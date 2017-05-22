@@ -1,0 +1,16 @@
+﻿.svn
+TEMP
+TestResults
+vini_app/.svn
+vini_app/bin
+vini_DB/bin
+vini_DB/.svn
+vini_internet/.svn
+vini_internet/bin
+vini_internet/exportinternet
+vini_service/.svn
+vini_service/bin
+vini_test/.svn
+vini_test/bin
+www
+*.zip

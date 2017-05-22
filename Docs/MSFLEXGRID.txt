@@ -1,0 +1,11 @@
+Dans les références du projet : Ajouter Microsoft FLexGrid Control 6.0
+Dans la boite à outils : Ajouter le controle COM MSFLEXGRID
+
+Créer une form y incure un controle MSFLEXGRID
+
+
+Si MSFLEXGRID apparait dans "Tous les controles Windows"
+
+Changer de Configuration "Debug" + Regenerer Tout
+et revenir en DEV 
+

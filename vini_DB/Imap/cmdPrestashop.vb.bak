@@ -1,0 +1,252 @@
+﻿Imports System.Xml.Serialization
+Imports System.Collections
+Imports System.IO
+Imports System.Collections.Generic
+Imports System.Text
+Imports System.Text.RegularExpressions
+<Serializable()>
+Public Class cmdprestashop
+    Public id As String
+    Public name As String
+    Public customer_id As String
+    Public livraison_company As String
+    Public livraison_name As String
+    Public livraison_firstname As String
+    Public livraison_adress1 As String
+    Public livraison_adress2 As String
+    Public livraison_postalcode As String
+    Public livraison_city As String
+    Public lignes As List(Of ligneprestashop)
+    <XmlIgnore()>
+    Public motif As String
+
+    Public Sub New()
+        id = ""
+        name = ""
+        customer_id = ""
+        livraison_company = ""
+        livraison_name = ""
+        livraison_firstname = ""
+        livraison_adress1 = ""
+        livraison_adress2 = ""
+        livraison_postalcode = ""
+        livraison_city = ""
+        lignes = New List(Of ligneprestashop)
+        motif = ""
+
+    End Sub
+
+    ''' <summary>
+    ''' Lecture du fichier XML et retour d'une Commande
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function readXMLFile(pFileName As String) As cmdprestashop
+        Dim oReturn As New cmdprestashop
+        Try
+            Dim objStreamReader As New StreamReader(pFileName)
+            Dim x As New XmlSerializer(oReturn.GetType)
+            oReturn = x.Deserialize(objStreamReader)
+            objStreamReader.Close()
+        Catch ex As Exception
+            Debug.Print("ParamDiag.readXML: " & ex.Message)
+            If ex.InnerException IsNot Nothing Then
+                Debug.Print("ParamDiag.readXML: " & ex.InnerException.Message)
+            End If
+        End Try
+        Return oReturn
+    End Function
+    ''' <summary>
+    ''' Lecture du fichier XML et retour d'une Commande
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function readXML(pXmlString As String) As cmdprestashop
+        Dim oReturn As New cmdprestashop
+        Dim strXMl As String = pXmlString
+        Try
+            Dim oCmd As New cmdprestashop
+            strXMl = strXMl.Replace("=3D", "=")
+            strXMl = strXMl.Replace("[", "<")
+            strXMl = strXMl.Replace("]", ">")
+            strXMl = strXMl.Replace("#", "=")
+
+            Dim oImap As New ImapVB.Imap
+            Dim strOut As String = ""
+            oImap.ParseQuotedString(strXMl, strOut)
+            Dim oSr As New StringReader(strOut)
+            '            Dim objStreamReader As New StreamReader(oSr)
+            Dim x As New XmlSerializer(GetType(cmdprestashop))
+            oReturn = x.Deserialize(oSr)
+            '"           objStreamReader.Close()
+        Catch ex As Exception
+            Debug.Print("cmdPrestashop.readXML: " & ex.Message)
+            If ex.InnerException IsNot Nothing Then
+                Debug.Print("cmdPrestashop.readXML: " & ex.InnerException.Message)
+            End If
+            Debug.Print("cmdPrestashop.readXML: " & pXmlString)
+            Debug.Print("cmdPrestashop.readXML: " & strXMl)
+
+        End Try
+        Return oReturn
+    End Function
+
+    Public Shared Function writeXml(pCmd As cmdprestashop, pFilename As String) As Boolean
+        Dim bReturn As Boolean
+        Dim objStreamWriter As StreamWriter = Nothing
+
+        Try
+            Dim ns As New XmlSerializerNamespaces()
+            ns.Add("", "")
+
+            objStreamWriter = New StreamWriter(pFilename)
+            Dim x As New XmlSerializer(pCmd.GetType)
+            x.Serialize(objStreamWriter, pCmd, ns)
+            objStreamWriter.Close()
+            bReturn = True
+        Catch ex As Exception
+            Debug.Print("ParamDiag.WriteXML: " & ex.Message)
+            If ex.InnerException IsNot Nothing Then
+                Debug.Print("ParamDiag.WriteXML: " & ex.InnerException.Message)
+            End If
+            bReturn = False
+            If objStreamWriter IsNot Nothing Then
+                objStreamWriter.Close()
+            End If
+
+
+        End Try
+        Return bReturn
+    End Function
+    ''' <summary>
+    ''' Vérification de la Commande importée
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function check() As Boolean
+        Dim bReturn As Boolean
+        Try
+            bReturn = True
+            If String.IsNullOrEmpty(id) Then
+                motif = "idCommande non renseigné"
+                bReturn = False
+            End If
+            If bReturn Then
+                If String.IsNullOrEmpty(name) Then
+                    motif = "nameCommande non renseigné"
+                    bReturn = False
+                End If
+            End If
+            If bReturn Then
+                If Not String.IsNullOrEmpty(customer_id) Then
+                    Dim oClient As Client
+                    oClient = Client.createandloadPrestashop(customer_id)
+                    If oClient Is Nothing Then
+                        motif = "Client Inconnu (" + customer_id + ") "
+                        bReturn = False
+                    End If
+                End If
+            End If
+            If bReturn Then
+                Dim oProduit As Produit
+                For Each oLg As ligneprestashop In lignes
+                    oProduit = Produit.createandloadbyKey(oLg.reference)
+                    If oProduit Is Nothing Then
+                        motif = "Produit Inconnu (" + oLg.reference + ")"
+                        bReturn = False
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            bReturn = False
+        End Try
+        Return bReturn
+    End Function
+
+    Public Sub AddLigne(pRef As String, pQte As Integer, pPrix As Decimal)
+        lignes.Add(New ligneprestashop(pRef, pQte, pPrix))
+    End Sub
+    ''' <summary>
+    ''' Création d'une commande Client à partir d'une commande prestaShop
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function createCommandeClient() As CommandeClient
+        Dim oReturn As CommandeClient
+        oReturn = Nothing
+        Try
+            Dim oClient As Client
+            Dim oProduit As Produit
+            Dim nLigne As Integer
+            oClient = Client.createandloadPrestashop(customer_id)
+            If oClient IsNot Nothing Then
+                oReturn = New CommandeClient(oClient)
+                oReturn.IDPrestashop = id
+                oReturn.NamePrestashop = name
+                oReturn.RaisonSocialeLivraison = livraison_company
+                oReturn.NomLivraison = livraison_name & " " & livraison_firstname
+                oReturn.caracteristiqueTiers.AdresseLivraison.nom = livraison_name & " " & livraison_firstname
+                oReturn.caracteristiqueTiers.AdresseLivraison.rue1 = livraison_adress1
+                oReturn.caracteristiqueTiers.AdresseLivraison.rue2 = livraison_adress2
+                oReturn.caracteristiqueTiers.AdresseLivraison.cp = livraison_postalcode
+                oReturn.caracteristiqueTiers.AdresseLivraison.ville = livraison_city
+
+                nLigne = 10
+                For Each oLg As ligneprestashop In lignes
+                    oProduit = Produit.createandloadbyKey(oLg.reference)
+                    If oProduit IsNot Nothing Then
+                        oReturn.AjouteLigne(nLigne, oProduit, oLg.quantite, oLg.prixunitaire)
+                        nLigne = nLigne + 10
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            oReturn = Nothing
+        End Try
+        Return oReturn
+    End Function
+    Protected Shared QuotedPrintableRegex As New Regex("=(?<hexchars>[0-9a-fA-F]{2,2})", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
+
+    Public Shared Function DecodeQuotedPrintableString(ByVal encodedString As String) As String
+        Dim b As New StringBuilder()
+        Dim startIndx As Integer = 0
+
+        Dim matches As MatchCollection = QuotedPrintableRegex.Matches(encodedString)
+
+        For i As Integer = 0 To matches.Count - 1
+            Dim m As Match = matches(i)
+            Dim hexchars As String = m.Groups("hexchars").Value
+            Dim charcode As Integer = Convert.ToInt32(hexchars, 16)
+            Dim c As Char = Chr(charcode)
+
+            If m.Index > 0 Then
+                b.Append(encodedString.Substring(startIndx, (m.Index - startIndx)))
+            End If
+
+            b.Append(c)
+
+            startIndx = m.Index + 3
+        Next
+
+        If startIndx < encodedString.Length Then
+            b.Append(encodedString.Substring(startIndx))
+        End If
+
+        Return Regex.Replace(b.ToString(), "=" & vbCr & vbLf, "")
+    End Function
+End Class
+Public Class ligneprestashop
+        Public reference As String
+        Public quantite As Integer
+        Public prixunitaire As Decimal
+    Public Sub New()
+
+    End Sub
+    Public Sub New(preference As String, pQte As Integer, pPrix As Decimal)
+        reference = preference
+        quantite = pQte
+        prixunitaire = pPrix
+    End Sub
+End Class
+
+

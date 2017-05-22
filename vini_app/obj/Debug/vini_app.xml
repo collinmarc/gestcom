@@ -1,0 +1,177 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+vini_app
+</name>
+</assembly>
+<members>
+<member name="M:vini_app.frmExportReglement.exporter">
+	<summary>
+ Exporte les Reglements vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportReglement.ValiderExport">
+	<summary>
+ Exporte les factures vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportReglement.exportReglement(System.String,Microsoft.VisualBasic.Collection)">
+	<summary>
+ Export les Reglements vers le répertoire indiqué
+ </summary>
+	<param name="pstrFile">répertoire d'exportation</param>
+	<param name="pcol">Collection à exporter</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.FrmDonBase.setElementCourant2(vini_DB.Persist)">
+	<summary>
+ Renseigne l'élément courant en véfifiant s'il est libre d'utilisation
+ </summary>
+	<param name="pElement">L'element à traiter</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmLstSCMDLitige.rechercheFournisseur">
+	<summary>
+ Recherche d'un fournisseur
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportFacture.exporter">
+	<summary>
+ Exporte les factures vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportFacture.ValiderExport">
+	<summary>
+ Exporte les factures vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportFacture.exportFacture(System.String,Microsoft.VisualBasic.Collection)">
+	<summary>
+ Export les factures vers le répertoire indiqué
+ </summary>
+	<param name="pstrFile">répertoire d'exportation</param>
+	<param name="colFact">Collection de factures à exporter</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmListeCommissionAProvisionner.rechercheFournisseur">
+	<summary>
+ Recherche d'un fournisseur
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmEclatementCommande.frmSave">
+	<summary>
+ Sauvegarde des commandes et des sous commandes modifiées
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmEclatementCommande.getListeCommandes">
+	<summary>
+ Récupération de la liste des commandes
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmEclatementCommande.LivraisonEclatement">
+	<summary>
+ Livraison des commandes sélectionnées
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmFournisseurTab.AfficheDlgcomm">
+	<summary>
+ Affiche la boite de disalogue de gestion des taux de commissions
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmJournalAnnonces.setbAnnoncesCommmandes(System.Boolean)">
+	<summary>
+ Affecte le boolean decidant s'il s'agit du journal d'annonces de commandes ou d'Approvisionement
+ </summary>
+	<param name="bValue"></param>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmExportQuadra.getListeScmd">
+	<summary>
+ Récupération de la liste des Bons à facturer à exporter vers Quadra
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmImportReglement.exporter">
+	<summary>
+ Exporte les Reglements vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmImportReglement.ValiderExport">
+	<summary>
+ Exporte les factures vers le répertoire indiqué
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmImportReglement.exportReglement(System.String,Microsoft.VisualBasic.Collection)">
+	<summary>
+ Export les Reglements vers le répertoire indiqué
+ </summary>
+	<param name="pstrFile">répertoire d'exportation</param>
+	<param name="pcol">Collection à exporter</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmGeneFactColisage.setListeMouvementsStock">
+	<summary>
+ Créé la liste des mouvements de stocks en fonction des paramètres
+ </summary>
+	<returns>True/False</returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmGeneFactColisage.genererFactures">
+	<summary>
+ Generatin d'une facture de colisage avec les paramètres
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmMajLivraisonCommande.frmSave">
+	<summary>
+ Sauvegarde des commandes et des sous commandes modifiées
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_app.frmMajLivraisonCommande.getListeCommandes">
+	<summary>
+ Récupération de la liste des commandes
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:vini_app.My.Resources.Resources.ResourceManager">
+	<summary>
+  Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.Culture">
+	<summary>
+  Remplace la propriété CurrentUICulture du thread actuel pour toutes
+  les recherches de ressources à l'aide de cette classe de ressource fortement typée.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_EXPORTCOMPTA_NOK">
+	<summary>
+  Recherche une chaîne localisée semblable à Exportation vers comptabilité terminée avec des erreurs.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_EXPORTCOMPTA_OK">
+	<summary>
+  Recherche une chaîne localisée semblable à Exportation vers comptabilité terminée avec succès.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_EXPORTCOMPTA_PATH">
+	<summary>
+  Recherche une chaîne localisée semblable à Répertoire d'exportation pour la compatabilité.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_LIGNE_NON_MODIFIABLE">
+	<summary>
+  Recherche une chaîne localisée semblable à Cette ligne n'est pas modifiable dans cet état.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_VALIDATION_EXPORT_FACTURE">
+	<summary>
+  Recherche une chaîne localisée semblable à Voulez-vous valider l'export des factures.
+</summary>
+</member><member name="P:vini_app.My.Resources.Resources.STR_VALIDATION_EXPORT_REGLEMENT">
+	<summary>
+  Recherche une chaîne localisée semblable à Voulez-vous valider l'export des règlements.
+</summary>
+</member><member name="T:vini_app.My.Resources.Resources">
+	<summary>
+  Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
+</summary>
+</member>
+</members>
+</doc>

@@ -1,0 +1,653 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="vini_DB.Adresse" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QICBAAAAACAAIAAAgI4wJAAABAhAAAggAIEAAAAAAAA=</HashCode>
+      <FileName>Adresse.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.aut_right" Collapsed="true">
+    <Position X="77" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAABAAgAAAAKAARAAMABAAAAIAAAAAAAWAAA=</HashCode>
+      <FileName>aut_right.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.aut_user" Collapsed="true">
+    <Position X="83.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQQABAIAAAAAIAARAAMAAAAAAgEAAAAgAUABA=</HashCode>
+      <FileName>aut_user.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.BonAppro" Collapsed="true">
+    <Position X="90.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgABAAAABADAAEIAgAAABSAAEAAAAAAAAAAgAAAUAAA=</HashCode>
+      <FileName>BonAppro.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.CaracteristiqueTiers" Collapsed="true">
+    <Position X="110.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>V0wIIAAIgGUIACACgKIBpBAFKMAIgBOoAMAAAQcACYA=</HashCode>
+      <FileName>CarracteristiqueTiers.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FicheTechniqueFourn" Collapsed="true">
+    <Position X="63.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAMCAAAABQAAAAhAIAJQAAUAAAAYAAAAAAAAAUAAA=</HashCode>
+      <FileName>FicheTehcniqueFourn.vb</FileName>
+      <NewMemberFileName>ClasseVide.vb</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Client" Collapsed="true">
+    <Position X="119.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAACDAQEEAgAACBwAAGAEAAABQUACBAAIdAAg=</HashCode>
+      <FileName>Client.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.clsFTPVinicom" Collapsed="true">
+    <Position X="68" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAFAAAYIAAgAIBBAAABAGAFAEAAAwGAIABBAI=</HashCode>
+      <FileName>clsFTPVinicom.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.NETFTPclient" Collapsed="true">
+    <Position X="136.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAAAAAAAABABAACGAQAQRQiAEEIAAARCMAUAJAAACAA=</HashCode>
+      <FileName>clsFTPVinicomNET.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FTPfileInfo" Collapsed="true">
+    <Position X="138.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAwAAAAACwIYAEAAAAAAACAggAQAAABAAAAIACAA=</HashCode>
+      <FileName>clsFTPVinicomNET.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FTPdirectory" Collapsed="true">
+    <Position X="136.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAQAAAABAABAAAAAAAAQAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>clsFTPVinicomNET.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.ColEvent" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAARAAAAABAAgAIABAQEIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ColEvent.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.ColEventSorted" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAARAAAAABAAgAIABAQEIAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ColEventSorted.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Commande" Collapsed="true">
+    <Position X="95" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>Jq4BQ9FANFUMvDpAiEKJRgYkIFma1CyyECGgIECAWBU=</HashCode>
+      <FileName>Commande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.CommandeClient" Collapsed="true">
+    <Position X="92.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgABBAAADCDIAEICgQAABSIAEAAQgQACJAAggEQVQAI=</HashCode>
+      <FileName>CommandeClient.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Commentaire" Collapsed="true">
+    <Position X="65.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAAAAAAAAgAIABAAAIAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Commentaire.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.contenant" Collapsed="true">
+    <Position X="126.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAADkBgBAQAACgAIABSEAMAAAAAogAAAgAAAWgAg=</HashCode>
+      <FileName>contenant.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dbConnection" Collapsed="true">
+    <Position X="70.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABAAAAQAEAgAIGZAAAAAAQAAAAAAAAAgAEgAA=</HashCode>
+      <FileName>dbConnection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsError" Collapsed="true">
+    <Position X="131.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgIAAAAwABABNABgCARAAQAAgDQBgAAAAAAAEARBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicom" Collapsed="true">
+    <Position X="133" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACDuIAEABwABAQJQhQgAQAAgEIgDUJyCUAAAIANABDk=</HashCode>
+      <FileName>dsVinicom.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatBAEnCoursSaisie" Collapsed="true">
+    <Position X="23" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatBAEnCoursSaisie.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatBALivrer" Collapsed="true">
+    <Position X="29.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatBALivrer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommande" Collapsed="true">
+    <Position X="36.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQBAAAAgAAAAIAgAIABAAEAAAAAAEBAAAAAAAAgAA=</HashCode>
+      <FileName>EtatCommande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeEclatee" Collapsed="true">
+    <Position X="36.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeEclatee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeEnCoursSaisie" Collapsed="true">
+    <Position X="43.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeEnCoursSaisie.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeLivree" Collapsed="true">
+    <Position X="50" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeLivree.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeRapprochee" Collapsed="true">
+    <Position X="56.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeRapprochee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeRien" Collapsed="true">
+    <Position X="59" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeRien.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeTransmise" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeTransmise.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatCommandeValidee" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatCommandeValidee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactcolExportee" Collapsed="true">
+    <Position X="25.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactColExportee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactColGeneree" Collapsed="true">
+    <Position X="32" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactColGeneree.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactCommExportee" Collapsed="true">
+    <Position X="34.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactCommExportee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactCommGeneree" Collapsed="true">
+    <Position X="38.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactCommGeneree.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactTRPExportee" Collapsed="true">
+    <Position X="45.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactTRPExportee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatFactTRPGeneree" Collapsed="true">
+    <Position X="52.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatFactTRPGeneree.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatMvtStock" Collapsed="true">
+    <Position X="73.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAAAgAAAAIAgAIABAAAAAAAAAABAAAAAAAAgAA=</HashCode>
+      <FileName>EtatMvtStock.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatMvtStock_Fact" Collapsed="true">
+    <Position X="74.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAgAIABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatMvtStock_Fact.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatMvtStock_nFact" Collapsed="true">
+    <Position X="72.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAgAIABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatMvtStock_nFact.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatPrecommande" Collapsed="true">
+    <Position X="18.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatPrecommande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatReglement" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAAAgAAAAIAgAIABAAAAAAAAAABAAAAAAAAgAA=</HashCode>
+      <FileName>EtatReglement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatReglement_Exporte" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAgAIABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatReglement_Exporte.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatReglement_Saisi" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAgAIABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatReglement_Saisi.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeExporteeInt" Collapsed="true">
+    <Position X="41" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeExporteeInt.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeFacturee" Collapsed="true">
+    <Position X="47.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeFacturee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeGeneree" Collapsed="true">
+    <Position X="54.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeGeneree.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeProvisionnee2" Collapsed="true">
+    <Position X="134.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeProvisionnee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeRapprochee" Collapsed="true">
+    <Position X="61.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeRapprochee.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeRapprocheeInt" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeRapprocheeInt.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatSSCommandeTransmise" Collapsed="true">
+    <Position X="20.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatSSCommandeTransmiseFax.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.EtatTous" Collapsed="true">
+    <Position X="27.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EtatTous.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.ExportParam" Collapsed="true">
+    <Position X="104" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgEAEAQADgAAAQABAAAQAIMAAACAABAAABAKBUAAA=</HashCode>
+      <FileName>ExportParam.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FactColisage" Collapsed="true">
+    <Position X="97.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MgABAlEIJAHADEIggCIoBSRAEAAAAAADECAiAEBUEIA=</HashCode>
+      <FileName>FactColisage.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FactCom" Collapsed="true">
+    <Position X="99.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MgCBAEIIBABAQEAAgAMIBSQAAAAAAAACEAAhAEDUEAA=</HashCode>
+      <FileName>FactCom.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FactTRP" Collapsed="true">
+    <Position X="101.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MgABEkAIBAFACEIAgAIIBSRAEAAAAAACEAAhAEDUEIA=</HashCode>
+      <FileName>FactTRP.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Facture" Collapsed="true">
+    <Position X="99.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgYgAAABFAIACAAgoAACAAQAEAQABAAIAIIAQAAAAAA=</HashCode>
+      <FileName>Facture.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.FileItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="133" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAgAAARQAAIAAAABCIACBAAAABBEAEIAAAA=</HashCode>
+      <FileName>FileItem.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="vini_DB.Fournisseur">
+    <Position X="124.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAEEAABAAEAggAABBQAAEAAAAAAAAAIBAAAUAAA=</HashCode>
+      <FileName>Fournisseur.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.LgCommande" Collapsed="true">
+    <Position X="79.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQABAiVIFEBAiAgA0FoANQYAEIACAwsKAEJiwEA3YRA=</HashCode>
+      <FileName>lgCommande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.LgFactColisage" Collapsed="true">
+    <Position X="86" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABCBSCAACARAIAAAgAIABYEAEAACoIADAAIAAACUEQI=</HashCode>
+      <FileName>lgFactColisage.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.LgFactTRP" Collapsed="true">
+    <Position X="106.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASAAHIBAkEpAgAIYBRIAkIAWQSgCAAEAAAQUAQE=</HashCode>
+      <FileName>lgFactTRP.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.lgPrecomm" Collapsed="true">
+    <Position X="79.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEUABCAABAAAAQgEKABSIAUAgAAAAAAAIQAAAUBAA=</HashCode>
+      <FileName>lgPrecomm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.LgStat" Collapsed="true">
+    <Position X="113" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAQAAACJAIAAMkCIAhQABEsAIAAIAIgAACBE0CCA=</HashCode>
+      <FileName>lgStat.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.mvtStock" Collapsed="true">
+    <Position X="117.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEABgAAgDAAEIJiIIEBYAAEAAIAIAAEAIAAACcgAE=</HashCode>
+      <FileName>mvtStock.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Param" Collapsed="true">
+    <Position X="128.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAQ4RgEiAhAAUAOgA4ADwEAMAABCDAggCABAiEXEAA=</HashCode>
+      <FileName>Param.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.ParamModeReglement" Collapsed="true">
+    <Position X="128.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAACggIABAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>ParamModeReglement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Persist" Collapsed="true">
+    <Position X="103" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/W/+/uu/sff/767v9v7//7+9+7/rb//F9/7v/6+/790=</HashCode>
+      <FileName>Persist.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.preCommande" Collapsed="true">
+    <Position X="88.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgQBAAABBATACACAAAAAAQAAEAEABABAEAAAAABXAAA=</HashCode>
+      <FileName>PreCommande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Produit" Collapsed="true">
+    <Position X="81.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wMREQAfOFBTAgEIgpEIgJwqEMQEWAAhgQGRKEgo+gJY=</HashCode>
+      <FileName>Produit.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.racine" Collapsed="true">
+    <Position X="64.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAABAIAAABAAAggAIABCEAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>racine.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Reglement" Collapsed="true">
+    <Position X="108.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAgQABCBAADIAEIAooIABQAAEAAIBwABAAAAAAAUgAA=</HashCode>
+      <FileName>Reglement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.SousCommande" Collapsed="true">
+    <Position X="95" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YgQVBRADBghKCEIigIJABVhwECBgCAACIoIQAEhUAEA=</HashCode>
+      <FileName>SousCommande.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.TauxComm" Collapsed="true">
+    <Position X="115.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAQAADgQEAAggIABQAAEAAAAIAAAAAAAAAUAAA=</HashCode>
+      <FileName>TauxComm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Tiers" Collapsed="true">
+    <Position X="122" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>V0wIIAAIgGVIACACgKIBpRAFOMAIgBOoAMAAAQcUCYA=</HashCode>
+      <FileName>Tiers.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.Transporteur" Collapsed="true">
+    <Position X="119.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAABAAAAEgAAAAQIIFAAAIAEAAAAAAAAUAAg=</HashCode>
+      <FileName>Transporteur.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsErrorTableAdapters.COMMANDE_SCMD_NULLTableAdapter" Collapsed="true">
+    <Position X="136.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsErrorTableAdapters.FACTCOMERRORTableAdapter" Collapsed="true">
+    <Position X="138.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsErrorTableAdapters.COMMANDE_ERRORTableAdapter" Collapsed="true">
+    <Position X="134.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsErrorTableAdapters.BASansMVTSTKTableAdapter" Collapsed="true">
+    <Position X="133" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter" Collapsed="true">
+    <Position X="136.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EMQAAHAAEAEAAAMAIAAAAAAAACEICAAAAgABAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.REGLEMENTTableAdapter" Collapsed="true">
+    <Position X="138.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGIAAAAABAMAIChAAAEAAiEICAAAAQAAgAgABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.CONSTANTESTableAdapter" Collapsed="true">
+    <Position X="138.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAACCMAIAAAAAAAACEICAAAAAAAAAAARBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.MVT_STOCKTableAdapter" Collapsed="true">
+    <Position X="133" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAMAAAAAAgACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.FRN_COMMTableAdapter" Collapsed="true">
+    <Position X="134.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGKBEAABAQMAIIAAAAAAACEIiAAAAAEAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.TRANSPORTEURTableAdapter" Collapsed="true">
+    <Position X="131.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.FACTCOMTableAdapter" Collapsed="true">
+    <Position X="131.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.LOCKTableAdapter" Collapsed="true">
+    <Position X="131.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAEAACEIDAAAAgAAAAgABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.USERSRIGHTSTableAdapter" Collapsed="true">
+    <Position X="133" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.USERSTableAdapter" Collapsed="true">
+    <Position X="134.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.dsVinicomTableAdapters.APPELATIONTableAdapter" Collapsed="true">
+    <Position X="131.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vini_DB.My.MySettings" Collapsed="true">
+    <Position X="134.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAABAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="vini_DB.ISCMD_FournisseurADEL" Collapsed="true">
+    <Position X="131.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgQAAAACAABQAAAAAAAgAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>ISCMD_Fournisseur.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Module Name="vini_DB.constants" Collapsed="true">
+    <Position X="131.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAAAAAQCClARFAIAGJABUgAQ4CARAAQgAIQgAAYAAI=</HashCode>
+      <FileName>constants.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="vini_DB.vncEnums" Collapsed="true">
+    <Position X="134.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="vini_DB.My.MySettingsProperty" Collapsed="true">
+    <Position X="133" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

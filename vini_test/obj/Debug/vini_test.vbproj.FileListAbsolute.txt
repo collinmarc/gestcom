@@ -1,0 +1,41 @@
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.dll
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.pdb
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.xml
+N:\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.dll
+N:\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.xml
+N:\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.pdb
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.dll
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.pdb
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.xml
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB_Accessor.dll
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB_Accessor.pdb
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.dll.config
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.dll.config
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.pdb
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_test.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.pdb
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB_Accessor.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\vini_DB_Accessor.pdb
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\ResolveAssemblyReference.cache
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.pdb
+N:\vinicom\V5_SVN\gestcom\vini_test\bin\Debug\DATATEST\Image2.jpg
+N:\vinicom\V5_SVN\gestcom\vini_test\obj\Debug\vini_test.vbprojResolveAssemblyReference.cache
+N:\vinicom\V5\vini_test\bin\Debug\DATATEST\Image2.jpg
+N:\vinicom\V5\vini_test\bin\Debug\vini_test.dll.config
+N:\vinicom\V5\vini_test\bin\Debug\vini_test.dll
+N:\vinicom\V5\vini_test\bin\Debug\vini_test.pdb
+N:\vinicom\V5\vini_test\bin\Debug\vini_test.xml
+N:\vinicom\V5\vini_test\bin\Debug\vini_DB.dll
+N:\vinicom\V5\vini_test\bin\Debug\vini_DB.pdb
+N:\vinicom\V5\vini_test\bin\Debug\vini_DB.xml
+N:\vinicom\V5\vini_test\bin\Debug\vini_DB_Accessor.dll
+N:\vinicom\V5\vini_test\bin\Debug\vini_DB_Accessor.pdb
+N:\vinicom\V5\vini_test\obj\Debug\vini_test.vbprojResolveAssemblyReference.cache
+N:\vinicom\V5\vini_test\obj\Debug\vini_test.dll
+N:\vinicom\V5\vini_test\obj\Debug\vini_test.xml
+N:\vinicom\V5\vini_test\obj\Debug\vini_test.pdb

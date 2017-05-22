@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="gestcom">
+</Property><Property Name="Fichier solution" Value="F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_app\gestcom.sln">
+</Property><Property Name="Date" Value="lundi 13 juin 2011">
+</Property><Property Name="Time" Value="12:11">
+</Property></Properties><Event ErrorLevel="0" Project="vini_app" Source="vini_app.vbproj" Description="Le fichier projet ne doit pas être converti.">
+</Event><Event ErrorLevel="3" Project="vini_app" Source="vini_app.vbproj" Description="Aucune conversion requise">
+</Event><Event ErrorLevel="0" Project="" Source="gestcom.sln" Description="Solution correctement convertie">
+</Event><Event ErrorLevel="3" Project="" Source="gestcom.sln" Description="Converted">
+</Event></UpgradeLog>

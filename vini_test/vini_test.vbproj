@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{EB8B2400-9F8B-42C9-9CD6-58B173BC234F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>vini_test</RootNamespace>
+    <AssemblyName>vini_test</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <ReferencePath>$(DevEnvDir)PublicAssemblies\</ReferencePath>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>vini_test.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>vini_test.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="Microsoft.VisualBasic" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.vb" />
+    <Compile Include="DataSet1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="T0100_vini_image.vb" />
+    <Compile Include="First.vb" />
+    <Compile Include="T1050_FicheTechniqueFourn.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="T1000_dbConnection.vb" />
+    <Compile Include="T1010_Collection.vb" />
+    <Compile Include="T1020_Etat.vb" />
+    <Compile Include="T1030_Param.vb" />
+    <Compile Include="T1050_fournisseur.vb" />
+    <Compile Include="T1060_produit.vb" />
+    <Compile Include="T1070_client.vb" />
+    <Compile Include="T1080_PRECOMMANDE.vb" />
+    <Compile Include="T1100_commande.vb" />
+    <Compile Include="T1110_SScommande.vb" />
+    <Compile Include="T1120_BA.vb" />
+    <Compile Include="T1130_FactureCommission.vb" />
+    <Compile Include="T1140_FactureTransport.vb" />
+    <Compile Include="T1150_FactureColisage.vb" />
+    <Compile Include="T1200_integrite.vb" />
+    <Compile Include="T1250_Stock.vb" />
+    <Compile Include="T1300_userRights.vb" />
+    <Compile Include="T1400_Transporteur.vb" />
+    <Compile Include="T4000_Reglement.vb" />
+    <Compile Include="testFax.vb" />
+    <Compile Include="TestImap.vb" />
+    <Compile Include="test_Base.vb" />
+    <Compile Include="test_FTP.vb" />
+    <Compile Include="test_V15.vb" />
+    <Compile Include="test_V17.vb" />
+    <Compile Include="test_V191.vb" />
+    <Compile Include="test_V192.vb" />
+    <Compile Include="test_V193.vb" />
+    <Compile Include="test_V194.vb" />
+    <Compile Include="test_V196.vb" />
+    <Compile Include="test_V197.vb" />
+    <Compile Include="test_V200.vb" />
+    <Compile Include="test_V201.vb" />
+    <Compile Include="test_V211.vb" />
+    <Compile Include="test_V212.vb" />
+    <Compile Include="test_V213.vb" />
+    <Compile Include="test_V22.vb" />
+    <Compile Include="test_V223.vb" />
+    <Compile Include="test_V228.vb" />
+    <Compile Include="test_V300.vb" />
+    <Compile Include="test_V310.vb" />
+    <Compile Include="Test_V420.vb" />
+    <Compile Include="Test_V423.vb" />
+    <Compile Include="Test_V560.vb" />
+    <Compile Include="Test_V550 .vb" />
+    <Compile Include="Test_V500.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Références de test\vini_DB.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vini_DB\vini_DB.vbproj">
+      <Project>{EEB9341C-D291-43A5-B51C-D88089D92BD0}</Project>
+      <Name>vini_DB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DATATEST\Image2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DATATEST\imgRaisin.jpg" />
+    <Content Include="DATATEST\IMGVignes.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

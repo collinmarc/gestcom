@@ -1,0 +1,12 @@
+SERVDB
+VINICOM/Administrateur
+EdcRfv11
+
+LocalHost/PSP
+
+Client : http://localhost/vinicom
+Admin : http://localhost/vinicom/admin5985
+	contact@pgweb.fr/ViniCom2015  contact@marccollin.com/collin10
+CLT : http://localhost/vinicom
+	marccollintest@gmail.com/collin10
+

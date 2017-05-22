@@ -1,0 +1,5 @@
+N:\vinicom\V5\vnc_module\bin\vnc_module.dll
+N:\vinicom\V5\vnc_module\bin\vnc_module.pdb
+N:\vinicom\V5\vnc_module\obj\Debug\vnc_module.csprojResolveAssemblyReference.cache
+N:\vinicom\V5\vnc_module\obj\Debug\vnc_module.dll
+N:\vinicom\V5\vnc_module\obj\Debug\vnc_module.pdb

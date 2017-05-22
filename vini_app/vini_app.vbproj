@@ -1,0 +1,1798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A5FDB23-CD5B-4349-8715-756F0CF09CA4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>vini_app.Module1</StartupObject>
+    <RootNamespace>vini_app</RootNamespace>
+    <AssemblyName>vini_app</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <OptionStrict>Off</OptionStrict>
+    <ApplicationIcon>logo32.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>http://localhost/vini_app/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>vini_app.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>vini_app.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="RichTextBoxJmb" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="Constants.vb" />
+    <Compile Include="crFactHobivin.vb">
+      <DependentUpon>crFactHobivin.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CrystalReport1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="dlgExportWebEDI.Designer.vb">
+      <DependentUpon>dlgExportWebEDI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dlgExportWebEDI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAppelation.Designer.vb">
+      <DependentUpon>frmAppelation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAppelation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportCommandeClientPrestashop.Designer.vb">
+      <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportCommandeClientPrestashop.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMajLivraisonCommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEclatementCommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExportQuadra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportCommandeClient.Designer.vb">
+      <DependentUpon>frmImportCommandeClient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportCommandeClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="crComparatifCommandeClientParProduit.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crComparatifCommandeClientParProduit.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crDetailCommandeClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crDetailCommandeClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="crListeCAMensuelClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeCAMensuelClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crPrecommande.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crPrecommande.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crTableauCAClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crTableauCAClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="frmPurgePrecommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUser.Designer.vb">
+      <DependentUpon>frmUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDonBase.Designer.vb">
+      <DependentUpon>FrmDonBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDonBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVinicom.Designer.vb">
+      <DependentUpon>frmVinicom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmVinicom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamContenant.Designer.vb">
+      <DependentUpon>frmGestParamContenant.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamContenant.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamConditionnement.Designer.vb">
+      <DependentUpon>frmGestParamConditionnement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamConditionnement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamRegion.Designer.vb">
+      <DependentUpon>frmGestParamRegion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamRegion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamCouleur.Designer.vb">
+      <DependentUpon>frmGestParamCouleur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamCouleur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamTypeClient.Designer.vb">
+      <DependentUpon>frmGestParamTypeClient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamTypeClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamTauxTva.Designer.vb">
+      <DependentUpon>frmGestParamTauxTva.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamTauxTva.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="crBilanFinancierClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBilanFinancierClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBilanFinancierFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBilanFinancierFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBLBonAppro.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBLBonAppro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBLTransporteur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBLTransporteur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBonAppro.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBonAppro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBonFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBonFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crBonLivraison.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crBonLivraison.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCAClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCAClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCAClientProducteur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCAClientProducteur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCAClientTableau.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCAClientTableau.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCAGroupeClients.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCAGroupeClients.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCAMensuelClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCAMensuelClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crComparatifCommission.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crComparatifCommission.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crCumulVentesArticles.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crCumulVentesArticles.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crEntete.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crEntete.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crEntete2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crEntete2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crEtatStock.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crEtatStock.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crEtatStockV2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crEtatStockV2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crFactCom.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFactCom.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crFactCom_courrier.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFactCom_courrier.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crFactCom_Releve.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFactCom_Releve.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crFactureColisage.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFactureColisage.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crFactureTRP.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFactureTRP.rpt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="crJournalAnnoncesApprovisionnement.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crJournalAnnoncesApprovisionnement.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crJournalAnnoncesLivraison.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crJournalAnnoncesLivraison.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeCommandeEnAttente.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeCommandeEnAttente.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeCommandeTRP.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeCommandeTRP.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeFactColisage.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeFactColisage.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeFactCom.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeFactCom.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeFactTRP.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeFactTRP.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListePalettes.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListePalettes.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeReglements.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeReglements.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeSousCommande.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeSousCommande.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crListeTarif.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crListeTarif.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstBonAppro.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstBonAppro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstCommandes.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstCommandes.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstCommissionsAProvisionner.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstCommissionsAProvisionner.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstEntreesPlateforme.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstEntreesPlateforme.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstSortiesPlateforme.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstSortiesPlateforme.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crLstSousCommandesLitige.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crLstSousCommandesLitige.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crMouvementArticle.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crMouvementArticle.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crMouvementCmdArticle.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crMouvementCmdArticle.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crQteCmdArticleClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crQteCmdArticleClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crQteCmdArticleMois.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crQteCmdArticleMois.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRecapAnnonces.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRecapAnnonces.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRecapAnnoncesAppro.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRecapAnnoncesAppro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRecapColisage.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRecapColisage.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRecapColisage_old.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRecapColisage_old.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crReferences.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crReferences.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crReferences2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crReferences2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRegistreAppro.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRegistreAppro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crRegistreLivraison.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crRegistreLivraison.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crReleveColisage.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crReleveColisage.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatBilanClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatBilanClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatCAClientProducteur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatCAClientProducteur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatCAProducteurClient.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatCAProducteurClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatHistoriqueArticles.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatHistoriqueArticles.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStatProduitFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStatProduitFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crStockFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crStockFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crSyntheseESArticle.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crSyntheseESArticle.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crTableauBordFacture.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crTableauBordFacture.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="crTableaudeBordFournisseur.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crTableaudeBordFournisseur.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="dlgBackupRestore.Designer.vb">
+      <DependentUpon>dlgBackupRestore.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dlgBackupRestore.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgFrnComm.Designer.vb">
+      <DependentUpon>dlgFrnComm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dlgFrnComm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgLgCommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgLgFactColisage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgLgFactCom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgLgFactTrp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgReglements.Designer.vb">
+      <DependentUpon>dlgReglements.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dlgReglements.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgVisuBonFournisseur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgVisuPrecommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgVisuStockFournisseur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBilanClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCAClientProducteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCAProducteurClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCheckDatabase.Designer.vb">
+      <DependentUpon>frmCheckDatabase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCheckDatabase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConstantes.Designer.vb">
+      <DependentUpon>frmConstantes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConstantes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmControleStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmcrListeTarif.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmcrRecapColisage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmcrRegistreAppro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmcrRegistreLivraison.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCumulVentesArticles.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditfactures.Designer.vb">
+      <DependentUpon>frmEditfactures.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditfactures.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditTransporteur.Designer.vb">
+      <DependentUpon>frmEditTransporteur.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditTransporteur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEtatStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExportFacture.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExportReglement.Designer.vb">
+      <DependentUpon>frmExportReglement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmExportReglement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFournisseurTab.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneFactColisage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneFactCom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneFactTRP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerationMvtInventaire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestFactColisage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestFactCom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestFactTRP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestionScmd.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestParamModeReglement.Designer.vb">
+      <DependentUpon>frmGestParamModeReglement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGestParamModeReglement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestTarif.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHistoriqueArticles.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportReglement.Designer.vb">
+      <DependentUpon>frmImportReglement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportReglement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmJournalAnnonces.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLibere.Designer.vb">
+      <DependentUpon>frmLibere.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLibere.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeBonAppro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeCommandes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeCommandesTRP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeCommissionAProvisionner.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeFactColisage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeFactCom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeFactTrp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListePalettesTRP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeReglement.Designer.vb">
+      <DependentUpon>frmListeReglement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListeReglement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListeSousCommades.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLstEntreesPlateforme.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLstSCMDLitige.Designer.vb">
+      <DependentUpon>frmLstSCMDLitige.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLstSCMDLitige.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLstSortiesPlateforme.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMouvementArticle.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrecommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProduit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPurgeBonAppro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPurgeCommandeClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPurgeFactCom.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPurgeMvtStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQteCmdArticleMois.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRapproFactFourn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRecalculStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRecapAnnonces.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRechercheCMDTRP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRechercheDB.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRechercheSCMD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmsaisieCommande.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaisieCommandeBonAppro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaisieCommandeClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaisieReglement.Designer.vb">
+      <DependentUpon>frmSaisieReglement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSaisieReglement.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.vb">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSplash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatCAClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatCAGroupeClients.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatistiques.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatListeCAMensuelClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatProduitFournisseur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTableauBordFacture.Designer.vb" />
+    <Compile Include="frmTableauBordFacture.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTableaudeBordFournisseur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTiers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUserRights.Designer.vb">
+      <DependentUpon>frmUserRights.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmUserRights.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module1.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RichTextBoxJmb.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings.vb" />
+    <Compile Include="textBoxCurrency.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="textBoxNumeric.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="textBoxstrNumeric.vb">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="crBilanFinancierClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBilanFinancierClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBilanFinancierFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBilanFinancierFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBLBonAppro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBLBonAppro.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBLTransporteur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBLTransporteur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBonAppro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBonAppro.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBonFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBonFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crBonLivraison.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crBonLivraison.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCAClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCAClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCAClientProducteur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCAClientProducteur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCAClientTableau.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCAClientTableau.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCAGroupeClients.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCAGroupeClients.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCAMensuelClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCAMensuelClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crComparatifCommission.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crComparatifCommission.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crCumulVentesArticles.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crCumulVentesArticles.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crDetailCommandeClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crDetailCommandeClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crEntete.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crEntete.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crEntete2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crEntete2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crEtatStock.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crEtatStock.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crEtatStockV2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crEtatStockV2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactCom.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactCom.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactCom_courrier.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactCom_courrier.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactCom_Releve.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactCom_Releve.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactureColisage.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactureColisage.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactureTRP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactureTRP.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crJournalAnnoncesApprovisionnement.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crJournalAnnoncesApprovisionnement.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crJournalAnnoncesLivraison.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crJournalAnnoncesLivraison.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeCommandeEnAttente.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeCommandeEnAttente.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeCommandeTRP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeCommandeTRP.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeFactColisage.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeFactColisage.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeFactCom.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeFactCom.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeFactTRP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeFactTRP.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListePalettes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListePalettes.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeReglements.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeReglements.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeSousCommande.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeSousCommande.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeTarif.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeTarif.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstBonAppro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstBonAppro.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstCommandes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstCommandes.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstCommissionsAProvisionner.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstCommissionsAProvisionner.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstEntreesPlateforme.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstEntreesPlateforme.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstSortiesPlateforme.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstSortiesPlateforme.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crLstSousCommandesLitige.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crLstSousCommandesLitige.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crMouvementArticle.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crMouvementArticle.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crMouvementCmdArticle.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crMouvementCmdArticle.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crQteCmdArticleClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crQteCmdArticleClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crQteCmdArticleMois.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crQteCmdArticleMois.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRecapAnnonces.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRecapAnnonces.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRecapAnnoncesAppro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRecapAnnoncesAppro.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRecapColisage.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRecapColisage.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRecapColisage_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRecapColisage_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crReferences.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crReferences.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crReferences2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crReferences2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRegistreAppro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRegistreAppro.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crRegistreLivraison.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRegistreLivraison.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crReleveColisage.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crReleveColisage.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatBilanClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatBilanClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatCAClientProducteur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatCAClientProducteur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatCAProducteurClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatCAProducteurClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatHistoriqueArticles.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatHistoriqueArticles.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStatProduitFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStatProduitFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crStockFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crStockFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crSyntheseESArticle.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crSyntheseESArticle.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crTableauBordFacture.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crTableauBordFacture.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crTableaudeBordFournisseur.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crTableaudeBordFournisseur.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crPrecommande.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crPrecommande.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crComparatifCommandeClientParProduit.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crComparatifCommandeClientParProduit.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crListeCAMensuelClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crListeCAMensuelClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crTableauCAClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crTableauCAClient.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Readme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Requetes\extractPreCommande.sql" />
+    <Content Include="Requetes\RQ_CLEAN.sql" />
+    <Content Include="Requetes\V5.6TOV5.7.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Requetes\V5.8TOV5.9.sql" />
+    <Content Include="Requetes\VxxTOV5.6.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crFactHobivin.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFactHobivin.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgBackupRestore.resx">
+      <DependentUpon>dlgBackupRestore.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgExportWebEDI.resx">
+      <DependentUpon>dlgExportWebEDI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAppelation.resx">
+      <DependentUpon>frmAppelation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConstantes.resx">
+      <DependentUpon>frmConstantes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportCommandeClientPrestashop.resx">
+      <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMajLivraisonCommande.resx">
+      <DependentUpon>frmMajLivraisonCommande.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEclatementCommande.resx">
+      <DependentUpon>frmEclatementCommande.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExportQuadra.resx">
+      <DependentUpon>frmExportQuadra.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFournisseurTab.resx">
+      <DependentUpon>frmFournisseurTab.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamContenant.resx">
+      <DependentUpon>frmGestParamContenant.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamConditionnement.resx">
+      <DependentUpon>frmGestParamConditionnement.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamRegion.resx">
+      <DependentUpon>frmGestParamRegion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamCouleur.resx">
+      <DependentUpon>frmGestParamCouleur.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamTypeClient.resx">
+      <DependentUpon>frmGestParamTypeClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamTauxTva.resx">
+      <DependentUpon>frmGestParamTauxTva.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgLgFactColisage.resx">
+      <DependentUpon>dlgLgFactColisage.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgLgFactCom.resx">
+      <DependentUpon>dlgLgFactCom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgLgFactTrp.resx">
+      <DependentUpon>dlgLgFactTrp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgVisuBonFournisseur.resx">
+      <DependentUpon>dlgVisuBonFournisseur.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBilanClient.resx">
+      <DependentUpon>frmBilanClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCAClientProducteur.resx">
+      <DependentUpon>frmCAClientProducteur.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClient.resx">
+      <DependentUpon>frmClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmControleStock.resx">
+      <DependentUpon>frmControleStock.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmcrListeTarif.resx">
+      <DependentUpon>frmcrListeTarif.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmcrRegistreAppro.resx">
+      <DependentUpon>frmcrRegistreAppro.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmcrRegistreLivraison.resx">
+      <DependentUpon>frmcrRegistreLivraison.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditfactures.resx">
+      <DependentUpon>frmEditfactures.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEtatStock.resx">
+      <DependentUpon>frmEtatStock.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExportFacture.resx">
+      <DependentUpon>frmExportFacture.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneFactColisage.resx">
+      <DependentUpon>frmGeneFactColisage.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneFactCom.resx">
+      <DependentUpon>frmGeneFactCom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestFactTRP.resx">
+      <DependentUpon>frmGestFactTRP.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestParamModeReglement.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGestParamModeReglement.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestTarif.resx">
+      <DependentUpon>frmGestTarif.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHistoriqueArticles.resx">
+      <DependentUpon>frmHistoriqueArticles.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportCommandeClient.resx">
+      <DependentUpon>frmImportCommandeClient.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmJournalAnnonces.resx">
+      <DependentUpon>frmJournalAnnonces.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLibere.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmLibere.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeCommandes.resx">
+      <DependentUpon>frmListeCommandes.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeCommandesTRP.resx">
+      <DependentUpon>frmListeCommandesTRP.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeCommissionAProvisionner.resx">
+      <DependentUpon>frmListeCommissionAProvisionner.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeFactColisage.resx">
+      <DependentUpon>frmListeFactColisage.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeFactCom.resx">
+      <DependentUpon>frmListeFactCom.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeFactTrp.resx">
+      <DependentUpon>frmListeFactTrp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListePalettesTRP.resx">
+      <DependentUpon>frmListePalettesTRP.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListeSousCommades.resx">
+      <DependentUpon>frmListeSousCommades.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLstEntreesPlateforme.resx">
+      <DependentUpon>frmLstEntreesPlateforme.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLstSortiesPlateforme.resx">
+      <DependentUpon>frmLstSortiesPlateforme.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrecommande.resx">
+      <DependentUpon>frmPrecommande.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProduit.resx">
+      <DependentUpon>frmProduit.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPurgeBonAppro.resx">
+      <DependentUpon>frmPurgeBonAppro.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPurgeMvtStock.resx">
+      <DependentUpon>frmPurgeMvtStock.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPurgePrecommande.resx">
+      <DependentUpon>frmPurgePrecommande.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRapproFactFourn.resx">
+      <DependentUpon>frmRapproFactFourn.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRecalculStock.resx">
+      <DependentUpon>frmRecalculStock.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRechercheCMDTRP.resx">
+      <DependentUpon>frmRechercheCMDTRP.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRechercheDB.resx">
+      <DependentUpon>frmRechercheDB.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRechercheSCMD.resx">
+      <DependentUpon>frmRechercheSCMD.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmsaisieCommande.resx">
+      <DependentUpon>frmsaisieCommande.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSaisieCommandeBonAppro.resx">
+      <DependentUpon>frmSaisieCommandeBonAppro.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSaisieCommandeClient.resx">
+      <DependentUpon>frmSaisieCommandeClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSplash.resX">
+      <DependentUpon>frmSplash.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStat.resx">
+      <DependentUpon>frmStat.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatCAClient.resx">
+      <DependentUpon>frmStatCAClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatCAGroupeClients.resx">
+      <DependentUpon>frmStatCAGroupeClients.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatistiques.resx">
+      <DependentUpon>frmStatistiques.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatListeCAMensuelClient.resx">
+      <DependentUpon>frmStatListeCAMensuelClient.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatProduitFournisseur.resx">
+      <DependentUpon>frmStatProduitFournisseur.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTableaudeBordFournisseur.resx">
+      <DependentUpon>frmTableaudeBordFournisseur.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTiers.resx">
+      <DependentUpon>frmTiers.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUser.resx">
+      <DependentUpon>frmUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVinicom.resx">
+      <DependentUpon>frmVinicom.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUserRights.resx">
+      <DependentUpon>frmUserRights.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RichTextBoxJmb.resx">
+      <DependentUpon>RichTextBoxJmb.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="textBoxCurrency.resx">
+      <DependentUpon>textBoxCurrency.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="textBoxNumeric.resx">
+      <DependentUpon>textBoxNumeric.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="textBoxstrNumeric.resx">
+      <DependentUpon>textBoxstrNumeric.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="OUTILS\RestoreDB.bat" />
+    <None Include="OUTILS\sauveDB.bat" />
+    <None Include="vini_DB.aut_right.datasource" />
+    <None Include="vini_DB.BonAppro.datasource" />
+    <None Include="vini_DB.Client.datasource" />
+    <None Include="vini_DB.Commande.datasource" />
+    <None Include="vini_DB.CommandeClient.datasource" />
+    <None Include="vini_DB.contenant.datasource" />
+    <None Include="vini_DB.FactCom.datasource" />
+    <None Include="vini_DB.FactTRP.datasource" />
+    <None Include="vini_DB.Fournisseur.datasource" />
+    <None Include="vini_DB.ImportPrestashop.datasource" />
+    <None Include="vini_DB.LgCommande.datasource" />
+    <None Include="vini_DB.LgFactColisage.datasource" />
+    <None Include="vini_DB.LgFactTRP.datasource" />
+    <None Include="vini_DB.lgPrecomm.datasource" />
+    <None Include="vini_DB.mvtStock.datasource" />
+    <None Include="vini_DB.Param.datasource" />
+    <None Include="vini_DB.ParamModeReglement.datasource" />
+    <None Include="vini_DB.Produit.datasource" />
+    <None Include="vini_DB.SousCommande.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vini_DB\vini_DB.vbproj">
+      <Project>{EEB9341C-D291-43A5-B51C-D88089D92BD0}</Project>
+      <Name>vini_DB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Requetes\V5.2TOV5.5.SQL">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Requetes\V5.0TOV5.1.SQL">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Requetes\V4.xTOV5.0.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icones\FlecheBas.jpg" />
+    <Content Include="Icones\FlecheEgal.jpg" />
+    <Content Include="Icones\FlecheHaut.jpg" />
+    <Content Include="logo32.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Requetes\createLockTable.sql" />
+    <Content Include="Requetes\CreateProcSCMD_0_Lines.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EXPORTCR\" />
+    <Folder Include="FAX\DETCMD\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

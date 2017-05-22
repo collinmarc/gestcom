@@ -1,0 +1,16 @@
+SELECT year(CMD_DATE) as annee, 
+ FRN_CODE,
+ FRN_NOM, 
+PRD_CODE, 
+PRD_LIBELLE, 
+SUM(CA_HT) as CA_HT,
+SUM(QTE * CONT_BOUT) as ColsN
+
+FROM vnc5.dbo.CAFOURNISSEUR2 
+ WHERE CMD_DATE between ? and ? or CMD_DATE between ? and ?
+Group By year(CMD_DATE), 
+ FRN_CODE,
+ FRN_NOM, 
+PRD_CODE, 
+PRD_LIBELLE
+ORDER BY FRN_CODE, PRD_CODE

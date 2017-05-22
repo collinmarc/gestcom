@@ -1,0 +1,2 @@
+"vnc5"."dbo"."CA_MENSUELCLIENT"
+"vnc5"."dbo"."CA_MENSUELCLIENT_CODECLIENT"

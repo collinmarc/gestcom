@@ -1,0 +1,8 @@
+domain : mcii
+login  : marccollin
+email  : marccollin@hotmail.fr
+passowrd : collin10
+Url : app.Cloudorge.com
+URL SVN : https://mcii.svn.cloudforge.com/kermene
+URL SVN : https://mcii.svn.cloudforge.com/vincom
+URL SVN : https://mcii.svn.cloudforge.com/VinicomV6

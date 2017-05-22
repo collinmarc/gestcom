@@ -1,0 +1,145 @@
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\ResolveAssemblyReference.cache
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.FAXCONTROLLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.MSFlexGridLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Office.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Outlook.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Scripting.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\AxInterop.MSFlexGridLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.vbproj.ResolveComReference.cache
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.read.1.tlog
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.write.1.tlog
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.exe.config
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.exe
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.pdb
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.FAXCOMLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.pdb
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.FAXCONTROLLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.MSFlexGridLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Office.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Outlook.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Scripting.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\AxInterop.MSFlexGridLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\ResolveAssemblyReference.cache
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.FAXCONTROLLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.MSFlexGridLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Office.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Outlook.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\Interop.Scripting.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\AxInterop.MSFlexGridLib.dll
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.vbproj.ResolveComReference.cache
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportPreCommande.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmImportDossier.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.dlgInternet.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportDossier.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportInternet.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmImportInternet.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmMDI.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmSettings.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmSplash.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmStatistiques.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.FrmVinicom.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxCurrency.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxNumeric.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxStrNumeric.resources
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.read.1.tlog
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.read.4.tlog
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.write.1.tlog
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.exe
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.xml
+F:\Mes documents\NewCo\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.pdb
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.exe.config
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.exe
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.pdb
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_internet.xml
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.FAXCOMLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.pdb
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\vini_DB.xml
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.FAXCONTROLLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.MSFlexGridLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Office.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Outlook.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\Interop.Scripting.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\bin\Debug\AxInterop.MSFlexGridLib.dll
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportPreCommande.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmImportDossier.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.dlgInternet.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportDossier.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmExportInternet.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmImportInternet.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmMDI.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmSettings.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmSplash.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.frmStatistiques.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.FrmVinicom.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxCurrency.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxNumeric.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.textBoxStrNumeric.resources
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\GenerateResource-ResGen.read.4.tlog
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.exe
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.xml
+N:\vinicom\V5_SVN\gestcom1\vini_internet\obj\Debug\vini_internet.pdb
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\internetconnection.ico
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_internet.exe.config
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_internet.exe
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_internet.pdb
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_internet.xml
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_DB.dll
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_DB.pdb
+N:\vinicom\V5_SVN\gestcom\vini_internet\bin\Debug\vini_DB.xml
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\ResolveAssemblyReference.cache
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmEtatServeur.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmExportPreCommande.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmImportDossier.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.dlgInternet.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmExportDossier.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmExportInternet.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmImportInternet.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmMDI.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmSettings.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmSplash.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.frmStatistiques.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.FrmVinicom.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.textBoxCurrency.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.textBoxNumeric.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.textBoxStrNumeric.resources
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\GenerateResource.read.1.tlog
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\GenerateResource.write.1.tlog
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.exe
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.xml
+N:\vinicom\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.pdb
+V:\V5_SVN\gestcom\vini_internet\bin\Debug\vini_internet.exe.config
+V:\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.exe
+V:\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.xml
+V:\V5_SVN\gestcom\vini_internet\obj\Debug\vini_internet.pdb
+N:\vinicom\V5\vini_internet\bin\Debug\internetconnection.ico
+N:\vinicom\V5\vini_internet\bin\Debug\vini_internet.exe.config
+N:\vinicom\V5\vini_internet\bin\Debug\vini_internet.exe
+N:\vinicom\V5\vini_internet\bin\Debug\vini_internet.pdb
+N:\vinicom\V5\vini_internet\bin\Debug\vini_internet.xml
+N:\vinicom\V5\vini_internet\bin\Debug\vini_DB.dll
+N:\vinicom\V5\vini_internet\bin\Debug\vini_DB.pdb
+N:\vinicom\V5\vini_internet\bin\Debug\vini_DB.xml
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmEtatServeur.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmExportPreCommande.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmImportDossier.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.dlgInternet.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmExportDossier.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmExportInternet.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmImportInternet.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmMDI.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmSettings.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmSplash.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.frmStatistiques.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.FrmVinicom.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.textBoxCurrency.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.textBoxNumeric.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.textBoxStrNumeric.resources
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.vbproj.GenerateResource.Cache
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.exe
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.xml
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.pdb
+N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.vbprojResolveAssemblyReference.cache

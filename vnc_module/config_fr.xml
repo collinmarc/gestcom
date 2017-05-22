@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>vncModule</name>
+	<displayName><![CDATA[Vinicom Module]]></displayName>
+	<version><![CDATA[1.0]]></version>
+	<description><![CDATA[Ce module contient les Addons pour vinicom]]></description>
+	<author><![CDATA[Marc Collin]]></author>
+	<tab><![CDATA[export]]></tab>
+	<confirmUninstall><![CDATA[Etes-vous sur de vouloir desinstaller ce module?]]></confirmUninstall>
+	<is_configurable>1</is_configurable>
+	<need_instance>0</need_instance>
+	<limited_countries></limited_countries>
+</module>

@@ -1,0 +1,15 @@
+N:\vinicom\V5\vini_service\bin\Release\vini_service.exe.config
+N:\vinicom\V5\vini_service\bin\Release\vini_service.exe
+N:\vinicom\V5\vini_service\bin\Release\vini_service.pdb
+N:\vinicom\V5\vini_service\bin\Release\vini_service.xml
+N:\vinicom\V5\vini_service\bin\Release\vini_DB.dll
+N:\vinicom\V5\vini_service\bin\Release\vini_DB.pdb
+N:\vinicom\V5\vini_service\bin\Release\vini_DB.xml
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.vbprojResolveAssemblyReference.cache
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.Resources.resources
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.ProjectInstaller.resources
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.vini_service.resources
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.vbproj.GenerateResource.Cache
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.exe
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.xml
+N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.pdb

@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EEB9341C-D291-43A5-B51C-D88089D92BD0}</ProjectGuid>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>vini_DB</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>vini_DB</RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>Windows</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SccAuxPath>
+    </SccAuxPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>vini_DB.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>vini_DB.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DEV|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>vini_DB.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'dv2|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\dv2\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>vini_DB.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'dev2|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\dev2\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>vini_DB.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adresse.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="aut_right.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="aut_user.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BonAppro.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClasseVide.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Client.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="clsFTPVinicom.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ColEvent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ColEventSorted.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Commande.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandeClient.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Commentaire.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="constants.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="contenant.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CarracteristiqueTiers.vb" />
+    <Compile Include="clsFTPVinicomNET.vb" />
+    <Compile Include="Imap\cmdPrestashop.vb" />
+    <Compile Include="Imap\Imap.vb" />
+    <Compile Include="Imap\ImapBase.vb" />
+    <Compile Include="Imap\ImapException.vb" />
+    <Compile Include="Imap\ImportPrestashop.vb" />
+    <Compile Include="LstScmd.vb" />
+    <Compile Include="vini_image.vb" />
+    <Compile Include="FicheTechniqueFourn.vb" />
+    <Compile Include="dsError.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsError.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsVinicom.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsVinicom.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ExportParam.vb" />
+    <Compile Include="EtatPrecommande.vb" />
+    <Compile Include="PreCommande.vb" />
+    <Compile Include="ParamModeReglement.vb" />
+    <Compile Include="TauxComm.vb" />
+    <Compile Include="dsVinicom.vb">
+      <DependentUpon>dsVinicom.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EtatReglement_Exporte.vb" />
+    <Compile Include="EtatReglement_Saisi.vb" />
+    <Compile Include="EtatReglement.vb" />
+    <Compile Include="Reglement.vb" />
+    <Compile Include="EtatTous.vb" />
+    <Compile Include="EtatFactColExportee.vb" />
+    <Compile Include="EtatFactColGeneree.vb" />
+    <Compile Include="Facture.vb" />
+    <Compile Include="lgFactColisage.vb" />
+    <Compile Include="FactColisage.vb" />
+    <Compile Include="EtatMvtStock_nFact.vb" />
+    <Compile Include="EtatMvtStock_Fact.vb" />
+    <Compile Include="EtatMvtStock.vb" />
+    <Compile Include="DataConnection.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="dbConnection.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatBAEnCoursSaisie.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatBALivrer.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommande.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeEclatee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeEnCoursSaisie.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeLivree.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeRapprochee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeRien.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeTransmise.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatCommandeValidee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatFactCommGeneree.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatFactCommExportee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatFactTRPExportee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatFactTRPGeneree.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeExporteeInt.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeFacturee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeGeneree.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeProvisionnee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeRapprochee.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeRapprocheeInt.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EtatSSCommandeTransmiseFax.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FactCom.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FactTRP.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FileItem.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fournisseur.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftpcolItem.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FtpConnection.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftpItem.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ftpwininet.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISCMD_Fournisseur.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lgCommande.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lgFactTRP.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lgPrecomm.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lgStat.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mvtStock.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Param.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persist.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Produit.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="racine.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SousCommande.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tiers.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Transporteur.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="dsError.xsc">
+      <DependentUpon>dsError.xsd</DependentUpon>
+    </None>
+    <None Include="dsError.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsError.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="dsError.xss">
+      <DependentUpon>dsError.xsd</DependentUpon>
+    </None>
+    <None Include="dsVinicom.xsc">
+      <DependentUpon>dsVinicom.xsd</DependentUpon>
+    </None>
+    <None Include="dsVinicom.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsVinicom.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="dsVinicom.xss">
+      <DependentUpon>dsVinicom.xsd</DependentUpon>
+    </None>
+    <None Include="Imap\Prestashop\mailalerts.php" />
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Imap\Prestashop\new_order.html" />
+    <Content Include="Imap\Prestashop\new_order.txt" />
+    <Content Include="Imap\Prestashop\ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
