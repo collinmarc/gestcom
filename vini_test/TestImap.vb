@@ -10,7 +10,7 @@ Imports System.Text.RegularExpressions
     Inherits test_Base
     Private Sub CleanImap()
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim oMsg As System.Net.Mail.MailMessage
         'Création du Folder MSGTRAITE
         oImap.SelectFolder("INBOX")
@@ -27,13 +27,13 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub TestLogin()
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Assert.IsTrue(oImap.isConnected)
         Assert.IsTrue(oImap.isLogged)
         oImap.LogOut()
         Assert.IsFalse(oImap.isLogged)
         '        Assert.IsFalse(oImap.isConnected)
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintestADEL@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintestADEL@gmail.com", "tphhgv3..", True)
         Assert.IsFalse(oImap.isLogged)
 
     End Sub
@@ -41,7 +41,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub TestMoveMessages()
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim strResult As String
         'Après chque move on recommence la selection depuis le début
         'Je suppose qu'il y a des pblm d'index
@@ -65,7 +65,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub TestDeleteMsg()
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         oImap.SelectFolder("MSGTRAITES")
         Dim nMessage As Integer
         Dim nMessageSupprime As Integer
@@ -91,7 +91,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub TestReadMessages()
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim oMsg As System.Net.Mail.MailMessage
         'Après chque move on recommence la selection depuis le début
         'Je suppose qu'il y a des pblm d'index
@@ -112,7 +112,7 @@ Imports System.Text.RegularExpressions
 
         Dim oImap As New Imap()
         Dim sResult As String
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         oImap.ListFolder()
         sResult = oImap.deleteFolder("TEST")
         sResult = oImap.createFolder("TEST")
@@ -134,7 +134,7 @@ Imports System.Text.RegularExpressions
         Dim nMessageTraiteApres As Integer
         Dim nmsgTraite1 As Integer
         Dim nmsgTraite2 As Integer
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim oMsg As System.Net.Mail.MailMessage
         'Création du Folder MSGTRAITE
         oImap.createFolder("MSGTRAITES")
@@ -267,7 +267,7 @@ Imports System.Text.RegularExpressions
 
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim oMsg As System.Net.Mail.MailMessage
         'Création du Folder MSGTRAITE
         oImap.SelectFolder("INBOX")
@@ -417,7 +417,7 @@ Imports System.Text.RegularExpressions
 
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3.", True)
+        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
         Dim oMsg As System.Net.Mail.MailMessage
         'Création du Folder MSGTRAITE
         oImap.SelectFolder("INBOX")
@@ -480,7 +480,7 @@ Imports System.Text.RegularExpressions
         Dim oImport As New ImportPrestashop(My.Settings.ImapHost, My.Settings.ImapUser, My.Settings.ImapPassword, My.Settings.ImapPort, My.Settings.ImapSSL)
         Assert.AreEqual("imap.google.com", oImport.HostName)
         Assert.AreEqual("marccollintest@gmail.com", oImport.UserName)
-        Assert.AreEqual("tphhgv3.", oImport.Password)
+        Assert.AreEqual("tphhgv3..", oImport.Password)
         Assert.AreEqual(993, oImport.Port)
         Assert.AreEqual(True, oImport.bSSL)
     End Sub
@@ -511,7 +511,7 @@ Imports System.Text.RegularExpressions
         EnvoiMailCmd()
         Dim olst As List(Of CommandeClient)
         Dim oCmdCLT As CommandeClient
-        Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3.", Convert.ToUInt16(993), True)
+        Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3..", Convert.ToUInt16(993), True)
         oImportPrestashop.MSGFolderName = "MSGTRAITES"
         olst = oImportPrestashop.Import()
         Assert.AreEqual(1, olst.Count)
@@ -583,10 +583,10 @@ Imports System.Text.RegularExpressions
         Assert.IsTrue(oProduit.save())
 
 
-        EnvoiMailCmd()
+        EnvoiMailCmd("HOBIVIN")
         Dim olst As List(Of CommandeClient)
         Dim oCmdCLT As CommandeClient
-        Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3.", Convert.ToUInt16(993), True)
+        Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3..", Convert.ToUInt16(993), True)
         oImportPrestashop.MSGFolderName = "MSGTRAITES"
         olst = oImportPrestashop.Import()
         Assert.AreEqual(1, olst.Count)
@@ -639,6 +639,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub testReadWriteXMLFile()
         Dim ocmd As New cmdprestashop()
         ocmd.id = 2
+        ocmd.origine = "VINICOM"
         ocmd.name = "aqwzsx"
         ocmd.livraison_company = "MCII"
         ocmd.livraison_name = "Collin"
@@ -660,6 +661,7 @@ Imports System.Text.RegularExpressions
         ocmd = cmdprestashop.readXML(strIn)
         Assert.AreEqual(ocmd.id, "2")
         Assert.AreEqual(ocmd.name, "aqwzsx")
+        Assert.AreEqual(ocmd.name, "VINICOM")
         Assert.AreEqual(ocmd.livraison_company, "MCII")
         Assert.AreEqual(ocmd.livraison_name, "Collin")
         Assert.AreEqual(ocmd.livraison_firstname, "MCII")
@@ -900,7 +902,7 @@ Imports System.Text.RegularExpressions
 
     End Sub
 
-    Private Sub EnvoiMailCmd()
+    Private Sub EnvoiMailCmd(Optional pOrigin As String = "VINICOM")
         Dim mail As MailMessage = New MailMessage("marccollin.com@gmail.com", "marccollintest@gmail.com")
         mail.Subject = "TEST"
         mail.IsBodyHtml = False
@@ -911,7 +913,7 @@ Imports System.Text.RegularExpressions
         strBody = strBody & "[cmdprestashop]" & vbCrLf
         strBody = strBody & "[id]37[/id]" & vbCrLf
         strBody = strBody & "[name]TESTIMPORT[/name]" & vbCrLf
-        strBody = strBody & "[origine]HOBIVIN[/origine]" & vbCrLf
+        strBody = strBody & "[origine]" & pOrigin & "[/origine]" & vbCrLf
         strBody = strBody & "[customer_id]2[/customer_id]" & vbCrLf
         strBody = strBody & "[livraison_company]MCII[/livraison_company]" & vbCrLf
         strBody = strBody & "[livraison_name]MCII[/livraison_name]" & vbCrLf
