@@ -40,6 +40,7 @@ Public Class Client
     Private m_libTypeClient As String
     Private m_oPreCommande As preCommande
     Private m_CodeTarif As String
+    Private m_Origine As String
 
 #Region "Accesseurs"
 
@@ -98,6 +99,24 @@ Public Class Client
             If Value <> CodeTarif Then
                 RaiseUpdated()
                 m_CodeTarif = Value
+            End If
+        End Set
+
+    End Property
+    ''' <summary>
+    ''' Si le client est de type 'Intermédiaire' , indique l'origine des commande pour lequel il est un intermédiaire
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property Origine() As String
+        Get
+            Return m_Origine
+        End Get
+        Set(ByVal Value As String)
+            If Value <> Origine Then
+                RaiseUpdated()
+                m_Origine = Value
             End If
         End Set
 
@@ -229,6 +248,7 @@ Public Class Client
             m_id = pid
         End If
         bReturn = loadCLT()
+        m_oPreCommande = New preCommande(Me)
         m_oPreCommande.load(m_id)
         shared_disconnect()
         'Mise à jour des indicateurs
@@ -462,7 +482,7 @@ Public Class Client
     'Description : Renvoie la ligne de precommande
     'Retour : Boolean
     '=======================================================================
-    Public Function getLgPrecom(ByVal pidProduit As Integer) As lgPrecomm
+    Public Function getLgPrecomByProductId(ByVal pidProduit As Integer) As lgPrecomm
         Dim objLgPrecomm As lgPrecomm
 
         Try
@@ -560,7 +580,7 @@ Public Class Client
                 'Pour chaque ligne
                 If lgPrecomExists(objLGCMD.oProduit.id) Then
                     'Recupération de la ligne de precommande
-                    objLGPRECOM = getLgPrecom(objLGCMD.oProduit.id)
+                    objLGPRECOM = getLgPrecomByProductId(objLGCMD.oProduit.id)
                     If objLGPRECOM.dateDerniereCommande <= objCommande.dateCommande Then
                         'Si la date de dernierecommande est inférieur ou egale à la date de la commande
                         'MAJ du Prix, de la quantite , de la date et de la reference de la commande

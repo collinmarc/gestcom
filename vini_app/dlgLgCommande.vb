@@ -708,7 +708,7 @@ Public Class dlgLgCommande
                 objClient = m_TiersCourant
                 If objClient.LoadPreCommande() Then
                     If objClient.lgPrecomExists(objProduit.code) Then
-                        objLgPrecom = objClient.getLgPrecom(objProduit.code)
+                        objLgPrecom = objClient.getLgPrecomByProductId(objProduit.id)
                         qte = objLgPrecom.qteHab
                     End If
                 End If

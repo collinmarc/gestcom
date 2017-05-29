@@ -52,7 +52,8 @@ Imports System.Globalization
         Assert.IsTrue(getIdsReference())
         Persist.shared_disconnect()
     End Sub
-    <TestCleanup()> Public Overridable Sub TestCleanup()
+    <TestCleanup()>
+    Public Overridable Sub TestCleanup()
         Persist.shared_connect()
         Assert.IsTrue(cleanDataTest())
         Persist.shared_disconnect()

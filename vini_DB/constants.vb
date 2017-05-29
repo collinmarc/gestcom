@@ -19,6 +19,7 @@ Module constants
     Public Const PAR_TYPECOMMANDE As String = "T"
     Public Const PAR_TYPETRANSPORT As String = "P"
     Public Const PAR_ETATCOMMANDE As String = "E"
+    Public Const PAR_ORIGINE As String = "O"
     'Libellé des Etats
     Public Const ETAT_ENCOURS As String = "En Cours"
     Public Const ETAT_VALIDEE As String = "Validée"

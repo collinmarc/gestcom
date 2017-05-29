@@ -95,7 +95,14 @@ Imports vini_DB
         Dim objCLT As Client
         Dim objCLT2 As Client
         Dim n As Integer
-        Dim objParam As ParamModeReglement
+        Dim objParam1 As ParamModeReglement
+        Dim objParam2 As ParamModeReglement
+        Dim objParam3 As ParamModeReglement
+
+        objParam1 = Param.colModeReglement(1)
+        objParam2 = Param.colModeReglement(2)
+        objParam3 = Param.colModeReglement(3)
+
 
         'I - Création d'un Client
         '=========================
@@ -125,12 +132,9 @@ Imports vini_DB
         objCLT.CommFacturation.comment = "Commentaire de Facturation"
         objCLT.CommLibre.comment = "Commentaire Libre"
         objCLT.CodeTarif = "B"
-        objParam = Param.colModeReglement(1)
-        objCLT.idModeReglement1 = objParam.id
-        objParam = Param.colModeReglement(2)
-        objCLT.idModeReglement2 = objParam.id
-        objParam = Param.colModeReglement(3)
-        objCLT.idModeReglement3 = objParam.id
+        objCLT.idModeReglement1 = objParam1.id
+        objCLT.idModeReglement2 = objParam2.id
+        objCLT.idModeReglement3 = objParam3.id
 
         'Test des indicateurs Avant le Save
         Assert.IsTrue(objCLT.bNew)
@@ -149,12 +153,9 @@ Imports vini_DB
         n = objCLT.id
         objCLT2 = Client.createandload(n)
         Assert.AreEqual("B", objCLT2.CodeTarif, "Code Tarif après rechargement")
-        objParam = Param.colModeReglement(1)
-        Assert.AreEqual(objCLT.idModeReglement1, objParam.id)
-        objParam = Param.colModeReglement(2)
-        Assert.AreEqual(objCLT.idModeReglement2, objParam.id)
-        objParam = Param.colModeReglement(3)
-        Assert.AreEqual(objCLT.idModeReglement3, objParam.id)
+        Assert.AreEqual(objCLT.idModeReglement1, objParam1.id)
+        Assert.AreEqual(objCLT.idModeReglement2, objParam2.id)
+        Assert.AreEqual(objCLT.idModeReglement3, objParam3.id)
 
         Assert.IsTrue(objCLT.Equals(objCLT2))
 
@@ -380,9 +381,9 @@ Imports vini_DB
         Assert.IsTrue(oCLT.LoadPreCommande(), "OCLT.LoadPrecommande")
         Assert.AreEqual(oCLT.getlgPrecomCount, 2, "Precommande.count ")
         'controle du contenu de daate d derniere commande
-        objLgPRecom = oCLT.getLgPrecom(oPrd1.code)
+        objLgPRecom = oCLT.getLgPrecomByProductId(oPrd1.id)
         Assert.IsTrue(objLgPRecom.Equals(objLgPRecom1), "LgPrecom1 sont différents apres rechargement")
-        objLgPRecom = oCLT.getLgPrecom(oPrd3.code)
+        objLgPRecom = oCLT.getLgPrecomByProductId(oPrd3.id)
         Assert.IsTrue(objLgPRecom.Equals(objLgPRecom2), "LgPrecom2 sont différents apres rechargement")
         'Ajout d'une ligne de precommande
         Assert.IsTrue(Not oCLT.ajouteLgPrecom(oPrd2.id, oPrd2.code, oPrd2.nom, 113, 20, 11.0) Is Nothing, "oclt.AjouteLg 3")
@@ -406,7 +407,7 @@ Imports vini_DB
         Assert.AreEqual(oCLT.getlgPrecomCount, 2, "Precommande.count ")
 
         'Maj d'une ligne de la precommande
-        objLgPRecom = oCLT.getLgPrecom(1)
+        objLgPRecom = oCLT.getLgPrecomByProductId(oPrd2.id)
         sCode = objLgPRecom.codeProduit
         objLgPRecom.qteHab = 150
         objLgPRecom.qteDern = 5
@@ -419,13 +420,14 @@ Imports vini_DB
         Assert.IsTrue(oCLT.load(nIDClient), "OCLT.load")
         Assert.IsTrue(oCLT.LoadPreCommande(), "OCLT.LoadPrecommande")
         Assert.AreEqual(oCLT.getlgPrecomCount, 2, "Precommande.count ")
-        objLgPRecom = oCLT.getLgPrecom(sCode)
-        Assert.AreEqual(objLgPRecom.qteHab, 150)
-        Assert.AreEqual(objLgPRecom.qteDern, 5)
-        Assert.AreEqual(objLgPRecom.prixU, 33)
+        objLgPRecom = oCLT.getLgPrecomByProductId(oPrd2.id)
+        Assert.AreEqual(objLgPRecom.qteHab, CDec(150))
+        Assert.AreEqual(objLgPRecom.qteDern, CDec(5))
+        Assert.AreEqual(objLgPRecom.prixU, CDbl(33))
 
         oCLT = New Client("", "")
         Assert.IsTrue(oCLT.load(nIDClient), "OCLT.load")
+
         'Creation d'une commande client
         objCMD = New CommandeClient(oCLT)
         objCMD.AjouteLigne("10", oPrd1, 5, 34.5)
@@ -436,11 +438,12 @@ Imports vini_DB
         Assert.IsTrue(oCLT.load(nIDClient), "OCLT.load")
         Assert.IsTrue(oCLT.LoadPreCommande(), "OCLT.LoadPrecommande")
         Assert.AreEqual(oCLT.getlgPrecomCount, 2, "Precommande.count ")
-        objLgPRecom = oCLT.getLgPrecom(oPrd1.code)
-        Assert.AreEqual(objLgPRecom.qteHab, 150)
-        Assert.AreEqual(objLgPRecom.qteDern, 5)
-        Assert.AreEqual(objLgPRecom.prixU, 34.5)
-        Assert.IsTrue(oCLT.lgPrecomExists(oPrd2.code))
+        objLgPRecom = oCLT.getLgPrecomByProductId(oPrd1.id)
+        Assert.AreEqual(objLgPRecom.qteHab, CDec(12))
+        Assert.AreEqual(objLgPRecom.qteDern, CDec(5))
+        Assert.AreEqual(objLgPRecom.prixU, CDbl(34.5))
+
+        '        Assert.IsTrue(oCLT.lgPrecomExists(oPrd1.code))
 
         'Suppression du Client 
         oCLT.bDeleted = True

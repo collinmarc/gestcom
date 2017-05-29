@@ -926,7 +926,7 @@ Public Class frmPrecommande
 
         nReturn = -1
         For i = 1 To m_objClientCourant.getlgPrecomCount
-            objLgPrecom = m_objClientCourant.getLgPrecom(i)
+            objLgPrecom = m_objClientCourant.getLgPrecomByProductId(i)
             If objLgPrecom.codeProduit.Equals(strCode) Then
                 nReturn = i
                 Exit For

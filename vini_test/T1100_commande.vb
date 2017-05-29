@@ -661,7 +661,7 @@ Imports vini_DB
 
 
         '1re ligne de precommande
-        objLGPRECOM = m_oClient.getLgPrecom(objProduit1.id)
+        objLGPRECOM = m_oClient.getLgPrecomByProductId(objProduit1.id)
         Assert.AreEqual(21D, objLGPRECOM.qteDern, "Derniere Qte commandée")
         Assert.AreEqual(CDbl(22D), objLGPRECOM.prixU, "Dern Prix U")
         Assert.AreEqual(objCmd.dateCommande, objLGPRECOM.dateDerniereCommande, "Date dernière commande")
@@ -669,7 +669,7 @@ Imports vini_DB
 
         '2eme ligne de precommande
         Assert.IsTrue(m_oClient.lgPrecomExists(objProduit2.Id), "La Ligne de Precommande n'a pas été ajoutée")
-        objLGPRECOM = m_oClient.getLgPrecom(objProduit2.id)
+        objLGPRECOM = m_oClient.getLgPrecomByProductId(objProduit2.id)
         Assert.AreEqual(31D, objLGPRECOM.qteDern, "Derniere Qte commandée")
         Assert.AreEqual(CDbl(32D), objLGPRECOM.prixU, "Dern Prix U")
         Assert.AreEqual(objCmd.dateCommande, objLGPRECOM.dateDerniereCommande, "Date dernière commande")
@@ -678,7 +678,7 @@ Imports vini_DB
         '3eme ligne de precommande 
         'Elle n'a pas changé car la date de dern commande est supérieure à la date de commande
         Assert.IsTrue(m_oClient.lgPrecomExists(objProduit3.id), "La Ligne de Precommande n'a pas été ajoutée")
-        objLGPRECOM = m_oClient.getLgPrecom(objProduit3.id)
+        objLGPRECOM = m_oClient.getLgPrecomByProductId(objProduit3.id)
         Assert.AreEqual(31D, objLGPRECOM.qteDern, "Derniere Qte commandée")
         Assert.AreEqual(CDbl(32), objLGPRECOM.prixU, "Dern Prix U")
         Assert.AreEqual(CDate("15/09/2004"), objLGPRECOM.dateDerniereCommande, "Date dernière commande")

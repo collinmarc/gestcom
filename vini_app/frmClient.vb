@@ -37,13 +37,17 @@ Public Class frmClient
     Friend WithEvents cbxCodeTarif As System.Windows.Forms.ComboBox
     Friend WithEvents Label41 As System.Windows.Forms.Label
     Friend WithEvents Label231 As System.Windows.Forms.Label
+    Friend WithEvents laOrigine As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
     Friend WithEvents cbPrecommande As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.cboTypeClient = New System.Windows.Forms.ComboBox
-        Me.Label41 = New System.Windows.Forms.Label
-        Me.cbPrecommande = New System.Windows.Forms.Button
-        Me.Label231 = New System.Windows.Forms.Label
-        Me.cbxCodeTarif = New System.Windows.Forms.ComboBox
+        Me.cboTypeClient = New System.Windows.Forms.ComboBox()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.cbPrecommande = New System.Windows.Forms.Button()
+        Me.Label231 = New System.Windows.Forms.Label()
+        Me.cbxCodeTarif = New System.Windows.Forms.ComboBox()
+        Me.laOrigine = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'cboTypeClient
@@ -106,10 +110,31 @@ Public Class frmClient
         Me.cbxCodeTarif.Size = New System.Drawing.Size(117, 21)
         Me.cbxCodeTarif.TabIndex = 72
         '
+        'laOrigine
+        '
+        Me.laOrigine.AutoSize = True
+        Me.laOrigine.Location = New System.Drawing.Point(785, 38)
+        Me.laOrigine.Name = "laOrigine"
+        Me.laOrigine.Size = New System.Drawing.Size(40, 13)
+        Me.laOrigine.TabIndex = 73
+        Me.laOrigine.Text = "Origine"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"HOBIVIN", "VINICOM"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(839, 30)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(121, 21)
+        Me.cbxOrigine.TabIndex = 74
+        '
         'frmClient
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(968, 734)
+        Me.Controls.Add(Me.cbxOrigine)
+        Me.Controls.Add(Me.laOrigine)
         Me.Controls.Add(Me.cbxCodeTarif)
         Me.Controls.Add(Me.Label231)
         Me.Controls.Add(Me.cbPrecommande)
@@ -117,7 +142,6 @@ Public Class frmClient
         Me.Controls.Add(Me.cboTypeClient)
         Me.Name = "frmClient"
         Me.Text = "Gestion des clients"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label2, 0)
         Me.Controls.SetChildIndex(Me.Label6, 0)
         Me.Controls.SetChildIndex(Me.tbCode, 0)
@@ -127,6 +151,8 @@ Public Class frmClient
         Me.Controls.SetChildIndex(Me.cbPrecommande, 0)
         Me.Controls.SetChildIndex(Me.Label231, 0)
         Me.Controls.SetChildIndex(Me.cbxCodeTarif, 0)
+        Me.Controls.SetChildIndex(Me.laOrigine, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -262,5 +288,25 @@ Public Class frmClient
         bReturn = bReturn And MyBase.ControleAvantSauvegarde()
         Return bReturn
 
+    End Function
+
+    Private Sub cboTypeClient_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboTypeClient.SelectedIndexChanged
+        ChangeTypeClient()
+    End Sub
+
+    Public Function changeTypeClient() As Boolean
+        Dim bReturn As Boolean
+        Try
+            If cboTypeClient.Text = "Intermédiaire" Then
+                laOrigine.Visible = True
+                cbxOrigine.Visible = True
+            Else
+                laOrigine.Visible = False
+                cbxOrigine.Visible = False
+            End If
+        Catch ex As Exception
+            bReturn = False
+        End Try
+        Return bReturn
     End Function
 End Class

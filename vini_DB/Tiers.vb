@@ -486,7 +486,7 @@ Public Class Tiers
             Return m_idModeRglmt3
         End Get
         Set(ByVal Value As Integer)
-            If Not m_idModeRglmt3.Equals(m_idModeRglmt) Then
+            If Not m_idModeRglmt3.Equals(Value) Then
                 m_idModeRglmt3 = Value
                 RaiseUpdated()
             End If

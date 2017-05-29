@@ -732,8 +732,8 @@ Public MustInherit Class Persist
         objCLT = CType(Me, Client)
 
         Dim sqlString As String = "INSERT INTO CLIENT( " & _
-                                    "CLT_CODE, CLT_NOM, CLT_RS,  CLT_RIB1, CLT_RIB2, CLT_RIB3, CLT_RIB4,  CLT_BANQUE, CLT_TYPE_ID , CLT_SIRET, CLT_TVAINTRACOM , CLT_RGLMT_ID , CLT_ADR_IDENT, CLT_CODETARIF, CLT_COMPTA, CLT_ID_MRGLMT1,CLT_ID_MRGLMT2,CLT_ID_MRGLMT3, CLT_IDPRESTASHOP)" & _
-                                  " VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?, ?, ?,?,?,?,?" & _
+                                    "CLT_CODE, CLT_NOM, CLT_RS,  CLT_RIB1, CLT_RIB2, CLT_RIB3, CLT_RIB4,  CLT_BANQUE, CLT_TYPE_ID , CLT_SIRET, CLT_TVAINTRACOM , CLT_RGLMT_ID , CLT_ADR_IDENT, CLT_CODETARIF, CLT_COMPTA, CLT_ID_MRGLMT1,CLT_ID_MRGLMT2,CLT_ID_MRGLMT3, CLT_IDPRESTASHOP, CLT_ORIGINE)" & _
+                                  " VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?, ?, ?,?,?,?,?,?" & _
                                     " )"
         Dim objOLeDBCommand As OleDbCommand
         Dim objOLeDBCommandID As OleDbCommand
@@ -766,6 +766,7 @@ Public MustInherit Class Persist
         CreateParamP_CLT_ID_MRGLMT2(objOLeDBCommand)
         CreateParamP_CLT_ID_MRGLMT3(objOLeDBCommand)
         CreateParamP_CLT_IDPRESASHOP(objOLeDBCommand)
+        CreateParamP_CLT_ORIGINE(objOLeDBCommand)
         m_dbconn.BeginTransaction()
         objOLeDBCommand.Transaction = m_dbconn.transaction
         Try
@@ -1031,7 +1032,8 @@ Public MustInherit Class Persist
                                         "CLT_ID_MRGLMT1 = ?, " & _
                                         "CLT_ID_MRGLMT2 = ?, " & _
                                         "CLT_ID_MRGLMT3 = ?, " & _
-                                        "CLT_IDPRESTASHOP = ? " & _
+                                        "CLT_IDPRESTASHOP = ?, " & _
+                                        "CLT_ORIGINE = ? " & _
                                   " WHERE CLT_ID = ?"
         Dim objOLeDBCommand As OleDbCommand
 
@@ -1062,6 +1064,7 @@ Public MustInherit Class Persist
         CreateParamP_CLT_ID_MRGLMT2(objOLeDBCommand)
         CreateParamP_CLT_ID_MRGLMT3(objOLeDBCommand)
         CreateParamP_CLT_IDPRESASHOP(objOLeDBCommand)
+        CreateParamP_CLT_ORIGINE(objOLeDBCommand)
         CreateParameterP_ID(objOLeDBCommand)
 
 
@@ -1302,7 +1305,7 @@ Public MustInherit Class Persist
                                     " CLT_LIV_TEL, CLT_LIV_FAX, CLT_LIV_PORT, CLT_LIV_EMAIL, " & _
                                     " CLT_FACT_NOM, CLT_FACT_RUE1, CLT_FACT_RUE2, CLT_FACT_CP, CLT_FACT_VILLE, " & _
                                     " CLT_FACT_TEL, CLT_FACT_FAX, CLT_FACT_PORT, CLT_FACT_EMAIL, " & _
-                                    " CLT_COM_CMD, CLT_COM_LIV, CLT_COM_FACT, CLT_COM_LIBRE, CLT_CODETARIF, CLT_COMPTA, CLT_ID_MRGLMT1,CLT_ID_MRGLMT2,CLT_ID_MRGLMT3, CLT_IDPRESTASHOP " & _
+                                    " CLT_COM_CMD, CLT_COM_LIV, CLT_COM_FACT, CLT_COM_LIBRE, CLT_CODETARIF, CLT_COMPTA, CLT_ID_MRGLMT1,CLT_ID_MRGLMT2,CLT_ID_MRGLMT3, CLT_IDPRESTASHOP,CLT_ORIGINE " & _
                                    " FROM (RQ_TypeClient LEFT OUTER JOIN CLIENT ON RQ_TypeClient.PAR_ID = CLIENT.CLT_TYPE_ID) LEFT OUTER JOIN RQ_ModeReglement ON CLIENT.CLT_RGLMT_ID = RQ_ModeReglement.PAR_ID" & _
                                   " WHERE CLIENT.CLT_ID=? "
         Dim objOLeDBCommand As OleDbCommand
@@ -1372,6 +1375,7 @@ Public MustInherit Class Persist
             objCLT.idModeReglement2 = getInteger(objRS, "CLT_ID_MRGLMT2")
             objCLT.idModeReglement3 = getInteger(objRS, "CLT_ID_MRGLMT3")
             objCLT.idPrestashop = getInteger(objRS, "CLT_IDPRESTASHOP")
+            objCLT.Origine = GetString(objRS, "CLT_ORIGINE")
 
             objRS.Close()
             objRS = Nothing
@@ -3559,6 +3563,12 @@ Public MustInherit Class Persist
         Dim objCLT As Client
         objCLT = Me
         objCommand.Parameters.AddWithValue("?", objCLT.idPrestashop)
+    End Sub
+    Private Sub CreateParamP_CLT_ORIGINE(ByVal objCommand As OleDbCommand)
+        '        Dim objParam As OleDbParameter
+        Dim objCLT As Client
+        objCLT = Me
+        objCommand.Parameters.AddWithValue("?", objCLT.Origine)
     End Sub
     Private Sub CreateParamP_CLT_LIV_NOM(ByVal objCommand As OleDbCommand)
         '        Dim objParam As OleDbParameter

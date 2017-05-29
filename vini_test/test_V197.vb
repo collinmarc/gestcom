@@ -59,72 +59,10 @@ Imports vini_DB
         m_objPRD.loadcolmvtStock()
         m_objPRD.recalculStock()
 
-        Assert.AreEqual(m_objPRD.QteStock, 20, "Qte En stock")
+        Assert.AreEqual(m_objPRD.QteStock, CDec(20), "Qte En stock")
 
     End Sub
-    <TestMethod()> Public Sub T20_SauvegardePrecommande()
-        Dim objPRD As Produit
-        Dim objLGPrecom As lgPrecomm
-        Dim nid As Integer
-        Dim nidLg As Integer
-
-        objPRD = New Produit("PRD197_T20", m_objFRN, 1990)
-        Assert.IsTrue(objPRD.save(), "Sauvegarde Produit")
-        Assert.IsTrue(m_objCLT.LoadPreCommande(), "LoadPreommande()")
-        m_objCLT.ajouteLgPrecom(m_objPRD, 10, 12, 12.5)
-        Assert.IsTrue(m_objCLT.save(), "Sauvegarde client")
-
-        nid = m_objCLT.id
-        m_objCLT = Client.createandload(nid)
-        m_objCLT.LoadPreCommande()
-        nidLg = m_objCLT.getLgPrecom(1).id
-
-        'Mise à jour d'uine ligne => update
-        objLGPrecom = m_objCLT.getLgPrecom(1)
-        objLGPrecom.refDerniereCommande = "DERNCMD"
-        Assert.IsTrue(m_objCLT.save(), "Sauvegarde client")
-        nid = m_objCLT.id
-
-        m_objCLT = Client.createandload(nid)
-        m_objCLT.LoadPreCommande()
-        Assert.AreEqual(nidLg, m_objCLT.getLgPrecom(1).id, "L'id ne change pas")
-        Assert.AreEqual(m_objCLT.getlgPrecomCount, 1, "Nbre le ligne de precommande")
-
-        'Ajout D'une ligne => insert delete
-        m_objCLT.ajouteLgPrecom(objPRD, 11, 21, 11.5)
-        Assert.IsTrue(m_objCLT.save(), "Sauvegarde client")
-        m_objCLT = Client.createandload(nid)
-        m_objCLT.LoadPreCommande()
-        Assert.IsFalse(nidLg = m_objCLT.getLgPrecom(1).id, "L'id Change")
-        Assert.AreEqual(m_objCLT.getlgPrecomCount, 2, "Nbre le ligne de precommande")
-        nidLg = m_objCLT.getLgPrecom(1).id
-
-        'Mise à jour d'une ligne => UPDATE
-        nidLg = m_objCLT.getLgPrecom(1).id
-        Assert.IsTrue(nidLg <> 0)
-        objLGPrecom = m_objCLT.getLgPrecom(1)
-        objLGPrecom.refDerniereCommande = "UPDATE"
-        Assert.IsTrue(m_objCLT.save(), "Sauvegarde client")
-        nid = m_objCLT.id
-        m_objCLT = Client.createandload(nid)
-        m_objCLT.LoadPreCommande()
-        Assert.AreEqual(nidLg, m_objCLT.getLgPrecom(1).id, "L'id ne change pas")
-
-        'Suppression d'un ligne => INSERT-DELETE
-        m_objCLT.supprimeLgPrecom(2)
-        Assert.IsTrue(m_objCLT.save(), "Sauvegarde client")
-        nid = m_objCLT.id
-        m_objCLT = Client.createandload(nid)
-        m_objCLT.LoadPreCommande()
-        Assert.IsFalse(nidLg = m_objCLT.getLgPrecom(1).id, "L'id change ")
-
-
-
-        objPRD.bDeleted = True
-        Assert.IsTrue(objPRD.save(), "Suppression produit")
-
-    End Sub
-    <TestMethod()> Public Sub T30_ReinitPrecommande()
+     <TestMethod()> Public Sub T30_ReinitPrecommande()
         Dim objPRD1 As Produit
         Dim objPRD2 As Produit
         Dim objCommande As CommandeClient

@@ -4,6 +4,7 @@ TestResults
 vini_app/.svn
 vini_app/bin
 vini_app/obj
+vini_app/obj/Debug
 vini_DB/bin
 vini_DB/obj
 vini_DB/.svn
