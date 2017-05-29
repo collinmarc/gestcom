@@ -59,6 +59,11 @@ les tests unitaires FicheTechniqueFournTest
  
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1070_client.T80_SetIntermédiaire">
+	<summary>
+ Test la récupération du client intermédiaire d'une origine
+ </summary>
+	<remarks></remarks>
 </member><member name="M:vini_test.test_V560.T01_ExportQuadra">
 	<summary>
  Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 

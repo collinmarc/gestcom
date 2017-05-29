@@ -595,44 +595,15 @@ Imports System.Text.RegularExpressions
 
         Assert.AreEqual("HOBIVIN", oCmdCLT.Origine)
 
-        Assert.AreEqual(37L, oCmdCLT.IDPrestashop)
-        Assert.AreEqual("TESTIMPORT", oCmdCLT.NamePrestashop)
-        Assert.AreEqual(oClient.code, oCmdCLT.TiersCode)
-        Assert.AreEqual("MCII", oCmdCLT.RaisonSocialeLivraison)
-        Assert.AreEqual("MCII MCII", oCmdCLT.NomLivraison)
-        Assert.AreEqual("MCII MCII", oCmdCLT.caracteristiqueTiers.AdresseLivraisonNom)
-        Assert.AreEqual("23, la mettrie", oCmdCLT.caracteristiqueTiers.AdresseLivraisonRue1)
-        Assert.AreEqual("", oCmdCLT.caracteristiqueTiers.AdresseLivraisonRue2)
-        Assert.AreEqual("35250", oCmdCLT.caracteristiqueTiers.AdresseLivraisonCP)
-        Assert.AreEqual("Chasné sur illet", oCmdCLT.caracteristiqueTiers.AdresseLivraisonVille)
-        ' Vérification de transfert du mode de reglement
-        Assert.AreEqual(oParam.id, oCmdCLT.caracteristiqueTiers.idModeReglement)
-
-        Assert.AreEqual(2, oCmdCLT.colLignes.Count, "Nombre de lignes")
-        Dim nLigne As Integer = 0
-        Dim oLgCmd As LgCommande
-        oLgCmd = oCmdCLT.colLignes(1)
-        Assert.AreEqual("demo_1", oLgCmd.ProduitCode)
-        Assert.AreEqual(CDec(1), oLgCmd.qteCommande)
-        Assert.AreEqual(CDec(5.5), oLgCmd.prixU)
-        oLgCmd = oCmdCLT.colLignes(2)
-        Assert.AreEqual("demo_3", oLgCmd.ProduitCode)
-        Assert.AreEqual(CDec(1), oLgCmd.qteCommande)
-        Assert.AreEqual(CDec(5.5), oLgCmd.prixU)
-
         'Envoi de 2 Commandes
-        EnvoiMailCmd()
+        EnvoiMailCmd("VINICOM")
         EnvoiMailCmd()
 
         olst = oImportPrestashop.Import()
         Assert.AreEqual(2, olst.Count)
-
-        'Après traitement la boite de réception est vide
-
-        olst = oImportPrestashop.Import()
-        Assert.AreEqual(0, olst.Count)
-
-
+        For Each oCmd As CommandeClient In olst
+            Assert.AreEqual("VINICOM", oCmd.Origine)
+        Next
 
 
     End Sub

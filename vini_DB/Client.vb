@@ -58,6 +58,17 @@ Public Class Client
         Persist.shared_disconnect()
         Return colReturn
     End Function
+
+    Public Shared Function getClientIntermediairePourOrigine(pOrigine As String) As Client
+        Dim oReturn As Client
+        oReturn = Nothing
+        Try
+
+        Catch ex As Exception
+
+        End Try
+        Return oReturn
+    End Function
     'Identifiant du type de client
     Public Property idTypeClient() As Integer
         Get
@@ -605,4 +616,52 @@ Public Class Client
         Debug.Assert(bReturn, getErreur())
         Return bReturn
     End Function 'updatePrecommande
+    ''' <summary>
+    ''' Fixe le type de client à "intermédaire" et l'origine des commandes concernées
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function setTypeIntermediaire(pOrigine As String) As Boolean
+        Dim bReturn As Boolean
+        Try
+
+            For Each oParam As Param In Param.colTypeClient
+                If oParam.valeur = "Intermediaire" Or oParam.valeur = "Intermédiaire" Then
+                    idTypeClient = oParam.id
+                    Origine = pOrigine
+
+                End If
+            Next
+
+            bReturn = True
+        Catch ex As Exception
+            bReturn = False
+        End Try
+        Return bReturn
+    End Function
+
+    Public Shared Function GetIntermediairePourUneOrigine(pOrigine As String) As Client
+        Dim oReturn As Client
+        Try
+            oReturn = Nothing
+            Dim idTypeClient As Integer
+            For Each oParam As Param In Param.colTypeClient
+                If oParam.valeur.ToUpper() = "Intermediaire".ToUpper() Or oParam.valeur.ToUpper = "Intermédiaire".ToUpper Then
+                    idTypeClient = oParam.id
+                End If
+            Next
+
+            Dim strSQL As String
+            strSQL = "SELECT CLT_ID FROM client where clt_Origine = '" & pOrigine & "' and CLT_TYPE_id = " & idTypeClient
+            Dim strResultat As String = Persist.executeSQLQuery(strSQL)
+
+            If Not String.IsNullOrEmpty(strResultat) Then
+                oReturn = Client.createandload(CLng(strResultat))
+            End If
+
+        Catch ex As Exception
+            oReturn = Nothing
+        End Try
+        Return oReturn
+    End Function
 End Class

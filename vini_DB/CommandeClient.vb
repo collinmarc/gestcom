@@ -290,7 +290,7 @@ Public Class CommandeClient
         If bReturn Then
             'Chargement des caractéristiques du client
             bReturn = oTiers.loadLight()
-            Debug.Assert(bReturn, Tiers.getErreur())
+            'Debug.Assert(bReturn, Tiers.getErreur())
         End If
         If Commande.bChargerColLignes Then
             bReturn = loadcolLignes()
@@ -639,6 +639,9 @@ Public Class CommandeClient
         Dim idFRN As Integer
         Dim oFRN As Fournisseur
         Dim oSCMD As SousCommande
+        Dim oIntermediaire As Client
+
+        oIntermediaire = Client.GetIntermediairePourUneOrigine(Me.Origine)
 
         oSCMD = Nothing
         bReturn = False
@@ -659,12 +662,13 @@ Public Class CommandeClient
                     If idFRN = 0 Then
                         'S'il n'y a pas de fournisseur courant on prend celui là
                         idFRN = objLGCMD.oProduit.idFournisseur
-                        oFRN = New Fournisseur
-                        oFRN.load(idFRN)
+                        oFRN = Fournisseur.createandload(idFRN)
                         ' et on crée la sous-commande avec ce fournisseur
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
-                        Debug.Assert(idFRN <> 0, "IDFRN <> 0")
+                        If oIntermediaire IsNot Nothing Then
+                            oSCMD.oTiers = oIntermediaire
+                        End If
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)
                     End If

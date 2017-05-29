@@ -574,6 +574,37 @@ Imports vini_DB
         obj.save()
 
     End Sub
+    ''' <summary>
+    ''' Test la récupération du client intermédiaire d'une origine
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()>
+    Public Sub T80_SetIntermédiaire()
+
+        Dim obj As New Client("TEST", "TEST")
+        Dim idTypeIntermediaire As Integer
+        obj.setTypeIntermediaire("HOBIVIN")
+
+        For Each oParam As Param In Param.colTypeClient
+            If oParam.valeur = "Intermediaire" Or oParam.valeur = "Intermédiaire" Then
+                idTypeIntermediaire = oParam.id
+            End If
+        Next
+
+        Assert.AreEqual(idTypeIntermediaire, obj.idTypeClient)
+        Assert.AreEqual("HOBIVIN", obj.Origine)
+
+        Assert.IsTrue(obj.save())
+
+        Dim oClt2 As Client
+        oClt2 = Client.GetIntermediairePourUneOrigine("HOBIVIN")
+        Assert.AreEqual(oClt2.id, obj.id)
+
+        oClt2 = Client.GetIntermediairePourUneOrigine("VINICOM")
+        Assert.IsNull(oClt2)
+
+
+    End Sub
 End Class
 
 

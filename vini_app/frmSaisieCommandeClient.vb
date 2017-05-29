@@ -510,6 +510,18 @@ Public Class frmCommandeClient
         Dim bReturn As Boolean
         setcursorWait()
         Try
+            Dim oInter As Client = Client.GetIntermediairePourUneOrigine(getCommandeCourante().Origine)
+            If oInter IsNot Nothing Then
+                LicltIntermediaire.Text = oInter.nom
+                LicltIntermediaire.Tag = oInter.id
+                LicltIntermediaire.Enabled = True
+
+            Else
+                LicltIntermediaire.Text = ""
+                LicltIntermediaire.Tag = ""
+                LicltIntermediaire.Enabled = False
+
+            End If
             If getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Then
                 getCommandeCourante.LoadColSousCommande()
                 afficheListeSousCommande()

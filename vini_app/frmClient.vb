@@ -195,6 +195,8 @@ Public Class frmClient
                     Exit For
                 End If
             Next
+
+            cbxOrigine.Text = objclient.Origine
             For Each str In cbxCodeTarif.Items
                 If str.Equals(objclient.CodeTarif) Then
                     cbxCodeTarif.SelectedItem = str
@@ -215,6 +217,7 @@ Public Class frmClient
             Try
                 objClient.idTypeClient = cboTypeClient.SelectedItem.id
                 objClient.CodeTarif = cbxCodeTarif.SelectedItem
+                objClient.Origine = cbxOrigine.Text
                 bReturn = True
             Catch ex As Exception
                 DisplayError("frmClientTab.MAJElement", ex.ToString())

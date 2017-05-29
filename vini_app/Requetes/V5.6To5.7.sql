@@ -1,0 +1,3 @@
+﻿ALTER TABLE dbo.CLIENT ADD
+	CLT_ORIGINE varchar(20) NULL
+GO

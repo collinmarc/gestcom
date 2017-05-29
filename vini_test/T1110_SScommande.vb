@@ -124,10 +124,10 @@ Imports vini_DB
         Assert.AreEqual(objSCMD2.idCommandeClient, m_oCmd.id)
         Assert.AreEqual(objSCMD2.refFactFournisseur, "FACT1")
         Assert.AreEqual(objSCMD2.dateFactFournisseur, CDate("01/08/2004"))
-        Assert.AreEqual(objSCMD2.totalHTFacture, 150)
-        Assert.AreEqual(objSCMD2.totalTTCFacture, 165)
-        Assert.AreEqual(objSCMD2.baseCommission, 155)
-        Assert.AreEqual(objSCMD2.tauxCommission, 12)
+        Assert.AreEqual(objSCMD2.totalHTFacture, CDec(150))
+        Assert.AreEqual(objSCMD2.totalTTCFacture, CDec(165))
+        Assert.AreEqual(objSCMD2.baseCommission, CDec(155))
+        Assert.AreEqual(objSCMD2.tauxCommission, CDec(12))
 
 
         'Test des indicateurs
@@ -358,7 +358,7 @@ Imports vini_DB
         Assert.IsTrue(objSCMD.load(nid), "ObjSCMD.load")
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 1, "colLignes.count ")
-        Assert.AreEqual(objSCMD.totalTTC, 123, "Calcul du prix Total")
+        Assert.AreEqual(objSCMD.totalTTC, CDec(123), "Calcul du prix Total")
 
         ''Ajout d'une ligne de SousCommande
         Assert.IsTrue(Not objSCMD.AjouteLigne(objLgCMD2) Is Nothing, "SCMD.AjouteLg 2" & objSCMD.getErreur())
@@ -386,8 +386,8 @@ Imports vini_DB
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 2, "SCMD.count ")
         objLG = objSCMD.colLignes(1)
-        Assert.AreEqual(objLG.qteCommande, 150)
-        Assert.AreEqual(objLG.prixU, 15)
+        Assert.AreEqual(objLG.qteCommande, CDec(150))
+        Assert.AreEqual(objLG.prixU, CDec(15))
 
         'Maj d'une ligne de la Commande (Qte Livrée)
         objLG = objSCMD.colLignes.Item(1)
@@ -403,8 +403,8 @@ Imports vini_DB
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 2, "ColLignes.count ")
         objLG = objSCMD.colLignes(1)
-        Assert.AreEqual(objLG.qteLiv, 100)
-        Assert.AreEqual(objLG.prixU, 16)
+        Assert.AreEqual(objLG.qteLiv, CDec(100))
+        Assert.AreEqual(objLG.prixU, CDec(16))
 
         'Maj d'une ligne de la Commande (Qte Facturée)
         objLG = objSCMD.colLignes.Item(1)
@@ -420,8 +420,8 @@ Imports vini_DB
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 2, "ColLignes.count ")
         objLG = objSCMD.colLignes(1)
-        Assert.AreEqual(objLG.qteLiv, 101)
-        Assert.AreEqual(objLG.prixU, 17)
+        Assert.AreEqual(objLG.qteLiv, CDec(101))
+        Assert.AreEqual(objLG.prixU, CDec(17))
 
         'Assert.IsTrue(objSCMD.faxer("01234567"), "Faxer" & objSCMD.getErreur())
 
@@ -466,33 +466,33 @@ Imports vini_DB
         oCMD.refLivraison = "REFLEVRAISON"
         oCMD.CommFacturation.comment = "Mon Comment"
         oCMD.dateLivraison = "31/08/2004"
-        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & m_oCmd.getErreur())
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
         'Génération des sous-commandes
-        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & oCMD.getErreur())
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
 
         Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
         'Vérification de la première sous-commande
         objSCMD = oCMD.colSousCommandes.Item(1)
         'Test du passage d'info entre la commande et la souscommande
-
         Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
         Assert.AreEqual(objSCMD.totalTTC, objLgCMD1.prixTTC, "Test PrixTTC1" & objSCMD.toString())
         Assert.IsTrue(objSCMD.oTransporteur.Equals(oCMD.oTransporteur), "Transporteur Différents")
         Assert.AreEqual(objSCMD.refLivraison, oCMD.refLivraison, "REfLivraison Différents")
         Assert.AreEqual(objSCMD.CommFacturation.comment, oCMD.CommFacturation.comment, "ComFacturation Différents")
         Assert.AreEqual(objSCMD.dateLivraison, oCMD.dateLivraison, "dateLivraison Différents")
-        'Vérification de la première sous-commande
+
+        'Vérification de la seconde sous-commande
         objSCMD = oCMD.colSousCommandes.Item(2)
         Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         Assert.AreEqual(objSCMD.totalTTC, objLgCMD2.prixTTC, "Test PrixTTC2" & objSCMD.toString())
-        'Vérification des Lignes de commande
-        '1)dans la Commande
+        'Vérification des Lignes de la commande
+
+        '1)dans la Commande , les lignes sont marquées comme éclatées
         For Each objLG In oCMD.colLignes
             Assert.IsTrue(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
-            'Avant la sauvegarde L'id de la sous comande n'a pas pu être renseigné
-            'Assert.IsTrue(objLG.idSCmd <> 0, "objLG.idSCMD= 0")
         Next objLG
+
         '2) dans chaque Sous Commandes
         For Each objSCMD In oCMD.colSousCommandes
             'Assert.IsTrue(objSCMD.loadcolLignes(), "SCMD.loadcolLignes" & objSCMD.getErreur())
@@ -503,7 +503,7 @@ Imports vini_DB
         Next objSCMD
 
         'Sauvegarde de la commande => Sauvegarde des Sous Commandes
-        Assert.IsTrue(oCMD.save(), "SaveCommandes" & oCMD.getErreur())
+        Assert.IsTrue(oCMD.save(), "SaveCommandes" & racine.getErreur())
         nidSCMD1 = CType(oCMD.colSousCommandes.Item(1), SousCommande).id
         Assert.IsTrue(nidSCMD1 <> 0, "idSCMD apres Sauvegarde")
         nidSCMD2 = CType(oCMD.colSousCommandes.Item(2), SousCommande).id
@@ -512,15 +512,16 @@ Imports vini_DB
         'Rechargement de la commande
         nIDCmd = oCMD.id
         oCMD = New CommandeClient(m_oClient)
-        Assert.IsTrue(oCMD.load(nIDCmd), "Load CMD" & oCMD.getErreur())
-        Assert.IsTrue(oCMD.LoadColSousCommande, "Load colSCMD" & oCMD.getErreur())
+        Assert.IsTrue(oCMD.load(nIDCmd), "Load CMD" & racine.getErreur())
+        Assert.IsTrue(oCMD.LoadColSousCommande, "Load colSCMD" & racine.getErreur())
         'Vérification des Lignes de commande
-        '1)dans la Commande
+        '1)dans la Commande (Les lignes sont éclatées et portent la référence de la sous commande
         For Each objLG In oCMD.colLignes
             Assert.IsTrue(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
             Assert.IsTrue(objLG.idSCmd <> 0, "objLG.idSCMD= 0")
         Next objLG
         '2) dans chaque Sous Commandes
+        ' Les Lignes sont éclatées et portent la référence de la sous commande
         For Each objSCMD In oCMD.colSousCommandes
             For Each objLG In objSCMD.colLignes
                 Assert.IsTrue(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
@@ -530,7 +531,7 @@ Imports vini_DB
 
 
         'Modification de Commandes
-        oCMD.CommCommande.comment = "Modification de Commenataires"
+        oCMD.CommCommande.comment = "Modification de Commentaires"
         Assert.IsTrue(oCMD.save())
         'Vérification des Lignes de commande
         '1)dans la Commande
@@ -567,19 +568,18 @@ Imports vini_DB
         'annulation de la génération des sous commandes
         'oCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
         oCMD.annulationSousCommande()
-        Assert.IsTrue(oCMD.save(), "oCMD.save" & oCMD.getErreur())
+        Assert.IsTrue(oCMD.save(), "oCMD.save" & racine.getErreur())
 
         'Rechargement de la commande Client
         nIDCmd = oCMD.id
         oCMD = New CommandeClient(New Client("", ""))
         Assert.IsTrue(oCMD.load(nIDCmd), "Chargement de la commande" & oCMD.getErreur())
         Assert.IsTrue(oCMD.LoadColSousCommande(), "Chargement des SousCommandes" & oCMD.getErreur())
-        Assert.IsTrue(oCMD.colSousCommandes.Count = 0, "Chargement des SousCommandes Count" & oCMD.getErreur())
         'Vérification des Lignes de commande
         '1)dans la Commande
         For Each objLG In oCMD.colLignes
-            Assert.IsTrue(objLG.bLigneEclatee = False, "objLG.bLigneEclatee = False")
-            Assert.IsTrue(objLG.idSCmd = 0, "objLG.idSCMD= 0")
+            Assert.IsFalse(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
+            Assert.AreEqual(-1, objLG.idSCmd, "objLG.idSCMD= 0")
         Next objLG
         '2) dans chaque Sous Commandes
         Assert.AreEqual(0, oCMD.colSousCommandes.Count, "colSousCommande.count()")
@@ -623,9 +623,6 @@ Imports vini_DB
 
 
         Persist.shared_connect()
-        colSCMD = SousCommande.getListe
-        Assert.IsTrue(Not colSCMD Is Nothing, "ListeCMD()" & Persist.getErreur())
-        Assert.IsTrue(colSCMD.Count > 0, "Plus D'un Enregistrement")
 
         colSCMD = SousCommande.getListe("15/09/1984", "15/09/1984", "")
         Assert.IsTrue(Not colSCMD Is Nothing, "ListeCMD()" & Persist.getErreur())
@@ -858,7 +855,7 @@ Imports vini_DB
                 n = n + 1
                 Assert.AreEqual(CDec(139.95), CDec(tabCSV(n)))
                 n = n + 1
-                Assert.AreEqual(CDec(167.38), CDec(tabCSV(n)))
+                Assert.AreEqual(CDec(167.94), CDec(tabCSV(n)))
                 n = n + 1
                 Assert.AreEqual(Trim(oSCmd.CommFacturation.comment), tabCSV(n))
                 n = n + 1
@@ -970,7 +967,7 @@ Imports vini_DB
             If System.IO.File.Exists("./TEMP/" & oSCmd.code & ".PDF") Then
                 System.IO.File.Delete("./TEMP/" & oSCmd.code & ".PDF")
             End If
-            oSCmd.genererPDF("F:\Mes documents\NewCo\vinicom\V3_SVN\gestcom\vini_app\", "./TEMP/" & oSCmd.code & ".PDF")
+            oSCmd.genererPDF("../../../vini_app/bin/debug/", "./TEMP/" & oSCmd.code & ".PDF")
             Assert.IsTrue(System.IO.File.Exists("./TEMP/" & oSCmd.code & ".PDF"), "Fichier PDF existant")
         Next oSCmd
         m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
@@ -1091,7 +1088,7 @@ Imports vini_DB
         objSCMD = SousCommande.createandload(strCodeSCMD)
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 1, "colLignes.count ")
-        Assert.AreEqual(objSCMD.totalTTC, 123, "Calcul du prix Total")
+        Assert.AreEqual(objSCMD.totalTTC, CDec(123), "Calcul du prix Total")
 
 
         'Suppression de la sous Commande
@@ -1100,26 +1097,92 @@ Imports vini_DB
 
     End Sub 'T71 LoadFromCode
     'Test l'incrémenation des codes
-    <TestMethod()> Public Sub T70_GetNextCode()
+    <TestMethod()> Public Sub T80_EclatementAvecIntermedaire()
 
-        Dim obj As New CommandeClient(m_oClient)
-        obj.save()
-        Dim obj1 As New SousCommande(obj, m_oFourn)
-        Dim obj2 As New SousCommande(obj, m_oFourn)
+        Dim objLG As LgCommande
 
-        obj1.save()
-        obj2.save()
-        Assert.AreNotEqual(obj2.code, obj1.code)
+        Dim objSCMD As SousCommande
+        Dim objLgCMD1 As LgCommande
+        Dim objLgCMD2 As LgCommande
+        Dim oFRN2 As Fournisseur
+        Dim oPRD2 As Produit
+        Dim oCMD As CommandeClient
+        Dim nIDCmd As Long
+        Dim nidSCMD1 As Long
+        Dim nidSCMD2 As Long
 
-        obj1.bDeleted = True
-        obj1.save()
-        obj2.bDeleted = True
-        obj2.Save()
-
-        obj.bDeleted = True
-        obj.save()
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire("HOBIVIN")
+        oCltIntermediaire.save()
 
 
+        oFRN2 = New Fournisseur("FRNT20" & Now(), "Fournisseur2")
+        Assert.IsTrue(oFRN2.Save(), "FRN2.save" & oFRN2.getErreur())
+        oPRD2 = New Produit("PRDT20" & Now(), oFRN2, 1990)
+        Assert.IsTrue(oPRD2.save(), "OPRD2.Save" & oPRD2.getErreur())
+
+        'Création d'une commande client origine Sans intermédiaire
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = "VINICOM"
+        oCMD.save()
+        objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
+        objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+        'Vérification de la première sous-commande
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        'Test du passage d'info entre la commande et la souscommande
+        'Producteur
+        Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
+        'Client = Client Originel
+        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande est le client initial" & objSCMD.oTiers.toString())
+
+        'Vérification de la seconde sous-commande
+        objSCMD = oCMD.colSousCommandes.Item(2)
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        'Client = Client initial
+        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le Client initial" & objSCMD.oTiers.toString())
+        oCMD.bDeleted = True
+        oCMD.save()
+
+        'Création d'une commande client origine AVEC intermédiaire
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = "HOBIVIN"
+        oCMD.save()
+        objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
+        objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+        'Vérification de la première sous-commande
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        'Test du passage d'info entre la commande et la souscommande
+        'Producteur
+        Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
+        'Client = Intermédiaire
+        Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande est l'intermédiaire" & objSCMD.oTiers.toString())
+
+        'Vérification de la seconde sous-commande
+        objSCMD = oCMD.colSousCommandes.Item(2)
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        'Client = Intermédiaire
+        Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande devrait être l'intermédiaire" & objSCMD.oTiers.toString())
+        oCMD.bDeleted = True
+        oCMD.save()
+
+        oPRD2.bDeleted = True
+        oFRN2.Save()
+
+        oFRN2.bDeleted = True
+        oFRN2.Save()
     End Sub
 End Class
 
