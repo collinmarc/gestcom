@@ -71,14 +71,19 @@ les tests unitaires FicheTechniqueFournTest
  Test de la purge des précommandes
  </summary>
 	<remarks></remarks>
-</member><member name="M:vini_test.T1100_commande.T80_COMMISSION">
+</member><member name="M:vini_test.T1100_commande.T080_COMMISSION">
 	<summary>
  Test les champs commision dans les lignes de commandes
  </summary>
 	<remarks></remarks>
-</member><member name="M:vini_test.T1100_commande.T80_CALCULCOMMISSION">
+</member><member name="M:vini_test.T1100_commande.T080_CALCULCOMMISSION">
 	<summary>
  Test les champs commision dans les lignes de commandes
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_test.T1100_commande.T100_RECHERCHEORIGINE">
+	<summary>
+ Test de la fonction de recherche sur l'origine
  </summary>
 	<remarks></remarks>
 </member><member name="M:vini_test.test1150_FactureColisage.T60_GenerationFactureColisage">

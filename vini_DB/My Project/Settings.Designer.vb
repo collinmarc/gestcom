@@ -57,8 +57,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB.1;Data Source=BUREAU-DELL\SQLEXPRESS;Initial Catalog=vnc5;Persi"& _ 
-            "st Security Info=True;User ID=vinicom;Password=vinicom")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB.1;Data Source=localhost\SQLEXPRESS;Initial Catalog=vnc5;Persist"& _ 
+            " Security Info=True;User ID=vinicom;Password=vinicom")>  _
         Public ReadOnly Property ConnectString() As String
             Get
                 Return CType(Me("ConnectString"),String)

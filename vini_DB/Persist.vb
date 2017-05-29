@@ -3847,7 +3847,7 @@ Public MustInherit Class Persist
 
 #Region "BD Commande Client"
     'Renvoie une collection d'objet résumé de CommandeClient
-    Protected Shared Function ListeCMDCLT(ByVal strCode As String, ByVal strRSClient As String, ByVal pEtat As vncEtatCommande) As Collection
+    Protected Shared Function ListeCMDCLT(ByVal strCode As String, ByVal strRSClient As String, ByVal pEtat As vncEtatCommande, pOrigine As String) As Collection
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Dim colReturn As New Collection
         '        Dim objParam As OleDbParameter
@@ -3887,6 +3887,14 @@ Public MustInherit Class Persist
 
         End If
 
+        If pOrigine <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "CMD_ORIGINE = ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pOrigine)
+
+        End If
 
         If strWhere <> "" Then
             sqlString = sqlString & "WHERE " & strWhere
@@ -6628,7 +6636,7 @@ Public MustInherit Class Persist
         Debug.Assert(Not colReturn Is Nothing, "ListeFACTCOMEtat: colReturn is nothing" & FactCom.getErreur())
         Return colReturn
     End Function 'ListeFactCom
-    Protected Shared Function ListeCMDCLTEtat(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pRSClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
+    Protected Shared Function ListeCMDCLTEtat(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pRSClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "") As Collection
         '============================================================================
         'Function : ListeFACTCOMEtat
         'Description : Rend une liste de Facture de commission en fonction leur état
@@ -6689,6 +6697,14 @@ Public MustInherit Class Persist
 
         End If
 
+        If pOrigine <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "CMD_ORIGINE = ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pOrigine)
+
+        End If
 
 
         If strWhere <> "" Then

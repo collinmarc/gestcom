@@ -58,7 +58,7 @@ Imports vini_DB
 
         MyBase.TestCleanup()
     End Sub
-    <TestMethod()> Public Sub T10_Object()
+    <TestMethod()> Public Sub T010_Object()
         Dim objCMD As CommandeClient
         Dim objCMD2 As CommandeClient
 
@@ -229,7 +229,7 @@ Imports vini_DB
 
 
     End Sub
-    <TestMethod()> Public Sub T11_ObjectLigneCommande()
+    <TestMethod()> Public Sub T011_ObjectLigneCommande()
         Dim objLgCMD As LgCommande
         Dim objLgCMD2 As LgCommande
         Dim nTaux As Double
@@ -341,7 +341,7 @@ Imports vini_DB
 
 
     End Sub
-    <TestMethod()> Public Sub T12_GestLignes()
+    <TestMethod()> Public Sub T012_GestLignes()
         Dim objComm As CommandeClient
         Dim objLg As LgCommande
 
@@ -380,7 +380,7 @@ Imports vini_DB
 
 
     End Sub 'T12
-    <TestMethod()> Public Sub T13_commClient()
+    <TestMethod()> Public Sub T013_commClient()
         Dim objComm As CommandeClient
 
         objComm = New CommandeClient(m_oClient)
@@ -398,7 +398,7 @@ Imports vini_DB
 
 
     End Sub 'T13
-    <TestMethod()> Public Sub T15_DB()
+    <TestMethod()> Public Sub T015_DB()
         Dim objCMDCLT As CommandeClient
         Dim objCMDCLT2 As CommandeClient
         Dim nid As Long
@@ -523,7 +523,7 @@ Imports vini_DB
         objCMDCLT.bDeleted = True
         Assert.IsTrue(objCMDCLT.save(), "Delete" & objCMDCLT.getErreur())
     End Sub
-    <TestMethod()> Public Sub T16_DB()
+    <TestMethod()> Public Sub T016_DB()
         Dim objLG As LgCommande
 
         Dim objCMD As CommandeClient
@@ -630,7 +630,7 @@ Imports vini_DB
 
     End Sub
 
-    <TestMethod()> Public Sub T20_MAJPRECOMMANDE()
+    <TestMethod()> Public Sub T020_MAJPRECOMMANDE()
         Dim objCmd As CommandeClient
         Dim objLGPRECOM As lgPrecomm
 
@@ -668,7 +668,7 @@ Imports vini_DB
         Assert.AreEqual(objCmd.code, objLGPRECOM.refDerniereCommande, "reference dernière commande")
 
         '2eme ligne de precommande
-        Assert.IsTrue(m_oClient.lgPrecomExists(objProduit2.Id), "La Ligne de Precommande n'a pas été ajoutée")
+        Assert.IsTrue(m_oClient.lgPrecomExists(objProduit2.id), "La Ligne de Precommande n'a pas été ajoutée")
         objLGPRECOM = m_oClient.getLgPrecomByProductId(objProduit2.id)
         Assert.AreEqual(31D, objLGPRECOM.qteDern, "Derniere Qte commandée")
         Assert.AreEqual(CDbl(32D), objLGPRECOM.prixU, "Dern Prix U")
@@ -691,7 +691,7 @@ Imports vini_DB
 
     End Sub
 
-    <TestMethod()> Public Sub T70_Gratuit()
+    <TestMethod()> Public Sub T070_Gratuit()
         Dim objCMD As CommandeClient
         Dim objLg As LgCommande
         Dim nIdCmd As Long
@@ -714,7 +714,7 @@ Imports vini_DB
 
     End Sub
     'Test la sauvegarde des champs long
-    <TestMethod()> Public Sub T60_Champslongs()
+    <TestMethod()> Public Sub T060_Champslongs()
 
         Dim obj As CommandeClient
         obj = New CommandeClient(m_oClient)
@@ -729,12 +729,12 @@ Imports vini_DB
         Assert.AreEqual("TEST2".PadRight(500, "x").Substring(0, 50), obj.lettreVoiture)
 
         obj.bDeleted = True
-        obj.Save()
+        obj.save()
 
     End Sub
 
     'Test l'incrémenation des codes
-    <TestMethod()> Public Sub T70_GetNextCode()
+    <TestMethod()> Public Sub T070_GetNextCode()
 
         Dim obj1 As New CommandeClient(m_oClient)
         Dim obj2 As New CommandeClient(m_oClient)
@@ -755,7 +755,7 @@ Imports vini_DB
     ''' Test les champs commision dans les lignes de commandes
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod()> Public Sub T80_COMMISSION()
+    <TestMethod()> Public Sub T080_COMMISSION()
 
         Dim objCMD As CommandeClient
         Dim objLg As LgCommande
@@ -785,7 +785,7 @@ Imports vini_DB
     ''' Test les champs commision dans les lignes de commandes
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod()> Public Sub T80_CALCULCOMMISSION()
+    <TestMethod()> Public Sub T080_CALCULCOMMISSION()
 
         Dim objCMD As CommandeClient
         Dim objLg As LgCommande
@@ -819,7 +819,7 @@ Imports vini_DB
         TauxComm.deleteTauxComms(m_oFourn.id)
     End Sub
 
-    <TestMethod()> Public Sub T90_IDPRESTASHOP()
+    <TestMethod()> Public Sub T090_IDPRESTASHOP()
         Dim objCMD As CommandeClient
         Dim objCMD2 As CommandeClient
 
@@ -884,7 +884,7 @@ Imports vini_DB
         Assert.AreEqual("EDCRFV", objCMD2.NamePrestashop)
 
     End Sub
-    <TestMethod()> Public Sub T95_ORIGINEHOBIVIN()
+    <TestMethod()> Public Sub T095_ORIGINEHOBIVIN()
         Dim objCMD As CommandeClient
         Dim objCMD2 As CommandeClient
 
@@ -951,6 +951,57 @@ Imports vini_DB
         Assert.AreEqual(147258L, objCMD2.idFactHobivin)
         Assert.AreEqual("VINICOM", objCMD2.Origine)
 
+    End Sub
+    ''' <summary>
+    ''' Test de la fonction de recherche sur l'origine
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T100_RECHERCHEORIGINE()
+        Dim objCMD As CommandeClient
+        Dim nId As Integer
+        Dim cmdCode As String
+        Dim oCol As Collection
+
+        objCMD = New CommandeClient(m_oClient)
+        'objCMD.code = "CMDTEST"
+        objCMD.dateCommande = CDate("06/02/1964")
+        objCMD.Origine = "HOBIVIN"
+        Assert.IsTrue(objCMD.save())
+
+        nId = objCMD.id
+        cmdCode = objCMD.code
+
+        'Vérification avec la bonne origine
+        oCol = CommandeClient.getListe(cmdCode, , , "HOBIVIN")
+        Assert.AreEqual(1, oCol.Count)
+        objCMD = oCol(1)
+        Assert.AreEqual(nId, objCMD.id)
+
+        'Vérification avec la Mauvaise origine
+        oCol = CommandeClient.getListe(cmdCode, , , "VINICOM")
+        Assert.AreEqual(0, oCol.Count)
+
+        'Vérification sans origine
+        oCol = CommandeClient.getListe(cmdCode, , , "")
+        Assert.AreEqual(1, oCol.Count)
+        objCMD = oCol(1)
+        Assert.AreEqual(nId, objCMD.id)
+
+        'Vérification avec les dates et la bonne origine
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "HOBIVIN")
+        Assert.AreEqual(1, oCol.Count)
+        objCMD = oCol(1)
+        Assert.AreEqual(nId, objCMD.id)
+
+        'Vérification avec les dates et sans la bonne origine
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "VINICOM")
+        Assert.AreEqual(0, oCol.Count)
+
+        'Vérification avec les dates et Sans l'origine
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "")
+        Assert.AreEqual(1, oCol.Count)
+        objCMD = oCol(1)
+        Assert.AreEqual(nId, objCMD.id)
     End Sub
 End Class
 

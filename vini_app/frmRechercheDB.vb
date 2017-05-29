@@ -274,9 +274,10 @@ Public Class frmRechercheDB
             Case vncEnums.vncTypeDonnee.COMMANDECLIENT
                 laCode.Text = "Code"
                 laNom.Text = "Nom Client"
-                laMotCle.Enabled = False
+                laMotCle.Text = "Origine"
+                laMotCle.Enabled = True
                 tbMotCle.Enabled = False
-                Me.Text = "Recherche de Commande"
+                Me.Text = "Recherche de Commande Client"
                 laEtat.Enabled = True
                 cboEtat.Enabled = True
             Case vncEnums.vncTypeDonnee.BA
@@ -437,14 +438,11 @@ Public Class frmRechercheDB
             Case vncTypeDonnee.COMMANDECLIENT
                 Me.m_bsrc.DataSource = GetType(vini_DB.CommandeClient)
                 If (tbCode.Text = "" And tbNom.Text = "" And cboEtat.SelectedItem.codeEtat = vncEnums.vncEtatCommande.vncRien) Then
-                    If MsgBox("Etes-vous sur ?", vbYesNo) = vbYes Then
-                        m_ocol = CommandeClient.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
-                    Else
+                    If MsgBox("Etes-vous sur ?", vbYesNo) = vbNo Then
                         Exit Sub
                     End If
-                Else
-                    m_ocol = CommandeClient.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
                 End If
+                m_ocol = CommandeClient.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
             Case vncTypeDonnee.BA
                 Me.m_bsrc.DataSource = GetType(vini_DB.BonAppro)
                 m_ocol = BonAppro.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)

@@ -368,7 +368,7 @@ Imports vini_DB
         'Assert.IsTrue(objFactCom3.Save())
         'nidFactCom3 = objFactCom3.id
 
-        colCmd = CommandeClient.getListe("01/01/2000", "01/01/2001", , vncEnums.vncEtatCommande.vncEclatee)
+        colCmd = CommandeClient.getListe("01/01/2000", "01/01/2001", "", vncEnums.vncEtatCommande.vncEclatee, "")
         Try
             objCMD1 = colCmd(objCMD1.code)
         Catch ex As Exception

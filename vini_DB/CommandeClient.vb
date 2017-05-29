@@ -241,20 +241,20 @@ Public Class CommandeClient
     'Description : Liste des Clients
     'Retour : Rend une collection de Clients
     '=======================================================================
-    Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
+    Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "VINICOM") As Collection
         Dim colReturn As Collection
 
         Persist.shared_connect()
-        colReturn = ListeCMDCLT(strCode, strNomClient, pEtat)
+        colReturn = ListeCMDCLT(strCode, strNomClient, pEtat, pOrigine)
         Persist.shared_disconnect()
         Return colReturn
     End Function
-    Public Shared Function getListe(ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
+    Public Shared Function getListe(ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "VINICOM") As Collection
         Dim colReturn As Collection
 
         shared_connect()
-        colReturn = Persist.ListeCMDCLTEtat(pddeb, pdfin, pNomClient, pEtat)
-        Debug.Assert(Not colReturn Is Nothing, "FactCom.getListe" & getErreur())
+        colReturn = Persist.ListeCMDCLTEtat(pddeb, pdfin, pNomClient, pEtat, pOrigine)
+        Debug.Assert(Not colReturn Is Nothing, "CommandeClient.getListe" & getErreur())
         shared_disconnect()
         Return colReturn
 
