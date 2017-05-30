@@ -36,6 +36,7 @@ Option Explicit On
 Imports System.data.OleDb
 Imports CrystalDecisions.Shared
 Imports CrystalDecisions.CrystalReports.Engine
+Imports System.Collections.Generic
 Public MustInherit Class Persist
     Inherits racine
     Private Shared WithEvents m_dbconn As dbConnection = New dbConnection
@@ -1670,7 +1671,52 @@ Public MustInherit Class Persist
             Return Nothing
         End Try
     End Function 'ListeCLT
+    ''' <summary>
+    ''' Renvoie une liste des client de type intermédiaire pour une origine
+    ''' </summary>
+    ''' <param name="strCode"></param>
+    ''' <param name="strNom"></param>
+    ''' <param name="strRS"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeCLTIntegmédiairePOurOrigine(pIdTypeClientInterlediaire As Integer, ByVal pOrigine As String) As List(Of Client)
+        Dim colReturn As New List(Of Client)
+        Dim strWhere As String = ""
+        Dim nId As Integer
 
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+
+
+
+        Dim strSQL As String
+        strSQL = "SELECT CLT_ID FROM client where clt_Origine = '" & pOrigine & "' and CLT_TYPE_id = " & pIdTypeClientInterlediaire
+        Dim objOLeDBCommand As OleDbCommand
+        Dim objCLT As Client
+        Dim objRS As OleDbDataReader = Nothing
+        objOLeDBCommand = New OleDbCommand
+        objOLeDBCommand.Connection = m_dbconn.Connection
+
+        strSQL = strSQL & " ORDER BY CLT_CODE"
+        objOLeDBCommand.CommandText = strSQL
+
+
+
+        Try
+            objRS = objOLeDBCommand.ExecuteReader()
+
+            While (objRS.Read())
+                nId = getInteger(objRS, "CLT_ID")
+                objCLT = Client.createandload(nId)
+                colReturn.Add(objCLT)
+
+            End While
+            objRS.Close()
+            objRS = Nothing
+        Catch ex As Exception
+            setError("ListCLT", ex.ToString())
+        End Try
+        Return colReturn
+    End Function 'ListeCLTOrigine
     '================================================================================================
     '====================== PRODUIT ================================================================
     '=======================================================================

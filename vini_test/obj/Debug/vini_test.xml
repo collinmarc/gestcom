@@ -59,6 +59,11 @@ les tests unitaires FicheTechniqueFournTest
  
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1110_sscommande.T50_TOCSV_StructureAvecIntermediaire">
+	<summary>
+ Test l'export d'une sous commande avec un intermédiaire
+ </summary>
+	<remarks></remarks>
 </member><member name="M:vini_test.T1070_client.T80_SetIntermédiaire">
 	<summary>
  Test la récupération du client intermédiaire d'une origine

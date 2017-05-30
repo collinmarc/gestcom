@@ -896,6 +896,215 @@ Imports vini_DB
         m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
         Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
     End Sub
+    ''' <summary>
+    ''' Test l'export d'une sous commande avec un intermédiaire
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T50_TOCSV_StructureAvecIntermediaire()
+        Dim oLgCmd As LgCommande
+        Dim oSCmd As SousCommande
+        Dim nfile As Integer
+        Dim nLineNumber As Integer
+        Dim strResult As String
+        Dim tabCSV As String() = Nothing
+        Dim n As Integer
+        Dim oIntermediaire As Client
+
+        oIntermediaire = New Client("INTER", "Intermediaire")
+        oIntermediaire.setTypeIntermediaire("HOBIVIN")
+        oIntermediaire.save()
+
+        'Ajout de 2 Lignes à la commande
+        m_oCmd.Origine = "HOBIVIN"
+        oLgCmd = m_oCmd.AjouteLigne("10", m_oProduit, 10, 15.55)
+        oLgCmd.qteLiv = 9
+        Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
+
+        m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+        m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionEclater)
+        Assert.IsTrue(m_oCmd.generationSousCommande(oIntermediaire), "Génération des sous-commandes")
+        Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
+
+
+        nfile = FreeFile()
+        FileOpen(nfile, "./adel.txt", OpenMode.Output, OpenAccess.Write, OpenShare.Shared)
+        For Each oSCmd In m_oCmd.colSousCommandes
+            strResult = oSCmd.toCSV()
+            Print(nfile, strResult)
+        Next oSCmd
+        FileClose(nfile)
+
+        nfile = FreeFile()
+        FileOpen(nfile, "./adel.txt", OpenMode.Input, OpenAccess.Read, OpenShare.Shared)
+        nLineNumber = 0
+        While Not EOF(nfile)
+            nLineNumber = nLineNumber + 1
+            strResult = LineInput(nfile)
+            Console.WriteLine(strResult)
+            If nLineNumber = 1 Then
+                tabCSV = strResult.Split(";")
+                oSCmd = m_oCmd.colSousCommandes(1)
+                'Vérification du contenu de la ligne
+                n = 0
+                Assert.AreEqual(Trim(oSCmd.id), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.code), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.codeCommandeClient), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(Format(oSCmd.dateCommande, "ddMMyyyy")), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.code), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.rs), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.rue1), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.rue2), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.cp), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.ville), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.tel), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.fax), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.port), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oFournisseur.AdresseFacturation.Email), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.rue1), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.rue2), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.cp), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.ville), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.tel), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.fax), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.port), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oTransporteur.AdresseLivraison.Email), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.code), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.rs), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.rue1), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.rue2), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.cp), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.ville), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.tel), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.fax), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.port), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseLivraison.Email), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.rue1), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.rue2), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.cp), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.ville), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.tel), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.fax), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.port), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.AdresseFacturation.Email), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.libTypeClient), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oCmd.typeTransport), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.oClient.libModeReglement), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oCmd.refLivraison), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.banque), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.rib1), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.rib2), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.rib3), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(oIntermediaire.rib4), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(Format(oSCmd.dateLivraison, "ddMMyyyy")), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(Format(oSCmd.dateEnlevement, "ddMMyyyy")), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(CDec(139.95), CDec(tabCSV(n)))
+                n = n + 1
+                Assert.AreEqual(CDec(167.94), CDec(tabCSV(n)))
+                n = n + 1
+                Assert.AreEqual(Trim(oSCmd.CommFacturation.comment), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual("10", tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(CDec(9), CDec(tabCSV(n)))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.code), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.nom), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.libCouleur), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.millesime), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.libConditionnement), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(m_oProduit.libContenant), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(CDec(15.55), CDec(tabCSV(n)))
+                n = n + 1
+                Assert.AreEqual("", tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(Trim(Format(oSCmd.dateFactFournisseur, "ddMMyyyy")), tabCSV(n))
+                n = n + 1
+                Assert.AreEqual(oSCmd.totalHTFacture, CDec(tabCSV(n))) ' Total HT Facturé
+                n = n + 1
+                Assert.AreEqual(oSCmd.totalTTCFacture, CDec(tabCSV(n))) 'Total TTC Facturé
+                n = n + 1
+                Assert.AreEqual(oSCmd.tauxCommission, CDec(tabCSV(n))) 'Taux de commission
+                n = n + 1
+
+            End If
+
+        End While
+        FileClose(nfile)
+
+        m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
+        Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
+        oIntermediaire.bDeleted = True
+        oIntermediaire.save()
+    End Sub
     <TestMethod()> Public Sub T51_TOCSV_Lines()
         Dim oLgCmd As LgCommande
         Dim oSCmd As SousCommande

@@ -1151,3 +1151,5 @@ N:\vinicom\V5\vini_app\obj\Debug\vini_app.dlgBackupRestore.resources
 N:\vinicom\V5\vini_app\bin\Debug\Requetes\V5.6TOV5.7.sql
 N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmImportcommandeClientPrestashop.resources
 N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmPurgePreCommande.resources
+N:\vinicom\V5\vini_app\bin\Debug\crFactHobivin.rpt
+N:\vinicom\V5\vini_app\bin\Debug\crFactHobivin.vb

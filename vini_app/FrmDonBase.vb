@@ -361,18 +361,18 @@ Public Class FrmDonBase
         Dim bReturn As Boolean
         bReturn = False
         If isfrmUpdated Then
-            If MsgBox("Voulez-vous sauvegarder l'élement courant", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                bReturn = frmSave()
-            Else
-                setfrmNotUpdated()
-                If Not getElementCourant() Is Nothing Then
-                    If Not getElementCourant.bNew Then
-                        getElementCourant.load()
-                        AfficheElementCourant()
-                    End If
+            '            If MsgBox("Voulez-vous sauvegarder l'élement courant", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            bReturn = frmSave()
+            'Else
+            '    setfrmNotUpdated()
+            '    If Not getElementCourant() Is Nothing Then
+            '        If Not getElementCourant.bNew Then
+            '            getElementCourant.load()
+            '            AfficheElementCourant()
+            '        End If
 
-                End If
-            End If
+            '    End If
+            'End If
         End If
         Return bReturn
     End Function 'SauvegardeElementcourant

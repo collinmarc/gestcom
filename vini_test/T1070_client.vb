@@ -597,11 +597,12 @@ Imports vini_DB
         Assert.IsTrue(obj.save())
 
         Dim oClt2 As Client
-        oClt2 = Client.GetIntermediairePourUneOrigine("HOBIVIN")
-        Assert.AreEqual(oClt2.id, obj.id)
+        Dim oLst As List(Of Client)
+        oLst = Client.getIntermediairesPourUneOrigine("HOBIVIN")
+        Assert.AreEqual(1, oLst.Count)
 
-        oClt2 = Client.GetIntermediairePourUneOrigine("VINICOM")
-        Assert.IsNull(oClt2)
+        oLst = Client.getIntermediairesPourUneOrigine("VINICOM")
+        Assert.AreEqual(0, oLst.Count)
 
 
     End Sub

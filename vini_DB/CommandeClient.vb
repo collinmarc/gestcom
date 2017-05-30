@@ -624,7 +624,7 @@ Public Class CommandeClient
     '    Return oLgCmd
     'End Function 'AjouteLigne
 
-    Public Function generationSousCommande() As Boolean
+    Public Function generationSousCommande(Optional pIntermediaire As Client = Nothing) As Boolean
         '=======================================================================
         'Fonction : generationSousCommande
         'Description : Création des sousCommandes : 1 Souscommande = 1 Fournisseur 
@@ -639,9 +639,7 @@ Public Class CommandeClient
         Dim idFRN As Integer
         Dim oFRN As Fournisseur
         Dim oSCMD As SousCommande
-        Dim oIntermediaire As Client
 
-        oIntermediaire = Client.GetIntermediairePourUneOrigine(Me.Origine)
 
         oSCMD = Nothing
         bReturn = False
@@ -666,8 +664,8 @@ Public Class CommandeClient
                         ' et on crée la sous-commande avec ce fournisseur
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
-                        If oIntermediaire IsNot Nothing Then
-                            oSCMD.oTiers = oIntermediaire
+                        If pIntermediaire IsNot Nothing Then
+                            oSCMD.oTiers = pIntermediaire
                         End If
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)

@@ -510,17 +510,20 @@ Public Class frmCommandeClient
         Dim bReturn As Boolean
         setcursorWait()
         Try
-            Dim oInter As Client = Client.GetIntermediairePourUneOrigine(getCommandeCourante().Origine)
-            If oInter IsNot Nothing Then
-                LicltIntermediaire.Text = oInter.nom
-                LicltIntermediaire.Tag = oInter.id
-                LicltIntermediaire.Enabled = True
+            Dim oLst As List(Of Client) = Client.getIntermediairesPourUneOrigine(getCommandeCourante().Origine)
+            m_bsrcIntermédiaires.Clear()
+            If oLst.Count > 0 Then
+                For Each oClt As Client In oLst
+                    m_bsrcIntermédiaires.Add(oClt)
+                Next
+                cbxIntermédiaires.Enabled = True
+                cbxIntermédiaires.Visible = True
+                laIntermediaires.Visible = True
 
             Else
-                LicltIntermediaire.Text = ""
-                LicltIntermediaire.Tag = ""
-                LicltIntermediaire.Enabled = False
-
+                cbxIntermédiaires.Enabled = False
+                cbxIntermédiaires.Visible = False
+                laIntermediaires.Visible = False
             End If
             If getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Then
                 getCommandeCourante.LoadColSousCommande()
@@ -590,20 +593,23 @@ Public Class frmCommandeClient
     Protected Overrides Function eclatementCommande() As Boolean
         Debug.Assert(Not getCommandeCourante() Is Nothing)
         Dim bReturn As Boolean
+        Dim oIntermediaire As Client = Nothing
 
-        setcursorWait()
+        Me.Cursor = Cursors.WaitCursor
         If getCommandeCourante.etat.codeEtat <> vncEtatCommande.vncLivree Then
             MsgBox("La Commande n'est pas dans l'état requis")
             bReturn = False
         Else
             getCommandeCourante.LoadColSousCommande()
+            If cbxIntermédiaires.Enabled And cbxIntermédiaires.Text <> "" Then
+                oIntermediaire = m_bsrcIntermédiaires.Current
+            End If
             'Eclatement de commande
-            bReturn = getCommandeCourante.generationSousCommande()
-            Debug.Assert(bReturn, "getCommandeCourante.generationSousCommande()" & Commande.getErreur())
+            bReturn = getCommandeCourante.generationSousCommande(oIntermediaire)
             AfficheEtat()
             afficheListeSousCommande()
         End If
-        restoreCursor()
+        Me.Cursor = Cursors.Default
         Return bReturn
     End Function 'EclatementCommande
     '======================================================================

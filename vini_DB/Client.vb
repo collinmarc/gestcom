@@ -33,6 +33,7 @@ Option Explicit On
 '============
 '
 '===================================================================================================================================
+Imports System.Collections.Generic
 Public Class Client
     Inherits Tiers
     Private m_IdPrestaShop As Long
@@ -59,16 +60,6 @@ Public Class Client
         Return colReturn
     End Function
 
-    Public Shared Function getClientIntermediairePourOrigine(pOrigine As String) As Client
-        Dim oReturn As Client
-        oReturn = Nothing
-        Try
-
-        Catch ex As Exception
-
-        End Try
-        Return oReturn
-    End Function
     'Identifiant du type de client
     Public Property idTypeClient() As Integer
         Get
@@ -231,12 +222,12 @@ Public Class Client
         Return oClt
     End Function 'CreateanloadPrestashop
 #End Region
-        '=======================================================================
-        'Fonction : savePrecommande
-        'Description : Sauvegarde des lignes de precommandes
-        'Détails    : 
-        'Retour : 
-        '=======================================================================
+    '=======================================================================
+    'Fonction : savePrecommande
+    'Description : Sauvegarde des lignes de precommandes
+    'Détails    : 
+    'Retour : 
+    '=======================================================================
     Public Function savePrecommande() As Boolean
         Dim bReturn As Boolean
 
@@ -314,7 +305,7 @@ Public Class Client
     '=======================================================================
     Friend Overrides Function delete() As Boolean
         Dim bReturn As Boolean
-        bReturn = deletePrecommande()
+        bReturn = deletePRECOMMANDE()
         If bReturn Then
             bReturn = deleteCLT()
             m_oPreCommande = Nothing
@@ -639,11 +630,15 @@ Public Class Client
         End Try
         Return bReturn
     End Function
-
-    Public Shared Function GetIntermediairePourUneOrigine(pOrigine As String) As Client
-        Dim oReturn As Client
+    ''' <summary>
+    ''' Renvoie la liste des clients qui ont été identifiés comme intermédiaires pour une origine
+    ''' </summary>
+    ''' <param name="pOrigine"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function getIntermediairesPourUneOrigine(pOrigine As String) As List(Of Client)
+        Dim oReturn As New List(Of Client)
         Try
-            oReturn = Nothing
             Dim idTypeClient As Integer
             For Each oParam As Param In Param.colTypeClient
                 If oParam.valeur.ToUpper() = "Intermediaire".ToUpper() Or oParam.valeur.ToUpper = "Intermédiaire".ToUpper Then
@@ -656,7 +651,7 @@ Public Class Client
             Dim strResultat As String = Persist.executeSQLQuery(strSQL)
 
             If Not String.IsNullOrEmpty(strResultat) Then
-                oReturn = Client.createandload(CLng(strResultat))
+                oReturn.Add(Client.createandload(CLng(strResultat)))
             End If
 
         Catch ex As Exception

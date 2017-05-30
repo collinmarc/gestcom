@@ -276,7 +276,7 @@ Public Class frmRechercheDB
                 laNom.Text = "Nom Client"
                 laMotCle.Text = "Origine"
                 laMotCle.Enabled = True
-                tbMotCle.Enabled = False
+                tbMotCle.Enabled = True
                 Me.Text = "Recherche de Commande Client"
                 laEtat.Enabled = True
                 cboEtat.Enabled = True
@@ -442,7 +442,7 @@ Public Class frmRechercheDB
                         Exit Sub
                     End If
                 End If
-                m_ocol = CommandeClient.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
+                m_ocol = CommandeClient.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat, tbMotCle.Text)
             Case vncTypeDonnee.BA
                 Me.m_bsrc.DataSource = GetType(vini_DB.BonAppro)
                 m_ocol = BonAppro.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
