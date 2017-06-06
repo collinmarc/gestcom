@@ -29,6 +29,8 @@ Imports System.Globalization
     Dim m_idContenant As Integer
     Dim m_idFicheTechniqueFourn As Integer
     Dim m_idImage As Integer
+    Dim m_idFactHBV As Integer
+    Dim m_idLGFactHBV As Integer
 
 
     <TestInitialize()> Public Overridable Sub TestInitialize()
@@ -84,6 +86,8 @@ Imports System.Globalization
             m_idTRP = CInt(Persist.executeSQLQuery("SELECT MAX(TRP_ID) FROM TRANSPORTEUR"))
             m_idParam = CInt(Persist.executeSQLQuery("SELECT MAX(PAR_ID) FROM PARAMETRE"))
             m_idContenant = CInt(Persist.executeSQLQuery("SELECT MAX(CONT_ID) FROM CONTENANT"))
+            m_idFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(FHBV_ID) FROM FACTHBV"))
+            m_idLGFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(LGFHBV_ID) FROM LIGNE_FACTHBV"))
             Try
                 m_idFicheTechniqueFourn = CInt(Persist.executeSQLQuery("SELECT MAX(FTFRN_ID) FROM FICHETECHNIQUE_FOURNISSEUR"))
             Catch
@@ -131,6 +135,8 @@ Imports System.Globalization
             Persist.executeSQLNonQuery("DELETE FROM TRANSPORTEUR WHERE TRP_ID > " + m_idTRP.ToString())
             Persist.executeSQLNonQuery("DELETE FROM PARAMETRE WHERE PAR_ID > " + m_idParam.ToString())
             Persist.executeSQLNonQuery("DELETE FROM CONTENANT WHERE CONT_ID > " + m_idContenant.ToString())
+            Persist.executeSQLNonQuery("DELETE FROM LIGNE_FACTHBV WHERE LGFHBV_ID > " + m_idLGFactHBV.ToString())
+            Persist.executeSQLNonQuery("DELETE FROM FACTHBV WHERE FHBV_ID > " + m_idFactHBV.ToString())
 
             bReturn = True
         Catch ex As Exception

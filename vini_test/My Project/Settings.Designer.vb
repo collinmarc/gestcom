@@ -206,9 +206,9 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB.1;Data Source=localhost\SQLEXPRESS;Integrated Security=SSPI;Ini"& _ 
-            "tial Catalog=vnc5")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>Provider=SQLOLEDB.1;Data Source=localhost\"& _ 
+            "SQLEXPRESS;Initial Catalog=vnc5;Persist Security Info=True;User ID=vinicom;Passw"& _ 
+            "ord=vinicom")>  _
         Public ReadOnly Property ConnectionString() As String
             Get
                 Return CType(Me("ConnectionString"),String)

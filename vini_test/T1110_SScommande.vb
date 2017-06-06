@@ -1368,7 +1368,7 @@ Imports vini_DB
         Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
         'Génération des sous-commandes
-        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+        Assert.IsTrue(oCMD.generationSousCommande(oCltIntermediaire), "OCMD.EclatementCommande()" & racine.getErreur())
 
         Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
         'Vérification de la première sous-commande

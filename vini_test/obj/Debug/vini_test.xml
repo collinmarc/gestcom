@@ -69,6 +69,26 @@ les tests unitaires FicheTechniqueFournTest
  Test la récupération du client intermédiaire d'une origine
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T20_DB_LG">
+	<summary>
+ Test de la sauvegarde des lignes de factures
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T20_DB_LG_ADD_DELETE">
+	<summary>
+ Test de la sauvegarde des lignes de factures en ajout ou en suppression
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T100_EXPORT">
+	<summary>
+ Test l'export vers Quadra
+ </summary>
+	<remarks></remarks>
+</member><member name="T:vini_test.T1500_FactHBV">
+	<summary>
+ Test des la classe FactHBV
+ </summary>
+	<remarks></remarks>
 </member><member name="M:vini_test.test_V560.T01_ExportQuadra">
 	<summary>
  Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 

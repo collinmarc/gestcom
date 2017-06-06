@@ -457,20 +457,17 @@ Public MustInherit Class Persist
                 shared_connect()
                 bReturn = delete()
                 shared_disconnect()
-                Debug.Assert(bReturn, "Erreur en Delete de Persist" & getErreur())
             End If
         Else
             If m_bNew Then
                 shared_connect()
                 bReturn = insert()
                 shared_disconnect()
-                Debug.Assert(bReturn, "Erreur en Insert de Persist" & getErreur())
             Else
                 If m_bUpdated Then
                     shared_connect()
                     bReturn = update()
                     shared_disconnect()
-                    Debug.Assert(bReturn, "Erreur en Update de Persist" & getErreur())
                 End If
             End If
 
@@ -480,7 +477,6 @@ Public MustInherit Class Persist
             m_bUpdated = False
             m_bNew = False
         End If
-        Debug.Assert(bReturn, getErreur())
         Return bReturn
     End Function 'Save
 
@@ -5722,6 +5718,42 @@ Public MustInherit Class Persist
         Debug.Assert(bReturn, "GetNumeroFactureTransport: " & getErreur())
         Return nReturn
     End Function 'GetNumeroFactureTransport
+    ''' <summary>
+    ''' Rend le prochain numéro de facture HOBIVIN
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function GetNumeroFactureHBV() As Integer
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        Dim nReturn As Integer = -1
+        Dim bReturn As Boolean
+        Dim strStringLect As String
+
+        Try
+            strStringLect = "DECLARE @return_value int;EXEC	@return_value = GETNEXTNUM_FACTTRP; SELECT 'CODE' = @return_value"
+            objCommand = New OleDbCommand
+            objCommand.Connection = m_dbconn.Connection
+            objCommand = New OleDbCommand(strStringLect, m_dbconn.Connection)
+            objRS = objCommand.ExecuteReader
+            If objRS.HasRows Then
+                objRS.Read()
+                nReturn = objRS.GetInt32(0)
+                objRS.Close()
+                objRS = Nothing
+                bReturn = True
+            Else
+                objRS.Close()
+                bReturn = False
+            End If
+        Catch ex As Exception
+            setError("Persist.GetNumeroFactureTransport", ex.ToString())
+            nReturn = -1
+            bReturn = False
+        End Try
+        Debug.Assert(bReturn, "GetNumeroFactureTransport: " & getErreur())
+        Return nReturn
+    End Function 'GetNumeroFactureHBV
     Protected Function GetNumeroFactureColisage() As Integer
         Dim objCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
@@ -10936,7 +10968,804 @@ Public MustInherit Class Persist
         objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
     End Sub
 #End Region
+#Region "Facture HBV"
+    Protected Function insertFACTHBV() As Boolean
+        '=======================================================================
+        'Fonction : insertFACTHBV
+        'Description : Insertion d'une Facture de Transport
+        'Retour : Rend Vrai si l'INSERT s'est correctement effectué
+        '=======================================================================
+        Dim bReturn As Boolean
+        Dim objFACT As FactHBV
+        bReturn = False
 
+        Debug.Assert(Me.GetType().Name.Equals("FactHBV"), "Objet de Type 'FactHBV' Requis")
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id = 0, "ID=0")
+        objFACT = CType(Me, FactHBV)
+
+        Dim sqlString As String = "INSERT INTO FACTHBV( " & _
+                                    "FHBV_CODE," & _
+                                    "FHBV_ETAT," & _
+                                    "FHBV_CLT_ID," & _
+                                    "FHBV_DATE," & _
+                                    "FHBV_TOTAL_HT," & _
+                                    "FHBV_TOTAL_TTC," & _
+                                    "FHBV_COM_FACT," & _
+                                    "FHBV_IDMODEREGLEMENT," & _
+                                    "FHBV_DECHEANCE," & _
+                                    "FHBV_BINTERNET" & _
+                                  " ) VALUES ( " & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? " & _
+                                    " )"
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        '        Dim objParam As OleDbParameter
+
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+        m_dbconn.BeginTransaction()
+        objCommand.Transaction = m_dbconn.transaction
+
+
+        CreateParameterP_FHBV_CODE(objCommand)
+        CreateParameterP_FHBV_ETAT(objCommand)
+        CreateParameterP_FHBV_CLT_ID(objCommand)
+        CreateParameterP_FHBV_DATE(objCommand)
+        CreateParameterP_FHBV_TOTAL_HT(objCommand)
+        CreateParameterP_FHBV_TOTAL_TTC(objCommand)
+        CreateParameterP_FHBV_COM_FACT(objCommand)
+        CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
+        CreateParameterP_FHBV_DECHEANCE(objCommand)
+        CreateParameterP_FHBV_BINTERNET(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+            objCommand = New OleDbCommand("SELECT MAX(FHBV_ID) FROM FACTHBV", m_dbconn.Connection)
+            objCommand.Transaction = m_dbconn.transaction
+            objRS = objCommand.ExecuteReader
+            If (objRS.Read) Then
+                m_id = objRS.GetInt32(0)
+                cleanErreur()
+                bReturn = True
+            Else
+                bReturn = False
+            End If
+            objRS.Close()
+            objRS = Nothing
+
+        Catch ex As Exception
+            setError("InsertFACTHBV", ex.ToString())
+            bReturn = False
+        End Try
+
+        If Not objRS Is Nothing Then
+            objRS.Close()
+        End If
+        If bReturn Then
+            m_dbconn.transaction.Commit()
+        Else
+            m_dbconn.transaction.Rollback()
+        End If
+        '    Debug.Assert(m_id <> 0, "ID=0")
+        Debug.Assert(bReturn, "InsertFACTHBV: " & getErreur())
+        Return bReturn
+    End Function 'insertFACTHBV
+
+    Protected Function deleteFACTHBV() As Boolean
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Id <> 0")
+        Debug.Assert(Me.GetType().Name.Equals("FactHBV"))
+        Dim bReturn As Boolean = False
+
+
+        Dim sqlString As String = "DELETE FROM FACTHBV WHERE FHBV_ID=? "
+        Dim objCommand As OleDbCommand
+        Dim objFACT As FactHBV
+        '        Dim objParam As OleDbParameter
+
+        objFACT = CType(Me, FactHBV)
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        CreateParameterP_ID(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+            m_id = 0
+            objFACT.resetCode()
+            bReturn = True
+
+        Catch ex As Exception
+            setError("DeleteFACTHBV", ex.ToString())
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function 'DeleteFACTHBV
+    Protected Function deleteRefFACTHBV() As Boolean
+        'Supprime la référence à la facture de transport dans la table commande
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Id <> 0")
+        Debug.Assert(Me.GetType().Name.Equals("FactHBV"))
+        Dim bReturn As Boolean = False
+
+
+        Dim sqlString As String = "UPDATE COMMANDE SET CMD_IDFACTHBV = 0 WHERE CMD_IDFACTHBV=? "
+        Dim objCommand As OleDbCommand
+        Dim objFACT As FactHBV
+        '        Dim objParam As OleDbParameter
+
+        objFACT = CType(Me, FactHBV)
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        CreateParameterP_ID(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+            bReturn = True
+
+        Catch ex As Exception
+            setError("DeleteRefFACTHBV", ex.ToString())
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function 'DeleteRefFACTHBV
+    Protected Function loadFACTHBV() As Boolean
+
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "L'id doit être renseigné")
+
+        Dim sqlString As String = "SELECT " & _
+                                    "FHBV_CODE," & _
+                                    "FHBV_ETAT," & _
+                                    "FHBV_CLT_ID," & _
+                                    "FHBV_DATE," & _
+                                    "FHBV_TOTAL_HT," & _
+                                    "FHBV_TOTAL_TTC," & _
+                                    "FHBV_TOTAL_TAXES," & _
+                                    "FHBV_COM_FACT," & _
+                                    "FHBV_IDMODEREGLEMENT," & _
+                                    "FHBV_DECHEANCE," & _
+                                    "FHBV_BINTERNET" & _
+                                    " FROM FACTHBV WHERE " & _
+                                   " FHBV_ID = ?"
+
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        Dim objFHBV As FactHBV
+        '        Dim objParam As OleDbParameter
+        Dim bReturn As Boolean
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        'Si le paramètre existe on ne met à jour que sa valeur
+        'Autrement on le crée
+        CreateParameterP_ID(objCommand)
+
+        Try
+            objRS = objCommand.ExecuteReader
+            If Not objRS.HasRows Then
+                objRS.Close()
+                m_id = 0
+                Return False
+            End If
+            objRS.Read()
+            objFHBV = CType(Me, FactHBV)
+            Try
+                objFHBV.code = GetString(objRS, "FHBV_CODE")
+            Catch ex As InvalidCastException
+                objFHBV.code = ""
+            End Try
+            Try
+                objFHBV.setEtat(GetString(objRS, "FHBV_ETAT"))
+            Catch ex As InvalidCastException
+                objFHBV.setEtat(vncEnums.vncEtatCommande.vncFactHBVGeneree)
+            End Try
+            Try
+                objFHBV.dateCommande = GetString(objRS, "FHBV_DATE")
+            Catch ex As InvalidCastException
+                objFHBV.dateCommande = DATE_DEFAUT
+            End Try
+            Try 'Total HT
+                objFHBV.totalHT = GetString(objRS, "FHBV_TOTAL_HT")
+            Catch ex As InvalidCastException
+                objFHBV.totalHT = 0
+            End Try
+            Try 'Total TTC
+                objFHBV.totalTTC = GetString(objRS, "FHBV_TOTAL_TTC")
+            Catch ex As InvalidCastException
+                objFHBV.totalTTC = 0
+            End Try
+            Try
+                objFHBV.idModeReglement = GetString(objRS, "FHBV_IDMODEREGLEMENT")
+            Catch ex As InvalidCastException
+                objFHBV.idModeReglement = 0
+            End Try
+            'Chargement de la date d'échéance après le mode de reglement pour éviter le recalcul
+            Try
+                objFHBV.dEcheance = GetString(objRS, "FHBV_DECHEANCE")
+            Catch ex As InvalidCastException
+                objFHBV.dEcheance = DATE_DEFAUT
+            End Try
+            Try
+                objFHBV.bExportInternet = GetValue(objRS, "FHBV_BINTERNET")
+            Catch ex As InvalidCastException
+                objFHBV.bExportInternet = False
+            End Try
+            Try
+                objFHBV.oTiers.setid(GetString(objRS, "FHBV_CLT_ID"))
+            Catch ex As InvalidCastException
+                objFHBV.oTiers.setid(0)
+            End Try
+            Try
+                objFHBV.CommFacturation.comment = GetString(objRS, "FHBV_COM_FACT")
+            Catch ex As InvalidCastException
+                objFHBV.CommFacturation.comment = ""
+            End Try
+
+            cleanErreur()
+            bReturn = True
+        Catch ex As Exception
+            setError("LoadFHBVCOM", ex.ToString())
+            bReturn = False
+        End Try
+        If (Not objRS Is Nothing) Then
+            objRS.Close()
+            objRS = Nothing
+        End If
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function 'LoadFACTHBV
+    Protected Function UpdateFACTHBV() As Boolean
+        Dim bReturn As Boolean
+        Dim objFact As FactHBV
+        bReturn = False
+
+        Debug.Assert(Me.GetType().Name.Equals("FactHBV"), "Objet de Type FactHBV Requis")
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "ID<>0")
+        objFact = CType(Me, FactHBV)
+
+        Dim sqlString As String = "UPDATE FACTHBV SET " & _
+                                    "FHBV_CODE = ? ," & _
+                                    "FHBV_ETAT = ? ," & _
+                                    "FHBV_CLT_ID = ? ," & _
+                                    "FHBV_DATE = ? ," & _
+                                    "FHBV_TOTAL_HT = ? ," & _
+                                    "FHBV_TOTAL_TTC = ? ," & _
+                                    "FHBV_COM_FACT = ? ," & _
+                                    "FHBV_IDMODEREGLEMENT = ?," & _
+                                    "FHBV_DECHEANCE = ?," & _
+                                    "FHBV_BINTERNET = ?" & _
+                                    " WHERE FHBV_ID = ?"
+
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        '        Dim objParam As OleDbParameter
+
+
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+        m_dbconn.BeginTransaction()
+        objCommand.Transaction = m_dbconn.transaction
+
+        CreateParameterP_FHBV_CODE(objCommand)
+        CreateParameterP_FHBV_ETAT(objCommand)
+        CreateParameterP_FHBV_CLT_ID(objCommand)
+        CreateParameterP_FHBV_DATE(objCommand)
+        CreateParameterP_FHBV_TOTAL_HT(objCommand)
+        CreateParameterP_FHBV_TOTAL_TTC(objCommand)
+        CreateParameterP_FHBV_COM_FACT(objCommand)
+        CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
+        CreateParameterP_FHBV_DECHEANCE(objCommand)
+        CreateParameterP_FHBV_BINTERNET(objCommand)
+        CreateParameterP_ID(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+            m_dbconn.transaction.Commit()
+            bReturn = True
+
+        Catch ex As Exception
+            setError("UpdateFACTHBV", ex.ToString())
+            m_dbconn.transaction.Rollback()
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, "UpdateFACTHBV" & getErreur())
+        Return bReturn
+    End Function 'UpdateFACTHBV
+    ''' <summary>
+    ''' Sauvegarde des Lignes des facture Hobivin
+    ''' Chargement des ID des lignes existantes
+    ''' pour chaque lignes de la collection
+    ''' Si l'ID existe
+    '''     Update de la ligne + Suppression de l'ID de la liste des Ids
+    ''' Sinon
+    '''     Création de la Ligne
+    ''' 
+    ''' Suppression des Lignes correspondant aux Ids restants
+    ''' 
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function saveColLGFACTHBV() As Boolean
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "La Commande.id  <> 0")
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.FACTHBV, "Objet de type FACTHBV requis")
+
+        Dim objCommand As OleDbCommand
+        Dim bReturn As Boolean
+        Try
+
+            'Marquage de toutes les lignes de factures
+            Dim sqlStringMARK As String = "UPDATE LIGNE_FACTHBV SET " & _
+                                        "LGFHBV_ETAT = 1 " & _
+                                        "WHERE LGFHBV_FACT_ID =  " & Me.id
+
+
+            objCommand = m_dbconn.Connection.CreateCommand()
+            objCommand.CommandText = sqlStringMARK
+            m_dbconn.BeginTransaction()
+            objCommand.Transaction = m_dbconn.transaction
+            objCommand.ExecuteNonQuery()
+
+
+            'Parcours de Chaque ligne de la collection
+            Dim oFact As FactHBV
+            oFact = CType(Me, FactHBV)
+
+            'Insert Or Update de chaque ligne
+            bReturn = True
+            For Each oLg As LgFactHBV In oFact.colLignes
+                If Not oLg.bDeleted Then
+                    If oLg.id = 0 Then
+                        bReturn = insertLgFactHBV(oLg)
+                    Else
+                        bReturn = updateLgFactHBV(oLg)
+                    End If
+                End If
+            Next oLg
+            'Suppression des autres lignes
+            Dim sqlStringDLT As String = "DELETE LIGNE_FACTHBV " & _
+                                        "WHERE LGFHBV_ETAT=1 AND LGFHBV_FACT_ID =  " & Me.id
+
+
+            objCommand = m_dbconn.Connection.CreateCommand()
+            objCommand.CommandText = sqlStringDLT
+            objCommand.Transaction = m_dbconn.transaction
+            objCommand.ExecuteNonQuery()
+
+            m_dbconn.transaction.Commit()
+            bReturn = True
+        Catch ex As Exception
+            setError(ex.Message)
+            m_dbconn.transaction.Rollback()
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function ' saveColLGFACTHBV
+    'Insertion d'une ligne de Facture Hobivin
+    Private Function insertLgFactHBV(pLg As LgFactHBV) As Boolean
+        Dim bReturn As Boolean
+        Dim oFact As FactHBV
+        Try
+            Dim oCmd As OleDbCommand
+            oCmd = m_dbconn.Connection.CreateCommand()
+            oFact = Me
+
+
+            Dim sqlString As String = "INSERT INTO LIGNE_FACTHBV (" & _
+                                        "LGFHBV_FACT_ID," & _
+                                        "LGFHBV_PRD_ID," & _
+                                        "LGFHBV_QTE_COMMANDE," & _
+                                        "LGFHBV_QTE_LIV," & _
+                                        "LGFHBV_QTE_FACT," & _
+                                        "LGFHBV_PRIX_UNITAIRE," & _
+                                        "LGFHBV_PRIX_HT," & _
+                                        "LGFHBV_PRIX_TTC," & _
+                                        "LGFHBV_BGRATUIT," & _
+                                        "LGFHBV_ETAT" & _
+                                        ") VALUES ( " & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "?, " & _
+                                        "0" & _
+                                      " )"
+            Dim sqlString3 As String = "SELECT MAX(LGFHBV_ID) FROM LIGNE_FACTHBV"
+            Dim objCommand As OleDbCommand
+            Dim objCommandID As OleDbCommand
+            Dim objRS As OleDbDataReader = Nothing
+
+            objCommand = New OleDbCommand
+            objCommand.Connection = m_dbconn.Connection
+            objCommand.CommandText = sqlString
+            objCommand.Transaction = m_dbconn.transaction
+
+            objCommandID = New OleDbCommand
+            objCommandID.Connection = m_dbconn.Connection
+            objCommandID.CommandText = sqlString3
+            objCommandID.Transaction = m_dbconn.transaction
+
+            bReturn = True
+            Try
+                'Commande 1
+                Dim oParam1 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer) 'LGFHBV_FACT_ID
+                Dim oParam2 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer) 'LGFHBV_PRD_ID
+                Dim oParam3 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer) 'LGFHBV_QTE_COMMANDE
+                Dim oParam4 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer) 'LGFHBV_QTE_LIV
+                Dim oParam5 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer) 'LGFHBV_QTE_FACT
+                Dim oParam6 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double) 'LGFHBV_PRIX_UNITAIRE
+                Dim oParam7 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double) 'LGFHBV_PRIX_HT
+                Dim oParam8 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double) 'LGFHBV_PRIX_TTC
+                Dim oParam9 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Boolean) 'LGFHBV_BGRATUIT
+
+                '"INSERT INTO LIGNE_FACTHBV (" & _
+                ' "LGFHBV_FACT_ID," & _
+                ' "LGFHBV_PRD_ID," & _
+                ' "LGFHBV_QTE_COMMANDE," & _
+                ' "LGFHBV_QTE_LIV," & _
+                ' "LGFHBV_QTE_FACT," & _
+                ' "LGFHBV_PRIX_UNITAIRE," & _
+                ' "LGFHBV_PRIX_HT," & _
+                ' "LGFHBV_PRIX_TTC," & _
+                ' "LGFHBV_BGRATUIT," & _
+                ' "LGFHBV_ETAT=0" & _
+
+                oParam1.Value = oFact.id
+                oParam2.Value = pLg.oProduit.id
+                oParam3.Value = pLg.qteCommande
+                oParam4.Value = pLg.qteLiv
+                oParam5.Value = pLg.qteFact
+                oParam6.Value = pLg.prixU
+                oParam7.Value = pLg.prixHT
+                oParam8.Value = pLg.prixTTC
+                oParam9.Value = pLg.bGratuit
+                objCommand.ExecuteNonQuery()
+
+                objRS = objCommandID.ExecuteReader
+                If objRS.Read Then
+                    pLg.setid(objRS.GetInt32(0))
+                    cleanErreur()
+                    bReturn = True
+                Else
+                    setError("InsertLGFactHBV", "NO LGTRPID")
+                    bReturn = False
+                End If
+                objRS.Close()
+                objRS = Nothing
+
+            Catch ex As Exception
+                setError("InsertcolLGHBV", ex.ToString())
+                bReturn = False
+            End Try
+
+
+
+        Catch ex As Exception
+            bReturn = False
+            setError(getErreur())
+        End Try
+        Debug.Assert(bReturn, "insertLgFactHBV.postCondition")
+        Return bReturn
+    End Function
+
+    'Insertion d'une ligne de Facture Hobivin
+    Private Function updateLgFactHBV(pLg As LgFactHBV) As Boolean
+        Dim bReturn As Boolean
+        Dim oFact As FactHBV
+        Try
+            Dim oCmd As OleDbCommand
+            oCmd = m_dbconn.Connection.CreateCommand()
+            oFact = Me
+
+
+            Dim sqlString As String = "UPDATE LIGNE_FACTHBV SET " & _
+                                        "LGFHBV_FACT_ID=" & oFact.id & " , " & _
+                                        "LGFHBV_PRD_ID=" & pLg.oProduit.id & " , " & _
+                                        "LGFHBV_QTE_COMMANDE=" & pLg.qteCommande & " , " & _
+                                        "LGFHBV_QTE_LIV=" & pLg.qteLiv & " , " & _
+                                        "LGFHBV_QTE_FACT=" & pLg.qteFact & "  ," & _
+                                        "LGFHBV_PRIX_UNITAIRE=" & pLg.prixU & " , " & _
+                                        "LGFHBV_PRIX_HT=" & pLg.prixHT & " , " & _
+                                        "LGFHBV_PRIX_TTC=" & pLg.prixTTC & " , " & _
+                                        "LGFHBV_BGRATUIT=" & CInt(pLg.bGratuit) & " , " & _
+                                        "LGFHBV_ETAT=0 " & _
+                                        "WHERE LGFHBV_ID = " & pLg.id
+            Dim objCommand As OleDbCommand
+
+            objCommand = New OleDbCommand
+            objCommand.Connection = m_dbconn.Connection
+            objCommand.CommandText = sqlString
+            objCommand.Transaction = m_dbconn.transaction
+
+
+            bReturn = True
+            Try
+                objCommand.ExecuteNonQuery()
+
+            Catch ex As Exception
+                setError("updatecolLGHBV", ex.ToString())
+                bReturn = False
+            End Try
+
+
+
+        Catch ex As Exception
+            bReturn = False
+            setError(getErreur())
+        End Try
+        Debug.Assert(bReturn, "updateLgFactHBV.postCondition")
+        Return bReturn
+    End Function
+
+    Protected Function LoadcolLgFactHBV() As Boolean
+        '================================================================================
+        'Fonction : LoadcolLgFactHBV
+        'Description : Chargement de la liste des lignes d'une factures de transport
+        '================================================================================
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Id <> 0")
+        Debug.Assert(Me.GetType().Name.Equals("FactHBV"))
+
+        Dim bReturn As Boolean
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        Dim objFACTHBV As FactHBV
+        Dim objLGHBV As LgFactHBV
+
+        objFACTHBV = CType(Me, FactHBV)
+
+        Dim sqlString As String = "SELECT " & _
+                                    "LGFHBV_ID," & _
+                                    "LGFHBV_FACT_ID," & _
+                                    "LGFHBV_PRD_ID," & _
+                                    "LGFHBV_QTE_COMMANDE," & _
+                                    "LGFHBV_QTE_LIV," & _
+                                    "LGFHBV_QTE_FACT," & _
+                                    "LGFHBV_PRIX_UNITAIRE," & _
+                                    "LGFHBV_PRIX_HT," & _
+                                    "LGFHBV_PRIX_TTC," & _
+                                    "LGFHBV_BGRATUIT" & _
+                                  " FROM LIGNE_FACTHBV" & _
+                                  " WHERE LGFHBV_FACT_ID =  " & objFACTHBV.id
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+        Try
+            objRS = objCommand.ExecuteReader
+            While objRS.Read
+                Try
+                    objLGHBV = New LgFactHBV
+                    Try
+                        objLGHBV.setid(getInteger(objRS, "LGFHBV_ID"))
+                    Catch ex As InvalidCastException
+                        objLGHBV.setid(0)
+                    End Try
+                    Try
+                        objLGHBV.idFactHBV = getInteger(objRS, "LGFHBV_FACT_ID")
+                    Catch ex As InvalidCastException
+                        objLGHBV.idFactHBV = 0
+                    End Try
+                    Try
+                        objLGHBV.oProduit = Produit.createandload(getInteger(objRS, "LGFHBV_PRD_ID"))
+                    Catch ex As InvalidCastException
+                        objLGHBV.oProduit = Nothing
+                    End Try
+                    Try
+                        objLGHBV.qteCommande = getInteger(objRS, "LGFHBV_QTE_COMMANDE")
+                    Catch ex As InvalidCastException
+                        objLGHBV.qteCommande = 0
+                    End Try
+                    Try
+                        objLGHBV.qteLiv = getInteger(objRS, "LGFHBV_QTE_LIV")
+                    Catch ex As InvalidCastException
+                        objLGHBV.qteLiv = 0
+                    End Try
+                    Try
+                        objLGHBV.qteFact = getInteger(objRS, "LGFHBV_QTE_FACT")
+                    Catch ex As InvalidCastException
+                        objLGHBV.qteFact = 0
+                    End Try
+                    Try
+                        objLGHBV.prixU = getDecimal(objRS, "LGFHBV_PRIX_UNITAIRE")
+                    Catch ex As InvalidCastException
+                        objLGHBV.prixU = 0
+                    End Try
+                    Try
+                        objLGHBV.prixHT = getDecimal(objRS, "LGFHBV_PRIX_HT")
+                    Catch ex As InvalidCastException
+                        objLGHBV.prixHT = 0
+                    End Try
+                    Try
+                        objLGHBV.prixTTC = getDecimal(objRS, "LGFHBV_PRIX_TTC")
+                    Catch ex As InvalidCastException
+                        objLGHBV.prixTTC = 0
+                    End Try
+                    Try
+                        objLGHBV.bGratuit = GetBoolean(objRS, "LGFHBV_BGRATUIT")
+                    Catch ex As InvalidCastException
+                        objLGHBV.bGratuit = 0
+                    End Try
+                    objLGHBV.resetBooleans()
+                    objFACTHBV.AjouteLigneFactHBV(objLGHBV, False)
+                Catch ex As InvalidCastException
+                    bReturn = False
+                    Exit While
+                End Try
+            End While
+            objRS.Close()
+            objRS = Nothing
+            bReturn = True
+        Catch ex As Exception
+            setError("LoadcolLgFactHBV", ex.ToString())
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, "LoadcollgFactHBV" & getErreur())
+        Return bReturn
+
+    End Function ' LoadColLGFACTHBV
+    ''' <summary>
+    ''' Suppression des lignes d'une facture
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function deletecolLgHBV() As Boolean
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Id <> 0")
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.FACTHBV, "Objet de type FactHBV requis")
+
+
+        Dim sqlString As String = "DELETE FROM LIGNE_FACTHBV "
+        Dim strClauseWhere As String = " WHERE LGFHBV_FACT_ID = ? "
+        Dim objCommand As OleDbCommand
+        '        Dim objParam As OleDbParameter
+        Dim bReturn As Boolean
+
+        'Clause where en Fonction du type de l'objet courant
+        sqlString = sqlString & strClauseWhere
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        CreateParameterP_ID(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+
+            bReturn = True
+
+        Catch ex As Exception
+            setError("deletecolLgHBV", ex.ToString())
+            bReturn = False
+        End Try
+        Debug.Assert(bReturn, "deletecolLgHBV" & getErreur())
+        Return bReturn
+    End Function 'deletecolLgTRP
+
+#Region "Paramètres FACTHBV"
+    Private Sub CreateParameterP_FHBV_CODE(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.code)
+
+    End Sub
+    Private Sub CreateParameterP_FHBV_ETAT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.etat.codeEtat)
+    End Sub
+    Private Sub CreateParameterP_FHBV_CLT_ID(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.oTiers.id)
+
+    End Sub
+    Private Sub CreateParameterP_FHBV_DATE(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.dateCommande.ToShortDateString)
+
+    End Sub
+    Private Sub CreateParameterP_FHBV_TOTAL_TAXES(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.montantTaxes)
+    End Sub
+    Private Sub CreateParameterP_FHBV_TOTAL_HT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.totalHT))
+    End Sub
+
+    Private Sub CreateParameterP_FHBV_TOTAL_TTC(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.totalTTC))
+    End Sub
+    Private Sub CreateParameterP_FHBV_COM_FACT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As Commande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", truncate(objCMD.CommFacturation.comment, 50))
+    End Sub
+    Private Sub CreateParameterP_FHBV_PERIODE(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", truncate(objCMD.periode, 50))
+    End Sub
+    Private Sub CreateParameterP_FHBV_MONTANT_REGLEMENT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.montantReglement))
+
+    End Sub
+    Private Sub CreateParameterP_FHBV_DATE_REGLEMENT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.dateReglement)
+
+    End Sub
+    Private Sub CreateParameterP_FHBV_REF_REGLEMENT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", truncate(objCMD.refReglement, 50))
+    End Sub
+    Private Sub CreateParameterP_FHBV_IDMODEREGLEMENT(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.idModeReglement)
+    End Sub
+    Private Sub CreateParameterP_FHBV_DECHEANCE(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.dEcheance)
+    End Sub
+    Private Sub CreateParameterP_FHBV_BINTERNET(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
+    End Sub
+#End Region
+
+#End Region
 #Region "FactColisage"
     Protected Function insertFactColisage() As Boolean
         '=======================================================================
@@ -11392,17 +12221,17 @@ Public MustInherit Class Persist
         bReturn = True
         Try
             'Commande 1
-            Dim oParam1 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.VarChar)
-            Dim oParam2 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam3 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.VarChar)
-            Dim oParam4 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.VarChar)
-            Dim oParam5 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam6 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam7 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam8 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam9 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Integer)
-            Dim oParam10 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Double)
-            Dim oParam11 As OleDbParameter = objCommand.Parameters.AddWithValue("?" , OleDbType.Double)
+            Dim oParam1 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.VarChar)
+            Dim oParam2 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam3 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.VarChar)
+            Dim oParam4 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.VarChar)
+            Dim oParam5 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam6 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam7 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam8 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam9 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+            Dim oParam10 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+            Dim oParam11 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
 
             For Each objLgCOL In objFactColisage.colLignes
 
@@ -11682,7 +12511,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " FCOL_DATE >=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pddeb)
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
 
         End If
         If pdfin <> DATE_DEFAUT Then
@@ -11690,7 +12519,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " FCOL_DATE <=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pdfin)
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
 
         End If
         If pCodeFournisseur <> "" Then
@@ -11698,7 +12527,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pCodeFournisseur)
+            objParam = objCommand.Parameters.AddWithValue("?", pCodeFournisseur)
 
         End If
 
@@ -11707,7 +12536,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "FCOL_ETAT = ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pEtat)
+            objParam = objCommand.Parameters.AddWithValue("?", pEtat)
 
         End If
 
@@ -11791,7 +12620,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " FCOL_CODE =  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , strCode)
+            objParam = objCommand.Parameters.AddWithValue("?", strCode)
 
         End If
         If Not String.IsNullOrEmpty(strRSFournisseur) Then
@@ -11799,7 +12628,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " FRN_RS LIKE  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , strRSFournisseur)
+            objParam = objCommand.Parameters.AddWithValue("?", strRSFournisseur)
 
         End If
 
@@ -11808,7 +12637,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "FCOL_ETAT = ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pEtat)
+            objParam = objCommand.Parameters.AddWithValue("?", pEtat)
 
         End If
 
@@ -11837,7 +12666,7 @@ Public MustInherit Class Persist
             objRS = Nothing
             For Each strId In colTemp
                 nId = CType(strId, Long)
-                objFCT = FactColisage.createandload(nid)
+                objFCT = FactColisage.createandload(nId)
                 objFCT.resetBooleans()
 
                 If objFCT.id <> 0 Then
@@ -11970,46 +12799,46 @@ Public MustInherit Class Persist
     Private Sub CreateParameterP_FCOL_CODE(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.code)
+        objCommand.Parameters.AddWithValue("?", objCMD.code)
 
     End Sub
     Private Sub CreateParameterP_FCOL_ETAT(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.etat.codeEtat)
+        objCommand.Parameters.AddWithValue("?", objCMD.etat.codeEtat)
     End Sub
     Private Sub CreateParameterP_FCOL_FRN_ID(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.oTiers.id)
+        objCommand.Parameters.AddWithValue("?", objCMD.oTiers.id)
 
     End Sub
     Private Sub CreateParameterP_FCOL_DATE(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.dateCommande.ToShortDateString)
+        objCommand.Parameters.AddWithValue("?", objCMD.dateCommande.ToShortDateString)
 
     End Sub
     Private Sub CreateParameterP_FCOL_TOTAL_TAXES(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisage
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.montantTaxes)
+        objCommand.Parameters.AddWithValue("?", objCMD.montantTaxes)
     End Sub
     Private Sub CreateParameterP_FCOL_TOTAL_HT(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , CDbl(objCMD.totalHT))
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.totalHT))
     End Sub
 
     Private Sub CreateParameterP_FCOL_TOTAL_TTC(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , CDbl(objCMD.totalTTC))
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.totalTTC))
     End Sub
     Private Sub CreateParameterP_FCOL_COM_FACT(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.CommFacturation.comment)
+        objCommand.Parameters.AddWithValue("?", objCMD.CommFacturation.comment)
     End Sub
     Private Sub CreateParameterP_FCOL_PERIODE(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisage
@@ -12019,14 +12848,14 @@ Public MustInherit Class Persist
     Private Sub CreateParameterP_FCOL_MONTANT_REGLEMENT(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisage
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , CDbl(objCMD.montantReglement))
+        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.montantReglement))
 
     End Sub
     Private Sub CreateParameterP_FCOL_DATE_REGLEMENT(ByVal objCommand As OleDbCommand)
 
         Dim objCMD As FactColisage
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.dateReglement)
+        objCommand.Parameters.AddWithValue("?", objCMD.dateReglement)
 
     End Sub
     Private Sub CreateParameterP_FCOL_REF_REGLEMENT(ByVal objCommand As OleDbCommand)
@@ -12037,7 +12866,7 @@ Public MustInherit Class Persist
     Private Sub CreateParameterP_FCOL_IDMODEREGLEMENT(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisage
         objCMD = Me
-        objCommand.Parameters.AddWithValue("?" , objCMD.idModeReglement)
+        objCommand.Parameters.AddWithValue("?", objCMD.idModeReglement)
     End Sub
     Private Sub CreateParameterP_FCOL_DECHEANCE(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisage
@@ -12537,42 +13366,42 @@ Public MustInherit Class Persist
     Private Sub CreateParameterP_ROLE(ByVal objCommand As OleDbCommand)
         Dim obj As aut_user
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.role)
+        objCommand.Parameters.AddWithValue("?", obj.role)
     End Sub
     Private Sub CreateParameterP_CODE(ByVal objCommand As OleDbCommand)
         Dim obj As aut_user
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.code)
+        objCommand.Parameters.AddWithValue("?", obj.code)
     End Sub
     Private Sub CreateParameterP_PASSWORD(ByVal objCommand As OleDbCommand)
         Dim obj As aut_user
         obj = Me
         If obj.password Is Nothing Then
-            objCommand.Parameters.AddWithValue("?" , "")
+            objCommand.Parameters.AddWithValue("?", "")
         Else
-            objCommand.Parameters.AddWithValue("?" , obj.password)
+            objCommand.Parameters.AddWithValue("?", obj.password)
         End If
 
     End Sub
     Private Sub CreateParameterP_RGH_TAG(ByVal objCommand As OleDbCommand)
         Dim obj As aut_right
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.tag)
+        objCommand.Parameters.AddWithValue("?", obj.tag)
     End Sub
     Private Sub CreateParameterP_RGH_ROLE(ByVal objCommand As OleDbCommand)
         Dim obj As aut_right
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.role)
+        objCommand.Parameters.AddWithValue("?", obj.role)
     End Sub
     Private Sub CreateParameterP_RGH_DROIT(ByVal objCommand As OleDbCommand)
         Dim obj As aut_right
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.droit)
+        objCommand.Parameters.AddWithValue("?", obj.droit)
     End Sub
     Private Sub CreateParameterP_RGH_TEXT(ByVal objCommand As OleDbCommand)
         Dim obj As aut_right
         obj = Me
-        objCommand.Parameters.AddWithValue("?" , obj.text)
+        objCommand.Parameters.AddWithValue("?", obj.text)
     End Sub
 
 #End Region
@@ -12621,7 +13450,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " CMD_DATE >=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pddeb)
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
 
         End If
         If pdfin <> DATE_DEFAUT Then
@@ -12629,7 +13458,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " CMD_DATE <=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?" , pdfin)
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
 
         End If
 
@@ -12650,7 +13479,7 @@ Public MustInherit Class Persist
                 If objCMD.id <> 0 Then
                     'Chargement des lignes de chaque commande
                     For Each objLgCmd In objCMD.colLignes
-                        objCommandSTK.Parameters.AddWithValue("?" , objCMD.id)
+                        objCommandSTK.Parameters.AddWithValue("?", objCMD.id)
                         objCommandSTK.Parameters.AddWithValue("P_PRD_ID", objLgCmd.oProduit.id)
                         'Lecture de la table MVTSTK
                         strErreur = "Commande = " & objCMD.code & "(" & objCMD.id & "), PRODUIT = " & objLgCmd.oProduit.code & "(" & objLgCmd.oProduit.id & ")"
@@ -14199,11 +15028,11 @@ Public MustInherit Class Persist
 
 
         CreateParamP_CONT_CODE(objOLeDBCommand)
-        CreateParamP_CONT_LIBELLE(objOLeDBCommand)
-        CreateParamP_CONT_CENT(objOLeDBCommand)
-        CreateParamP_CONT_BOUT(objOLeDBCommand)
-        CreateParamP_CONT_DEFAUT(objOLeDBCommand)
-        CreateParamP_CONT_POIDS(objOLeDBCommand)
+        createParamP_CONT_LIBELLE(objOLeDBCommand)
+        createParamP_CONT_CENT(objOLeDBCommand)
+        createParamP_CONT_BOUT(objOLeDBCommand)
+        createParamP_CONT_DEFAUT(objOLeDBCommand)
+        createParamP_CONT_POIDS(objOLeDBCommand)
         Try
             objOLeDBCommand.ExecuteNonQuery()
             objOLeDBCommand = New OleDbCommand("SELECT MAX(CONT_ID) FROM CONTENANT", m_dbconn.Connection)

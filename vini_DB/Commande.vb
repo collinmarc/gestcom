@@ -216,6 +216,7 @@ Public MustInherit Class Commande
             End If
         End Set
     End Property
+
     Public Property dateCommande() As Date
         Get
             Return m_dateCommande
@@ -748,7 +749,7 @@ Public MustInherit Class Commande
             m_bColLgInsertorDelete = False
         Else
             'On Met à jour la collection (SousCommande)
-            bReturn = UpdatecolLgCMD()
+            bReturn = UPDATEcolLGCMD()
         End If
         Debug.Assert(bReturn, "Commande.savecolLignes:" & getErreur())
         Return bReturn

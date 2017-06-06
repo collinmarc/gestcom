@@ -111,6 +111,10 @@ Public MustInherit Class EtatCommande
                 Return New EtatFactColGeneree
             Case vncEnums.vncEtatCommande.vncFactCOLExportee
                 Return New EtatFactcolExportee
+            Case vncEnums.vncEtatCommande.vncFactHBVGeneree
+                Return New EtatFactHBVGeneree
+            Case vncEnums.vncEtatCommande.vncFactHBVExportee
+                Return New EtatFactHBVExportee
             Case Else
                 Debug.Assert(False, "Pas de création d'état pour cet etat " & CStr(pcodeEtat))
                 Return Nothing

@@ -109,6 +109,7 @@
     <Compile Include="T1110_SScommande.vb" />
     <Compile Include="T1120_BA.vb" />
     <Compile Include="T1130_FactureCommission.vb" />
+    <Compile Include="T1500_FactHBV.vb" />
     <Compile Include="T1140_FactureTransport.vb" />
     <Compile Include="T1150_FactureColisage.vb" />
     <Compile Include="T1200_integrite.vb" />

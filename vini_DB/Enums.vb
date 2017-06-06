@@ -40,6 +40,10 @@ Public Module vncEnums
         LGFACTCOL = 15
         REGLEMENT = 16
         PRECOMMANDE = 17
+
+        FACTHBV = 20
+        LGFACTHBV = 21
+
         FACTCOMM_NONREGLEE = 100 'utilisée dans RechercheDB
         FACTTRP_NONREGLEE = 101
         FACTCOL_NONREGLEE = 102
@@ -76,6 +80,10 @@ Public Module vncEnums
         vncFactCOLGeneree = 400
         '        vncFactCOLTransmise = 401
         vncFactCOLExportee = 402
+
+        vncFactHBVGeneree = 500
+        vncFactHBVExportee = 502
+
     End Enum
 
     Public Enum vncTypeCommande
@@ -137,6 +145,13 @@ Public Module vncEnums
         vncActionFactCOLAnnExporter = 421
         vncActionMinFactCOL = 400
         vncActionMaxFactCOL = 421
+
+        vncActionFactHBVGenerer = 500
+        vncActionFactHBVAnnGenerer = 501
+        vncActionFactHBVExporter = 520
+        vncActionFactHBVAnnExporter = 521
+        vncActionMinFactHBV = 500
+        vncActionMaxFactHBV = 521
     End Enum
     Public Enum vncGenererSupprimer
         vncRien = 0

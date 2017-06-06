@@ -195,11 +195,15 @@
     </Compile>
     <Compile Include="CarracteristiqueTiers.vb" />
     <Compile Include="clsFTPVinicomNET.vb" />
+    <Compile Include="EtatFactHBVGeneree.vb" />
+    <Compile Include="EtatFactHBVExportee.vb" />
+    <Compile Include="FactHBV.vb" />
     <Compile Include="Imap\cmdPrestashop.vb" />
     <Compile Include="Imap\Imap.vb" />
     <Compile Include="Imap\ImapBase.vb" />
     <Compile Include="Imap\ImapException.vb" />
     <Compile Include="Imap\ImportPrestashop.vb" />
+    <Compile Include="lgFactHBV.vb" />
     <Compile Include="LstScmd.vb" />
     <Compile Include="vini_image.vb" />
     <Compile Include="FicheTechniqueFourn.vb" />
