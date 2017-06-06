@@ -11680,7 +11680,197 @@ Public MustInherit Class Persist
         Debug.Assert(bReturn, "deletecolLgHBV" & getErreur())
         Return bReturn
     End Function 'deletecolLgTRP
+    ''' <summary>
+    ''' Rend une collection de FactHBV
+    ''' </summary>
+    ''' <param name="strCode"></param>
+    ''' <param name="strRSClient"></param>
+    ''' <param name="pEtat"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Overloads Shared Function ListeFACTHBV(ByVal strCode As String, ByVal strRSClient As String, ByVal pEtat As vncEtatCommande) As Collection
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Dim colReturn As New Collection
+        '        Dim objParam As OleDbParameter
+        Dim sqlString As String = "SELECT FHBV_ID " & _
+                                    "FROM FACTHBV, CLIENT "
+        Dim strWhere As String = " FHBV_CLT_ID = CLT_ID"
+        Dim objCommand As OleDbCommand
+        Dim objFACT As FactHBV
+        Dim objRS As OleDbDataReader = Nothing
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        Dim bReturn As Boolean
+        Dim objParam As OleDbParameter
 
+        If strCode <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "FHBV_CODE LIKE ?"
+            objParam = objCommand.Parameters.AddWithValue("?", strCode)
+
+        End If
+
+        If strRSClient <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "CLIENT.CLT_RS LIKE ?"
+            objParam = objCommand.Parameters.AddWithValue("?", strRSClient)
+
+        End If
+
+        If pEtat <> vncEnums.vncEtatCommande.vncRien Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "FHBV_ETAT = ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pEtat)
+
+        End If
+
+
+        If strWhere <> "" Then
+            sqlString = sqlString & " WHERE " & strWhere
+        End If
+        sqlString = sqlString & " ORDER BY FHBV_DATE DESC, CLT_CODE ASC"
+        objCommand.CommandText = sqlString
+
+
+
+        Try
+            objRS = objCommand.ExecuteReader
+            While (objRS.Read())
+                Dim nId As Integer
+                nId = getInteger(objRS, "FHBV_ID")
+
+                objFACT = FactHBV.createandload(nId)
+                If objFACT.id = nId Then
+                    colReturn.Add(objFACT, CStr(objFACT.code))
+                End If
+            End While
+            objRS.Close()
+            objRS = Nothing
+            bReturn = True
+        Catch ex As Exception
+            setError("ListeFACTHBV", sqlString & vbCrLf & ex.ToString())
+            bReturn = False
+            colReturn = Nothing
+        End Try
+
+        Debug.Assert(bReturn, getErreur())
+
+        Return colReturn
+
+    End Function 'ListeFACTHBV
+    ''' <summary>
+    ''' Rend une liste de factHBV en fonctino des date et de l'état
+    ''' </summary>
+    ''' <param name="pddeb"></param>
+    ''' <param name="pdfin"></param>
+    ''' <param name="pCodeClient"></param>
+    ''' <param name="pEtat"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeFACTHBVDate(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Dim colReturn As New Collection
+        Dim colTemp As New Collection
+        '        Dim objParam As OleDbParameter
+        Dim sqlString As String = "SELECT " & _
+                                    "FHBV_ID, CLT_ID " & _
+                                  " FROM FACTHBV, CLIENT "
+
+        Dim strWhere As String = " FACTHBV.FHBV_CLT_ID = CLIENT.CLT_ID "
+        Dim objCommand As OleDbCommand
+        Dim objFCT As FactHBV
+        Dim objRS As OleDbDataReader = Nothing
+        Dim strId As String
+        Dim objParam As OleDbParameter
+        Dim nId As Long
+
+
+
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+
+
+        If pddeb <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " FHBV_DATE >=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
+
+        End If
+        If pdfin <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " FHBV_DATE <=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
+
+        End If
+        If pCodeClient <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "CLIENT.CLT_CODE LIKE ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pCodeClient)
+
+        End If
+
+        If pEtat <> vncEnums.vncEtatCommande.vncRien Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "FHBV_ETAT = ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pEtat)
+
+        End If
+
+
+
+        If strWhere <> "" Then
+            sqlString = sqlString & "WHERE " & strWhere
+        End If
+        sqlString = sqlString & " ORDER BY CLIENT.CLT_CODE ASC"
+        objCommand.CommandText = sqlString
+
+
+
+        Try
+            objRS = objCommand.ExecuteReader
+            While objRS.Read()
+                Try
+                    strId = GetString(objRS, "FHBV_ID")
+                    colTemp.Add(strId)
+                Catch ex As InvalidCastException
+                    colReturn = Nothing
+                    Exit While
+                End Try
+            End While
+            objRS.Close()
+            objRS = Nothing
+            For Each strId In colTemp
+                nId = CLng(strId)
+                objFCT = FactHBV.createandload(nId)
+                objFCT.resetBooleans()
+
+                If objFCT.id = nId Then
+                    colReturn.Add(objFCT, objFCT.code)
+                End If
+            Next
+            Return colReturn
+        Catch ex As Exception
+            setError("ListeFACTHBVEtat", ex.ToString() & sqlString)
+            colReturn = Nothing
+        End Try
+        Debug.Assert(Not colReturn Is Nothing, "ListeFACTHBVEtat: colReturn is nothing" & FactHBV.getErreur())
+        Return colReturn
+    End Function 'ListeFactTRPEtat
 #Region "Paramètres FACTHBV"
     Private Sub CreateParameterP_FHBV_CODE(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande

@@ -84,6 +84,11 @@ les tests unitaires FicheTechniqueFournTest
  Test l'export vers Quadra
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T110_CREATEFROMCOMMANDECLT">
+	<summary>
+ Création depuis une commande Client
+ </summary>
+	<remarks></remarks>
 </member><member name="T:vini_test.T1500_FactHBV">
 	<summary>
  Test des la classe FactHBV

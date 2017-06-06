@@ -1220,6 +1220,25 @@ Represents the connection and commands used to retrieve and save data.
  </summary>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.ListeFACTHBV(System.String,System.String,vini_DB.vncEnums.vncEtatCommande)">
+	<summary>
+ Rend une collection de FactHBV
+ </summary>
+	<param name="strCode"></param>
+	<param name="strRSClient"></param>
+	<param name="pEtat"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.ListeFACTHBVDate(System.DateTime,System.DateTime,System.String,vini_DB.vncEnums.vncEtatCommande)">
+	<summary>
+ Rend une liste de factHBV en fonctino des date et de l'état
+ </summary>
+	<param name="pddeb"></param>
+	<param name="pdfin"></param>
+	<param name="pCodeClient"></param>
+	<param name="pEtat"></param>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_DB.Persist.LoadcolLgFactColisage">
 	<summary>
  Chargement de la liste des lignes d'une facture de Colisage
