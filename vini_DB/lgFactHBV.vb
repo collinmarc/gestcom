@@ -17,8 +17,6 @@ Public Class LgFactHBV
     Private m_prixTTC As Decimal               'Prix Total TTC
     Private m_bGratuit As Boolean           'Ligne Gratuite
     Private m_bProduitLoaded As Boolean
-    Private m_poids As Decimal         'Poids de la commande
-    Private m_qteColis As Decimal         'Quantite de colis
 
 #Region "Accesseurs"
     Public Sub New()
@@ -195,38 +193,6 @@ Public Class LgFactHBV
         End Get
     End Property
 
-    Public Property poids() As Decimal
-        Get
-            Return m_poids
-        End Get
-        Set(ByVal Value As Decimal)
-            If m_poids <> Value Then
-                m_poids = Value
-                RaiseUpdated()
-            End If
-
-        End Set
-    End Property
-
-    Public Property qteColis() As Decimal
-        Get
-            Return m_qteColis
-        End Get
-        Set(ByVal Value As Decimal)
-            If m_qteColis <> Value Then
-                m_qteColis = Value
-                RaiseUpdated()
-            End If
-
-        End Set
-    End Property
-
-    Public Sub calcPoidsColis()
-        Debug.Assert(m_oProduit.id <> 0, "Produit inexistant")
-        poids = m_oProduit.poids * m_qteCom
-        qteColis = m_oProduit.qteColis(m_qteCom)
-    End Sub
-
 #End Region
 
 #Region "Méthodes Persist"
@@ -336,8 +302,6 @@ Public Class LgFactHBV
             bReturn = bReturn And (prixHT = objLgCommande.prixHT)
             bReturn = bReturn And (prixTTC = objLgCommande.prixTTC)
             bReturn = bReturn And (bGratuit = objLgCommande.bGratuit)
-            bReturn = bReturn And (poids = objLgCommande.poids)
-            bReturn = bReturn And (qteColis = objLgCommande.qteColis)
 
 
         Catch ex As Exception
@@ -364,6 +328,7 @@ Public Class LgFactHBV
             m_prixHT = 0
             m_prixTTC = 0
         Else
+            'Récupération du taux de TVA du produit
             For Each oParam In Param.colTVA
                 If oParam.id = oProduit.idTVA Then
                     nTaux = CDbl(oParam.valeur)

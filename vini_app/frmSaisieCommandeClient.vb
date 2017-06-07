@@ -403,6 +403,36 @@ Public Class frmCommandeClient
         objReport.SetParameterValue("IDCOMMANDE", getCommandeCourante.id)
         restoreCursor()
     End Sub 'Passe les paramètres à l'état Crystal Report
+    Protected Overrides Function affichecrFactHBV() As Boolean
+        Dim objReport As ReportDocument
+        Dim strReportName As String
+        'Si la facture n'a pas été générée, il faut la générer au préalable
+        Dim oCmd As CommandeClient
+        Dim oFactHBV As FactHBV
+        oCmd = getElementCourant()
+        oFactHBV = FactHBV.createandloadFromCmd(oCmd.id)
+        If oFactHBV.id = 0 Then
+            If MsgBox("La facture n'a pas été générée, voulez-vous la générer maintenant ?", MsgBoxStyle.YesNo
+                      ) = MsgBoxResult.Yes Then
+                Cursor = Cursors.WaitCursor
+                oFactHBV = New FactHBV(oCmd)
+                oFactHBV.Save()
+                Cursor = Cursors.Default
+            End If
+        End If
+        If (oFactHBV.id <> 0) Then
+            Cursor = Cursors.WaitCursor
+            objReport = New ReportDocument
+            strReportName = PATHTOREPORTS & "crFactHobivin.rpt"
+            objReport.Load(strReportName)
+            objReport.SetParameterValue("IDCOMMANDE", oFactHBV.id)
+            Persist.setReportConnection(objReport)
+            crwFact.ReportSource = objReport
+            crwFact.Zoom(1)
+            Cursor = Cursors.Default
+        End If
+        Return True
+    End Function 'Affichage du Bon de Livraison
     Protected Overrides Function faxerBL(ByVal pnumfax As String, Optional ByVal poTiers As Tiers = Nothing) As Boolean
         'Dim diskOpts As New CrystalDecisions.Shared.DiskFileDestinationOptions
         'Dim objFax As clsFax
@@ -872,6 +902,7 @@ Public Class frmCommandeClient
                 laMtComm.Visible = False
                 tbMtComm.Visible = False
             End If
+            SSTabCommandeClient.TabPages.RemoveByKey(tpFactHbv.Name)
         End If
 
     End Sub

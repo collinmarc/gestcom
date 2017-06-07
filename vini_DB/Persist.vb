@@ -4093,8 +4093,7 @@ Public MustInherit Class Persist
                                     "CMD_CLT_RSLIVRAISON= ?, " & _
                                     "CMD_IDPRESTASHOP= ?, " & _
                                     "CMD_NAMEPRESTASHOP= ?, " & _
-                                    "CMD_ORIGINE= ?, " & _
-                                    "CMD_IDFHBV= ? " & _
+                                    "CMD_ORIGINE= ? " & _
                                     " WHERE CMD_ID = ?"
         Dim objCommand As OleDbCommand
         '        Dim objParam As OleDbParameter
@@ -4177,7 +4176,6 @@ Public MustInherit Class Persist
         CreateParameterP_CMD_IDPRESTASHOP(objCommand)
         CreateParameterP_CMD_NAMEPRESTASHOP(objCommand)
         CreateParameterP_CMD_Origine(objCommand)
-        CreateParameterP_CMD_IDFHBV(objCommand)
 
         CreateParameterP_ID(objCommand)
         Try
@@ -4280,11 +4278,9 @@ Public MustInherit Class Persist
                                     "CMD_CLT_RSLIVRAISON," & _
                                     "CMD_IDPRESTASHOP," & _
                                     "CMD_NAMEPRESTASHOP," & _
-                                    "CMD_ORIGINE," & _
-                                    "CMD_IDFHBV" & _
+                                    "CMD_ORIGINE" & _
                                           " ) VALUES ( " & _
                                             "? ," & _
-                                    "? ," & _
                                     "? ," & _
                                     "? ," & _
                                     "? ," & _
@@ -4439,7 +4435,6 @@ Public MustInherit Class Persist
         CreateParameterP_CMD_IDPRESTASHOP(objCommand)
         CreateParameterP_CMD_NAMEPRESTASHOP(objCommand)
         CreateParameterP_CMD_Origine(objCommand)
-        CreateParameterP_CMD_IDFHBV(objCommand)
         Try
 
             objCommand.ExecuteNonQuery()
@@ -4987,7 +4982,6 @@ Public MustInherit Class Persist
             objCMDCLT.IDPrestashop = getLong(objRS, "CMD_IDPRESTASHOP")
             objCMDCLT.NamePrestashop = GetString(objRS, "CMD_NAMEPRESTASHOP")
             objCMDCLT.Origine = Trim(GetString(objRS, "CMD_ORIGINE"))
-            objCMDCLT.idFactHobivin = GetValue(objRS, "CMD_IDFHBV")
             cleanErreur()
             objRS.Close()
             bReturn = True
@@ -5501,11 +5495,6 @@ Public MustInherit Class Persist
         Dim objCMD As CommandeClient
         objCMD = Me
         objOLeDBCommand.Parameters.AddWithValue("?", truncate(objCMD.Origine, 50))
-    End Sub
-    Private Sub CreateParameterP_CMD_IDFHBV(ByVal objOLeDBCommand As OleDbCommand)
-        Dim objCMD As CommandeClient
-        objCMD = Me
-        objOLeDBCommand.Parameters.AddWithValue("?", objCMD.idFactHobivin)
     End Sub
 #End Region
 #Region "Fonction Database SousCommande"
@@ -10994,8 +10983,10 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT," & _
                                     "FHBV_IDMODEREGLEMENT," & _
                                     "FHBV_DECHEANCE," & _
+                                    "FHBV_IDCOMMANDE," & _
                                     "FHBV_BINTERNET" & _
                                   " ) VALUES ( " & _
+                                    "? ," & _
                                     "? ," & _
                                     "? ," & _
                                     "? ," & _
@@ -11028,6 +11019,7 @@ Public MustInherit Class Persist
         CreateParameterP_FHBV_COM_FACT(objCommand)
         CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FHBV_DECHEANCE(objCommand)
+        CreateParameterP_FHBV_IDCOMMANDE(objCommand)
         CreateParameterP_FHBV_BINTERNET(objCommand)
         Try
             objCommand.ExecuteNonQuery()
@@ -11129,6 +11121,44 @@ Public MustInherit Class Persist
         Debug.Assert(bReturn, getErreur())
         Return bReturn
     End Function 'DeleteRefFACTHBV
+    ''' <summary>
+    ''' Chargement de la facture à partir de l'Id de la commande
+    ''' </summary>
+    ''' <param name="pIdCmd"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function loadFACTHBVFromCmd(pIdCmd As Long) As Boolean
+        Dim sqlString As String = "SELECT FHBV_ID " & _
+                            "FROM FACTHBV WHERE FHBV_IDCOMMANDE = " & pIdCmd
+        Dim bReturn As Boolean
+        Dim objCommand As OleDbCommand
+        Dim objFACT As FactHBV
+        Dim objRS As OleDbDataReader = Nothing
+        objCommand = m_dbconn.Connection.CreateCommand()
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+        Try
+            objRS = objCommand.ExecuteReader
+            While (objRS.Read())
+                Dim nId As Integer
+                nId = getInteger(objRS, "FHBV_ID")
+                m_id = nId
+                loadFACTHBV()
+            End While
+            objRS.Close()
+            objRS = Nothing
+            bReturn = True
+        Catch ex As Exception
+            setError("ListeFACTHBVFromCmd", sqlString & vbCrLf & ex.ToString())
+            bReturn = False
+        End Try
+
+        Debug.Assert(bReturn, getErreur())
+
+        Return bReturn
+
+    End Function 'loadFACTHBVFromCmd
+
     Protected Function loadFACTHBV() As Boolean
 
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
@@ -11145,6 +11175,7 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT," & _
                                     "FHBV_IDMODEREGLEMENT," & _
                                     "FHBV_DECHEANCE," & _
+                                    "FHBV_IDCOMMANDE," & _
                                     "FHBV_BINTERNET" & _
                                     " FROM FACTHBV WHERE " & _
                                    " FHBV_ID = ?"
@@ -11225,6 +11256,11 @@ Public MustInherit Class Persist
             Catch ex As InvalidCastException
                 objFHBV.CommFacturation.comment = ""
             End Try
+            Try
+                objFHBV.idCommande = getInteger(objRS, "FHBV_IDCOMMANDE")
+            Catch ex As InvalidCastException
+                objFHBV.idCommande = 0
+            End Try
 
             cleanErreur()
             bReturn = True
@@ -11259,6 +11295,7 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT = ? ," & _
                                     "FHBV_IDMODEREGLEMENT = ?," & _
                                     "FHBV_DECHEANCE = ?," & _
+                                    "FHBV_IDCOMMANDE = ?," & _
                                     "FHBV_BINTERNET = ?" & _
                                     " WHERE FHBV_ID = ?"
 
@@ -11283,6 +11320,7 @@ Public MustInherit Class Persist
         CreateParameterP_FHBV_COM_FACT(objCommand)
         CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FHBV_DECHEANCE(objCommand)
+        CreateParameterP_FHBV_IDCOMMANDE(objCommand)
         CreateParameterP_FHBV_BINTERNET(objCommand)
         CreateParameterP_ID(objCommand)
         Try
@@ -11895,12 +11933,7 @@ Public MustInherit Class Persist
         objCommand.Parameters.AddWithValue("?", objCMD.dateCommande.ToShortDateString)
 
     End Sub
-    Private Sub CreateParameterP_FHBV_TOTAL_TAXES(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", objCMD.montantTaxes)
-    End Sub
-    Private Sub CreateParameterP_FHBV_TOTAL_HT(ByVal objCommand As OleDbCommand)
+     Private Sub CreateParameterP_FHBV_TOTAL_HT(ByVal objCommand As OleDbCommand)
         Dim objCMD As Commande
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", CDbl(objCMD.totalHT))
@@ -11916,29 +11949,7 @@ Public MustInherit Class Persist
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", truncate(objCMD.CommFacturation.comment, 50))
     End Sub
-    Private Sub CreateParameterP_FHBV_PERIODE(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", truncate(objCMD.periode, 50))
-    End Sub
-    Private Sub CreateParameterP_FHBV_MONTANT_REGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", CDbl(objCMD.montantReglement))
-
-    End Sub
-    Private Sub CreateParameterP_FHBV_DATE_REGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", objCMD.dateReglement)
-
-    End Sub
-    Private Sub CreateParameterP_FHBV_REF_REGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", truncate(objCMD.refReglement, 50))
-    End Sub
-    Private Sub CreateParameterP_FHBV_IDMODEREGLEMENT(ByVal objCommand As OleDbCommand)
+     Private Sub CreateParameterP_FHBV_IDMODEREGLEMENT(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactHBV
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.idModeReglement)
@@ -11952,6 +11963,11 @@ Public MustInherit Class Persist
         Dim objCMD As FactHBV
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
+    End Sub
+    Private Sub CreateParameterP_FHBV_IDCOMMANDE(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactHBV
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.idCommande)
     End Sub
 #End Region
 

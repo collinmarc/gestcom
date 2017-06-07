@@ -2,6 +2,8 @@ Imports System
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports vini_DB
 Imports System.IO
+Imports CrystalDecisions.Shared
+Imports CrystalDecisions.CrystalReports.Engine
 
 ''' <summary>
 ''' Test des la classe FactHBV
@@ -106,8 +108,6 @@ Imports System.IO
 
         objFactHBV = New FactHBV(m_oClient)
         Assert.IsTrue(objFactHBV.oTiers.Equals(m_oClient), "Le Client est identique à celui passé en paramètre à la création")
-        Assert.IsTrue(objFactHBV.periode = "")
-        Assert.IsTrue(objFactHBV.montantReglement = 0)
         Assert.IsTrue(objFactHBV.etat.codeEtat = vncEnums.vncEtatCommande.vncFactHBVGeneree)
         Assert.IsTrue(objFactHBV.code = "")
         Assert.IsTrue(objFactHBV.totalHT = 0)
@@ -150,6 +150,10 @@ Imports System.IO
         Assert.IsTrue(objFactHBV.etat.codeEtat = vncEnums.vncEtatCommande.vncFactHBVExportee, "Code Etat ne change pas")
         objFactHBV.changeEtat(vncEnums.vncActionEtatCommande.vncActionFactHBVAnnGenerer)
         Assert.IsTrue(objFactHBV.etat.codeEtat = vncEnums.vncEtatCommande.vncFactHBVExportee, "Code Etat ne change pas")
+
+        'IdCommande
+        objFactHBV.idCommande = 15060
+        Assert.AreEqual(CLng(15060), objFactHBV.idCommande)
 
     End Sub 'T10_Object
     <TestMethod()> Public Sub T15_GETDERNNUMFACT()
@@ -246,6 +250,38 @@ Imports System.IO
 
         objFactHBV2.bDeleted = True
         Assert.IsTrue(objFactHBV2.Save())
+
+
+    End Sub
+    ''' <summary>
+    ''' Test de la sauvegarde de la  facture
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T20_DB_FACT()
+        Dim objFactHBV As FactHBV
+        Dim objFactHBV2 As FactHBV
+        Dim nId As Integer
+
+        'Création d'une facture HOBIVIN
+        objFactHBV = New FactHBV(m_oClient)
+        objFactHBV.dEcheance = "01/04/1964"
+        objFactHBV.idModeReglement = 1
+        objFactHBV.idCommande = 15060
+
+
+        'Sauvegarde de la facture
+        Assert.IsTrue(objFactHBV.Save(), objFactHBV.getErreur())
+
+        'Rechargement de la facture
+        nId = objFactHBV.id
+        objFactHBV2 = FactHBV.createandload(nId)
+
+        Assert.AreEqual(objFactHBV.id, objFactHBV2.id)
+        Assert.AreEqual(objFactHBV.code, objFactHBV2.code)
+        Assert.AreEqual(CDate("01/04/1964"), objFactHBV2.dEcheance, "Date Echeance")
+        Assert.AreEqual(1, objFactHBV2.idModeReglement, "Mode de reglement")
+        Assert.AreEqual(CLng(15060), objFactHBV2.idCommande, "idCommande")
+
 
 
     End Sub
@@ -500,7 +536,6 @@ Imports System.IO
         Dim strLine3 As String
 
         objFact = New FactHBV(m_oClient)
-        objFact.periode = "1er Timestre 1964"
         objFact.dateFacture = CDate("06/02/1964")
         objFact.totalHT = 150.56
         objFact.totalTTC = 180.89
@@ -579,6 +614,7 @@ Imports System.IO
 
         oFactHBV = New FactHBV(objCMD)
 
+        Assert.AreEqual(CLng(objCMD.id), oFactHBV.idCommande)
         Assert.AreEqual(objCMD.dateCommande, oFactHBV.dateCommande)
         Assert.AreEqual(objCMD.colLignes.Count, oFactHBV.colLignes.Count)
         Dim oLgCMD As LgCommande
@@ -607,6 +643,181 @@ Imports System.IO
         Assert.AreEqual(oLgCMD.prixHT, oLgHBV.prixHT)
         Assert.AreEqual(oLgCMD.prixTTC, oLgHBV.prixTTC)
         Assert.AreEqual(oLgCMD.bGratuit, oLgHBV.bGratuit)
+    End Sub
+    <TestMethod()> Public Sub T120_CALCULPRIXLG()
+        m_oProduit.idTVA = Param.TVAdefaut.id
+
+        Dim oLg As New LgFactHBV()
+        oLg.oProduit = m_oProduit
+        oLg.qteCommande = 5
+        oLg.qteLiv = 7
+        oLg.qteFact = 10
+        oLg.prixU = 15.5
+
+        Assert.IsTrue(oLg.calculPrixTotal())
+        Assert.AreEqual(CDec(10 * 15.5), oLg.prixHT)
+        Assert.AreEqual(CDec(10 * 15.5 * (1 + (Param.TVAdefaut.valeur / 100))), oLg.prixTTC)
+
+        oLg.bGratuit = True
+        Assert.IsTrue(oLg.calculPrixTotal())
+        Assert.AreEqual(CDec(0), oLg.prixHT)
+        Assert.AreEqual(CDec(0), oLg.prixTTC)
+
+
+    End Sub
+    <TestMethod()> Public Sub T120_CALCULPRIXFACT()
+
+        Dim oFact As FactHBV
+
+        
+        m_oProduit.idTVA = Param.TVAdefaut.id
+        objProduit2.idTVA = Param.TVAdefaut.id
+        oFact = New FactHBV(m_oClient)
+
+        Dim oLg As New LgFactHBV()
+        oLg.oProduit = m_oProduit
+        oLg.qteCommande = 5
+        oLg.qteLiv = 7
+        oLg.qteFact = 10
+        oLg.prixU = 15.5
+
+        oFact.AjouteLigneFactHBV(oLg)
+
+        oLg = New LgFactHBV()
+        oLg.oProduit = objProduit2
+        oLg.qteCommande = 50
+        oLg.qteLiv = 70
+        oLg.qteFact = 100
+        oLg.prixU = 150.5
+        oFact.AjouteLigneFactHBV(oLg)
+
+
+        Assert.IsTrue(oFact.calculPrixTotal())
+
+        Assert.AreEqual(CDec(10 * 15.5) + CDec(100 * 150.5), oFact.totalHT)
+        Assert.AreEqual(CDec(oFact.totalHT * (1 + (Param.TVAdefaut.valeur / 100))), oFact.totalTTC)
+
+
+
+    End Sub
+    ''' <summary>
+    ''' Test du chargement depuis  L'id d'uine commmande
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T130_LOADFROMCMD()
+
+        Dim objCMD As CommandeClient
+        Dim oFactHBV As FactHBV
+
+        'CREATION D'UNE COMMANDE CLIENT
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+        'Ajout de 2 lignes de Commandes
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit, 12, 20, True, 120, (120 * 1.196))
+        objCMD.AjouteLigne(objCMD.getNextNumLg, objProduit2, 12, 20, True, 125, (125 * 1.196))
+
+        Assert.IsTrue(objCMD.save())
+
+        Dim nId As Long
+        nId = objCMD.id
+
+        'Chargement avant la génération
+        oFactHBV = FactHBV.createandloadFromCmd(nId)
+        Assert.AreEqual(0, oFactHBV.id)
+
+        oFactHBV = New FactHBV(objCMD)
+        oFactHBV.Save()
+        Dim nIdFact As Integer
+        nIdFact = oFactHBV.id
+
+        'Chargement après génération
+        oFactHBV = FactHBV.createandloadFromCmd(nId)
+        Assert.AreEqual(nIdFact, oFactHBV.id)
+        Assert.AreEqual(nId, oFactHBV.idCommande)
+
+        oFactHBV.bDeleted = True
+        oFactHBV.Save()
+
+
+    End Sub
+    ''' <summary>
+    ''' Test du chargement depuis  L'id d'uine commmande
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T150_GENERATIONETAT()
+
+        Dim objCMD As CommandeClient
+        Dim oFactHBV As FactHBV
+
+        'Initialisation des Données pour la facture
+        m_oClient.rs = "CLIENT RS"
+        m_oClient.AdresseLivraison.rue1 = "AdresseLivraison Rue1"
+        m_oClient.AdresseLivraison.rue2 = "AdresseLivraison Rue2"
+        m_oClient.AdresseLivraison.cp = "35000"
+        m_oClient.AdresseLivraison.ville = "Adresse Livraison Ville"
+        m_oClient.AdresseLivraison.tel = "0299559955"
+        m_oClient.AdresseLivraison.fax = "0102030405"
+        m_oClient.AdresseLivraison.port = "0605040302"
+        m_oClient.AdresseLivraison.Email = "liv@client.Com"
+
+        m_oClient.AdresseFacturation.rue1 = "AdresseFacturation Rue1"
+        m_oClient.AdresseFacturation.rue2 = "AdresseFacturation Rue2"
+        m_oClient.AdresseFacturation.cp = "36000"
+        m_oClient.AdresseFacturation.ville = "Adresse Facturation Ville"
+        m_oClient.AdresseFacturation.tel = "0399559955"
+        m_oClient.AdresseFacturation.fax = "0402030405"
+        m_oClient.AdresseFacturation.port = "0505040302"
+        m_oClient.AdresseFacturation.Email = "fact@client.Com"
+        m_oClient.save()
+
+
+        'CREATION D'UNE COMMANDE CLIENT
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.DuppliqueCaracteristiqueTiers()
+        objCMD.dateCommande = CDate("06/02/1964")
+        objCMD.dateEnlevement = CDate("08/02/1964")
+        objCMD.dateLivraison = CDate("10/02/1964")
+        'Ajout de 2 lignes de Commandes
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit, 12, 20)
+        objCMD.AjouteLigne(objCMD.getNextNumLg, objProduit2, 5, 25.5)
+
+
+        'On Simule la Livraison
+        For Each oLg As LgCommande In objCMD.colLignes
+            oLg.qteLiv = oLg.qteCommande
+            oLg.qteFact = oLg.qteCommande
+        Next
+
+        Assert.IsTrue(objCMD.save())
+
+        Dim nId As Long
+        nId = objCMD.id
+
+        oFactHBV = New FactHBV(objCMD)
+        oFactHBV.calculPrixTotal()
+        oFactHBV.Save()
+        Dim nIdFact As Integer
+        nIdFact = oFactHBV.id
+
+        Dim objReport As ReportDocument
+        Dim strReportName As String
+
+        objReport = New ReportDocument
+        strReportName = "V:\V5\vini_app\bin\Debug/crFactHobivin.rpt"
+        objReport.Load(strReportName)
+        objReport.SetParameterValue("IDCOMMANDE", oFactHBV.id)
+        Persist.setReportConnection(objReport)
+
+        objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "FactHBV.pdf")
+
+        Assert.IsTrue(File.Exists("FactHBV.pdf"))
+
+        System.Diagnostics.Process.Start("FactHBV.pdf")
+
+        oFactHBV.bDeleted = True
+        oFactHBV.Save()
+
+
     End Sub
 End Class
 

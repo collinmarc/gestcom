@@ -33,6 +33,13 @@ vini_DB
  </summary>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:vini_DB.FactHBV.createandloadFromCmd(System.Int64)">
+	<summary>
+ Creation et chargement d'une factute HBV à partir d'un id de commande
+ </summary>
+	<param name="pIdCmd"></param>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_DB.FactHBV.insert">
 	<summary>
  insertion d'une facture dans la base de données
@@ -1196,6 +1203,13 @@ Represents the connection and commands used to retrieve and save data.
  </summary>
 	<param name="strCode"></param>
 	<param name="strRSClient"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.loadFACTHBVFromCmd(System.Int64)">
+	<summary>
+ Chargement de la facture à partir de l'Id de la commande
+ </summary>
+	<param name="pIdCmd"></param>
 	<returns></returns>
 	<remarks></remarks>
 </member><member name="M:vini_DB.Persist.saveColLGFACTHBV">

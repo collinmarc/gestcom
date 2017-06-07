@@ -140,7 +140,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("F:\Mesdocuments\Newco\vincom\V5_SVN\gestcom\vini_app\bin\Debug")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("V:/V5/vini_app/bin/Debug")>  _
         Public Property PathToReport() As String
             Get
                 Return CType(Me("PathToReport"),String)

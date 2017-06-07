@@ -24,7 +24,7 @@
       <Value Profile="(Default)">5.2.0</Value>
     </Setting>
     <Setting Name="PathToReport" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F:\Mesdocuments\Newco\vincom\V5_SVN\gestcom\vini_app\bin\Debug</Value>
+      <Value Profile="(Default)">V:/V5/vini_app/bin/Debug</Value>
     </Setting>
     <Setting Name="ImapHost" Type="System.String" Scope="Application">
       <Value Profile="(Default)">imap.google.com</Value>

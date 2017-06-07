@@ -222,17 +222,6 @@ Public Class CommandeClient
             End If
         End Set
     End Property
-    Public Property idFactHobivin As Long
-        Get
-            Return m_idFHBV
-        End Get
-        Set(value As Long)
-            If value <> m_idFHBV Then
-                m_idFHBV = value
-                RaiseUpdated()
-            End If
-        End Set
-    End Property
 #End Region
 #Region "Méthodes de Classe"
     '=======================================================================

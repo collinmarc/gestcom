@@ -69,6 +69,11 @@ les tests unitaires FicheTechniqueFournTest
  Test la récupération du client intermédiaire d'une origine
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T20_DB_FACT">
+	<summary>
+ Test de la sauvegarde de la  facture
+ </summary>
+	<remarks></remarks>
 </member><member name="M:vini_test.T1500_FactHBV.T20_DB_LG">
 	<summary>
  Test de la sauvegarde des lignes de factures
@@ -87,6 +92,16 @@ les tests unitaires FicheTechniqueFournTest
 </member><member name="M:vini_test.T1500_FactHBV.T110_CREATEFROMCOMMANDECLT">
 	<summary>
  Création depuis une commande Client
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T130_LOADFROMCMD">
+	<summary>
+ Test du chargement depuis  L'id d'uine commmande
+ </summary>
+	<remarks></remarks>
+</member><member name="M:vini_test.T1500_FactHBV.T150_GENERATIONETAT">
+	<summary>
+ Test du chargement depuis  L'id d'uine commmande
  </summary>
 	<remarks></remarks>
 </member><member name="T:vini_test.T1500_FactHBV">

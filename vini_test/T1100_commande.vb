@@ -891,7 +891,6 @@ Imports vini_DB
         objCMD = New CommandeClient(m_oClient)
 
         Assert.AreEqual("VINICOM", objCMD.Origine)
-        Assert.AreEqual(0L, objCMD.idFactHobivin)
 
         objCMD.dateCommande = CDate("06/02/1964")
         objCMD.caracteristiqueTiers.banque = "BANQUE"
@@ -933,22 +932,18 @@ Imports vini_DB
         objCMD.NamePrestashop = "AQWZSX"
 
         objCMD.Origine = "HOBIVIN"
-        objCMD.idFactHobivin = 98765
 
 
         Assert.IsTrue(objCMD.save())
 
         objCMD2 = CommandeClient.createandload(objCMD.id)
-        Assert.AreEqual(98765L, objCMD2.idFactHobivin)
         Assert.AreEqual("HOBIVIN", objCMD2.Origine)
 
-        objCMD2.idFactHobivin = 147258
         objCMD2.Origine = "VINICOM"
 
         Assert.IsTrue(objCMD2.save())
 
         objCMD = CommandeClient.createandload(objCMD2.id)
-        Assert.AreEqual(147258L, objCMD2.idFactHobivin)
         Assert.AreEqual("VINICOM", objCMD2.Origine)
 
     End Sub

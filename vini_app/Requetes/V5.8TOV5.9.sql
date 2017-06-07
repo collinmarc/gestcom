@@ -32,7 +32,6 @@ GO
 USE [vnc5TU]
 GO
 
-/****** Object:  Table [dbo].[LIGNE_COMMANDE]    Script Date: 06/06/2017 17:23:30 ******/
 SET ANSI_NULLS ON
 GO
 

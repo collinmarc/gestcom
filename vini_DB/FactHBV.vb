@@ -2,13 +2,7 @@ Imports System.configuration
 Public Class FactHBV
     Inherits Facture
 
-    Private m_dateStat As Date
-    Private m_periode As String
-    Private m_montantTaxes As Decimal
-    Private m_montantReglement As Decimal
-    Private m_refReglement As String
-    Private m_dateReglement As Date
-    '    Private m_idModeRegelement As Long
+    Private m_idCommande As Long
 
 #Region "Accesseurs"
     Public Sub New(ByVal poClient As Client)
@@ -22,6 +16,7 @@ Public Class FactHBV
         idModeReglement = poCmd.oTiers.idModeReglement1 'utilisation du mode de reglement du Tiers
         dateCommande = poCmd.dateCommande
         CommFacturation.comment = poCmd.CommentaireFacturationText
+        m_idCommande = poCmd.id
         For Each oLg As LgCommande In poCmd.colLignes
             Dim olgFHBV As New LgFactHBV()
             olgFHBV.oProduit = oLg.oProduit
@@ -37,7 +32,18 @@ Public Class FactHBV
 
         Next
     End Sub
-
+    Public Property idCommande() As Long
+        Get
+            Return m_idCommande
+        End Get
+        Set(ByVal Value As Long)
+            If Not m_idCommande.Equals(Value) Then
+                m_idCommande = Value
+                RaiseUpdated()
+            End If
+        End Set
+    End Property
+#End Region
     Public Shared Function createandload(ByVal pid As Long) As FactHBV
         '=======================================================================
         ' Contructeur pour chargement
@@ -73,86 +79,30 @@ Public Class FactHBV
         Debug.Assert(obj.code = pCode, "FactHBV " & pCode & " non chargée")
         Return obj
     End Function 'createandload
-    Friend Sub New()
+    ''' <summary>
+    ''' Creation et chargement d'une factute HBV à partir d'un id de commande
+    ''' </summary>
+    ''' <param name="pIdCmd"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function createandloadFromCmd(ByVal pIdCmd As Long) As FactHBV
+        '=======================================================================
+        ' Contructeur pour chargement
+        '=======================================================================
+        Dim obj As FactHBV = Nothing
+        Try
+            obj = New FactHBV()
+            obj.loadFACTHBVFromCmd(pIdCmd)
+
+        Catch ex As Exception
+            setError("createandloadFromCmd", ex.Message)
+        End Try
+        Return obj
+    End Function 'createandload
+    Private Sub New()
         Me.New(New Client)
     End Sub
-    Public Property dateReglement() As Date
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_dateReglement.ToShortDateString
-        End Get
-        Set(ByVal Value As Date)
-            If Value.ToShortDateString <> m_dateReglement.ToShortDateString Then
-                RaiseUpdated()
-                m_dateReglement = Value.ToShortDateString
-            End If
-        End Set
-    End Property
 
-    Public Property dateStatistique() As Date
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_dateStat.ToShortDateString
-        End Get
-        Set(ByVal Value As Date)
-            If Value.ToShortDateString <> m_dateStat.ToShortDateString Then
-                RaiseUpdated()
-                m_dateStat = Value.ToShortDateString
-            End If
-        End Set
-    End Property
-    Public Property periode() As String
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_periode
-        End Get
-        Set(ByVal Value As String)
-            If Value <> m_periode Then
-                RaiseUpdated()
-                m_periode = Value
-            End If
-        End Set
-
-    End Property
-    Public Property refReglement() As String
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_refReglement
-        End Get
-        Set(ByVal Value As String)
-            If Value <> m_refReglement Then
-                RaiseUpdated()
-                m_refReglement = Value
-            End If
-        End Set
-
-    End Property
-    Public Property montantReglement() As Decimal
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_montantReglement
-        End Get
-        Set(ByVal Value As Decimal)
-            If Value <> m_montantReglement Then
-                RaiseUpdated()
-                m_montantReglement = Value
-            End If
-        End Set
-    End Property
-
-    Public Property montantTaxes() As Decimal
-        Get
-            Debug.Assert(Not bResume, "Objet Résumé")
-            Return m_montantTaxes
-        End Get
-        Set(ByVal Value As Decimal)
-            If Value <> m_montantTaxes Then
-                RaiseUpdated()
-                m_montantTaxes = Value
-            End If
-        End Set
-
-    End Property
 
     Public Overrides ReadOnly Property shortResume() As String
         Get
@@ -160,7 +110,6 @@ Public Class FactHBV
         End Get
     End Property
 
-#End Region
 #Region "Méthode de racine"
 
     '=======================================================================
@@ -170,7 +119,7 @@ Public Class FactHBV
     'Retour : une Chaine
     '=======================================================================
     Public Overrides Function toString() As String
-        Return "(" & code & "," & dateCommande & "," & periode & "," & oTiers.code & "," & m_TotalHT & "," & m_TotalTTC & ")"
+        Return "(" & code & "," & dateCommande & "," & oTiers.code & "," & m_TotalHT & "," & m_TotalTTC & ")"
     End Function
     '=======================================================================
     'Fonction : Equals()
@@ -186,13 +135,8 @@ Public Class FactHBV
 
             bReturn = MyBase.Equals(obj)
             objCommande = obj
-            bReturn = bReturn And (m_periode.Equals(objCommande.periode))
 
-            bReturn = bReturn And (m_montantReglement.Equals(objCommande.montantReglement))
-            bReturn = bReturn And (m_dateReglement.Equals(objCommande.dateReglement))
-            bReturn = bReturn And (m_refReglement.Equals(objCommande.refReglement))
             bReturn = bReturn And (m_IDModeReglement.Equals(objCommande.idModeReglement))
-            bReturn = bReturn And (m_montantTaxes.Equals(objCommande.montantTaxes))
             Return bReturn
 
         Catch ex As Exception
@@ -235,7 +179,34 @@ Public Class FactHBV
 
         Return bReturn
     End Function 'DBLoad
+    Protected Function DBLoadFromCmd(Optional ByVal pid As Integer = 0) As Boolean
+        Dim bReturn As Boolean = False
+        Try
+            If pid <> 0 Then
+                m_id = pid
+            End If
 
+            bReturn = loadFACTHBV()
+            If id <> 0 Then
+                'Chargement des caractéristiques du Client
+                Try
+                    oTiers.load()
+                Catch ex As Exception
+                    bReturn = False
+                    setError("oTiers.load", Tiers.getErreur())
+                End Try
+                'Chargement des lignes de Facture
+                m_bcolLgLoaded = loadcolLignes()
+            End If
+
+
+        Catch ex As Exception
+            bReturn = False
+            setError("", ex.ToString())
+        End Try
+
+        Return bReturn
+    End Function 'DBLoad
     Friend Overrides Function delete() As Boolean
 
         Dim bReturn As Boolean = False
@@ -279,6 +250,7 @@ Public Class FactHBV
             If bcolLignesLoaded Then
                 bReturn = savecolLignes()
             End If
+
         Catch ex As Exception
             bReturn = False
             setError("FactHBV.insert", ex.ToString())
@@ -448,6 +420,13 @@ Public Class FactHBV
         Return Nothing
     End Function 'AjouteLigne
     Public Overrides Function calculPrixTotal() As Boolean
+        totalHT = 0
+        totalTTC = 0
+        For Each oLg As LgFactHBV In colLignes
+            oLg.calculPrixTotal()
+            totalHT = totalHT + oLg.prixHT
+            totalTTC = totalTTC + oLg.prixTTC
+        Next
         Return True
     End Function 'calculPrixTotal
 
@@ -478,63 +457,6 @@ Public Class FactHBV
 
 
 #End Region
-    Public Shared Function createFactHBVs(ByVal pcolCMD As Collection, Optional ByVal pdateFact As Date = DATE_DEFAUT, Optional ByVal pdateStat As Date = DATE_DEFAUT, Optional ByVal pPeriode As String = "") As ColEvent
-
-        '======================================================================================
-        'Function : createFactHBVs
-        'description : création des factures de Transport à partir d'une collection de commande
-        '               Pour chaque Client Différent une facture de transport est crée et les 
-        '           Commande de ce client lui sont attribué
-        '======================================================================================
-        Debug.Assert(Not pcolCMD Is Nothing)
-        Dim ocolReturn As ColEvent
-        Dim objCMD As CommandeClient
-        Dim objFactHBV As FactHBV
-
-        Try
-            'Traitement des paramètres
-            If pdateFact = DATE_DEFAUT Then
-                pdateFact = Now()
-            End If
-            If pdateStat = DATE_DEFAUT Then
-                pdateStat = pdateFact
-            End If
-            If pPeriode = "" Then
-                pPeriode = CStr(pdateStat.ToString("d"))
-            End If
-
-            ocolReturn = New ColEvent
-            'Parcours de toutes les Commandes de la collection
-            For Each objCMD In pcolCMD
-                'A-t-on déjà crée une facture de Transport pour ce Client
-                If ocolReturn.keyExists(objCMD.oTiers.code) Then
-                    'Une Facture à déjà été créée pour ce Client
-                    objFactHBV = ocolReturn(objCMD.oTiers.code)
-                Else
-                    'Il n'y a pas de facture pour ce client
-                    'Création de la facture de transport
-                    objFactHBV = New FactHBV(objCMD.oTiers)
-                    objFactHBV.dateFacture = pdateFact
-                    objFactHBV.dateStatistique = pdateStat
-                    objFactHBV.periode = pPeriode
-                    objFactHBV.montantTaxes = 0
-                    'Ajout de la facture à la collection 
-                    ocolReturn.Add(objFactHBV, objFactHBV.oTiers.code)
-                End If
-                'Ajout de la taxe d'enregistrement autant de fois qu'il y a de lignes
-                objFactHBV.montantTaxes = objFactHBV.montantTaxes + Param.getConstante("CST_TAXES_HBV")
-                'Ajout de la Commande dans la facture
-                '                objFactHBV.AjouteLigneFactHBV(objCMD, True)
-            Next
-        Catch ex As Exception
-            ocolReturn = Nothing
-            setError("FactHBV.createFactHBV", ex.ToString())
-        End Try
-
-        Debug.Assert(Not ocolReturn Is Nothing, getErreur())
-        Return ocolReturn
-
-    End Function 'createFactsHBV
     Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
         Dim colReturn As Collection
         shared_connect()
@@ -559,6 +481,9 @@ Public Class FactHBV
     Public Function AjouteLigneFactHBV(ByVal p_oLgFactHBV As LgFactHBV, Optional ByVal pCalcul As Boolean = True) As LgFactHBV
         m_bColLgInsertorDelete = True
         colLignes.Add(p_oLgFactHBV)
+        If pCalcul Then
+            calculPrixTotal()
+        End If
         Return p_oLgFactHBV
     End Function 'AjouteLigneFactHBV
     '=======================================================================
