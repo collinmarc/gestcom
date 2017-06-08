@@ -52,28 +52,30 @@ Public Class frmExportFacture
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tbCodeFacture As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents rbFactHobivin As System.Windows.Forms.RadioButton
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Me.CONSTANTESBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DsVinicom = New vini_DB.dsVinicom
-        Me.CONSTANTESTableAdapter = New vini_DB.dsVinicomTableAdapters.CONSTANTESTableAdapter
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
-        Me.cbParcourir = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbPath = New System.Windows.Forms.TextBox
-        Me.lbMessages = New System.Windows.Forms.ListBox
-        Me.cbExporter = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.rbFactCommission = New System.Windows.Forms.RadioButton
-        Me.rbFactTransport = New System.Windows.Forms.RadioButton
-        Me.rbFactColisage = New System.Windows.Forms.RadioButton
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.tbCodeFacture = New System.Windows.Forms.TextBox
-        Me.Label5 = New System.Windows.Forms.Label
+        Me.DsVinicom = New vini_DB.dsVinicom()
+        Me.CONSTANTESTableAdapter = New vini_DB.dsVinicomTableAdapters.CONSTANTESTableAdapter()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.cbParcourir = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbPath = New System.Windows.Forms.TextBox()
+        Me.lbMessages = New System.Windows.Forms.ListBox()
+        Me.cbExporter = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.rbFactCommission = New System.Windows.Forms.RadioButton()
+        Me.rbFactTransport = New System.Windows.Forms.RadioButton()
+        Me.rbFactColisage = New System.Windows.Forms.RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.tbCodeFacture = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.rbFactHobivin = New System.Windows.Forms.RadioButton()
         CType(Me.CONSTANTESBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsVinicom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -114,7 +116,7 @@ Public Class frmExportFacture
         'tbPath
         '
         Me.tbPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbPath.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CONSTANTESBindingSource, "CST_EXPORT_COMPTA_PATH", True))
         Me.tbPath.Location = New System.Drawing.Point(93, 127)
         Me.tbPath.Name = "tbPath"
@@ -124,8 +126,8 @@ Public Class frmExportFacture
         'lbMessages
         '
         Me.lbMessages.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbMessages.FormattingEnabled = True
         Me.lbMessages.Location = New System.Drawing.Point(7, 184)
         Me.lbMessages.Name = "lbMessages"
@@ -230,10 +232,22 @@ Public Class frmExportFacture
         Me.Label5.TabIndex = 19
         Me.Label5.Text = "ou"
         '
+        'rbFactHobivin
+        '
+        Me.rbFactHobivin.AutoSize = True
+        Me.rbFactHobivin.Location = New System.Drawing.Point(263, 71)
+        Me.rbFactHobivin.Name = "rbFactHobivin"
+        Me.rbFactHobivin.Size = New System.Drawing.Size(100, 17)
+        Me.rbFactHobivin.TabIndex = 20
+        Me.rbFactHobivin.TabStop = True
+        Me.rbFactHobivin.Text = "Facture Hobivin"
+        Me.rbFactHobivin.UseVisualStyleBackColor = True
+        '
         'frmExportFacture
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.rbFactHobivin)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.tbCodeFacture)
         Me.Controls.Add(Me.Label4)
@@ -251,7 +265,6 @@ Public Class frmExportFacture
         Me.Controls.Add(Me.Label2)
         Me.Name = "frmExportFacture"
         Me.Text = "Exportation des factures vers Quadra"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.CONSTANTESBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DsVinicom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -301,6 +314,7 @@ Public Class frmExportFacture
         Dim bExportFactureCommision As Boolean
         Dim bExportFactureColisage As Boolean
         Dim bExportFactureTransport As Boolean
+        Dim bExportFactureHobivin As Boolean
         Dim bReturn As Boolean
         Dim colFact As Collection
         Dim bCodeFact As Boolean
@@ -318,6 +332,7 @@ Public Class frmExportFacture
             bExportFactureCommision = rbFactCommission.Checked
             bExportFactureColisage = rbFactColisage.Checked
             bExportFactureTransport = rbFactTransport.Checked
+            bExportFactureHobivin = rbFactHobivin.Checked
             strCode = tbCodeFacture.Text
             bCodeFact = Not String.IsNullOrEmpty(strCode)
 
@@ -333,8 +348,8 @@ Public Class frmExportFacture
                 End If
                 bReturn = bReturn And exportFacture(strFile, colFact)
             End If
-                If bExportFactureTransport Then
-                    DisplayMessage("== EXPORTATION DES FACTURES DE TRANSPORT ==")
+            If bExportFactureTransport Then
+                DisplayMessage("== EXPORTATION DES FACTURES DE TRANSPORT ==")
                 strFile = strPath + "/FACTTRP" + Format(Now(), "yyyyMMdd")
                 If bCodeFact Then
                     colFact = FactTRP.getListe(strCode)
@@ -350,6 +365,16 @@ Public Class frmExportFacture
                     colFact = FactColisage.getListe(strCode)
                 Else
                     colFact = FactColisage.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactCOLGeneree)
+                End If
+                bReturn = bReturn And exportFacture(strFile, colFact)
+            End If
+            If bExportFactureHobivin Then
+                DisplayMessage("== EXPORTATION DES FACTURES HOBIVIN ==")
+                strFile = strPath + "/FACTHBV" + Format(Now(), "yyyyMMdd")
+                If bCodeFact Then
+                    colFact = FactHBV.getListe(strCode)
+                Else
+                    colFact = FactHBV.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactHBVGeneree)
                 End If
                 bReturn = bReturn And exportFacture(strFile, colFact)
             End If
@@ -372,7 +397,7 @@ Public Class frmExportFacture
     End Sub
 
     ''' <summary>
-    ''' Exporte les factures vers le répertoire indiqué
+    ''' Change l'état des factures à facturée
     ''' </summary>
     ''' <remarks></remarks>
     Private Function ValiderExport() As Boolean
@@ -382,6 +407,7 @@ Public Class frmExportFacture
         Dim bExportFactureCommision As Boolean
         Dim bExportFactureColisage As Boolean
         Dim bExportFactureTransport As Boolean
+        Dim bExportFactureHobivin As Boolean
         Dim bReturn As Boolean
         Dim colFact As Collection
 
@@ -396,6 +422,7 @@ Public Class frmExportFacture
             bExportFactureCommision = rbFactCommission.Checked
             bExportFactureColisage = rbFactColisage.Checked
             bExportFactureTransport = rbFactTransport.Checked
+            bExportFactureHobivin = rbFactHobivin.Checked
 
             bReturn = True
             If bExportFactureCommision Then
@@ -419,6 +446,14 @@ Public Class frmExportFacture
                 colFact = FactTRP.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactTRPGeneree)
                 For Each objFact As Facture In colFact
                     objFact.changeEtat(vncActionEtatCommande.vncActionFactTRPExporter)
+                    objFact.Save()
+                Next
+            End If
+            If bExportFactureHobivin Then
+                DisplayMessage("== Validation Export Facture de Hobivin ==")
+                colFact = FactTRP.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactHBVGeneree)
+                For Each objFact As Facture In colFact
+                    objFact.changeEtat(vncActionEtatCommande.vncActionFactHBVExporter)
                     objFact.Save()
                 Next
             End If
