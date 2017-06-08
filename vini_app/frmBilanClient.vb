@@ -38,15 +38,19 @@ Public Class frmBilanClient
     Friend WithEvents dtdeb As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents tbCodeClient As System.Windows.Forms.TextBox
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbCodeClient = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbCodeClient = New System.Windows.Forms.TextBox()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -106,10 +110,31 @@ Public Class frmBilanClient
         Me.tbCodeClient.Size = New System.Drawing.Size(116, 20)
         Me.tbCodeClient.TabIndex = 5
         '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(99, 35)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
+        Me.cbxOrigine.TabIndex = 7
+        Me.cbxOrigine.Text = "VINICOM"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 38)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(46, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Origine :"
+        '
         'frmBilanClient
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(976, 678)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.cbxOrigine)
         Me.Controls.Add(Me.tbCodeClient)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbAfficher)
@@ -119,7 +144,6 @@ Public Class frmBilanClient
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmBilanClient"
         Me.Text = "Bilan commercial Client"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -127,6 +151,8 @@ Public Class frmBilanClient
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.tbCodeClient, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -153,6 +179,7 @@ Public Class frmBilanClient
             strCodeClient = "*"
         End If
         objReport.SetParameterValue("codeClient", strCodeClient)
+        objReport.SetParameterValue("Origine", cbxOrigine.Text)
 
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
