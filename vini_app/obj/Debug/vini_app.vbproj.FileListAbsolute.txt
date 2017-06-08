@@ -1153,3 +1153,5 @@ N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmImportcommandeClientPrestashop.reso
 N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmPurgePreCommande.resources
 N:\vinicom\V5\vini_app\bin\Debug\crFactHobivin.rpt
 N:\vinicom\V5\vini_app\bin\Debug\crFactHobivin.vb
+N:\vinicom\V5\vini_app\bin\Debug\crEnteteHBV.rpt
+N:\vinicom\V5\vini_app\bin\Debug\crEnteteHBV.vb
