@@ -94,6 +94,13 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyInfo.vb" />
     <Compile Include="Constants.vb" />
+    <Compile Include="crEnteteHBV.vb">
+      <DependentUpon>crEnteteHBV.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="crFactHobivin.vb">
       <DependentUpon>crFactHobivin.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1371,6 +1378,11 @@
       <LastGenOutput>crFactHobivin.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="crEnteteHBV.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crEnteteHBV.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.vb</LastGenOutput>
@@ -1712,11 +1724,13 @@
     <None Include="vini_DB.CommandeClient.datasource" />
     <None Include="vini_DB.contenant.datasource" />
     <None Include="vini_DB.FactCom.datasource" />
+    <None Include="vini_DB.FactHBV.datasource" />
     <None Include="vini_DB.FactTRP.datasource" />
     <None Include="vini_DB.Fournisseur.datasource" />
     <None Include="vini_DB.ImportPrestashop.datasource" />
     <None Include="vini_DB.LgCommande.datasource" />
     <None Include="vini_DB.LgFactColisage.datasource" />
+    <None Include="vini_DB.LgFactHBV.datasource" />
     <None Include="vini_DB.LgFactTRP.datasource" />
     <None Include="vini_DB.lgPrecomm.datasource" />
     <None Include="vini_DB.mvtStock.datasource" />

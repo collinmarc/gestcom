@@ -1,4 +1,6 @@
-Imports System.configuration
+Imports System.Configuration
+Imports System.Collections.Generic
+
 Public Class FactHBV
     Inherits Facture
 
@@ -43,6 +45,14 @@ Public Class FactHBV
             End If
         End Set
     End Property
+
+    Public ReadOnly Property colLignesFactHBV As Collection
+        Get
+            Return colLignes.col
+        End Get
+    End Property
+
+
 #End Region
     Public Shared Function createandload(ByVal pid As Long) As FactHBV
         '=======================================================================
@@ -93,6 +103,7 @@ Public Class FactHBV
         Try
             obj = New FactHBV()
             obj.loadFACTHBVFromCmd(pIdCmd)
+            obj.resetBooleans()
 
         Catch ex As Exception
             setError("createandloadFromCmd", ex.Message)
@@ -146,6 +157,8 @@ Public Class FactHBV
         Return bReturn
 
     End Function 'Equals
+
+
 #End Region
 #Region "Interface Persist"
     Public Overrides Function checkForDelete() As Boolean
@@ -423,7 +436,7 @@ Public Class FactHBV
         totalHT = 0
         totalTTC = 0
         For Each oLg As LgFactHBV In colLignes
-            oLg.calculPrixTotal()
+            '            oLg.calculPrixTotal()
             totalHT = totalHT + oLg.prixHT
             totalTTC = totalTTC + oLg.prixTTC
         Next

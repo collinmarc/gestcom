@@ -190,10 +190,10 @@ Imports CrystalDecisions.CrystalReports.Engine
         oLg.qteCommande = 5
         oLg.qteLiv = 7
         oLg.qteFact = 10
+        oLg.bGratuit = False
         oLg.prixU = 50.5
         oLg.prixHT = 60.5
         oLg.prixTTC = 70.5
-        oLg.bGratuit = True
         objFactHBV.AjouteLigneFactHBV(oLg)
 
         'Sauvegarde de la facture
@@ -214,7 +214,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(oLg.prixU, CDec(50.5))
         Assert.AreEqual(oLg.prixHT, CDec(60.5))
         Assert.AreEqual(oLg.prixTTC, CDec(70.5))
-        Assert.IsTrue(oLg.bGratuit)
+        Assert.IsFalse(oLg.bGratuit)
 
         oLg.oProduit = objProduit3
         oLg.qteCommande = 50
@@ -236,6 +236,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         'Rechargement des lignes
         objFactHBV2.loadcolLignes()
 
+        Assert.AreEqual(1, objFactHBV2.colLignes.Count)
         oLg = objFactHBV2.colLignes(1)
         Assert.AreEqual(oLg.ProduitCode, objProduit3.code)
         Assert.AreEqual(oLg.qteCommande, CDec(50))
@@ -777,6 +778,8 @@ Imports CrystalDecisions.CrystalReports.Engine
         objCMD.dateCommande = CDate("06/02/1964")
         objCMD.dateEnlevement = CDate("08/02/1964")
         objCMD.dateLivraison = CDate("10/02/1964")
+        objCMD.NamePrestashop = "ASXEDC"
+
         'Ajout de 2 lignes de Commandes
         objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit, 12, 20)
         objCMD.AjouteLigne(objCMD.getNextNumLg, objProduit2, 5, 25.5)

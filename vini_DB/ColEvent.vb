@@ -52,6 +52,11 @@ Public Class ColEvent
         Return m_col.Count
     End Function
 
+    Public ReadOnly Property col As Collection
+        Get
+            Return m_col
+        End Get
+    End Property
     '=======================================================================
     'Fonction : Item()
     'Description : Rend l'objet indexé

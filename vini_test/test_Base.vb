@@ -66,7 +66,9 @@ Imports System.Globalization
         Dim bReturn As Boolean
 
         Try
-
+            Persist.executeSQLQuery("DELETE PRODUIT where PRD_Code like '%TEST%'")
+            Persist.executeSQLQuery("DELETE FOURNISSEUR where FRN_Code like '%TEST%'")
+            Persist.executeSQLQuery("DELETE CLIENT where clt_Code like '%TEST%'")
             m_idCLT = CInt(Persist.executeSQLQuery("SELECT MAX(CLT_ID) FROM CLIENT"))
             m_idFRN = CInt(Persist.executeSQLQuery("SELECT MAX(FRN_ID) FROM FOURNISSEUR"))
             m_idPRD = CInt(Persist.executeSQLQuery("SELECT MAX(PRD_ID) FROM PRODUIT"))
@@ -86,8 +88,16 @@ Imports System.Globalization
             m_idTRP = CInt(Persist.executeSQLQuery("SELECT MAX(TRP_ID) FROM TRANSPORTEUR"))
             m_idParam = CInt(Persist.executeSQLQuery("SELECT MAX(PAR_ID) FROM PARAMETRE"))
             m_idContenant = CInt(Persist.executeSQLQuery("SELECT MAX(CONT_ID) FROM CONTENANT"))
-            m_idFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(FHBV_ID) FROM FACTHBV"))
-            m_idLGFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(LGFHBV_ID) FROM LIGNE_FACTHBV"))
+            Try
+                m_idFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(FHBV_ID) FROM FACTHBV"))
+            Catch
+                m_idFactHBV = 0
+            End Try
+            Try
+                m_idLGFactHBV = CInt(Persist.executeSQLQuery("SELECT MAX(LGFHBV_ID) FROM LIGNE_FACTHBV"))
+            Catch
+                m_idLGFactHBV = 0
+            End Try
             Try
                 m_idFicheTechniqueFourn = CInt(Persist.executeSQLQuery("SELECT MAX(FTFRN_ID) FROM FICHETECHNIQUE_FOURNISSEUR"))
             Catch
@@ -104,7 +114,7 @@ Imports System.Globalization
 
         End Try
 
-            Return bReturn
+        Return bReturn
     End Function
 
     Private Function cleanDataTest() As Boolean

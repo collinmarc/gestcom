@@ -137,6 +137,7 @@ Public Class LgFactHBV
         Set(ByVal Value As Decimal)
             If m_qteFact <> Value Then
                 m_qteFact = Value
+                Me.calculPrixTotal()
                 RaiseUpdated()
             End If
         End Set
@@ -148,6 +149,7 @@ Public Class LgFactHBV
         Set(ByVal Value As Decimal)
             If m_prixU <> Value Then
                 m_prixU = Value
+                Me.calculPrixTotal()
                 RaiseUpdated()
             End If
 
@@ -182,6 +184,7 @@ Public Class LgFactHBV
         Set(ByVal Value As Boolean)
             If m_bGratuit <> Value Then
                 m_bGratuit = Value
+                Me.calculPrixTotal()
                 RaiseUpdated()
             End If
 
@@ -324,7 +327,6 @@ Public Class LgFactHBV
 
         Debug.Assert(Not oProduit Is Nothing, "Produit Non renseigné")
         If m_bGratuit Then
-            m_prixU = 0
             m_prixHT = 0
             m_prixTTC = 0
         Else

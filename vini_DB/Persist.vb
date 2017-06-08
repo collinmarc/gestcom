@@ -10983,10 +10983,8 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT," & _
                                     "FHBV_IDMODEREGLEMENT," & _
                                     "FHBV_DECHEANCE," & _
-                                    "FHBV_IDCOMMANDE," & _
-                                    "FHBV_BINTERNET" & _
+                                    "FHBV_IDCOMMANDE" & _
                                   " ) VALUES ( " & _
-                                    "? ," & _
                                     "? ," & _
                                     "? ," & _
                                     "? ," & _
@@ -11020,7 +11018,6 @@ Public MustInherit Class Persist
         CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FHBV_DECHEANCE(objCommand)
         CreateParameterP_FHBV_IDCOMMANDE(objCommand)
-        CreateParameterP_FHBV_BINTERNET(objCommand)
         Try
             objCommand.ExecuteNonQuery()
             objCommand = New OleDbCommand("SELECT MAX(FHBV_ID) FROM FACTHBV", m_dbconn.Connection)
@@ -11175,8 +11172,7 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT," & _
                                     "FHBV_IDMODEREGLEMENT," & _
                                     "FHBV_DECHEANCE," & _
-                                    "FHBV_IDCOMMANDE," & _
-                                    "FHBV_BINTERNET" & _
+                                    "FHBV_IDCOMMANDE" & _
                                     " FROM FACTHBV WHERE " & _
                                    " FHBV_ID = ?"
 
@@ -11242,11 +11238,6 @@ Public MustInherit Class Persist
                 objFHBV.dEcheance = DATE_DEFAUT
             End Try
             Try
-                objFHBV.bExportInternet = GetValue(objRS, "FHBV_BINTERNET")
-            Catch ex As InvalidCastException
-                objFHBV.bExportInternet = False
-            End Try
-            Try
                 objFHBV.oTiers.setid(GetString(objRS, "FHBV_CLT_ID"))
             Catch ex As InvalidCastException
                 objFHBV.oTiers.setid(0)
@@ -11295,8 +11286,7 @@ Public MustInherit Class Persist
                                     "FHBV_COM_FACT = ? ," & _
                                     "FHBV_IDMODEREGLEMENT = ?," & _
                                     "FHBV_DECHEANCE = ?," & _
-                                    "FHBV_IDCOMMANDE = ?," & _
-                                    "FHBV_BINTERNET = ?" & _
+                                    "FHBV_IDCOMMANDE = ?" & _
                                     " WHERE FHBV_ID = ?"
 
         Dim objCommand As OleDbCommand
@@ -11321,7 +11311,6 @@ Public MustInherit Class Persist
         CreateParameterP_FHBV_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FHBV_DECHEANCE(objCommand)
         CreateParameterP_FHBV_IDCOMMANDE(objCommand)
-        CreateParameterP_FHBV_BINTERNET(objCommand)
         CreateParameterP_ID(objCommand)
         Try
             objCommand.ExecuteNonQuery()
@@ -11524,32 +11513,34 @@ Public MustInherit Class Persist
     'Insertion d'une ligne de Facture Hobivin
     Private Function updateLgFactHBV(pLg As LgFactHBV) As Boolean
         Dim bReturn As Boolean
-        Dim oFact As FactHBV
         Try
-            Dim oCmd As OleDbCommand
-            oCmd = m_dbconn.Connection.CreateCommand()
-            oFact = Me
-
-
-            Dim sqlString As String = "UPDATE LIGNE_FACTHBV SET " & _
-                                        "LGFHBV_FACT_ID=" & oFact.id & " , " & _
-                                        "LGFHBV_PRD_ID=" & pLg.oProduit.id & " , " & _
-                                        "LGFHBV_QTE_COMMANDE=" & pLg.qteCommande & " , " & _
-                                        "LGFHBV_QTE_LIV=" & pLg.qteLiv & " , " & _
-                                        "LGFHBV_QTE_FACT=" & pLg.qteFact & "  ," & _
-                                        "LGFHBV_PRIX_UNITAIRE=" & pLg.prixU & " , " & _
-                                        "LGFHBV_PRIX_HT=" & pLg.prixHT & " , " & _
-                                        "LGFHBV_PRIX_TTC=" & pLg.prixTTC & " , " & _
-                                        "LGFHBV_BGRATUIT=" & CInt(pLg.bGratuit) & " , " & _
-                                        "LGFHBV_ETAT=0 " & _
-                                        "WHERE LGFHBV_ID = " & pLg.id
             Dim objCommand As OleDbCommand
-
-            objCommand = New OleDbCommand
-            objCommand.Connection = m_dbconn.Connection
-            objCommand.CommandText = sqlString
+            objCommand = m_dbconn.Connection.CreateCommand()
             objCommand.Transaction = m_dbconn.transaction
 
+            Dim sqlString As String = "UPDATE LIGNE_FACTHBV SET " & _
+                                        "LGFHBV_FACT_ID= ?," & _
+                                        "LGFHBV_PRD_ID= ?," & _
+                                        "LGFHBV_QTE_COMMANDE= ? " & " , " & _
+                                        "LGFHBV_QTE_LIV= ? " & " , " & _
+                                        "LGFHBV_QTE_FACT= ? " & "  ," & _
+                                        "LGFHBV_PRIX_UNITAIRE= ?" & " , " & _
+                                        "LGFHBV_PRIX_HT= ?" & " , " & _
+                                        "LGFHBV_PRIX_TTC=?" & " , " & _
+                                        "LGFHBV_BGRATUIT=?" & " , " & _
+                                        "LGFHBV_ETAT=0 " & _
+                                        "WHERE LGFHBV_ID = ?"
+            objCommand.CommandText = sqlString
+            objCommand.Parameters.AddWithValue("?", pLg.idFactHBV)
+            objCommand.Parameters.AddWithValue("?", pLg.oProduit.id)
+            objCommand.Parameters.AddWithValue("?", pLg.qteCommande)
+            objCommand.Parameters.AddWithValue("?", pLg.qteLiv)
+            objCommand.Parameters.AddWithValue("?", pLg.qteFact)
+            objCommand.Parameters.AddWithValue("?", pLg.prixU)
+            objCommand.Parameters.AddWithValue("?", pLg.prixHT)
+            objCommand.Parameters.AddWithValue("?", pLg.prixTTC)
+            objCommand.Parameters.AddWithValue("?", pLg.bGratuit)
+            objCommand.Parameters.AddWithValue("?", pLg.id)
 
             bReturn = True
             Try
@@ -11641,6 +11632,11 @@ Public MustInherit Class Persist
                         objLGHBV.qteFact = 0
                     End Try
                     Try
+                        objLGHBV.bGratuit = GetBoolean(objRS, "LGFHBV_BGRATUIT")
+                    Catch ex As InvalidCastException
+                        objLGHBV.bGratuit = 0
+                    End Try
+                    Try
                         objLGHBV.prixU = getDecimal(objRS, "LGFHBV_PRIX_UNITAIRE")
                     Catch ex As InvalidCastException
                         objLGHBV.prixU = 0
@@ -11654,11 +11650,6 @@ Public MustInherit Class Persist
                         objLGHBV.prixTTC = getDecimal(objRS, "LGFHBV_PRIX_TTC")
                     Catch ex As InvalidCastException
                         objLGHBV.prixTTC = 0
-                    End Try
-                    Try
-                        objLGHBV.bGratuit = GetBoolean(objRS, "LGFHBV_BGRATUIT")
-                    Catch ex As InvalidCastException
-                        objLGHBV.bGratuit = 0
                     End Try
                     objLGHBV.resetBooleans()
                     objFACTHBV.AjouteLigneFactHBV(objLGHBV, False)
@@ -11958,11 +11949,6 @@ Public MustInherit Class Persist
         Dim objCMD As FactHBV
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.dEcheance)
-    End Sub
-    Private Sub CreateParameterP_FHBV_BINTERNET(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactHBV
-        objCMD = Me
-        objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
     End Sub
     Private Sub CreateParameterP_FHBV_IDCOMMANDE(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactHBV
