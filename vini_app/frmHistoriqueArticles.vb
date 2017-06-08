@@ -39,15 +39,19 @@ Public Class frmHistoriqueArticles
     Friend WithEvents dtdeb As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tbCodeArticle As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbCodeArticle = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbCodeArticle = New System.Windows.Forms.TextBox()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -105,10 +109,31 @@ Public Class frmHistoriqueArticles
         Me.tbCodeArticle.Size = New System.Drawing.Size(72, 20)
         Me.tbCodeArticle.TabIndex = 5
         '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(128, 36)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
+        Me.cbxOrigine.TabIndex = 7
+        Me.cbxOrigine.Text = "VINICOM"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(8, 39)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(46, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Origine :"
+        '
         'frmHistoriqueArticles
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(992, 694)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.cbxOrigine)
         Me.Controls.Add(Me.tbCodeArticle)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbAfficher)
@@ -118,7 +143,6 @@ Public Class frmHistoriqueArticles
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmHistoriqueArticles"
         Me.Text = "Historique Articles"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -126,6 +150,8 @@ Public Class frmHistoriqueArticles
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.tbCodeArticle, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -148,6 +174,7 @@ Public Class frmHistoriqueArticles
         str = tbCodeArticle.Text
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("CodeArticle", Trim(str))
+        objReport.SetParameterValue("Origine", Trim(cbxOrigine.Text))
 
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
