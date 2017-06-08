@@ -345,34 +345,34 @@ Public Class frmSaisieCommande
     Friend WithEvents cbMailBLPLTFRM As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle46 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle47 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle48 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle49 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle50 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle51 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle52 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle53 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle54 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle55 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle56 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.grpEntete = New System.Windows.Forms.GroupBox()
         Me.grpPrestashop = New System.Windows.Forms.GroupBox()
         Me.cbxOrigine = New System.Windows.Forms.ComboBox()
@@ -645,6 +645,13 @@ Public Class frmSaisieCommande
         Me.crwFact = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.btnFactHBVAfficher = New System.Windows.Forms.Button()
         Me.DataGridView4 = New System.Windows.Forms.DataGridView()
+        Me.ProduitCodeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProduitNomDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QteFactDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BGratuitDataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.PrixUDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixHTDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixTTCDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcLgFactHBV = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -653,13 +660,6 @@ Public Class frmSaisieCommande
         Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.ProduitCodeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ProduitNomDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.QteFactDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.BGratuitDataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.PrixUDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrixHTDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrixTTCDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpEntete.SuspendLayout()
         Me.grpPrestashop.SuspendLayout()
         Me.grpFactTRP.SuspendLayout()
@@ -1765,8 +1765,8 @@ Public Class frmSaisieCommande
         'ProduitCodeDataGridViewTextBoxColumn
         '
         Me.ProduitCodeDataGridViewTextBoxColumn.DataPropertyName = "ProduitCode"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.ProduitCodeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.ProduitCodeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle34
         Me.ProduitCodeDataGridViewTextBoxColumn.FillWeight = 48.21718!
         Me.ProduitCodeDataGridViewTextBoxColumn.HeaderText = "Code Produit"
         Me.ProduitCodeDataGridViewTextBoxColumn.Name = "ProduitCodeDataGridViewTextBoxColumn"
@@ -1807,8 +1807,8 @@ Public Class frmSaisieCommande
         'QteCommandeDataGridViewTextBoxColumn
         '
         Me.QteCommandeDataGridViewTextBoxColumn.DataPropertyName = "qteCommande"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.QteCommandeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.QteCommandeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle35
         Me.QteCommandeDataGridViewTextBoxColumn.FillWeight = 53.57465!
         Me.QteCommandeDataGridViewTextBoxColumn.HeaderText = "Qte Comm"
         Me.QteCommandeDataGridViewTextBoxColumn.Name = "QteCommandeDataGridViewTextBoxColumn"
@@ -1817,8 +1817,8 @@ Public Class frmSaisieCommande
         'QteLivDataGridViewTextBoxColumn
         '
         Me.QteLivDataGridViewTextBoxColumn.DataPropertyName = "qteLiv"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.QteLivDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.QteLivDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle36
         Me.QteLivDataGridViewTextBoxColumn.FillWeight = 53.57465!
         Me.QteLivDataGridViewTextBoxColumn.HeaderText = "Qte Liv"
         Me.QteLivDataGridViewTextBoxColumn.Name = "QteLivDataGridViewTextBoxColumn"
@@ -1827,8 +1827,8 @@ Public Class frmSaisieCommande
         'QteFactDataGridViewTextBoxColumn
         '
         Me.QteFactDataGridViewTextBoxColumn.DataPropertyName = "qteFact"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.QteFactDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.QteFactDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle37
         Me.QteFactDataGridViewTextBoxColumn.FillWeight = 53.57465!
         Me.QteFactDataGridViewTextBoxColumn.HeaderText = "Qte Fact"
         Me.QteFactDataGridViewTextBoxColumn.Name = "QteFactDataGridViewTextBoxColumn"
@@ -1845,9 +1845,9 @@ Public Class frmSaisieCommande
         'PrixUDataGridViewTextBoxColumn
         '
         Me.PrixUDataGridViewTextBoxColumn.DataPropertyName = "prixU"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.Format = "C2"
-        Me.PrixUDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle38.Format = "C2"
+        Me.PrixUDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle38
         Me.PrixUDataGridViewTextBoxColumn.FillWeight = 60.0036!
         Me.PrixUDataGridViewTextBoxColumn.HeaderText = "Prix U"
         Me.PrixUDataGridViewTextBoxColumn.Name = "PrixUDataGridViewTextBoxColumn"
@@ -1856,9 +1856,9 @@ Public Class frmSaisieCommande
         'PrixHTDataGridViewTextBoxColumn
         '
         Me.PrixHTDataGridViewTextBoxColumn.DataPropertyName = "prixHT"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "C2"
-        Me.PrixHTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle39.Format = "C2"
+        Me.PrixHTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle39
         Me.PrixHTDataGridViewTextBoxColumn.FillWeight = 75.00452!
         Me.PrixHTDataGridViewTextBoxColumn.HeaderText = "Montant HT"
         Me.PrixHTDataGridViewTextBoxColumn.Name = "PrixHTDataGridViewTextBoxColumn"
@@ -1867,9 +1867,9 @@ Public Class frmSaisieCommande
         'PrixTTCDataGridViewTextBoxColumn
         '
         Me.PrixTTCDataGridViewTextBoxColumn.DataPropertyName = "prixTTC"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Format = "C2"
-        Me.PrixTTCDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle40.Format = "C2"
+        Me.PrixTTCDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle40
         Me.PrixTTCDataGridViewTextBoxColumn.FillWeight = 75.00452!
         Me.PrixTTCDataGridViewTextBoxColumn.HeaderText = "Montant TTC"
         Me.PrixTTCDataGridViewTextBoxColumn.Name = "PrixTTCDataGridViewTextBoxColumn"
@@ -2880,8 +2880,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.DataPropertyName = "ProduitCode"
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle41
         Me.DataGridViewTextBoxColumn2.FillWeight = 45.0!
         Me.DataGridViewTextBoxColumn2.HeaderText = "Code Produit"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
@@ -2922,8 +2922,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn7
         '
         Me.DataGridViewTextBoxColumn7.DataPropertyName = "qteCommande"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle42
         Me.DataGridViewTextBoxColumn7.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "Qte Comm"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -2932,8 +2932,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn8
         '
         Me.DataGridViewTextBoxColumn8.DataPropertyName = "qteLiv"
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle43
         Me.DataGridViewTextBoxColumn8.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn8.HeaderText = "Qte Liv"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
@@ -2942,8 +2942,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn9
         '
         Me.DataGridViewTextBoxColumn9.DataPropertyName = "qteFact"
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle44
         Me.DataGridViewTextBoxColumn9.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn9.HeaderText = "Qte Fact"
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
@@ -2960,9 +2960,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn10
         '
         Me.DataGridViewTextBoxColumn10.DataPropertyName = "prixU"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle12.Format = "C2"
-        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle45.Format = "C2"
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle45
         Me.DataGridViewTextBoxColumn10.FillWeight = 56.0!
         Me.DataGridViewTextBoxColumn10.HeaderText = "Prix U"
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
@@ -2971,9 +2971,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn11
         '
         Me.DataGridViewTextBoxColumn11.DataPropertyName = "prixHT"
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle13.Format = "C2"
-        Me.DataGridViewTextBoxColumn11.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle46.Format = "C2"
+        Me.DataGridViewTextBoxColumn11.DefaultCellStyle = DataGridViewCellStyle46
         Me.DataGridViewTextBoxColumn11.FillWeight = 70.0!
         Me.DataGridViewTextBoxColumn11.HeaderText = "Montant HT"
         Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
@@ -2982,9 +2982,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn12
         '
         Me.DataGridViewTextBoxColumn12.DataPropertyName = "prixTTC"
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle14.Format = "C2"
-        Me.DataGridViewTextBoxColumn12.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle47.Format = "C2"
+        Me.DataGridViewTextBoxColumn12.DefaultCellStyle = DataGridViewCellStyle47
         Me.DataGridViewTextBoxColumn12.FillWeight = 70.0!
         Me.DataGridViewTextBoxColumn12.HeaderText = "Montant TTC"
         Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
@@ -3186,9 +3186,9 @@ Public Class frmSaisieCommande
         'TotalHTDataGridViewTextBoxColumn
         '
         Me.TotalHTDataGridViewTextBoxColumn.DataPropertyName = "totalHT"
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle15.Format = "C2"
-        Me.TotalHTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle48.Format = "C2"
+        Me.TotalHTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle48
         Me.TotalHTDataGridViewTextBoxColumn.FillWeight = 70.0!
         Me.TotalHTDataGridViewTextBoxColumn.HeaderText = "Montant HT"
         Me.TotalHTDataGridViewTextBoxColumn.Name = "TotalHTDataGridViewTextBoxColumn"
@@ -3197,9 +3197,9 @@ Public Class frmSaisieCommande
         'DateCommandeDataGridViewTextBoxColumn
         '
         Me.DateCommandeDataGridViewTextBoxColumn.DataPropertyName = "dateCommande"
-        DataGridViewCellStyle16.Format = "d"
-        DataGridViewCellStyle16.NullValue = Nothing
-        Me.DateCommandeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle49.Format = "d"
+        DataGridViewCellStyle49.NullValue = Nothing
+        Me.DateCommandeDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle49
         Me.DateCommandeDataGridViewTextBoxColumn.FillWeight = 60.0!
         Me.DateCommandeDataGridViewTextBoxColumn.HeaderText = "date Commande"
         Me.DateCommandeDataGridViewTextBoxColumn.Name = "DateCommandeDataGridViewTextBoxColumn"
@@ -3247,8 +3247,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn14
         '
         Me.DataGridViewTextBoxColumn14.DataPropertyName = "ProduitCode"
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle50
         Me.DataGridViewTextBoxColumn14.FillWeight = 45.0!
         Me.DataGridViewTextBoxColumn14.HeaderText = "Code Produit"
         Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
@@ -3289,8 +3289,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn19
         '
         Me.DataGridViewTextBoxColumn19.DataPropertyName = "qteCommande"
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle51
         Me.DataGridViewTextBoxColumn19.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn19.HeaderText = "Qte Comm"
         Me.DataGridViewTextBoxColumn19.Name = "DataGridViewTextBoxColumn19"
@@ -3299,8 +3299,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn20
         '
         Me.DataGridViewTextBoxColumn20.DataPropertyName = "qteLiv"
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn20.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn20.DefaultCellStyle = DataGridViewCellStyle52
         Me.DataGridViewTextBoxColumn20.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn20.HeaderText = "Qte Liv"
         Me.DataGridViewTextBoxColumn20.Name = "DataGridViewTextBoxColumn20"
@@ -3309,8 +3309,8 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn21
         '
         Me.DataGridViewTextBoxColumn21.DataPropertyName = "qteFact"
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn21.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn21.DefaultCellStyle = DataGridViewCellStyle53
         Me.DataGridViewTextBoxColumn21.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn21.HeaderText = "Qte Fact"
         Me.DataGridViewTextBoxColumn21.Name = "DataGridViewTextBoxColumn21"
@@ -3327,9 +3327,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn22
         '
         Me.DataGridViewTextBoxColumn22.DataPropertyName = "prixU"
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle21.Format = "C2"
-        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle54.Format = "C2"
+        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle54
         Me.DataGridViewTextBoxColumn22.FillWeight = 56.0!
         Me.DataGridViewTextBoxColumn22.HeaderText = "Prix U"
         Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
@@ -3338,9 +3338,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn23
         '
         Me.DataGridViewTextBoxColumn23.DataPropertyName = "prixHT"
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle22.Format = "C2"
-        Me.DataGridViewTextBoxColumn23.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle55.Format = "C2"
+        Me.DataGridViewTextBoxColumn23.DefaultCellStyle = DataGridViewCellStyle55
         Me.DataGridViewTextBoxColumn23.FillWeight = 70.0!
         Me.DataGridViewTextBoxColumn23.HeaderText = "Montant HT"
         Me.DataGridViewTextBoxColumn23.Name = "DataGridViewTextBoxColumn23"
@@ -3349,9 +3349,9 @@ Public Class frmSaisieCommande
         'DataGridViewTextBoxColumn24
         '
         Me.DataGridViewTextBoxColumn24.DataPropertyName = "prixTTC"
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle23.Format = "C2"
-        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle56.Format = "C2"
+        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle56
         Me.DataGridViewTextBoxColumn24.FillWeight = 70.0!
         Me.DataGridViewTextBoxColumn24.HeaderText = "Montant TTC"
         Me.DataGridViewTextBoxColumn24.Name = "DataGridViewTextBoxColumn24"
@@ -3522,12 +3522,11 @@ Public Class frmSaisieCommande
         '
         'btnFactHBVAfficher
         '
-        Me.btnFactHBVAfficher.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnFactHBVAfficher.Location = New System.Drawing.Point(3, 3)
         Me.btnFactHBVAfficher.Name = "btnFactHBVAfficher"
         Me.btnFactHBVAfficher.Size = New System.Drawing.Size(104, 24)
         Me.btnFactHBVAfficher.TabIndex = 150
-        Me.btnFactHBVAfficher.Text = "A&fficher"
+        Me.btnFactHBVAfficher.Text = "Afficher"
         '
         'DataGridView4
         '
@@ -3542,8 +3541,65 @@ Public Class frmSaisieCommande
         Me.DataGridView4.DataSource = Me.m_bsrcLgFactHBV
         Me.DataGridView4.Location = New System.Drawing.Point(3, 33)
         Me.DataGridView4.Name = "DataGridView4"
-        Me.DataGridView4.Size = New System.Drawing.Size(648, 484)
+        Me.DataGridView4.Size = New System.Drawing.Size(648, 515)
         Me.DataGridView4.TabIndex = 151
+        '
+        'ProduitCodeDataGridViewTextBoxColumn1
+        '
+        Me.ProduitCodeDataGridViewTextBoxColumn1.DataPropertyName = "ProduitCode"
+        DataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.ProduitCodeDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle29
+        Me.ProduitCodeDataGridViewTextBoxColumn1.HeaderText = "Code"
+        Me.ProduitCodeDataGridViewTextBoxColumn1.Name = "ProduitCodeDataGridViewTextBoxColumn1"
+        Me.ProduitCodeDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'ProduitNomDataGridViewTextBoxColumn1
+        '
+        Me.ProduitNomDataGridViewTextBoxColumn1.DataPropertyName = "ProduitNom"
+        DataGridViewCellStyle30.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.ProduitNomDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle30
+        Me.ProduitNomDataGridViewTextBoxColumn1.HeaderText = "Libellé"
+        Me.ProduitNomDataGridViewTextBoxColumn1.Name = "ProduitNomDataGridViewTextBoxColumn1"
+        Me.ProduitNomDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'QteFactDataGridViewTextBoxColumn1
+        '
+        Me.QteFactDataGridViewTextBoxColumn1.DataPropertyName = "qteFact"
+        Me.QteFactDataGridViewTextBoxColumn1.HeaderText = "Qte"
+        Me.QteFactDataGridViewTextBoxColumn1.Name = "QteFactDataGridViewTextBoxColumn1"
+        '
+        'BGratuitDataGridViewCheckBoxColumn1
+        '
+        Me.BGratuitDataGridViewCheckBoxColumn1.DataPropertyName = "bGratuit"
+        Me.BGratuitDataGridViewCheckBoxColumn1.HeaderText = "Gratuit ?"
+        Me.BGratuitDataGridViewCheckBoxColumn1.Name = "BGratuitDataGridViewCheckBoxColumn1"
+        '
+        'PrixUDataGridViewTextBoxColumn1
+        '
+        Me.PrixUDataGridViewTextBoxColumn1.DataPropertyName = "prixU"
+        DataGridViewCellStyle31.Format = "C2"
+        DataGridViewCellStyle31.NullValue = Nothing
+        Me.PrixUDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle31
+        Me.PrixUDataGridViewTextBoxColumn1.HeaderText = "P.U."
+        Me.PrixUDataGridViewTextBoxColumn1.Name = "PrixUDataGridViewTextBoxColumn1"
+        '
+        'PrixHTDataGridViewTextBoxColumn1
+        '
+        Me.PrixHTDataGridViewTextBoxColumn1.DataPropertyName = "prixHT"
+        DataGridViewCellStyle32.Format = "C2"
+        DataGridViewCellStyle32.NullValue = Nothing
+        Me.PrixHTDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle32
+        Me.PrixHTDataGridViewTextBoxColumn1.HeaderText = "Montant HT"
+        Me.PrixHTDataGridViewTextBoxColumn1.Name = "PrixHTDataGridViewTextBoxColumn1"
+        '
+        'PrixTTCDataGridViewTextBoxColumn1
+        '
+        Me.PrixTTCDataGridViewTextBoxColumn1.DataPropertyName = "prixTTC"
+        DataGridViewCellStyle33.Format = "C2"
+        DataGridViewCellStyle33.NullValue = Nothing
+        Me.PrixTTCDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle33
+        Me.PrixTTCDataGridViewTextBoxColumn1.HeaderText = "Montant TTC"
+        Me.PrixTTCDataGridViewTextBoxColumn1.Name = "PrixTTCDataGridViewTextBoxColumn1"
         '
         'm_bsrcLgFactHBV
         '
@@ -3601,63 +3657,6 @@ Public Class frmSaisieCommande
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(88, 16)
         Me.Label35.TabIndex = 0
-        '
-        'ProduitCodeDataGridViewTextBoxColumn1
-        '
-        Me.ProduitCodeDataGridViewTextBoxColumn1.DataPropertyName = "ProduitCode"
-        DataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.ProduitCodeDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle24
-        Me.ProduitCodeDataGridViewTextBoxColumn1.HeaderText = "Code"
-        Me.ProduitCodeDataGridViewTextBoxColumn1.Name = "ProduitCodeDataGridViewTextBoxColumn1"
-        Me.ProduitCodeDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'ProduitNomDataGridViewTextBoxColumn1
-        '
-        Me.ProduitNomDataGridViewTextBoxColumn1.DataPropertyName = "ProduitNom"
-        DataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.ProduitNomDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle25
-        Me.ProduitNomDataGridViewTextBoxColumn1.HeaderText = "Libellé"
-        Me.ProduitNomDataGridViewTextBoxColumn1.Name = "ProduitNomDataGridViewTextBoxColumn1"
-        Me.ProduitNomDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'QteFactDataGridViewTextBoxColumn1
-        '
-        Me.QteFactDataGridViewTextBoxColumn1.DataPropertyName = "qteFact"
-        Me.QteFactDataGridViewTextBoxColumn1.HeaderText = "Qte"
-        Me.QteFactDataGridViewTextBoxColumn1.Name = "QteFactDataGridViewTextBoxColumn1"
-        '
-        'BGratuitDataGridViewCheckBoxColumn1
-        '
-        Me.BGratuitDataGridViewCheckBoxColumn1.DataPropertyName = "bGratuit"
-        Me.BGratuitDataGridViewCheckBoxColumn1.HeaderText = "Gratuit ?"
-        Me.BGratuitDataGridViewCheckBoxColumn1.Name = "BGratuitDataGridViewCheckBoxColumn1"
-        '
-        'PrixUDataGridViewTextBoxColumn1
-        '
-        Me.PrixUDataGridViewTextBoxColumn1.DataPropertyName = "prixU"
-        DataGridViewCellStyle26.Format = "C2"
-        DataGridViewCellStyle26.NullValue = Nothing
-        Me.PrixUDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle26
-        Me.PrixUDataGridViewTextBoxColumn1.HeaderText = "P.U."
-        Me.PrixUDataGridViewTextBoxColumn1.Name = "PrixUDataGridViewTextBoxColumn1"
-        '
-        'PrixHTDataGridViewTextBoxColumn1
-        '
-        Me.PrixHTDataGridViewTextBoxColumn1.DataPropertyName = "prixHT"
-        DataGridViewCellStyle27.Format = "C2"
-        DataGridViewCellStyle27.NullValue = Nothing
-        Me.PrixHTDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle27
-        Me.PrixHTDataGridViewTextBoxColumn1.HeaderText = "Montant HT"
-        Me.PrixHTDataGridViewTextBoxColumn1.Name = "PrixHTDataGridViewTextBoxColumn1"
-        '
-        'PrixTTCDataGridViewTextBoxColumn1
-        '
-        Me.PrixTTCDataGridViewTextBoxColumn1.DataPropertyName = "prixTTC"
-        DataGridViewCellStyle28.Format = "C2"
-        DataGridViewCellStyle28.NullValue = Nothing
-        Me.PrixTTCDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle28
-        Me.PrixTTCDataGridViewTextBoxColumn1.HeaderText = "Montant TTC"
-        Me.PrixTTCDataGridViewTextBoxColumn1.Name = "PrixTTCDataGridViewTextBoxColumn1"
         '
         'frmSaisieCommande
         '

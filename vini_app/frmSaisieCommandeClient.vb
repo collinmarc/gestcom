@@ -744,8 +744,8 @@ Public Class frmCommandeClient
             objReport.Load(strReportName)
             objReport.SetParameterValue("IDCOMMANDE", m_oFactHBV.id)
             Persist.setReportConnection(objReport)
-            objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "FactHBV.pdf")
-            System.Diagnostics.Process.Start("FactHBV.pdf")
+            '            objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "FactHBV.pdf")
+            '            System.Diagnostics.Process.Start("FactHBV.pdf")
             crwFact.ReportSource = objReport
             crwFact.Zoom(1)
             Cursor = Cursors.Default
