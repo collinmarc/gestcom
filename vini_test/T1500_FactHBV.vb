@@ -71,6 +71,7 @@ Imports CrystalDecisions.CrystalReports.Engine
             m_oClient.save()
         End If
         m_oClient = New Client("CLTTEST1500", "MonClient1")
+        m_oClient.rs = "RaisonSociale"
         m_oClient.CodeCompta = "4100001"
         m_oClient.save()
 
@@ -489,47 +490,13 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.IsTrue(objFact3.Save(), "Suppression de facture3")
 
     End Sub
-    <TestMethod(), Ignore()> Public Sub T60_EXPORTCOMPTA()
-        Dim objFact As FactHBV
-        Dim objLgFact As LgFactHBV
-        Dim nFile As Integer
-        Dim v As String
-        Dim strFile As String = "F:\temp\export.txt"
-
-        objFact = New FactHBV(m_oClient)
-        Assert.IsTrue(objFact.Save(), "Sauvegarde de la facture")
-
-        objLgFact = New LgFactHBV
-        objLgFact.prixHT = 150.55
-
-        objFact.AjouteLigneFactHBV(objLgFact)
-        If System.IO.File.Exists(strFile) Then
-            System.IO.File.Delete(strFile)
-        End If
-        objFact.Exporter(strFile)
-        Try
-            nFile = FreeFile()
-            FileOpen(nFile, strFile, OpenMode.Input, OpenAccess.Read)
-            While Not EOF(nFile)
-                v = LineInput(nFile)
-                Assert.IsTrue(MsgBox(v, MsgBoxStyle.YesNo, "Ligne du fichier d'export") = MsgBoxResult.Yes)
-            End While
-            FileClose(nFile)
-        Catch ex As Exception
-            Assert.IsTrue(False, ex.ToString)
-        End Try
-
-        objFact.bDeleted = True
-        Assert.IsTrue(objFact.Save(), "Suppression de la facture")
-
-    End Sub
 
 
     ''' <summary>
     ''' Test l'export vers Quadra
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod(), Ignore()> Public Sub T100_EXPORT()
+    <TestMethod()> Public Sub T100_EXPORT()
         Dim objFact As FactHBV
         Dim strLines As String()
         Dim strLine1 As String
@@ -554,7 +521,7 @@ Imports CrystalDecisions.CrystalReports.Engine
             File.Delete("./T20_EXPORT.txt")
         End If
 
-        objFact.exporter("./T20_EXPORT.txt")
+        objFact.Exporter("./T20_EXPORT.txt")
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
@@ -569,7 +536,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(m_oClient.CodeCompta, Trim(strLine1.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine1.Substring(9, 2)))
         Assert.AreEqual("060264", strLine1.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 19), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(21)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("D", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
         Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
@@ -579,7 +546,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine2.Substring(9, 2)))
         Assert.AreEqual("060264", strLine2.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 19), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("C", strLine2.Substring(41, 1))
         Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
 
@@ -588,7 +555,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT")), Trim(strLine3.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine3.Substring(9, 2)))
         Assert.AreEqual("060264", strLine3.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 19), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("C", strLine3.Substring(41, 1))
         Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
 
