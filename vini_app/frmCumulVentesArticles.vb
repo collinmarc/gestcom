@@ -40,16 +40,20 @@ Public Class frmCumulVentesArticles
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.cbRecherche = New System.Windows.Forms.Button
-        Me.tbCodeFourn = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.cbRecherche = New System.Windows.Forms.Button()
+        Me.tbCodeFourn = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -115,10 +119,31 @@ Public Class frmCumulVentesArticles
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Code Fournisseur"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 39)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(46, 13)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "Origine :"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(128, 39)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
+        Me.cbxOrigine.TabIndex = 10
+        Me.cbxOrigine.Text = "VINICOM"
+        '
         'frmCumulVentesArticles
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(984, 678)
+        Me.Controls.Add(Me.cbxOrigine)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cbRecherche)
         Me.Controls.Add(Me.tbCodeFourn)
         Me.Controls.Add(Me.Label3)
@@ -129,7 +154,6 @@ Public Class frmCumulVentesArticles
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmCumulVentesArticles"
         Me.Text = "Cumul des ventes par article"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -138,6 +162,8 @@ Public Class frmCumulVentesArticles
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.tbCodeFourn, 0)
         Me.Controls.SetChildIndex(Me.cbRecherche, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -163,6 +189,7 @@ Public Class frmCumulVentesArticles
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("CodeFourn", Trim(str))
 
+        objReport.SetParameterValue("Origine", Trim(cbxOrigine.Text).ToUpper())
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
     End Sub

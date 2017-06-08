@@ -1400,6 +1400,9 @@
     <EmbeddedResource Include="frmConstantes.resx">
       <DependentUpon>frmConstantes.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCumulVentesArticles.resx">
+      <DependentUpon>frmCumulVentesArticles.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmImportCommandeClientPrestashop.resx">
       <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
     </EmbeddedResource>
