@@ -38,15 +38,19 @@ Public Class frmStatCAGroupeClients
     Friend WithEvents dtdeb As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
     Friend WithEvents tbcodeClient As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbcodeClient = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbcodeClient = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -59,7 +63,7 @@ Public Class frmStatCAGroupeClients
         '
         'dtdeb
         '
-        Me.dtdeb.Format = System.Windows.Forms.DateTimePickerFormat.Short
+        Me.dtdeb.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtdeb.Location = New System.Drawing.Point(104, 8)
         Me.dtdeb.Name = "dtdeb"
         Me.dtdeb.Size = New System.Drawing.Size(136, 20)
@@ -75,7 +79,7 @@ Public Class frmStatCAGroupeClients
         '
         'dtFin
         '
-        Me.dtFin.Format = System.Windows.Forms.DateTimePickerFormat.Short
+        Me.dtFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtFin.Location = New System.Drawing.Point(336, 8)
         Me.dtFin.Name = "dtFin"
         Me.dtFin.Size = New System.Drawing.Size(104, 20)
@@ -101,13 +105,34 @@ Public Class frmStatCAGroupeClients
         '
         Me.tbcodeClient.Location = New System.Drawing.Point(512, 8)
         Me.tbcodeClient.Name = "tbcodeClient"
+        Me.tbcodeClient.Size = New System.Drawing.Size(100, 20)
         Me.tbcodeClient.TabIndex = 6
-        Me.tbcodeClient.Text = ""
         '
-        'frmStatCAClient
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(11, 36)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(46, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Origine :"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(104, 35)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
+        Me.cbxOrigine.TabIndex = 9
+        Me.cbxOrigine.Text = "VINICOM"
+        '
+        'frmStatCAGroupeClients
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.cbxOrigine)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tbcodeClient)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbAfficher)
@@ -117,7 +142,6 @@ Public Class frmStatCAGroupeClients
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmStatCAGroupeClients"
         Me.Text = "CA Groupe Clients"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -125,7 +149,10 @@ Public Class frmStatCAGroupeClients
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.tbcodeClient, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -157,6 +184,7 @@ Public Class frmStatCAGroupeClients
         str = tbcodeClient.Text
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("codeClient", Trim(str))
+        objReport.SetParameterValue("Origine", cbxOrigine.Text)
 
         CrystalReportViewer1.ReportSource = objReport
         Persist.setReportConnection(objReport)
