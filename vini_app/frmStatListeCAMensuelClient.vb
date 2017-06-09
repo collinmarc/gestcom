@@ -38,15 +38,19 @@ Public Class frmStatListeCAMensuelClient
     Friend WithEvents dtdeb As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
     Friend WithEvents tbcodeClient As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbcodeClient = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbcodeClient = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -104,10 +108,31 @@ Public Class frmStatListeCAMensuelClient
         Me.tbcodeClient.Size = New System.Drawing.Size(100, 20)
         Me.tbcodeClient.TabIndex = 6
         '
-        'frmStatCARecapClients
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(13, 36)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(46, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Origine :"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(104, 33)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
+        Me.cbxOrigine.TabIndex = 9
+        Me.cbxOrigine.Text = "VINICOM"
+        '
+        'frmStatListeCAMensuelClient
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.cbxOrigine)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tbcodeClient)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbAfficher)
@@ -115,9 +140,8 @@ Public Class frmStatListeCAMensuelClient
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dtdeb)
         Me.Controls.Add(Me.Label1)
-        Me.Name = "frmStatCARecapClients"
+        Me.Name = "frmStatListeCAMensuelClient"
         Me.Text = "CA Client par type de client"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -125,6 +149,8 @@ Public Class frmStatListeCAMensuelClient
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.tbcodeClient, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -160,6 +186,7 @@ Public Class frmStatListeCAMensuelClient
         str = tbcodeClient.Text
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("codeClient", Trim(str))
+        objReport.SetParameterValue("Origine", Trim(cbxOrigine.Text))
 
         CrystalReportViewer1.ReportSource = objReport
         Persist.setReportConnection(objReport)
