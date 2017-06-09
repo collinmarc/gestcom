@@ -1397,6 +1397,9 @@
     <EmbeddedResource Include="frmAppelation.resx">
       <DependentUpon>frmAppelation.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCAProducteurClient.resx">
+      <DependentUpon>frmCAProducteurClient.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConstantes.resx">
       <DependentUpon>frmConstantes.vb</DependentUpon>
     </EmbeddedResource>

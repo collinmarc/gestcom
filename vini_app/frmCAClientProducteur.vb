@@ -43,17 +43,21 @@ Public Class frmCAClientProducteur
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents tbCodeFournisseur As System.Windows.Forms.TextBox
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents cbxOrigine As System.Windows.Forms.ComboBox
     Friend WithEvents tbCodeclient As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.dtDateDeb = New System.Windows.Forms.DateTimePicker
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.dtDateFin = New System.Windows.Forms.DateTimePicker
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.tbCodeclient = New System.Windows.Forms.TextBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox
-        Me.cbAfficher = New System.Windows.Forms.Button
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtDateDeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.dtDateFin = New System.Windows.Forms.DateTimePicker()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.tbCodeclient = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label4
@@ -131,9 +135,30 @@ Public Class frmCAClientProducteur
         Me.cbAfficher.Text = "Afficher"
         Me.cbAfficher.UseVisualStyleBackColor = True
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(12, 38)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(46, 13)
+        Me.Label8.TabIndex = 10
+        Me.Label8.Text = "Origine :"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(99, 35)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(96, 21)
+        Me.cbxOrigine.TabIndex = 11
+        Me.cbxOrigine.Text = "VINICOM"
+        '
         'frmCAClientProducteur
         '
         Me.ClientSize = New System.Drawing.Size(952, 646)
+        Me.Controls.Add(Me.cbxOrigine)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.cbAfficher)
         Me.Controls.Add(Me.tbCodeFournisseur)
         Me.Controls.Add(Me.Label7)
@@ -144,7 +169,6 @@ Public Class frmCAClientProducteur
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.dtDateDeb)
         Me.Name = "frmCAClientProducteur"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.dtDateDeb, 0)
         Me.Controls.SetChildIndex(Me.Label4, 0)
         Me.Controls.SetChildIndex(Me.dtDateFin, 0)
@@ -154,6 +178,8 @@ Public Class frmCAClientProducteur
         Me.Controls.SetChildIndex(Me.Label7, 0)
         Me.Controls.SetChildIndex(Me.tbCodeFournisseur, 0)
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
+        Me.Controls.SetChildIndex(Me.Label8, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -185,6 +211,7 @@ Public Class frmCAClientProducteur
             strCodeFourn = "*"
         End If
         objReport.SetParameterValue("codeFourn", strCodeFourn)
+        objReport.SetParameterValue("Origine", Trim(cbxOrigine.Text))
 
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport

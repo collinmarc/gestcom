@@ -1156,3 +1156,4 @@ N:\vinicom\V5\vini_app\bin\Debug\crFactHobivin.vb
 N:\vinicom\V5\vini_app\bin\Debug\crEnteteHBV.rpt
 N:\vinicom\V5\vini_app\bin\Debug\crEnteteHBV.vb
 N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmCumulVentesArticles.resources
+N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmCAProducteurClient.resources
