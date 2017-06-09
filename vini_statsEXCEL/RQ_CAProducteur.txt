@@ -7,7 +7,7 @@ SUM(CA_HT) as CA_HT,
 SUM(QTE * CONT_BOUT) as ColsN
 
 FROM vnc5.dbo.CAFOURNISSEUR2 
- WHERE CMD_DATE between ? and ? or CMD_DATE between ? and ?
+ WHERE (CMD_DATE between ? and ? or CMD_DATE between ? and ?) and CMD_ORIGINE = ?
 Group By year(CMD_DATE), 
  FRN_CODE,
  FRN_NOM, 
