@@ -5720,7 +5720,7 @@ Public MustInherit Class Persist
         Dim strStringLect As String
 
         Try
-            strStringLect = "DECLARE @return_value int;EXEC	@return_value = GETNEXTNUM_FACTTRP; SELECT 'CODE' = @return_value"
+            strStringLect = "DECLARE @return_value int;EXEC	@return_value = GETNEXTNUM_FACTHBV; SELECT 'CODE' = @return_value"
             objCommand = New OleDbCommand
             objCommand.Connection = m_dbconn.Connection
             objCommand = New OleDbCommand(strStringLect, m_dbconn.Connection)
@@ -5736,11 +5736,11 @@ Public MustInherit Class Persist
                 bReturn = False
             End If
         Catch ex As Exception
-            setError("Persist.GetNumeroFactureTransport", ex.ToString())
+            setError("Persist.GetNumeroFactureHBV", ex.ToString())
             nReturn = -1
             bReturn = False
         End Try
-        Debug.Assert(bReturn, "GetNumeroFactureTransport: " & getErreur())
+        Debug.Assert(bReturn, "GetNumeroFactureHBV: " & getErreur())
         Return nReturn
     End Function 'GetNumeroFactureHBV
     Protected Function GetNumeroFactureColisage() As Integer

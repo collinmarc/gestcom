@@ -91,7 +91,9 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub TestReadMessages()
 
         Dim oImap As New Imap()
-        oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
+        Dim bReturn As Boolean
+        bReturn = oImap.Login("imap.gmail.com", Convert.ToUInt16(993), "marccollintest@gmail.com", "tphhgv3..", True)
+        Assert.IsTrue(bReturn, "Login NOK")
         Dim oMsg As System.Net.Mail.MailMessage
         'Après chque move on recommence la selection depuis le début
         'Je suppose qu'il y a des pblm d'index
@@ -177,7 +179,7 @@ Imports System.Text.RegularExpressions
     End Sub
 
     <TestMethod()> Public Sub TestSendMailCmd()
-        Dim mail As MailMessage = New MailMessage("marccollin.com@gmail.com", "marccollintest@gmail.com")
+        Dim mail As MailMessage = New MailMessage("contact@marccollin.com", "marccollintest@gmail.com")
 
         mail.Subject = "TEST"
         mail.IsBodyHtml = False
@@ -209,11 +211,15 @@ Imports System.Text.RegularExpressions
 
 
         Dim smtp As SmtpClient = New SmtpClient()
-        smtp.Host = "smtp.googlemail.com"
-        smtp.Port = 587
-        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3.")
+        '        smtp.Host = "smtp.googlemail.com"
+        '        smtp.Port = 587
+        '        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3.")
+        '        smtp.EnableSsl = True
 
-        smtp.EnableSsl = True
+        smtp.Host = "smtpauth.phpnet.org"
+        smtp.Port = 8025
+        '        smtp.EnableSsl = True
+        smtp.Credentials = New System.Net.NetworkCredential("contact@marccollin.com", "tphhgv3")
 
         smtp.Send(mail)
     End Sub

@@ -132,6 +132,8 @@ Partial Class frmConstantes
         Me.CST_FAX_PAGE_GARDETextBox = New System.Windows.Forms.TextBox()
         Me.CST_FAX_ENVOI_PAGE_GARDECheckBox = New System.Windows.Forms.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CST_PATH_FACTTRPTextBox = New System.Windows.Forms.TextBox()
@@ -1257,6 +1259,8 @@ Partial Class frmConstantes
         'TabPage3
         '
         Me.TabPage3.AutoScroll = True
+        Me.TabPage3.Controls.Add(Me.Label15)
+        Me.TabPage3.Controls.Add(Me.TextBox2)
         Me.TabPage3.Controls.Add(Me.TextBox1)
         Me.TabPage3.Controls.Add(Me.Label1)
         Me.TabPage3.Controls.Add(Me.CST_PATH_FACTTRPTextBox)
@@ -1281,12 +1285,29 @@ Partial Class frmConstantes
         Me.TabPage3.Text = "Numérotation"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(6, 165)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(99, 13)
+        Me.Label15.TabIndex = 17
+        Me.Label15.Text = "Facture HOBIVIN : "
+        '
+        'TextBox2
+        '
+        Me.TextBox2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CONSTANTESBindingSource, "CST_DERN_NUM_FACT_HBV", True))
+        Me.TextBox2.Location = New System.Drawing.Point(189, 162)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox2.TabIndex = 18
+        '
         'TextBox1
         '
         Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CONSTANTESBindingSource, "CST_EXPORT_COMPTA_PATH", True))
-        Me.TextBox1.Location = New System.Drawing.Point(295, 159)
+        Me.TextBox1.Location = New System.Drawing.Point(295, 188)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(467, 20)
         Me.TextBox1.TabIndex = 16
@@ -1294,7 +1315,7 @@ Partial Class frmConstantes
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 167)
+        Me.Label1.Location = New System.Drawing.Point(9, 196)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(221, 13)
         Me.Label1.TabIndex = 15
@@ -2032,4 +2053,6 @@ Partial Class frmConstantes
     Friend WithEvents tbSave As System.Windows.Forms.Button
     Friend WithEvents tbImport As System.Windows.Forms.Button
     Friend WithEvents ckCheck As System.Windows.Forms.CheckBox
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
 End Class

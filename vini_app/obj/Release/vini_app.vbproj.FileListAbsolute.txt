@@ -235,3 +235,9 @@ N:\vinicom\V5\vini_app\obj\Release\vini_app.exe
 N:\vinicom\V5\vini_app\obj\Release\vini_app.xml
 N:\vinicom\V5\vini_app\obj\Release\vini_app.pdb
 N:\vinicom\V5\vini_app\obj\Release\vini_app.frmPurgePreCommande.resources
+N:\vinicom\V5\vini_app\bin\Release\crFactHobivin.rpt
+N:\vinicom\V5\vini_app\bin\Release\crEnteteHBV.rpt
+N:\vinicom\V5\vini_app\bin\Release\crEnteteHBV.vb
+N:\vinicom\V5\vini_app\bin\Release\crFactHobivin.vb
+N:\vinicom\V5\vini_app\obj\Release\vini_app.frmCAProducteurClient.resources
+N:\vinicom\V5\vini_app\obj\Release\vini_app.frmCumulVentesArticles.resources

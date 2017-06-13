@@ -451,7 +451,7 @@ Public Class frmExportFacture
             End If
             If bExportFactureHobivin Then
                 DisplayMessage("== Validation Export Facture de Hobivin ==")
-                colFact = FactTRP.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactHBVGeneree)
+                colFact = FactHBV.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactHBVGeneree)
                 For Each objFact As Facture In colFact
                     objFact.changeEtat(vncActionEtatCommande.vncActionFactHBVExporter)
                     objFact.Save()

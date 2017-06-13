@@ -33,6 +33,19 @@ vini_DB
  </summary>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:vini_DB.FactHBV.createandloadFromCmd(System.Int64)">
+	<summary>
+ Creation et chargement d'une factute HBV à partir d'un id de commande
+ </summary>
+	<param name="pIdCmd"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.FactHBV.insert">
+	<summary>
+ insertion d'une facture dans la base de données
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_DB.TauxComm.getListe(System.Int32)">
 	<summary>
  Rend la Liste des Taux de Commission associé à une fournisseur
@@ -822,12 +835,32 @@ Represents the connection and commands used to retrieve and save data.
 	<param name="vncAction"></param>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="P:vini_DB.Client.Origine">
+	<summary>
+ Si le client est de type 'Intermédiaire' , indique l'origine des commande pour lequel il est un intermédiaire
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_DB.Client.createandload(System.String)">
 	<summary>
  Constructeur pour Chargement par la clé
  </summary>
 	<param name="pCode"> Code Fournisseur</param>
 	<returns>Objet Fournisseur ou null</returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Client.setTypeIntermediaire(System.String)">
+	<summary>
+ Fixe le type de client à "intermédaire" et l'origine des commandes concernées
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Client.getIntermediairesPourUneOrigine(System.String)">
+	<summary>
+ Renvoie la liste des clients qui ont été identifiés comme intermédiaires pour une origine
+ </summary>
+	<param name="pOrigine"></param>
+	<returns></returns>
 	<remarks></remarks>
 </member><member name="P:vini_DB.Transporteur.colTransporteur(System.Boolean)">
 	<summary>
@@ -837,6 +870,12 @@ Represents the connection and commands used to retrieve and save data.
 	<param name="bForce"></param>
 	<value></value>
 	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:vini_DB.LgFactHBV">
+	<summary>
+ Classe Ligne de facture Hobivin
+ Créée à partir de ligneCommande
+ </summary>
 	<remarks></remarks>
 </member><member name="T:vini_DB.dsError.COMMANDE_SCMD_NULLDataTable">
 	<summary>
@@ -1135,6 +1174,12 @@ Represents the connection and commands used to retrieve and save data.
  </summary>
 	<returns>ID  ou -1</returns>
 	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.GetNumeroFactureHBV">
+	<summary>
+ Rend le prochain numéro de facture HOBIVIN
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_DB.Persist.ListeSCMDAFacturerCom(System.DateTime,System.DateTime,System.String)">
 	<summary>
  Liste des sous commandes à facturer en Commission 
@@ -1158,6 +1203,54 @@ Represents the connection and commands used to retrieve and save data.
  </summary>
 	<param name="strCode"></param>
 	<param name="strRSClient"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.loadFACTHBVFromCmd(System.Int64)">
+	<summary>
+ Chargement de la facture à partir de l'Id de la commande
+ </summary>
+	<param name="pIdCmd"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.saveColLGFACTHBV">
+	<summary>
+ Sauvegarde des Lignes des facture Hobivin
+ Chargement des ID des lignes existantes
+ pour chaque lignes de la collection
+ Si l'ID existe
+     Update de la ligne + Suppression de l'ID de la liste des Ids
+ Sinon
+     Création de la Ligne
+ 
+ Suppression des Lignes correspondant aux Ids restants
+ 
+ 
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.deletecolLgHBV">
+	<summary>
+ Suppression des lignes d'une facture
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.ListeFACTHBV(System.String,System.String,vini_DB.vncEnums.vncEtatCommande)">
+	<summary>
+ Rend une collection de FactHBV
+ </summary>
+	<param name="strCode"></param>
+	<param name="strRSClient"></param>
+	<param name="pEtat"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:vini_DB.Persist.ListeFACTHBVDate(System.DateTime,System.DateTime,System.String,vini_DB.vncEnums.vncEtatCommande)">
+	<summary>
+ Rend une liste de factHBV en fonctino des date et de l'état
+ </summary>
+	<param name="pddeb"></param>
+	<param name="pdfin"></param>
+	<param name="pCodeClient"></param>
+	<param name="pEtat"></param>
 	<returns></returns>
 	<remarks></remarks>
 </member><member name="M:vini_DB.Persist.LoadcolLgFactColisage">

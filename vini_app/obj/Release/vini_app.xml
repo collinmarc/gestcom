@@ -24,6 +24,12 @@ vini_app
 	<param name="pcol">Collection à exporter</param>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:vini_app.frmCommandeClient.SauveElement">
+	<summary>
+ Sauvegarde de l'élement courant (Commande)
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:vini_app.FrmDonBase.setElementCourant2(vini_DB.Persist)">
 	<summary>
  Renseigne l'élément courant en véfifiant s'il est libre d'utilisation
@@ -43,7 +49,7 @@ vini_app
 	<remarks></remarks>
 </member><member name="M:vini_app.frmExportFacture.ValiderExport">
 	<summary>
- Exporte les factures vers le répertoire indiqué
+ Change l'état des factures à facturée
  </summary>
 	<remarks></remarks>
 </member><member name="M:vini_app.frmExportFacture.exportFacture(System.String,Microsoft.VisualBasic.Collection)">
