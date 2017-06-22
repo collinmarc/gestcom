@@ -24,3 +24,10 @@ N:\vinicom\V5\vini_internet\obj\Release\vini_internet.vbproj.GenerateResource.Ca
 N:\vinicom\V5\vini_internet\obj\Release\vini_internet.exe
 N:\vinicom\V5\vini_internet\obj\Release\vini_internet.xml
 N:\vinicom\V5\vini_internet\obj\Release\vini_internet.vbprojResolveAssemblyReference.cache
+N:\vinicom\V5\vini_internet\bin\release\internetconnection.ico
+N:\vinicom\V5\vini_internet\bin\release\vini_internet.exe.config
+N:\vinicom\V5\vini_internet\bin\release\vini_internet.exe
+N:\vinicom\V5\vini_internet\bin\release\vini_internet.xml
+N:\vinicom\V5\vini_internet\bin\release\vini_DB.dll
+N:\vinicom\V5\vini_internet\bin\release\vini_DB.pdb
+N:\vinicom\V5\vini_internet\bin\release\vini_DB.xml

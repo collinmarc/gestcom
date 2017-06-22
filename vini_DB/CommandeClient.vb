@@ -45,7 +45,6 @@ Public Class CommandeClient
     Protected m_IDPrestashop As Long
     Protected m_NamePrestashop As String
     Protected m_Origine As String
-    Protected m_idFHBV As Long 'Identifiant de la facture Hobivin
 #End Region
 #Region "Accesseurs"
     Public Sub New(ByVal poClient As Client)
@@ -61,7 +60,6 @@ Public Class CommandeClient
         m_RaisonSocialeLivraison = ""
         m_bUpdatePrecommande = True
         m_NamePrestashop = ""
-        m_idFHBV = 0
         m_Origine = "VINICOM"
         Debug.Assert(Not m_oTransporteur Is Nothing)
         Debug.Assert(Not etat Is Nothing)

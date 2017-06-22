@@ -241,3 +241,4 @@ N:\vinicom\V5\vini_app\bin\Release\crEnteteHBV.vb
 N:\vinicom\V5\vini_app\bin\Release\crFactHobivin.vb
 N:\vinicom\V5\vini_app\obj\Release\vini_app.frmCAProducteurClient.resources
 N:\vinicom\V5\vini_app\obj\Release\vini_app.frmCumulVentesArticles.resources
+N:\vinicom\V5\vini_app\bin\Release\Requetes\V5.8TOV5.9.sql

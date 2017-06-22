@@ -4868,7 +4868,6 @@ Public MustInherit Class Persist
                                     "CMD_IDPRESTASHOP, " & _
                                     "CMD_NAMEPRESTASHOP, " & _
                                     "CMD_ORIGINE, " & _
-                                    "CMD_IDFHBV, " & _
                                     "RQ_ModeReglement.PAR_VALUE" & _
                                     " FROM COMMANDE LEFT OUTER JOIN RQ_ModeReglement ON COMMANDE.CMD_CLT_RGLMT_ID = RQ_ModeReglement.PAR_ID WHERE " & _
                                    " CMD_ID = ?"
