@@ -65,27 +65,29 @@ Public Class FrmDonBase
         If frm.ShowDialog() = Windows.Forms.DialogResult.OK Then
             'Si on sort par OK
             oElement = frm.getElementSelectionne()
-            DisplayStatus("Chargement de l'élément en cours")
-            bReturn = oElement.load()
-            DisplayStatus("Chargement Terminée")
-            Debug.Assert(bReturn, "frmDonBase.frmLoad : Load Failed :" & Persist.getErreur())
+            If oElement IsNot Nothing Then
+                DisplayStatus("Chargement de l'élément en cours")
+                bReturn = oElement.load()
+                DisplayStatus("Chargement Terminée")
+                Debug.Assert(bReturn, "frmDonBase.frmLoad : Load Failed :" & Persist.getErreur())
 
-            If isfrmUpdated() Then
-                If MsgBox("L'élement courant a été modifié, Voulez-vous le sauvegarder ", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                    frmSave()
-                Else
-                    setfrmNotUpdated()
+                If isfrmUpdated() Then
+                    If MsgBox("L'élement courant a été modifié, Voulez-vous le sauvegarder ", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                        frmSave()
+                    Else
+                        setfrmNotUpdated()
+                    End If
                 End If
-            End If
 
-            If Not oElement Is Nothing Then
-                DisplayStatus("Positionnement de l'élement courant")
-                If setElementCourant2(oElement) Then
-                    DisplayStatus("Affichage de l'élement courant")
-                    AfficheElementCourant()
+                If Not oElement Is Nothing Then
+                    DisplayStatus("Positionnement de l'élement courant")
+                    If setElementCourant2(oElement) Then
+                        DisplayStatus("Affichage de l'élement courant")
+                        AfficheElementCourant()
+                    End If
                 End If
+                setfrmNotUpdated()
             End If
-            setfrmNotUpdated()
         Else
             bReturn = False
         End If

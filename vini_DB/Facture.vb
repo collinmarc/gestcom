@@ -103,12 +103,7 @@ Public MustInherit Class Facture
                 objParam = New ParamModeReglement()
                 objParam.load(idModeReglement)
                 If Not String.IsNullOrEmpty(objParam.code) Then
-                    Select Case objParam.dDebutEcheance
-                        Case "FDM"
-                            dEcheance = objParam.calDateEcheance(Me.dateFacture)
-                        Case "FACT"
-                            dEcheance = objParam.calDateEcheance(Me.dateFacture)
-                    End Select
+                    dEcheance = objParam.calDateEcheance(Me.dateFacture)
                 End If
             End If
             bReturn = True

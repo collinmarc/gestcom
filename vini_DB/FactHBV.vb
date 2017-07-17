@@ -19,6 +19,7 @@ Public Class FactHBV
         dateCommande = poCmd.dateCommande
         CommFacturation.comment = poCmd.CommentaireFacturationText
         m_idCommande = poCmd.id
+        CalcDateEcheance()
         For Each oLg As LgCommande In poCmd.colLignes
             Dim olgFHBV As New LgFactHBV()
             olgFHBV.oProduit = oLg.oProduit

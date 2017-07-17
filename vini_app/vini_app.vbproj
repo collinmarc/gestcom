@@ -1360,6 +1360,7 @@
       <LastGenOutput>crTableauCAClient.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icones\HobivinLogo.jpg" />
     <Content Include="Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
