@@ -1,4 +1,9 @@
-﻿ 
+﻿Version : 5.9
+date :  17/07/2017
+#779,780 : Facture Hobivin
+#778 : Curseur après affichage de l'onglet eclatement
+
+ 
 Version : 5.8.5
 date :  17/03/2017, 21/03/2017
 #742 : Plantage lors de l'import Internet

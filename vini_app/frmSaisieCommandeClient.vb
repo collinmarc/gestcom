@@ -451,6 +451,7 @@ Public Class frmCommandeClient
         afficheListeSousCommande()
 
         finAffiche()
+        Me.Cursor = Cursors.Default
         Return True
     End Function 'AfficheElement
     Protected Overrides Sub EnableControls(ByVal bEnabled As Boolean)
@@ -809,7 +810,7 @@ Public Class frmCommandeClient
             DisplayError("visualiserSousCommande", ex.Message)
             bReturn = False
         End Try
-        restoreCursor()
+        Me.Cursor = Cursors.Default
         Return bReturn
     End Function 'visualiserSousCommande
 
@@ -892,7 +893,7 @@ Public Class frmCommandeClient
             bReturn = False
             DisplayError("InitTPEclatement", ex.Message)
         End Try
-        restoreCursor()
+        Me.Cursor = Cursors.Default
         Return bReturn
     End Function 'initTPEclatement
     ''======================================================================
