@@ -9,7 +9,7 @@ Public Class frmGestParamContenant
         Dim objParam As contenant
 
         DataGridView1.DataSource = Nothing
-
+        m_bsrcParam.Clear()
         For Each objParam In contenant.colContenant
             m_bsrcParam.Add(objParam)
         Next
@@ -35,20 +35,14 @@ Public Class frmGestParamContenant
         Me.Close()
     End Sub
 
-    Private Sub m_bsrcParamModeReglement_AddingNew(ByVal sender As System.Object, ByVal e As System.ComponentModel.AddingNewEventArgs) Handles m_bsrcParam.AddingNew
-        Try
-            e.NewObject = New contenant
-        Catch ex As Exception
-
-        End Try
-    End Sub
 
     Private Sub DataGridView1_UserDeletingRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowCancelEventArgs) Handles DataGridView1.UserDeletingRow
-        Dim objParam As Param
+        Dim objParam As contenant
         objParam = m_bsrcParam.Current
         If Not objParam Is Nothing Then
             objParam.bDeleted = True
             m_DeletedRows.Add(objParam)
+
         End If
 
     End Sub
@@ -61,5 +55,9 @@ Public Class frmGestParamContenant
         ' Ajoutez une initialisation quelconque après l'appel InitializeComponent().
         m_DeletedRows = New Collection()
 
+    End Sub
+
+    Private Sub DataGridView1_UserAddedRow(sender As Object, e As DataGridViewRowEventArgs) Handles DataGridView1.UserAddedRow
+        setfrmUpdated()
     End Sub
 End Class

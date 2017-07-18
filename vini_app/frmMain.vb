@@ -1137,7 +1137,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 291)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 251)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1164,7 +1164,7 @@ Friend Class frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(1016, 313)
+        Me.ClientSize = New System.Drawing.Size(1016, 273)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default
@@ -2100,6 +2100,10 @@ Friend Class frmMain
         ofrm = New frmPurgePreCommande
         ofrm.MdiParent = Me
         ofrm.Show()
+
+    End Sub
+
+    Private Sub cbToolBarSave_Disposed(sender As Object, e As EventArgs) Handles cbToolBarSave.Disposed
 
     End Sub
 End Class

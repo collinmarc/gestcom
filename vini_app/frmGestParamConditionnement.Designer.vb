@@ -19,14 +19,14 @@ Partial Class frmGestParamConditionnement
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Me.m_bsrcParam = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ValeurDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DefautDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.cbOK = New System.Windows.Forms.Button
-        Me.cbCancel = New System.Windows.Forms.Button
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ValeurDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DefautDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.cbOK = New System.Windows.Forms.Button()
+        Me.cbCancel = New System.Windows.Forms.Button()
         CType(Me.m_bsrcParam, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -38,10 +38,9 @@ Partial Class frmGestParamConditionnement
         '
         'DataGridView1
         '
-        Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.AutoGenerateColumns = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -98,7 +97,6 @@ Partial Class frmGestParamConditionnement
         Me.Controls.Add(Me.DataGridView1)
         Me.Name = "frmGestParamConditionnement"
         Me.Text = "Gestion des conditionnements"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.m_bsrcParam, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

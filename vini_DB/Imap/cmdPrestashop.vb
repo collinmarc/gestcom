@@ -10,6 +10,7 @@ Public Class cmdprestashop
     Public name As String
     Public origine As String
     Public customer_id As String
+    Public company As String
     Public livraison_company As String
     Public livraison_name As String
     Public livraison_firstname As String
@@ -26,6 +27,7 @@ Public Class cmdprestashop
         name = ""
         origine = "VINICOM"
         customer_id = ""
+        company = ""
         livraison_company = ""
         livraison_name = ""
         livraison_firstname = ""
@@ -171,7 +173,7 @@ Public Class cmdprestashop
                 oReturn.IDPrestashop = id
                 oReturn.NamePrestashop = name
                 oReturn.Origine = origine
-                oReturn.caracteristiqueTiers.nom = livraison_name
+                oReturn.caracteristiqueTiers.nom = company
                 oReturn.caracteristiqueTiers.rs = livraison_company
                 oReturn.RaisonSocialeLivraison = livraison_company
                 oReturn.NomLivraison = livraison_name & " " & livraison_firstname

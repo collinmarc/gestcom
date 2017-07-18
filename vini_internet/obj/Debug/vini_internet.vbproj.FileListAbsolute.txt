@@ -142,4 +142,3 @@ N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.vbproj.GenerateResource.Cach
 N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.exe
 N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.xml
 N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.pdb
-N:\vinicom\V5\vini_internet\obj\Debug\vini_internet.vbprojResolveAssemblyReference.cache

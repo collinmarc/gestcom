@@ -2,6 +2,7 @@
 date :  17/07/2017
 #779,780 : Facture Hobivin
 #778 : Curseur après affichage de l'onglet eclatement
+#769 : Modif du mail new_oder : mettre la société dans livraison company
 
  
 Version : 5.8.5

@@ -61,4 +61,8 @@ Public Class frmGestParamConditionnement
         m_DeletedRows = New Collection()
 
     End Sub
+
+    Private Sub DataGridView1_UserAddedRow(sender As Object, e As DataGridViewRowEventArgs) Handles DataGridView1.UserAddedRow
+        setfrmUpdated()
+    End Sub
 End Class

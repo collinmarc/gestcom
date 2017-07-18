@@ -19,17 +19,17 @@ Partial Class frmGestParamContenant
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Me.m_bsrcParam = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.cbOK = New System.Windows.Forms.Button
-        Me.cbCancel = New System.Windows.Forms.Button
-        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CentDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BoutDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.PoidsDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DefautDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CentDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BoutDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PoidsDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DefautDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.cbOK = New System.Windows.Forms.Button()
+        Me.cbCancel = New System.Windows.Forms.Button()
         CType(Me.m_bsrcParam, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -41,10 +41,9 @@ Partial Class frmGestParamContenant
         '
         'DataGridView1
         '
-        Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.AutoGenerateColumns = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -54,26 +53,6 @@ Partial Class frmGestParamContenant
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(697, 310)
         Me.DataGridView1.TabIndex = 0
-        '
-        'cbOK
-        '
-        Me.cbOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbOK.Location = New System.Drawing.Point(529, 318)
-        Me.cbOK.Name = "cbOK"
-        Me.cbOK.Size = New System.Drawing.Size(75, 23)
-        Me.cbOK.TabIndex = 1
-        Me.cbOK.Text = "OK"
-        Me.cbOK.UseVisualStyleBackColor = True
-        '
-        'cbCancel
-        '
-        Me.cbCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbCancel.Location = New System.Drawing.Point(621, 317)
-        Me.cbCancel.Name = "cbCancel"
-        Me.cbCancel.Size = New System.Drawing.Size(75, 23)
-        Me.cbCancel.TabIndex = 2
-        Me.cbCancel.Text = "Annuler"
-        Me.cbCancel.UseVisualStyleBackColor = True
         '
         'CodeDataGridViewTextBoxColumn
         '
@@ -111,6 +90,26 @@ Partial Class frmGestParamContenant
         Me.DefautDataGridViewCheckBoxColumn.HeaderText = "defaut"
         Me.DefautDataGridViewCheckBoxColumn.Name = "DefautDataGridViewCheckBoxColumn"
         '
+        'cbOK
+        '
+        Me.cbOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbOK.Location = New System.Drawing.Point(529, 318)
+        Me.cbOK.Name = "cbOK"
+        Me.cbOK.Size = New System.Drawing.Size(75, 23)
+        Me.cbOK.TabIndex = 1
+        Me.cbOK.Text = "OK"
+        Me.cbOK.UseVisualStyleBackColor = True
+        '
+        'cbCancel
+        '
+        Me.cbCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbCancel.Location = New System.Drawing.Point(621, 317)
+        Me.cbCancel.Name = "cbCancel"
+        Me.cbCancel.Size = New System.Drawing.Size(75, 23)
+        Me.cbCancel.TabIndex = 2
+        Me.cbCancel.Text = "Annuler"
+        Me.cbCancel.UseVisualStyleBackColor = True
+        '
         'frmGestParamContenant
         '
         Me.ClientSize = New System.Drawing.Size(712, 342)
@@ -119,7 +118,6 @@ Partial Class frmGestParamContenant
         Me.Controls.Add(Me.DataGridView1)
         Me.Name = "frmGestParamContenant"
         Me.Text = "Gestion des contenants"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.m_bsrcParam, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
