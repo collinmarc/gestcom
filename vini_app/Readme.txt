@@ -1,4 +1,8 @@
-﻿Version : 5.9
+﻿Version : 
+date : 
+#787 : Expot des modes de reglements
+
+Version : 5.9
 date :  17/07/2017
 #779,780 : Facture Hobivin
 #778 : Curseur après affichage de l'onglet eclatement
