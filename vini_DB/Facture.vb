@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Data.OleDb
 
 Public MustInherit Class Facture
     Inherits Commande
@@ -200,12 +201,22 @@ Public MustInherit Class Facture
                     If oRow IsNot Nothing Then
                         If Trim(oRow.EXP_TYPECHAMPS).Equals("C") Then
                             'Exportation d'une Constante
-                            strLine = strLine + Left(oRow.EXP_VALEUR + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                            'Si la longueur est égale à 0 => Trim
+                            If oRow.EXP_LONGUEUR = 0 Then
+                                strLine = strLine + Trim(oRow.EXP_VALEUR)
+                            Else
+                                strLine = strLine + Left(oRow.EXP_VALEUR + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                            End If
                         End If
                         If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
                             'Exportation d'une Valeur
                             strValeur = getAttributeValue(oRow.EXP_VALEUR, oDTConstantes)
-                            strLine = strLine + Left(strValeur + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                            'Si la longueur est égale à 0 => Trim
+                            If oRow.EXP_LONGUEUR = 0 Then
+                                strLine = strLine + Trim(strValeur)
+                            Else
+                                strLine = strLine + Left(strValeur + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                            End If
                         End If
                     End If
                 Next 'champs
@@ -224,63 +235,101 @@ Public MustInherit Class Facture
         Dim strReturn As String
         strReturn = String.Empty
 
-        Select Case pstrAttributeName
-            Case "CODECOMPTA"
-                strReturn = oTiers.CodeCompta
-            Case "DATEFACTURE"
-                strReturn = Format(dateFacture, "ddMMyy")
-            Case "DATEECHEANCE"
-                strReturn = Format(dEcheance, "ddMMyy")
-            Case "LIBELLE"
-                strReturn = "F:" + Trim(code) + " " + getTXTString(oTiers.rs)
-            Case "TTC"
-                strReturn = totalTTC.ToString("0000000000.00").Replace(".", "")
-            Case "HT"
-                strReturn = totalHT.ToString("0000000000.00").Replace(".", "")
-            Case "TVA"
-                strReturn = (totalTTC - totalHT).ToString("0000000000.00").Replace(".", "")
-            Case "NUMFACT"
-                strReturn = code
-            Case "COMPTETVA"
-                If pDTConstantes IsNot Nothing Then
-                    If (Not pDTConstantes.Rows(0).IsNull("CST_SOC_COMPTETVA")) Then
-                        strReturn = pDTConstantes.Rows(0)("CST_SOC_COMPTETVA")
+        Try
+
+            Select Case pstrAttributeName
+                Case "CODECOMPTA"
+                    strReturn = oTiers.CodeCompta
+                Case "DATEFACTURE"
+                    strReturn = Format(dateFacture, "ddMMyy")
+                Case "DATEECHEANCE"
+                    strReturn = Format(dEcheance, "ddMMyy")
+                Case "LIBELLE"
+                    strReturn = "F:" + Trim(code) + " " + getTXTString(oTiers.rs)
+                Case "TTC"
+                    strReturn = totalTTC.ToString("0000000000.00").Replace(".", "")
+                Case "HT"
+                    strReturn = totalHT.ToString("0000000000.00").Replace(".", "")
+                Case "TVA"
+                    strReturn = (totalTTC - totalHT).ToString("0000000000.00").Replace(".", "")
+                Case "NUMFACT"
+                    strReturn = code
+                Case "COMPTETVA"
+                    If pDTConstantes IsNot Nothing Then
+                        If (Not pDTConstantes.Rows(0).IsNull("CST_SOC_COMPTETVA")) Then
+                            strReturn = pDTConstantes.Rows(0)("CST_SOC_COMPTETVA")
+                        End If
                     End If
-                End If
-            Case "COMPTEPRODUIT"
+                Case "COMPTEPRODUIT"
                     If pDTConstantes IsNot Nothing Then
                         If (Not pDTConstantes.Rows(0).IsNull("CST_SOC_COMPTEPRODUIT")) Then
                             strReturn = pDTConstantes.Rows(0)("CST_SOC_COMPTEPRODUIT")
                         End If
                     End If
-            Case "COMPTETVA2"
+                Case "COMPTETVA2"
                     If pDTConstantes IsNot Nothing Then
                         If (Not pDTConstantes.Rows(0).IsNull("CST_SOC2_COMPTETVA")) Then
                             strReturn = pDTConstantes.Rows(0)("CST_SOC2_COMPTETVA")
                         End If
                     End If
-            Case "COMPTEPRODUIT2"
+                Case "COMPTEPRODUIT2"
                     If pDTConstantes IsNot Nothing Then
                         If (Not pDTConstantes.Rows(0).IsNull("CST_SOC2_COMPTEPRODUIT")) Then
                             strReturn = pDTConstantes.Rows(0)("CST_SOC2_COMPTEPRODUIT")
                         End If
                     End If
-            Case "COMPTEPRODUIT2COL"
+                Case "COMPTEPRODUIT2COL"
                     If pDTConstantes IsNot Nothing Then
                         If (Not pDTConstantes.Rows(0).IsNull("CST_SOC2_COMPTEPRODUIT_COL")) Then
                             strReturn = pDTConstantes.Rows(0)("CST_SOC2_COMPTEPRODUIT_COL")
                         End If
                     End If
 
-            Case "MODEREGLEMENT"
-                Dim oParam As New ParamModeReglement
-                oParam.load(Me.idModeReglement)
-                strReturn = oParam.code
-            Case "LIBMODEREGLEMENT"
-                Dim oParam As New ParamModeReglement
-                oParam.load(Me.idModeReglement)
-                strReturn = oParam.valeur
-        End Select
+                Case "MODEREGLEMENT"
+                    Dim oParam As New ParamModeReglement
+                    oParam.load(Me.idModeReglement)
+                    strReturn = oParam.code
+                Case "LIBMODEREGLEMENT"
+                    Dim oParam As New ParamModeReglement
+                    oParam.load(Me.idModeReglement)
+                    strReturn = oParam.valeur
+
+                Case "BANQUE"
+                    strReturn = Me.oTiers.banque
+                Case "RIB"
+                    strReturn = Me.oTiers.rib1 & Me.oTiers.rib2 & Me.oTiers.rib3 & Me.oTiers.rib4
+
+                Case "MODEREGLEMENT2"
+                    Dim oParam As New ParamModeReglement
+                    oParam.load(Me.idModeReglement)
+                    Dim oTabCorrespondance As String()
+                    oTabCorrespondance = File.ReadAllLines("./ModeReglmtQuadra.csv")
+                    For Each line As String In oTabCorrespondance
+                        Dim Ligne As String()
+                        Ligne = line.Split(";")
+                        If Trim(Ligne(0)) = oParam.code Then
+                            strReturn = Ligne(1)
+                        End If
+                    Next
+
+ 
+                Case "MODEREGLEMENT4"
+                    Dim oParam As New ParamModeReglement
+                    oParam.load(Me.idModeReglement)
+                    Dim oTabCorrespondance As String()
+                    oTabCorrespondance = File.ReadAllLines("./ModeReglmtQuadra.csv")
+                    For Each line As String In oTabCorrespondance
+                        Dim Ligne As String()
+                        Ligne = line.Split(";")
+                        If Trim(Ligne(0)) = oParam.code Then
+                            strReturn = Ligne(2)
+                        End If
+                    Next
+            End Select
+        Catch ex As Exception
+            setError(System.Environment.StackTrace, ex.Message)
+            strReturn = ""
+        End Try
 
         Return strReturn
     End Function

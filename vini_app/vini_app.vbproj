@@ -1364,6 +1364,7 @@
     <Content Include="Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Requetes\Cretate_EXPORTParam.sql" />
     <Content Include="Requetes\extractPreCommande.sql" />
     <Content Include="Requetes\RQ_CLEAN.sql" />
     <Content Include="Requetes\V5.6To5.7.sql" />

@@ -339,9 +339,27 @@ Imports System.IO
         Dim strLine1 As String
         Dim strLine2 As String
         Dim strLine3 As String
+        Dim strLine4 As String
 
         'I - Création d'une Facture 
         '=========================
+        m_oFourn.banque = "CMB LIFFRE"
+        m_oFourn.rib1 = "12"
+        m_oFourn.rib2 = "34"
+        m_oFourn.rib3 = "56"
+        m_oFourn.rib4 = "78"
+
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "TA30FDM"
+        oParam.dDebutEcheance = "FDM"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+
+
+        Assert.IsTrue(m_oFourn.Save())
         objFACT = New FactCom(m_oFourn)
 
         objFACT.dateCommande = CDate("06/02/1964")
@@ -354,7 +372,7 @@ Imports System.IO
         objFACT.totalHT = 150.56
         objFACT.totalTTC = 180.89
         objFACT.dEcheance = "01/04/1964"
-        objFACT.idModeReglement = 45
+        objFACT.idModeReglement = oParam.id
 
         'Save
         Assert.IsTrue(objFACT.Save(), "Insert" & objFACT.getErreur)
@@ -366,11 +384,12 @@ Imports System.IO
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
-        Assert.AreEqual(3, strLines.Length, "3 lignes d'export")
+        Assert.AreEqual(4, strLines.Length, "4 lignes d'export")
 
         strLine1 = strLines(0)
         strLine2 = strLines(1)
         strLine3 = strLines(2)
+        strLine4 = strLines(3)
 
         Assert.AreEqual(231, strLine1.Length)
         Assert.AreEqual("M", strLine1.Substring(0, 1))
@@ -381,7 +400,7 @@ Imports System.IO
         Assert.AreEqual("V", strLine1.Substring(20, 1))
         Assert.AreEqual("D", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
-        Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
+        Assert.AreEqual("310364", Trim(strLine1.Substring(63, 6)))
 
         Assert.AreEqual(231, strLine2.Length)
         Assert.AreEqual("M", strLine2.Substring(0, 1))
@@ -400,6 +419,25 @@ Imports System.IO
         Assert.AreEqual(("F:" + objFACT.code + " " + m_oFourn.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("C", strLine3.Substring(41, 1))
         Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
+
+        'Test de la 4eme ligne
+        Dim unChamp As String()
+        Dim ChampVal As String() = strLine4.Split(";")
+        Assert.AreEqual("X", ChampVal(0).Substring(0, 1))
+        Assert.AreEqual(m_oFourn.CodeCompta, ChampVal(0).Substring(1))
+        Assert.AreEqual(6, ChampVal.Length)
+        unChamp = ChampVal(1).Split("=")
+        Assert.AreEqual("CMODEREGLEMENT2", unChamp(0))
+        Assert.AreEqual("LC", unChamp(1))
+        unChamp = ChampVal(2).Split("=")
+        Assert.AreEqual("CMODEREGLEMENT4", unChamp(0))
+        Assert.AreEqual("LCR", unChamp(1))
+        unChamp = ChampVal(3).Split("=")
+        Assert.AreEqual("CBANQUE", unChamp(0))
+        Assert.AreEqual("CMB LIFFRE", unChamp(1))
+        unChamp = ChampVal(4).Split("=")
+        Assert.AreEqual("CRIB", unChamp(0))
+        Assert.AreEqual("12345678", unChamp(1))
 
         objFACT.bDeleted = True
         objFACT.Save()
@@ -553,7 +591,28 @@ Imports System.IO
 
 
     End Sub
+    ''' <summary>
+    ''' test de la fonction GetAtributeValue pour l'export QUADRA
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T100_getAttributeValue()
 
+        Dim oFact As FactCom
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "TA30FDM"
+        oParam.dDebutEcheance = "FDM"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+
+        oFact = New FactCom(m_oFourn)
+        oFact.idModeReglement = oParam.id
+
+        Assert.AreEqual("LC", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
+        Assert.AreEqual("LCR", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
+    End Sub
 End Class
 
 
