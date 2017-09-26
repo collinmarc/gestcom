@@ -52,6 +52,11 @@ les tests unitaires FicheTechniqueFournTest
  Test la génération de facture de comm, Cette génération se fait sur la date de commande
  </summary>
 	<remarks></remarks>
+</member><member name="M:vini_test.T1130_FactComisssion.T100_getAttributeValue">
+	<summary>
+ test de la fonction GetAtributeValue pour l'export QUADRA
+ </summary>
+	<remarks></remarks>
 </member><member name="M:vini_test.test_V550.T01_NOMRSLIVRAISON_CMDCLT">
 	<summary>
  Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 

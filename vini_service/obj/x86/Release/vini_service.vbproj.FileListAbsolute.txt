@@ -13,3 +13,4 @@ N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.vbproj.GenerateResource.
 N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.exe
 N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.xml
 N:\vinicom\V5\vini_service\obj\x86\Release\vini_service.pdb
+N:\vinicom\V5\vini_service\bin\Release\ModeReglmtQuadra.csv

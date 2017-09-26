@@ -12,3 +12,4 @@ N:\vinicom\V5\vini_test\obj\Release\vini_test.vbprojResolveAssemblyReference.cac
 N:\vinicom\V5\vini_test\obj\Release\vini_test.dll
 N:\vinicom\V5\vini_test\obj\Release\vini_test.xml
 N:\vinicom\V5\vini_test\obj\Release\vini_test.pdb
+N:\vinicom\V5\vini_test\bin\Release\ModeReglmtQuadra.csv

@@ -3,3 +3,6 @@ N:\vinicom\V5\vini_DB\bin\vini_DB.dll
 N:\vinicom\V5\vini_DB\bin\vini_DB.xml
 N:\vinicom\V5\vini_DB\obj\Release\vini_DB.dll
 N:\vinicom\V5\vini_DB\obj\Release\vini_DB.xml
+N:\vinicom\V5\vini_DB\bin\ModeReglmtQuadra.csv
+N:\vinicom\V5\vini_DB\bin\Csv.dll
+N:\vinicom\V5\vini_DB\bin\Csv.xml

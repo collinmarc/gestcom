@@ -31,3 +31,4 @@ N:\vinicom\V5\vini_internet\bin\release\vini_internet.xml
 N:\vinicom\V5\vini_internet\bin\release\vini_DB.dll
 N:\vinicom\V5\vini_internet\bin\release\vini_DB.pdb
 N:\vinicom\V5\vini_internet\bin\release\vini_DB.xml
+N:\vinicom\V5\vini_internet\bin\release\ModeReglmtQuadra.csv
