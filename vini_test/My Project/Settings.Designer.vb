@@ -138,18 +138,6 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("V:/V5/vini_app/bin/Debug")>  _
-        Public Property PathToReport() As String
-            Get
-                Return CType(Me("PathToReport"),String)
-            End Get
-            Set
-                Me("PathToReport") = value
-            End Set
-        End Property
-        
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("imap.google.com")>  _
@@ -206,13 +194,24 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>Provider=SQLOLEDB.1;Data Source=localhost\"& _ 
-            "SQLEXPRESS;Initial Catalog=vnc5;Persist Security Info=True;User ID=vinicom;Passw"& _ 
-            "ord=vinicom")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB.1;Data Source=localhost\SQLEXPRESS;Initial Catalog=vnc5tu;Persi"& _ 
+            "st Security Info=True;User ID=vinicom;Password=vinicom")>  _
         Public ReadOnly Property ConnectionString() As String
             Get
                 Return CType(Me("ConnectionString"),String)
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("F:\Mesdocuments\Newco\vincom\V5_SVN\gestcom\vini_app\bin\Debug")>  _
+        Public Property PathToReport() As String
+            Get
+                Return CType(Me("PathToReport"),String)
+            End Get
+            Set
+                Me("PathToReport") = value
+            End Set
         End Property
     End Class
 End Namespace

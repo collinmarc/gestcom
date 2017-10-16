@@ -23,9 +23,6 @@
     <Setting Name="AppVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)">5.2.0</Value>
     </Setting>
-    <Setting Name="PathToReport" Type="System.String" Scope="User">
-      <Value Profile="(Default)">V:/V5/vini_app/bin/Debug</Value>
-    </Setting>
     <Setting Name="ImapHost" Type="System.String" Scope="Application">
       <Value Profile="(Default)">imap.google.com</Value>
     </Setting>
@@ -45,7 +42,10 @@
       <Value Profile="(Default)">993</Value>
     </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;Provider=SQLOLEDB.1;Data Source=localhost\SQLEXPRESS;Initial Catalog=vnc5;Persist Security Info=True;User ID=vinicom;Password=vinicom</Value>
+      <Value Profile="(Default)">Provider=SQLOLEDB.1;Data Source=localhost\SQLEXPRESS;Initial Catalog=vnc5tu;Persist Security Info=True;User ID=vinicom;Password=vinicom</Value>
+    </Setting>
+    <Setting Name="PathToReport" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F:\Mesdocuments\Newco\vincom\V5_SVN\gestcom\vini_app\bin\Debug</Value>
     </Setting>
   </Settings>
 </SettingsFile>

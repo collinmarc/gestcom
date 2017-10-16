@@ -353,8 +353,8 @@ Imports System.IO
         Dim oParam As ParamModeReglement
         'Création d'un mode de reglement 30 fin de mois
         oParam = New ParamModeReglement()
-        oParam.code = "TA30FDM"
-        oParam.dDebutEcheance = "FDM"
+        oParam.code = "CHQ30NETS"
+        oParam.dDebutEcheance = "FACT"
         oParam.valeur2 = 30
         Assert.IsTrue(oParam.Save())
 
@@ -400,7 +400,7 @@ Imports System.IO
         Assert.AreEqual("V", strLine1.Substring(20, 1))
         Assert.AreEqual("D", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
-        Assert.AreEqual("310364", Trim(strLine1.Substring(63, 6)))
+        Assert.AreEqual("060364", Trim(strLine1.Substring(63, 6)))
 
         Assert.AreEqual(231, strLine2.Length)
         Assert.AreEqual("M", strLine2.Substring(0, 1))
@@ -428,7 +428,7 @@ Imports System.IO
         Assert.AreEqual(4, ChampVal.Length)
         unChamp = ChampVal(1).Split("=")
         Assert.AreEqual("ModePaiement", unChamp(0))
-        Assert.AreEqual("LCR", unChamp(1))
+        Assert.AreEqual("CHQ", unChamp(1))
         unChamp = ChampVal(2).Split("=")
         Assert.AreEqual("DomBanque", unChamp(0))
         Assert.AreEqual("CMB LIFFRE", unChamp(1))
@@ -609,6 +609,19 @@ Imports System.IO
 
         Assert.AreEqual("LC", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
         Assert.AreEqual("LCR", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
+
+        oParam = New ParamModeReglement()
+        oParam.code = "CHQ30NETS"
+        oParam.dDebutEcheance = "FACT"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+
+        oFact = New FactCom(m_oFourn)
+        oFact.idModeReglement = oParam.id
+
+        Assert.AreEqual("CH", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
+        Assert.AreEqual("CHQ", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
+
     End Sub
 End Class
 
