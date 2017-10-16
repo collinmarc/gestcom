@@ -245,13 +245,17 @@ Public MustInherit Class Facture
                 Case "DATEECHEANCE"
                     strReturn = Format(dEcheance, "ddMMyy")
                 Case "LIBELLE"
-                    strReturn = "F:" + Trim(code) + " " + getTXTString(oTiers.rs)
+                    If totalHT > 0 Then
+                        strReturn = "F:" + Trim(code) + " " + getTXTString(oTiers.rs)
+                    Else
+                        strReturn = "A:" + Trim(code) + " " + getTXTString(oTiers.rs)
+                    End If
                 Case "TTC"
-                    strReturn = totalTTC.ToString("0000000000.00").Replace(".", "")
+                    strReturn = Math.Abs(totalTTC).ToString("0000000000.00").Replace(".", "")
                 Case "HT"
-                    strReturn = totalHT.ToString("0000000000.00").Replace(".", "")
+                    strReturn = Math.Abs(totalHT).ToString("0000000000.00").Replace(".", "")
                 Case "TVA"
-                    strReturn = (totalTTC - totalHT).ToString("0000000000.00").Replace(".", "")
+                    strReturn = Math.Abs((totalTTC - totalHT)).ToString("0000000000.00").Replace(".", "")
                 Case "NUMFACT"
                     strReturn = code
                 Case "COMPTETVA"
@@ -325,6 +329,20 @@ Public MustInherit Class Facture
                             strReturn = Ligne(2)
                         End If
                     Next
+                Case "SENSD"
+                    If totalHT > 0 Then
+                        strReturn = "D"
+                    Else
+                        strReturn = "C"
+                    End If
+
+
+                Case "SENSC"
+                    If totalHT > 0 Then
+                        strReturn = "C"
+                    Else
+                        strReturn = "D"
+                    End If
             End Select
         Catch ex As Exception
             setError(System.Environment.StackTrace, ex.Message)

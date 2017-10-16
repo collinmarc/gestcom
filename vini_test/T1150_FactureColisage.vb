@@ -109,7 +109,7 @@ Imports System.IO
         Assert.IsTrue(objFACT.save(), "Update" & objFACT.getErreur)
         objFACT = FactColisage.createandload(nId)
 
-        Assert.AreEqual(CDate("01/04/1984"), objFACT.dEcheance)
+        ' Assert.AreEqual(CDate("01/04/1984"), objFACT.dEcheance)
         Assert.AreEqual(2, objFACT.idModeReglement)
 
         objFACT.bDeleted = True
@@ -216,12 +216,12 @@ Imports System.IO
         oLgFactCol = oFactCol1.colLignes(1)
         ' la Ligne pour le Produit 4 ne doit pas être prise en compte
         'Le Profuit 4 fait partie du fournisseur1
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Premier mois pas de mouvement")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Premier mois pas de mouvement")
         Assert.AreEqual(CDate("01/01/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("31/01/1964"), oLgFactCol.dFin, "Date de Fin")
         oLgFactCol = oFactCol1.colLignes(2)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(CDate("01/02/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("29/02/1964"), oLgFactCol.dFin, "Date de Fin")
 
@@ -322,24 +322,24 @@ Imports System.IO
 
         oLgFactCol = oFactCol1.colLignes(1)
         ' le mois 1 => Stock initial
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockFinal)
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Qte = Stock F ")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockFinal))
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock F ")
         Assert.AreEqual(1, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual(1, oLgFactCol.dFin.Month, "Date de Fin")
         Assert.AreNotEqual(0, oLgFactCol.MontantHT, "Montant HT <> 0")
 
         oLgFactCol = oFactCol1.colLignes(2)
         ' le mois 2 
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(2, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual(2, oLgFactCol.dFin.Month, "Date de Fin")
 
         oLgFactCol = oFactCol1.colLignes(3)
         ' 1 Sorties pour le mois 3
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Qte = Stock I")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I")
         Assert.AreEqual(3, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual(3, oLgFactCol.dFin.Month, "Date de Fin")
 
@@ -347,20 +347,20 @@ Imports System.IO
         ' 1 Sorties pour le mois 4
         Assert.AreEqual(4, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual(4, oLgFactCol.dFin.Month, "Date de Fin")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
 
         oLgFactCol = oFactCol1.colLignes(5)
         ' 1 Sorties pour le mois 5
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(5, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual(5, oLgFactCol.dFin.Month, "Date de Fin")
 
         oLgFactCol = oFactCol1.colLignes(6)
         ' 1 Sorties pour le mois 6
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), oLgFactCol.StockInitial, "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(6, oLgFactCol.dDeb.Month, "Date de debut")
         Assert.AreEqual("30/06/2000", oLgFactCol.dFin.ToShortDateString(), "Date de Fin")
 
@@ -613,6 +613,76 @@ Imports System.IO
         Assert.AreEqual("060264", strLine3.Substring(14, 6))
         Assert.AreEqual(Trim(("F:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("C", strLine3.Substring(41, 1))
+        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
+
+        objFact.bDeleted = True
+        Assert.IsTrue(objFact.save())
+    End Sub
+    ''' <summary>
+    ''' Test l'export vers Quadra d'un avoir
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T100_EXPORTAVOIR()
+        Dim objFact As FactColisage
+        Dim strLines As String()
+        Dim strLine1 As String
+        Dim strLine2 As String
+        Dim strLine3 As String
+
+        objFact = New FactColisage(m_objFRN)
+        objFact.periode = "1er Timestre 1964"
+        objFact.dateFacture = CDate("06/02/1964")
+        objFact.totalHT = -150.56
+        objFact.totalTTC = -180.89
+        objFact.dEcheance = "01/04/1964"
+
+        Assert.IsTrue(objFact.save(), objFact.getErreur())
+
+
+
+
+        'Save
+        Assert.IsTrue(objFact.save(), "Insert" & objFact.getErreur)
+        If File.Exists("./T20_EXPORT.txt") Then
+            File.Delete("./T20_EXPORT.txt")
+        End If
+
+        objFact.Exporter("./T20_EXPORT.txt")
+
+        Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
+        strLines = File.ReadAllLines("./T20_EXPORT.txt")
+        Assert.AreEqual(3, strLines.Length, "3 lignes d'export")
+
+        strLine1 = strLines(0)
+        strLine2 = strLines(1)
+        strLine3 = strLines(2)
+
+        Assert.AreEqual(231, strLine1.Length)
+        Assert.AreEqual("M", strLine1.Substring(0, 1))
+        Assert.AreEqual(m_objFRN.CodeCompta, Trim(strLine1.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine1.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine1.Substring(14, 6))
+        Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("C", strLine1.Substring(41, 1))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
+        Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
+
+        Assert.AreEqual(231, strLine2.Length)
+        Assert.AreEqual("M", strLine2.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine2.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine2.Substring(14, 6))
+        Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("D", strLine2.Substring(41, 1))
+        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
+
+        Assert.AreEqual(231, strLine3.Length)
+        Assert.AreEqual("M", strLine3.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT_COL")), Trim(strLine3.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine3.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine3.Substring(14, 6))
+        Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("D", strLine3.Substring(41, 1))
         Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
 
         objFact.bDeleted = True

@@ -5,7 +5,7 @@ Imports System.IO
 
 
 
-<TestClass()> Public Class T1130_FactComisssion
+<TestClass()> Public Class T1130_FactCommission
     Inherits test_Base
 
     Private m_oProduit As Produit
@@ -59,7 +59,7 @@ Imports System.IO
         objFACT = New FactCom(m_oFourn)
 
         Assert.AreEqual("", objFACT.periode, "Periode de reference")
-        Assert.AreEqual(0, objFACT.montantReglement, "Montant du reglement")
+        Assert.AreEqual(0D, objFACT.montantReglement, "Montant du reglement")
         Assert.AreEqual(CDate("01/01/2000"), objFACT.dateReglement, "date de reglement")
         Assert.AreEqual("", objFACT.refReglement, "reference du reglement")
 
@@ -71,7 +71,7 @@ Imports System.IO
         objFACT.refReglement = "CA01"
 
         Assert.AreEqual(objFACT.periode, "Periode de reference")
-        Assert.AreEqual(objFACT.montantReglement, 155.8)
+        Assert.AreEqual(objFACT.montantReglement, 155.8D)
         Assert.AreEqual(objFACT.dateReglement, CDate("31/07/1964"))
         Assert.AreEqual(objFACT.dateStatistique, CDate("01/03/2004"))
         Assert.AreEqual(objFACT.refReglement, "CA01")
@@ -439,6 +439,116 @@ Imports System.IO
         objFACT.bDeleted = True
         objFACT.Save()
     End Sub
+    ''' <summary>
+    ''' Test l'export d'un AVOIR de comm
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T21_EXPORTaVOIR()
+        Dim objFACT As FactCom
+        Dim strLines As String()
+        Dim strLine1 As String
+        Dim strLine2 As String
+        Dim strLine3 As String
+        Dim strLine4 As String
+
+        'I - Création d'une Facture 
+        '=========================
+        m_oFourn.banque = "CMB LIFFRE"
+        m_oFourn.rib1 = "12"
+        m_oFourn.rib2 = "34"
+        m_oFourn.rib3 = "56"
+        m_oFourn.rib4 = "78"
+
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "CHQ30NETS"
+        oParam.dDebutEcheance = "FACT"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+
+
+        Assert.IsTrue(m_oFourn.Save())
+        objFACT = New FactCom(m_oFourn)
+
+        objFACT.dateCommande = CDate("06/02/1964")
+        objFACT.periode = "1er Timestre 1964"
+        objFACT.dateFacture = CDate("06/02/1964")
+        objFACT.dateReglement = CDate("31/07/1964")
+        objFACT.montantReglement = 321.34
+        objFACT.refReglement = "CMB0034"
+        objFACT.dateStatistique = "01/03/1964"
+        objFACT.totalHT = -150.56
+        objFACT.totalTTC = -180.89
+        objFACT.dEcheance = "01/04/1964"
+        objFACT.idModeReglement = oParam.id
+
+        'Save
+        Assert.IsTrue(objFACT.Save(), "Insert" & objFACT.getErreur)
+        If File.Exists("./T20_EXPORT.txt") Then
+            File.Delete("./T20_EXPORT.txt")
+        End If
+
+        objFACT.Exporter("./T20_EXPORT.txt")
+
+        Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
+        strLines = File.ReadAllLines("./T20_EXPORT.txt")
+        Assert.AreEqual(4, strLines.Length, "4 lignes d'export")
+
+        strLine1 = strLines(0)
+        strLine2 = strLines(1)
+        strLine3 = strLines(2)
+        strLine4 = strLines(3)
+
+        Assert.AreEqual(231, strLine1.Length)
+        Assert.AreEqual("M", strLine1.Substring(0, 1))
+        Assert.AreEqual(m_oFourn.CodeCompta, Trim(strLine1.Substring(1, 8)))
+        Assert.AreEqual("VE", Trim(strLine1.Substring(9, 2)))
+        Assert.AreEqual("000", Trim(strLine1.Substring(11, 3)))
+        Assert.AreEqual("060264", strLine1.Substring(14, 6))
+        Assert.AreEqual("V", strLine1.Substring(20, 1))
+        Assert.AreEqual("C", strLine1.Substring(41, 1))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
+        Assert.AreEqual("060364", Trim(strLine1.Substring(63, 6)))
+
+        Assert.AreEqual(231, strLine2.Length)
+        Assert.AreEqual("M", strLine2.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
+        Assert.AreEqual("VE", Trim(strLine2.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine2.Substring(14, 6))
+        Assert.AreEqual(("A:" + objFACT.code + " " + m_oFourn.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("D", strLine2.Substring(41, 1))
+        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
+
+        Assert.AreEqual(231, strLine3.Length)
+        Assert.AreEqual("M", strLine3.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTEPRODUIT")), Trim(strLine3.Substring(1, 8)))
+        Assert.AreEqual("VE", Trim(strLine3.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine3.Substring(14, 6))
+        Assert.AreEqual(("A:" + objFACT.code + " " + m_oFourn.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("D", strLine3.Substring(41, 1))
+        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
+
+        'Test de la 4eme ligne
+        Dim unChamp As String()
+        Dim ChampVal As String() = strLine4.Split(";")
+        Assert.AreEqual("X", ChampVal(0).Substring(0, 1))
+        Assert.AreEqual(m_oFourn.CodeCompta, ChampVal(0).Substring(1))
+        Assert.AreEqual(4, ChampVal.Length)
+        unChamp = ChampVal(1).Split("=")
+        Assert.AreEqual("ModePaiement", unChamp(0))
+        Assert.AreEqual("CHQ", unChamp(1))
+        unChamp = ChampVal(2).Split("=")
+        Assert.AreEqual("DomBanque", unChamp(0))
+        Assert.AreEqual("CMB LIFFRE", unChamp(1))
+        unChamp = ChampVal(3).Split("=")
+        Assert.AreEqual("Rib", unChamp(0))
+        Assert.AreEqual("12345678", unChamp(1))
+
+        objFACT.bDeleted = True
+        objFACT.Save()
+    End Sub
     <TestMethod()> Public Sub T30_ChampsLongs()
 
         Dim objFACT As FactCom
@@ -465,15 +575,15 @@ Imports System.IO
         Dim obj1 As New FactCom(m_oFourn)
         Dim obj2 As New FactCom(m_oFourn)
 
-        obj1.save()
-        obj2.save()
+        obj1.Save()
+        obj2.Save()
         Assert.AreEqual(obj2.code, (obj1.code + 1).ToString())
         Assert.AreNotEqual(0, obj1.code)
 
         obj1.bDeleted = True
-        obj1.save()
+        obj1.Save()
         obj2.bDeleted = True
-        obj2.save()
+        obj2.Save()
 
 
     End Sub
