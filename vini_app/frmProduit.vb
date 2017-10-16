@@ -944,6 +944,15 @@ Public Class frmProduit
                 m_bsrcContenant.Add(objContenant)
             Next
             initcboTypeMvt(cbomvtType)
+            If currentuser.role = vncEnums.userRole.ADMIN Or currentuser.role = vncEnums.userRole.COMPTABILITE Then
+                tbCodeFourn.Enabled = True
+                cbRechercher.Enabled = True
+            Else
+                tbCodeFourn.Enabled = False
+                cbRechercher.Enabled = False
+            End If
+
+
             bReturn = True
         Catch ex As Exception
             bReturn = False
@@ -1352,9 +1361,9 @@ Public Class frmProduit
         MyBase.EnableControls(bEnabled) ' Activation de tous les contrôles de la fenêtre
         If m_action = vncEnums.vncfrmAction.FRMLOAD Then
             'Modifiation d'un Element
-            Me.tbCode.Enabled = False
-            Me.tbCodeFourn.Enabled = False
-            Me.cbRechercher.Enabled = False
+            Me.tbCode.Enabled = currentuser.aLeDroitdeModifierleFourniseurProduit()
+            Me.tbCodeFourn.Enabled = currentuser.aLeDroitdeModifierleFourniseurProduit()
+            Me.cbRechercher.Enabled = currentuser.aLeDroitdeModifierleFourniseurProduit()
         End If
     End Sub
 

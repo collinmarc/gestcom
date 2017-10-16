@@ -205,6 +205,17 @@ Public Class aut_user
         End Try
         Return bReturn
     End Function
+
+    Public Function aLeDroitdeModifierleFourniseurProduit() As Boolean
+        Dim bReturn As Boolean
+
+        If code = "CMATHURIN" Or code = "COLLIN" Then
+            bReturn = True
+        Else
+            bReturn = False
+        End If
+        Return bReturn
+    End Function
 #End Region
 
 End Class
