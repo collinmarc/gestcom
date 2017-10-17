@@ -1,0 +1,7 @@
+SRV : 192.168.0.240
+Port 143
+SSL : Checked
+imapuser : cmdprestashop@vinicom.fr
+Password vinicom35760
+Dossier : MSGTRAITES
+intervalle 30

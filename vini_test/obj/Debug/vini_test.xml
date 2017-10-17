@@ -7,271 +7,347 @@ vini_test
 </assembly>
 <members>
 <member name="T:vini_test.DataSet1">
-	<summary>
+<summary>
 Represents a strongly typed in-memory cache of data.
 </summary>
-</member><member name="P:vini_test.T0100_vini_base.TestContext">
-	<summary>
+</member>
+<member name="T:vini_test.T0100_vini_base">
+<summary>
+Classe de test pour FicheTechniqueFournTest, destinée à contenir tous
+les tests unitaires FicheTechniqueFournTest
+</summary>
+</member>
+<member name="P:vini_test.T0100_vini_base.TestContext">
+<summary>
 Obtient ou définit le contexte de test qui fournit
 des informations sur la série de tests active ainsi que ses fonctionnalités.
 </summary>
-</member><member name="M:vini_test.T0100_vini_base.T01_Constructeur">
-	<summary>
+</member>
+<member name="M:vini_test.T0100_vini_base.T01_Constructeur">
+<summary>
 Test pour Constructeur vini_Image
 </summary>
-</member><member name="M:vini_test.T0100_vini_base.T10_LoadSaveImage">
-	<summary>
+</member>
+<member name="M:vini_test.T0100_vini_base.T10_LoadSaveImage">
+<summary>
 Test pour LoadImage et Save Image
 </summary>
-</member><member name="M:vini_test.T0100_vini_base.T20_LoadDBSave">
-	<summary>
+</member>
+<member name="M:vini_test.T0100_vini_base.T20_LoadDBSave">
+<summary>
 Test pour Save abd Load Image en baseDeDonnées
 </summary>
-</member><member name="T:vini_test.T0100_vini_base">
-	<summary>
+</member>
+<member name="T:vini_test.T1050_FicheTechniqueFourn">
+<summary>
 Classe de test pour FicheTechniqueFournTest, destinée à contenir tous
 les tests unitaires FicheTechniqueFournTest
 </summary>
-</member><member name="M:vini_test.test4000_Reglement.T00_Object">
-	<summary>
- Teste Les acesseurs de l'objet ainsi que les méthodes de DB
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test4000_Reglement.T100_EXPORT">
-	<summary>
- Test l'export vers Quadra
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1130_FactComisssion.T20_EXPORT">
-	<summary>
- Test l'export d'une facture de comm
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1130_FactComisssion.T90_GenerationFactureCommissions">
-	<summary>
- Test la génération de facture de comm, Cette génération se fait sur la date de commande
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V550.T01_NOMRSLIVRAISON_CMDCLT">
-	<summary>
- Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
- commandes et Bon Appo
- 
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1110_sscommande.T50_TOCSV_StructureAvecIntermediaire">
-	<summary>
- Test l'export d'une sous commande avec un intermédiaire
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1070_client.T80_SetIntermédiaire">
-	<summary>
- Test la récupération du client intermédiaire d'une origine
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T20_DB_FACT">
-	<summary>
- Test de la sauvegarde de la  facture
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T20_DB_LG">
-	<summary>
- Test de la sauvegarde des lignes de factures
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T20_DB_LG_ADD_DELETE">
-	<summary>
- Test de la sauvegarde des lignes de factures en ajout ou en suppression
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T100_EXPORT">
-	<summary>
- Test l'export vers Quadra
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T110_CREATEFROMCOMMANDECLT">
-	<summary>
- Création depuis une commande Client
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T130_LOADFROMCMD">
-	<summary>
- Test du chargement depuis  L'id d'uine commmande
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1500_FactHBV.T150_GENERATIONETAT">
-	<summary>
- Test du chargement depuis  L'id d'uine commmande
- </summary>
-	<remarks></remarks>
-</member><member name="T:vini_test.T1500_FactHBV">
-	<summary>
- Test des la classe FactHBV
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V560.T01_ExportQuadra">
-	<summary>
- Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
- commandes et Bon Appo
- 
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1080_PRECOMMANDE.T60_Purge">
-	<summary>
- Test de la purge des précommandes
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1100_commande.T080_COMMISSION">
-	<summary>
- Test les champs commision dans les lignes de commandes
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1100_commande.T080_CALCULCOMMISSION">
-	<summary>
- Test les champs commision dans les lignes de commandes
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1100_commande.T100_RECHERCHEORIGINE">
-	<summary>
- Test de la fonction de recherche sur l'origine
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test1150_FactureColisage.T60_GenerationFactureColisage">
-	<summary>
- Test que les produit hors stock ne sont pas pris dans le colisage
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test1150_FactureColisage.T70_GenerationFactureColisage2Mois">
-	<summary>
- Test la génération des factures de colisage sur plusieurs mois
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test1150_FactureColisage.T80_GenereDataSet">
-	<summary>
- Test la génération du dataset Colisage
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test1150_FactureColisage.T100_EXPORT">
-	<summary>
- Test l'export vers Quadra
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V310.T10_ListeMvtStock">
-	<summary>
- Test que la liste ds mvts de stocks ne concerne que les Produits en Stocks
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V310.T60_GenerationFactureColisage">
-	<summary>
- Test que les produit hors stock ne sont pas pris dans le colisage
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V310.T70_REFACTTRP_CMDCLT">
-	<summary>
- Test Les Champs LettreVoiture, CoutTransport, RefFActTRp pour la Commande Client
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V310.T80_REFACTTRP_BA">
-	<summary>
- Test Les Champs LettreVoiture, CoutTransport, RefFActTRp pour la bon Appro
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V420.T00">
-	<summary>
- Test la génération des factures de commission avec des sous commandes rapprochées
- changement d'état Raprochée -&gt; Facturée
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V420.T01">
-	<summary>
- Test le passge du taux de commission de la commande à la sous commande
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V420.T02_ColMvtStock">
-	<summary>
- test le non ecrasement des mouvements de stocks en sauvegarde article
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.T1140_FactureTransport.T100_EXPORT">
-	<summary>
- Test l'export vers Quadra
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V300.T30_TestFactColisage">
-	<summary>
- Test the factcolisage Object, Insert, Update,Delete
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V300.T40_TestLgFactColisage">
-	<summary>
- Test the Line factcolisage Object, 
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V300.T50_ListeFactColisage">
-	<summary>
- Test la Liste des factures de colisage
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V423.T01_IDSCMD">
-	<summary>
- La sauvegarde d'une commandeclient =&gt; l'id de SCMD = 0
- 
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V500.T01_NOMRSCLIENT_CMDCLT">
-	<summary>
- Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
- commandes et Bon Appo
- 
- </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.test_V500.T02_COPY_TIERS_TO_CMD">
-	<summary>
- Teste la recopie des infos du tiers sur la commande
- </summary>
-	<remarks></remarks>
-</member><member name="P:vini_test.T1050_FicheTechniqueFourn.TestContext">
-	<summary>
+</member>
+<member name="P:vini_test.T1050_FicheTechniqueFourn.TestContext">
+<summary>
 Obtient ou définit le contexte de test qui fournit
 des informations sur la série de tests active ainsi que ses fonctionnalités.
 </summary>
-</member><member name="M:vini_test.T1050_FicheTechniqueFourn.EqualsTest">
-	<summary>
+</member>
+<member name="M:vini_test.T1050_FicheTechniqueFourn.EqualsTest">
+<summary>
 Test pour Equals
 </summary>
-</member><member name="M:vini_test.T1050_FicheTechniqueFourn.FicheTechniqueFournConstructorTest">
-	<summary>
+</member>
+<member name="M:vini_test.T1050_FicheTechniqueFourn.FicheTechniqueFournConstructorTest">
+<summary>
 Test pour Constructeur FicheTechniqueFourn
 </summary>
-</member><member name="M:vini_test.T1050_FicheTechniqueFourn.LoadImages">
-	<summary>
+</member>
+<member name="M:vini_test.T1050_FicheTechniqueFourn.LoadImages">
+<summary>
 Test pour Constructeur FicheTechniqueFourn
 </summary>
-</member><member name="T:vini_test.T1050_FicheTechniqueFourn">
-	<summary>
-Classe de test pour FicheTechniqueFournTest, destinée à contenir tous
-les tests unitaires FicheTechniqueFournTest
-</summary>
-</member><member name="M:vini_test.TestImap.TestCkeckMailVinicom">
-	<summary>
+</member>
+<member name="M:vini_test.T1070_client.T80_SetIntermédiaire">
+ <summary>
+ Test la récupération du client intermédiaire d'une origine
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1080_PRECOMMANDE.T60_Purge">
+ <summary>
+ Test de la purge des précommandes
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1100_commande.T080_COMMISSION">
+ <summary>
+ Test les champs commision dans les lignes de commandes
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1100_commande.T080_CALCULCOMMISSION">
+ <summary>
+ Test les champs commision dans les lignes de commandes
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1100_commande.T100_RECHERCHEORIGINE">
+ <summary>
+ Test de la fonction de recherche sur l'origine
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1110_sscommande.T50_TOCSV_StructureAvecIntermediaire">
+ <summary>
+ Test l'export d'une sous commande avec un intermédiaire
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T20_EXPORT">
+ <summary>
+ Test l'export d'une facture de comm
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T21_EXPORTaVOIR">
+ <summary>
+ Test l'export d'un AVOIR de comm
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T90_GenerationFactureCommissions">
+ <summary>
+ Test la génération de facture de comm, Cette génération se fait sur la date de commande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T100_getAttributeValue">
+ <summary>
+ test de la fonction GetAtributeValue pour l'export QUADRA
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:vini_test.T1500_FactHBV">
+ <summary>
+ Test des la classe FactHBV
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T20_DB_FACT">
+ <summary>
+ Test de la sauvegarde de la  facture
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T20_DB_LG">
+ <summary>
+ Test de la sauvegarde des lignes de factures
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T20_DB_LG_ADD_DELETE">
+ <summary>
+ Test de la sauvegarde des lignes de factures en ajout ou en suppression
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T100_EXPORT">
+ <summary>
+ Test l'export vers Quadra
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T110_CREATEFROMCOMMANDECLT">
+ <summary>
+ Création depuis une commande Client
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T130_LOADFROMCMD">
+ <summary>
+ Test du chargement depuis  L'id d'uine commmande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1500_FactHBV.T150_GENERATIONETAT">
+ <summary>
+ Test du chargement depuis  L'id d'uine commmande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1140_FactureTransport.T100_EXPORT">
+ <summary>
+ Test l'export vers Quadra
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1140_FactureTransport.T100_EXPORTAvoir">
+ <summary>
+ Test l'export vers Quadra d'un avoir (Afcture négative)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test1150_FactureColisage.T60_GenerationFactureColisage">
+ <summary>
+ Test que les produit hors stock ne sont pas pris dans le colisage
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test1150_FactureColisage.T70_GenerationFactureColisage2Mois">
+ <summary>
+ Test la génération des factures de colisage sur plusieurs mois
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test1150_FactureColisage.T80_GenereDataSet">
+ <summary>
+ Test la génération du dataset Colisage
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test1150_FactureColisage.T100_EXPORT">
+ <summary>
+ Test l'export vers Quadra
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test1150_FactureColisage.T100_EXPORTAVOIR">
+ <summary>
+ Test l'export vers Quadra d'un avoir
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test4000_Reglement.T00_Object">
+ <summary>
+ Teste Les acesseurs de l'objet ainsi que les méthodes de DB
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test4000_Reglement.T100_EXPORT">
+ <summary>
+ Test l'export vers Quadra
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestImap.TestCkeckMailVinicom">
+ <summary>
  Ce test lit un mail provenant du système vinicom
  </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.TestImap.TestImportPrestashopCmd">
-	<summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestImap.TestImportPrestashopCmd">
+ <summary>
  Test de l'import Prestashop avec envoi de mail automatique
  </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.TestImap.TestImportPrestashopCmdOrigine">
-	<summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestImap.TestImportPrestashopCmdOrigine">
+ <summary>
  Test de L'origine de l'import Prestashop (HOBIVIN ou VINICOM)
  </summary>
-	<remarks></remarks>
-</member><member name="M:vini_test.TestImap.testReadWriteXMLString">
-	<summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestImap.testReadWriteXMLString">
+ <summary>
  Chargement de la commande prestashop à partir d'une chaine
  </summary>
-	<remarks></remarks>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V300.T30_TestFactColisage">
+ <summary>
+ Test the factcolisage Object, Insert, Update,Delete
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V300.T40_TestLgFactColisage">
+ <summary>
+ Test the Line factcolisage Object, 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V300.T50_ListeFactColisage">
+ <summary>
+ Test la Liste des factures de colisage
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V310.T10_ListeMvtStock">
+ <summary>
+ Test que la liste ds mvts de stocks ne concerne que les Produits en Stocks
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V310.T60_GenerationFactureColisage">
+ <summary>
+ Test que les produit hors stock ne sont pas pris dans le colisage
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V310.T70_REFACTTRP_CMDCLT">
+ <summary>
+ Test Les Champs LettreVoiture, CoutTransport, RefFActTRp pour la Commande Client
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V310.T80_REFACTTRP_BA">
+ <summary>
+ Test Les Champs LettreVoiture, CoutTransport, RefFActTRp pour la bon Appro
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V420.T00">
+ <summary>
+ Test la génération des factures de commission avec des sous commandes rapprochées
+ changement d'état Raprochée -> Facturée
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V420.T01">
+ <summary>
+ Test le passge du taux de commission de la commande à la sous commande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V420.T02_ColMvtStock">
+ <summary>
+ test le non ecrasement des mouvements de stocks en sauvegarde article
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V423.T01_IDSCMD">
+ <summary>
+ La sauvegarde d'une commandeclient => l'id de SCMD = 0
+ 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V560.T01_ExportQuadra">
+ <summary>
+ Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
+ commandes et Bon Appo
+ 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V550.T01_NOMRSLIVRAISON_CMDCLT">
+ <summary>
+ Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
+ commandes et Bon Appo
+ 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V500.T01_NOMRSCLIENT_CMDCLT">
+ <summary>
+ Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
+ commandes et Bon Appo
+ 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.test_V500.T02_COPY_TIERS_TO_CMD">
+ <summary>
+ Teste la recopie des infos du tiers sur la commande
+ </summary>
+ <remarks></remarks>
 </member>
 </members>
 </doc>
