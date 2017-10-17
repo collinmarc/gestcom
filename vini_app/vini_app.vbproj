@@ -1428,6 +1428,9 @@
     <EmbeddedResource Include="frmCumulVentesArticles.resx">
       <DependentUpon>frmCumulVentesArticles.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGestFactCom.resx">
+      <DependentUpon>frmGestFactCom.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmImportCommandeClientPrestashop.resx">
       <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
     </EmbeddedResource>

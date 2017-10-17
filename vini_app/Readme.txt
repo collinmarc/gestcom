@@ -2,6 +2,7 @@
 date : 26/09/2017
 #788 : Export des avoirs en comptabilité
 #789 : Possibilité de modifier le fournisseur d'un produit (CMATHURIN et COLLIN)'
+#787 : Export des modes de reglements (VersionQuadra)
 
 Version : 5.9.003
 date : 26/09/2017

@@ -153,6 +153,7 @@ Public Class frmGestFactCom
         Me.tbCommentaireFacturation = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.tpValidCmd = New System.Windows.Forms.TabPage()
+        Me.CrystalReportViewer1 = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.ckEntete = New System.Windows.Forms.CheckBox()
         Me.cbAfficherEtat = New System.Windows.Forms.Button()
         Me.cbBrowse = New System.Windows.Forms.Button()
@@ -173,7 +174,6 @@ Public Class frmGestFactCom
         Me.tbSolder = New System.Windows.Forms.Button()
         Me.tbSolde = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.CrystalReportViewer1 = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.tbTotalReglements.SuspendLayout()
         CType(Me.m_bsrcFacture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SSTabCommandeClient.SuspendLayout()
@@ -610,6 +610,21 @@ Public Class frmGestFactCom
         Me.tpValidCmd.TabIndex = 4
         Me.tpValidCmd.Text = "Editions"
         '
+        'CrystalReportViewer1
+        '
+        Me.CrystalReportViewer1.ActiveViewIndex = -1
+        Me.CrystalReportViewer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CrystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
+        Me.CrystalReportViewer1.DisplayStatusBar = False
+        Me.CrystalReportViewer1.Location = New System.Drawing.Point(9, 39)
+        Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
+        Me.CrystalReportViewer1.Size = New System.Drawing.Size(979, 428)
+        Me.CrystalReportViewer1.TabIndex = 129
+        Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
         'ckEntete
         '
         Me.ckEntete.Location = New System.Drawing.Point(208, 8)
@@ -769,21 +784,8 @@ Public Class frmGestFactCom
         Me.Label4.TabIndex = 20
         Me.Label4.Text = "Total Réglements :"
         '
-        'CrystalReportViewer1
-        '
-        Me.CrystalReportViewer1.ActiveViewIndex = -1
-        Me.CrystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.CrystalReportViewer1.DisplayStatusBar = False
-        Me.CrystalReportViewer1.Location = New System.Drawing.Point(9, 39)
-        Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
-        Me.CrystalReportViewer1.Size = New System.Drawing.Size(979, 428)
-        Me.CrystalReportViewer1.TabIndex = 129
-        Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
-        '
         'frmGestFactCom
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(1016, 577)
         Me.Controls.Add(Me.tbSolder)
         Me.Controls.Add(Me.tbSolde)
@@ -793,9 +795,7 @@ Public Class frmGestFactCom
         Me.Controls.Add(Me.SSTabCommandeClient)
         Me.Controls.Add(Me.tbTotalReglements)
         Me.Name = "frmGestFactCom"
-        Me.ShowInTaskbar = False
         Me.Text = "Facture de commission"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.tbTotalReglements.ResumeLayout(False)
         Me.tbTotalReglements.PerformLayout()
         CType(Me.m_bsrcFacture, System.ComponentModel.ISupportInitialize).EndInit()
