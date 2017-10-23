@@ -107,7 +107,7 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:vini_test.T1130_FactCommission.T21_EXPORTaVOIR">
+<member name="M:vini_test.T1130_FactCommission.T21_EXPORTAVOIR">
  <summary>
  Test l'export d'un AVOIR de comm
  </summary>

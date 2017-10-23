@@ -526,28 +526,6 @@ Imports System.IO
 
     End Sub 'T80_GenereDataset
 
-    'Ignore("test sur des valeurs réelles")
-    <TestMethod(), Ignore()> Public Sub T90_Test()
-
-        Dim oFact As FactColisage
-        Dim oFRN As Fournisseur
-        Dim oLG As LgFactColisage
-
-        oFRN = Fournisseur.createandload("002")
-        oFact = FactColisage.GenereFacture("01/10/2007", "31/12/2007", oFRN)
-        Assert.AreEqual(3, oFact.colLignes.Count)
-
-        oLG = CType(oFact.colLignes(1), LgFactColisage)
-        Assert.AreEqual(10, oLG.dDeb.Month)
-        Assert.AreEqual(253.4, oLG.MontantHT)
-        oLG = CType(oFact.colLignes(2), LgFactColisage)
-        Assert.AreEqual(11, oLG.dDeb.Month)
-        Assert.AreEqual(303.1, oLG.MontantHT)
-        oLG = CType(oFact.colLignes(3), LgFactColisage)
-        Assert.AreEqual(12, oLG.dDeb.Month)
-        Assert.AreEqual(300, oLG.MontantHT)
-
-    End Sub
     ''' <summary>
     ''' Test l'export vers Quadra
     ''' </summary>
@@ -555,9 +533,18 @@ Imports System.IO
     <TestMethod()> Public Sub T100_EXPORT()
         Dim objFact As FactColisage
         Dim strLines As String()
+        Dim strLine As String
         Dim strLine1 As String
-        Dim strLine2 As String
-        Dim strLine3 As String
+        Dim strLine5 As String
+        Dim strLine6 As String
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "CHQ30NETS"
+        oParam.dDebutEcheance = "FACT"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
 
         objFact = New FactColisage(m_objFRN)
         objFact.periode = "1er Timestre 1964"
@@ -565,6 +552,7 @@ Imports System.IO
         objFact.totalHT = 150.56
         objFact.totalTTC = 180.89
         objFact.dEcheance = "01/04/1964"
+        objFact.idModeReglement = oParam.id
 
         Assert.IsTrue(objFact.save(), objFact.getErreur())
 
@@ -581,11 +569,11 @@ Imports System.IO
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
-        Assert.AreEqual(3, strLines.Length, "3 lignes d'export")
+        Assert.AreEqual(6, strLines.Length, "3 lignes d'export")
 
         strLine1 = strLines(0)
-        strLine2 = strLines(1)
-        strLine3 = strLines(2)
+        strLine5 = strLines(4)
+        strLine6 = strLines(5)
 
         Assert.AreEqual(231, strLine1.Length)
         Assert.AreEqual("M", strLine1.Substring(0, 1))
@@ -595,25 +583,51 @@ Imports System.IO
         Assert.AreEqual(Trim(("F:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("D", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
-        Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
+        Assert.AreEqual("060364", Trim(strLine1.Substring(63, 6)))
 
-        Assert.AreEqual(231, strLine2.Length)
-        Assert.AreEqual("M", strLine2.Substring(0, 1))
-        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
-        Assert.AreEqual("CO", Trim(strLine2.Substring(9, 2)))
-        Assert.AreEqual("060264", strLine2.Substring(14, 6))
-        Assert.AreEqual(Trim(("F:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
-        Assert.AreEqual("C", strLine2.Substring(41, 1))
-        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
+        'Test de la 2eme ligne
+        strLine = strLines(1)
 
-        Assert.AreEqual(231, strLine3.Length)
-        Assert.AreEqual("M", strLine3.Substring(0, 1))
-        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT_COL")), Trim(strLine3.Substring(1, 8)))
-        Assert.AreEqual("CO", Trim(strLine3.Substring(9, 2)))
-        Assert.AreEqual("060264", strLine3.Substring(14, 6))
+        Dim unChamp As String()
+        Dim ChampVal As String() = strLine.Split(";")
+        Assert.AreEqual("Y", ChampVal(0))
+        Assert.AreEqual(2, ChampVal.Length)
+        unChamp = ChampVal(1).Split("=")
+        Assert.AreEqual("ModePaiement", unChamp(0))
+        Assert.AreEqual("CHQ", unChamp(1))
+
+
+        'Test de la 3eme ligne
+        strLine = strLines(2)
+        Assert.AreEqual(111, strLine.Length)
+        Assert.AreEqual("R", strLine.Substring(0, 1))
+        Assert.AreEqual("060364", strLine.Substring(1, 6))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(7, 13)))
+
+        'Test de la 4eme ligne
+        strLine = strLines(3)
+        Assert.AreEqual(18, strLine.Length)
+        Assert.AreEqual("Z;ModePaiement=", strLine.Substring(0, 15))
+        Assert.AreEqual("CHQ", strLine.Substring(15, 3))
+
+
+        Assert.AreEqual(231, strLine5.Length)
+        Assert.AreEqual("M", strLine5.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine5.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine5.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine5.Substring(14, 6))
         Assert.AreEqual(Trim(("F:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
-        Assert.AreEqual("C", strLine3.Substring(41, 1))
-        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
+        Assert.AreEqual("C", strLine5.Substring(41, 1))
+        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine5.Substring(42, 13)))
+
+        Assert.AreEqual(231, strLine6.Length)
+        Assert.AreEqual("M", strLine6.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT_COL")), Trim(strLine6.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine6.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine6.Substring(14, 6))
+        Assert.AreEqual(Trim(("F:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("C", strLine6.Substring(41, 1))
+        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine6.Substring(42, 13)))
 
         objFact.bDeleted = True
         Assert.IsTrue(objFact.save())
@@ -625,9 +639,18 @@ Imports System.IO
     <TestMethod()> Public Sub T100_EXPORTAVOIR()
         Dim objFact As FactColisage
         Dim strLines As String()
+        Dim strLine As String
         Dim strLine1 As String
-        Dim strLine2 As String
-        Dim strLine3 As String
+        Dim strLine5 As String
+        Dim strLine6 As String
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "CHQ30NETS"
+        oParam.dDebutEcheance = "FACT"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
 
         objFact = New FactColisage(m_objFRN)
         objFact.periode = "1er Timestre 1964"
@@ -635,6 +658,7 @@ Imports System.IO
         objFact.totalHT = -150.56
         objFact.totalTTC = -180.89
         objFact.dEcheance = "01/04/1964"
+        objFact.idModeReglement = oParam.id
 
         Assert.IsTrue(objFact.save(), objFact.getErreur())
 
@@ -651,11 +675,11 @@ Imports System.IO
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
-        Assert.AreEqual(3, strLines.Length, "3 lignes d'export")
+        Assert.AreEqual(6, strLines.Length, "3 lignes d'export")
 
         strLine1 = strLines(0)
-        strLine2 = strLines(1)
-        strLine3 = strLines(2)
+        strLine5 = strLines(4)
+        strLine6 = strLines(5)
 
         Assert.AreEqual(231, strLine1.Length)
         Assert.AreEqual("M", strLine1.Substring(0, 1))
@@ -665,25 +689,51 @@ Imports System.IO
         Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
         Assert.AreEqual("C", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
-        Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
+        Assert.AreEqual("060364", Trim(strLine1.Substring(63, 6)))
 
-        Assert.AreEqual(231, strLine2.Length)
-        Assert.AreEqual("M", strLine2.Substring(0, 1))
-        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
-        Assert.AreEqual("CO", Trim(strLine2.Substring(9, 2)))
-        Assert.AreEqual("060264", strLine2.Substring(14, 6))
-        Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
-        Assert.AreEqual("D", strLine2.Substring(41, 1))
-        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
+        'Test de la 2eme ligne
+        strLine = strLines(1)
 
-        Assert.AreEqual(231, strLine3.Length)
-        Assert.AreEqual("M", strLine3.Substring(0, 1))
-        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT_COL")), Trim(strLine3.Substring(1, 8)))
-        Assert.AreEqual("CO", Trim(strLine3.Substring(9, 2)))
-        Assert.AreEqual("060264", strLine3.Substring(14, 6))
+        Dim unChamp As String()
+        Dim ChampVal As String() = strLine.Split(";")
+        Assert.AreEqual("Y", ChampVal(0))
+        Assert.AreEqual(2, ChampVal.Length)
+        unChamp = ChampVal(1).Split("=")
+        Assert.AreEqual("ModePaiement", unChamp(0))
+        Assert.AreEqual("CHQ", unChamp(1))
+
+        'Test de la 3eme ligne
+        strLine = strLines(2)
+        Assert.AreEqual(111, strLine.Length)
+        Assert.AreEqual("R", strLine.Substring(0, 1))
+        Assert.AreEqual("060364", strLine.Substring(1, 6))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(7, 13)))
+
+        'Test de la 4eme ligne
+        strLine = strLines(3)
+        Assert.AreEqual(18, strLine.Length)
+        Assert.AreEqual("Z;ModePaiement=", strLine.Substring(0, 15))
+        Assert.AreEqual("CHQ", strLine.Substring(15, 3))
+
+
+
+        Assert.AreEqual(231, strLine5.Length)
+        Assert.AreEqual("M", strLine5.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine5.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine5.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine5.Substring(14, 6))
         Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
-        Assert.AreEqual("D", strLine3.Substring(41, 1))
-        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
+        Assert.AreEqual("D", strLine5.Substring(41, 1))
+        Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine5.Substring(42, 13)))
+
+        Assert.AreEqual(231, strLine6.Length)
+        Assert.AreEqual("M", strLine6.Substring(0, 1))
+        Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT_COL")), Trim(strLine6.Substring(1, 8)))
+        Assert.AreEqual("CO", Trim(strLine6.Substring(9, 2)))
+        Assert.AreEqual("060264", strLine6.Substring(14, 6))
+        Assert.AreEqual(Trim(("A:" + objFact.code + " " + m_objFRN.rs + Space(20)).Substring(0, 19)), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual("D", strLine6.Substring(41, 1))
+        Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine6.Substring(42, 13)))
 
         objFact.bDeleted = True
         Assert.IsTrue(objFact.save())

@@ -452,20 +452,13 @@ Imports System.IO
     ''' Test l'export d'un AVOIR de comm
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod()> Public Sub T21_EXPORTaVOIR()
+    <TestMethod()> Public Sub T21_EXPORTAVOIR()
         Dim objFACT As FactCom
         Dim strLines As String()
         Dim strLine As String
 
         'I - Création d'une Facture 
         '=========================
-        m_oFourn.banque = "CMB LIFFRE"
-        m_oFourn.rib1 = "12"
-        m_oFourn.rib2 = "34"
-        m_oFourn.rib3 = "56"
-        m_oFourn.rib4 = "78"
-
-
         Dim oParam As ParamModeReglement
         'Création d'un mode de reglement 30 fin de mois
         oParam = New ParamModeReglement()
@@ -474,6 +467,11 @@ Imports System.IO
         oParam.valeur2 = 30
         Assert.IsTrue(oParam.Save())
 
+        m_oFourn.banque = "CMB LIFFRE"
+        m_oFourn.rib1 = "12"
+        m_oFourn.rib2 = "34"
+        m_oFourn.rib3 = "56"
+        m_oFourn.rib4 = "78"
 
         Assert.IsTrue(m_oFourn.Save())
         objFACT = New FactCom(m_oFourn)

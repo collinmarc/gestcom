@@ -1,6 +1,6 @@
-﻿Version : 5.9.004
+﻿Version : 5.9.004b
 date : 23/10/2017
-#787 : Export des modes de reglements (VersionQuadra)
+#787 : Export des modes de reglements (VersionQuadra) Regeneration de exportParam pour com, col TRP
 
 Version : 5.9.003
 date : 26/09/2017

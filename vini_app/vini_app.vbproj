@@ -1388,12 +1388,10 @@
     <Content Include="Requetes\V5.8TOV5.9.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Requetes\V5.9.004a.SQL">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Requetes\V5.9.003ToV5.9.004.SQL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Requetes\V5.9.004b.SQL" />
     <Content Include="Requetes\VxxTOV5.6.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
