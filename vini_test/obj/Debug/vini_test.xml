@@ -113,6 +113,12 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
+<member name="M:vini_test.T1130_FactCommission.T22_EXPORTModeReglement">
+ <summary>
+ Test l'export d'une facture de comm
+ </summary>
+ <remarks></remarks>
+</member>
 <member name="M:vini_test.T1130_FactCommission.T90_GenerationFactureCommissions">
  <summary>
  Test la génération de facture de comm, Cette génération se fait sur la date de commande

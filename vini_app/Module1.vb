@@ -18,6 +18,7 @@ Module Module1
         Dim colTrp As Collection
         Dim ofrmSettings As frmSettings
 
+        StartTrace("Gestcom.trace")
 
         initConstantes()
         If Not Persist.shared_connect() Then

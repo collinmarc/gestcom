@@ -382,7 +382,7 @@ Imports System.IO
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
-        Assert.AreEqual(4, strLines.Length, "4 lignes d'export")
+        Assert.AreEqual(6, strLines.Length, "6 lignes d'export")
 
 
         strLine = strLines(0)
@@ -411,6 +411,19 @@ Imports System.IO
 
         'Test de la 3eme ligne
         strLine = strLines(2)
+        Assert.AreEqual(111, strLine.Length)
+        Assert.AreEqual("R", strLine.Substring(0, 1))
+        Assert.AreEqual("060364", strLine.Substring(1, 6))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(7, 13)))
+
+        'Test de la 4eme ligne
+        strLine = strLines(3)
+        Assert.AreEqual(18, strLine.Length)
+        Assert.AreEqual("Z;ModePaiement=", strLine.Substring(0, 15))
+        Assert.AreEqual("CHQ", strLine.Substring(15, 3))
+
+        'Test de la 5eme ligne
+        strLine = strLines(4)
         Assert.AreEqual(231, strLine.Length)
         Assert.AreEqual("M", strLine.Substring(0, 1))
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTETVA")), Trim(strLine.Substring(1, 8)))
@@ -420,8 +433,8 @@ Imports System.IO
         Assert.AreEqual("C", strLine.Substring(41, 1))
         Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(42, 13)))
 
-        'Test de la 4eme Ligne
-        strLine = strLines(3)
+        'Test de la 6eme Ligne
+        strLine = strLines(5)
         Assert.AreEqual(231, strLine.Length)
         Assert.AreEqual("M", strLine.Substring(0, 1))
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTEPRODUIT")), Trim(strLine.Substring(1, 8)))
@@ -487,9 +500,9 @@ Imports System.IO
 
         Assert.IsTrue(File.Exists("./T20_EXPORT.txt"), "le fichier d'export n'existe pas")
         strLines = File.ReadAllLines("./T20_EXPORT.txt")
-        Assert.AreEqual(4, strLines.Length, "4 lignes d'export")
+        Assert.AreEqual(6, strLines.Length, "4 lignes d'export")
 
-
+        '1etre ligne
         strLine = strLines(0)
         Assert.AreEqual(231, strLine.Length)
         Assert.AreEqual("M", strLine.Substring(0, 1))
@@ -513,7 +526,21 @@ Imports System.IO
         Assert.AreEqual("ModePaiement", unChamp(0))
         Assert.AreEqual("CHQ", unChamp(1))
 
+        'Test de la 3eme ligne
         strLine = strLines(2)
+        Assert.AreEqual(111, strLine.Length)
+        Assert.AreEqual("R", strLine.Substring(0, 1))
+        Assert.AreEqual("060364", strLine.Substring(1, 6))
+        Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(7, 13)))
+
+        'Test de la 4eme ligne
+        strLine = strLines(3)
+        Assert.AreEqual(18, strLine.Length)
+        Assert.AreEqual("Z;ModePaiement=", strLine.Substring(0, 15))
+        Assert.AreEqual("CHQ", strLine.Substring(15, 3))
+
+        '5eme Ligne
+        strLine = strLines(4)
         Assert.AreEqual(231, strLine.Length)
         Assert.AreEqual("M", strLine.Substring(0, 1))
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTETVA")), Trim(strLine.Substring(1, 8)))
@@ -523,7 +550,8 @@ Imports System.IO
         Assert.AreEqual("D", strLine.Substring(41, 1))
         Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(42, 13)))
 
-        strLine = strLines(3)
+        '6eme Ligne
+        strLine = strLines(5)
         Assert.AreEqual(231, strLine.Length)
         Assert.AreEqual("M", strLine.Substring(0, 1))
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC_COMPTEPRODUIT")), Trim(strLine.Substring(1, 8)))
@@ -537,6 +565,84 @@ Imports System.IO
         objFACT.bDeleted = True
         objFACT.Save()
     End Sub
+
+    ''' <summary>
+    ''' Test l'export d'une facture de comm
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T22_EXPORTModeReglement()
+        Dim objFACT As FactCom
+        Dim strLines As String()
+        Dim strLine As String
+
+        'I - Création d'une Facture 
+        '=========================
+        m_oFourn.banque = "CMB LIFFRE"
+        m_oFourn.rib1 = "12"
+        m_oFourn.rib2 = "34"
+        m_oFourn.rib3 = "56"
+        m_oFourn.rib4 = "78"
+
+
+        Dim oParam As ParamModeReglement
+        'Création d'un mode de reglement Prmevement 60 FDM
+        oParam = New ParamModeReglement()
+        oParam.code = "PRE60J"
+        oParam.dDebutEcheance = "FACT"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+
+
+        Assert.IsTrue(m_oFourn.Save())
+        objFACT = New FactCom(m_oFourn)
+
+        objFACT.dateCommande = CDate("06/02/1964")
+        objFACT.periode = "1er Timestre 1964"
+        objFACT.dateFacture = CDate("06/02/1964")
+        objFACT.dateReglement = CDate("31/07/1964")
+        objFACT.montantReglement = 321.34
+        objFACT.refReglement = "CMB0034"
+        objFACT.dateStatistique = "01/03/1964"
+        objFACT.totalHT = 150.56
+        objFACT.totalTTC = 180.89
+        objFACT.dEcheance = "01/04/1964"
+        objFACT.idModeReglement = oParam.id
+
+        'Save
+        Assert.IsTrue(objFACT.Save(), "Insert" & objFACT.getErreur)
+        If File.Exists("./T21_EXPORT.txt") Then
+            File.Delete("./T21_EXPORT.txt")
+        End If
+
+        objFACT.Exporter("./T21_EXPORT.txt")
+
+        Assert.IsTrue(File.Exists("./T21_EXPORT.txt"), "le fichier d'export n'existe pas")
+        strLines = File.ReadAllLines("./T21_EXPORT.txt")
+
+        'Test de la 2eme ligne
+        strLine = strLines(1)
+
+        Dim unChamp As String()
+        Dim ChampVal As String() = strLine.Split(";")
+        Assert.AreEqual("Y", ChampVal(0))
+        Assert.AreEqual(2, ChampVal.Length)
+        unChamp = ChampVal(1).Split("=")
+        Assert.AreEqual("ModePaiement", unChamp(0))
+        Assert.AreEqual("PRE", unChamp(1))
+
+
+
+        'Test de la 4eme ligne
+        strLine = strLines(3)
+        Assert.AreEqual(18, strLine.Length)
+        Assert.AreEqual("Z;ModePaiement=", strLine.Substring(0, 15))
+        Assert.AreEqual("PRE", strLine.Substring(15, 3))
+
+
+        objFACT.bDeleted = True
+        objFACT.Save()
+    End Sub
+
     <TestMethod()> Public Sub T30_ChampsLongs()
 
         Dim objFACT As FactCom

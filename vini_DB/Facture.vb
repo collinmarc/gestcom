@@ -329,6 +329,7 @@ Public MustInherit Class Facture
                             strReturn = Ligne(2)
                         End If
                     Next
+
                 Case "SENSD"
                     If totalHT > 0 Then
                         strReturn = "D"
