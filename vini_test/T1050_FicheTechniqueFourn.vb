@@ -8,7 +8,7 @@ Imports vini_DB
 '''Classe de test pour FicheTechniqueFournTest, destinée à contenir tous
 '''les tests unitaires FicheTechniqueFournTest
 '''</summary>
-<TestClass()> _
+<TestClass(), Ignore()> _
 Public Class T1050_FicheTechniqueFourn
     Inherits test_Base
 
@@ -72,7 +72,7 @@ Public Class T1050_FicheTechniqueFourn
     '''<summary>
     '''Test pour Constructeur FicheTechniqueFourn
     '''</summary>
-    <TestMethod()> _
+    <TestMethod(), Ignore()> _
     Public Sub FicheTechniqueFournConstructorTest()
         Dim pfrnId As Integer = 10 ' TODO: initialisez à une valeur appropriée
         Dim target As FicheTechniqueFourn = New FicheTechniqueFourn(pfrnId)
@@ -113,7 +113,7 @@ Public Class T1050_FicheTechniqueFourn
     '''<summary>
     '''Test pour Constructeur FicheTechniqueFourn
     '''</summary>
-    <TestMethod()> _
+    <TestMethod(), Ignore()> _
     Public Sub LoadImages()
 
         Dim pfrnId As Integer = 10 ' TODO: initialisez à une valeur appropriée

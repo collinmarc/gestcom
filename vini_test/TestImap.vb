@@ -6,7 +6,10 @@ Imports System.Xml
 Imports System.Net.Mail
 Imports System.Text.RegularExpressions
 
-<TestClass()> Public Class TestImap
+''' <summary>
+''' Classe de test à reactiver 
+''' </summary>
+<TestClass(), Ignore()> Public Class TestImap
     Inherits test_Base
     Private Sub CleanImap()
         Dim oImap As New Imap()

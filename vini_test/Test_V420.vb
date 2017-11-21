@@ -86,6 +86,7 @@ Imports vini_App
     <TestMethod()> Public Sub T00()
 
         Dim oCol As Collection
+        Dim oColScmd As List(Of SousCommande)
         Dim oColEvent As ColEvent
         Dim oFact As FactCom
         Dim objSCMD As SousCommande
@@ -128,11 +129,11 @@ Imports vini_App
 
 
         'Récupération de la liste des Sous-Commandes a facturer 
-        oCol = SousCommande.getListeAFacturer(#6/2/1964#, #6/2/1964#)
-        Assert.AreEqual(2, oCol.Count)
+        oColScmd = SousCommande.getListeAFacturer(#6/2/1964#, #6/2/1964#)
+        Assert.AreEqual(2, oColScmd.Count)
 
         'Génération des Factures de commissions
-        oColEvent = FactCom.createFactComs(oCol, #6/2/1964#, #6/2/1964#, "Test")
+        oColEvent = FactCom.createFactComs(oColScmd, #6/2/1964#, #6/2/1964#, "Test")
         For Each oFact In oColEvent
             Assert.IsTrue(oFact.Save(), oFact.getErreur())
         Next
@@ -141,16 +142,16 @@ Imports vini_App
         oCol = FactCom.getListe(#6/2/1964#, #6/2/1964#)
         Assert.AreEqual(2, oCol.Count)
         oFact = oCol(1)
-        Assert.AreEqual(150 * 0.08, oFact.totalHT)
+        Assert.AreEqual(CDec(150 * 0.08), oFact.totalHT)
         oFact = oCol(2)
-        Assert.AreEqual(320 * 0.08, oFact.totalHT)
+        Assert.AreEqual(CDec(320 * 0.08), oFact.totalHT)
 
         'Lectures Sous commandes Facturée
-        oCol = SousCommande.getListe(#6/2/1964#, #6/2/1964#, , vncEtatCommande.vncSCMDFacturee)
-        Assert.AreEqual(2, oCol.Count)
+        oColScmd = SousCommande.getListe(#6/2/1964#, #6/2/1964#, , vncEtatCommande.vncSCMDFacturee)
+        Assert.AreEqual(2, oColScmd.Count)
         'Lectures Sous commandes A Facturer 
-        oCol = SousCommande.getListeAFacturer(#6/2/1964#, #6/2/1964#)
-        Assert.AreEqual(0, oCol.Count)
+        oColScmd = SousCommande.getListeAFacturer(#6/2/1964#, #6/2/1964#)
+        Assert.AreEqual(0, oColScmd.Count)
 
 
 
@@ -162,7 +163,7 @@ Imports vini_App
     ''' <remarks></remarks>
     <TestMethod()> Public Sub T01()
 
-        Dim oCol As Collection
+        Dim oCol As List(Of SousCommande)
         Dim oLG As LgCommande
         Dim objSCMD As SousCommande
 
@@ -190,10 +191,10 @@ Imports vini_App
 
         oCol = SousCommande.getListe(#6/2/1964#, #6/2/1964#)
         Assert.AreEqual(2, oCol.Count)
+        objSCMD = oCol(0)
+        Assert.AreEqual(CDec(15), objSCMD.tauxCommission)
         objSCMD = oCol(1)
-        Assert.AreEqual(15, objSCMD.tauxCommission)
-        objSCMD = oCol(2)
-        Assert.AreEqual(18, objSCMD.tauxCommission)
+        Assert.AreEqual(CDec(18), objSCMD.tauxCommission)
 
 
 

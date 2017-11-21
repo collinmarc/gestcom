@@ -1,7 +1,8 @@
 Imports vini_DB
+Imports System.Collections.Generic
 Public Class frmExportInternet
     Inherits frmStatistiques
-    Protected m_colCommandes As Collection
+    Protected m_colCommandes As List(Of SousCommande)
 
 #Region " Code généré par le Concepteur Windows Form "
 
@@ -402,7 +403,7 @@ Public Class frmExportInternet
     Private Sub initFenetre()
         dtDatedeb.Value = Now()
         dtdateFin.Value = Now()
-        m_colCommandes = New Collection
+        m_colCommandes = New List(Of SousCommande)
         ckPDFs.Enabled = True
         ckPDFs.Checked = True
         cbExporter.Enabled = False
@@ -447,7 +448,7 @@ Public Class frmExportInternet
         Dim ddeb As Date
         Dim dfin As Date
         Dim strCodeFourn As String
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
         Dim bReturn As Boolean
         debAffiche()
         setcursorWait()

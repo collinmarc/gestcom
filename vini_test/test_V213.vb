@@ -80,11 +80,11 @@ Imports vini_DB
 
         objCMD = BonAppro.createandload(nIdCmd)
 
-        Assert.AreEqual(150.55, objCMD.montantTransport, "Mont de transport non lu")
+        Assert.AreEqual(CDec(150.55), objCMD.montantTransport, "Mont de transport non lu")
         objCMD.montantTransport = 250.55
         Assert.IsTrue(objCMD.save())
         objCMD = BonAppro.createandload(nIdCmd)
-        Assert.AreEqual(250.55, objCMD.montantTransport, "Mont de transport non lu")
+        Assert.AreEqual(CDec(250.55), objCMD.montantTransport, "Mont de transport non lu")
 
         objCMD.bDeleted = True
         Assert.IsTrue(objCMD.save(), "Destruction du bon Appro")

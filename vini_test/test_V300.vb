@@ -105,12 +105,12 @@ Imports vini_App
         objCMD.CommLivraison.comment = "123456789012345678901234567890123456789012345678901234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ45678901234567890123456789012345678901234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ45678901234567890123456789012345678901234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         objCMD.oTransporteur.nom = "Nom du transporteurNom du transporteurNom du transporteur"
         objCMD.AjouteLigne("10", m_objPRD, 10, 10)
-        If System.IO.File.Exists("F:/temp/adel.txt") Then
-            System.IO.File.Delete("F:/temp/adel.txt")
+        If System.IO.File.Exists("C:/temp/adel.txt") Then
+            System.IO.File.Delete("C:/temp/adel.txt")
         End If
-        objCMD.exporterWebEDI("F:/temp/adel.txt")
+        objCMD.exporterWebEDI("C:/temp/adel.txt")
         nFile = FreeFile()
-        FileOpen(nFile, "F:/temp/adel.txt", OpenMode.Input, OpenAccess.Read)
+        FileOpen(nFile, "C:/temp/adel.txt", OpenMode.Input, OpenAccess.Read)
         nLineNumber = 0
         While Not EOF(nFile)
             nLineNumber = nLineNumber + 1
@@ -126,7 +126,7 @@ Imports vini_App
 
         FileClose(nFile)
         'Suppression du fichier créé
-        System.IO.File.Delete("F:/temp/adel.txt")
+        System.IO.File.Delete("C:/temp/adel.txt")
 
     End Sub
 
@@ -167,7 +167,7 @@ Imports vini_App
         Assert.AreEqual(#6/2/1964#, objMvt.datemvt, "dateMvt")
         Assert.AreEqual(1, objMvt.idProduit, "idPrd")
         Assert.AreEqual(vncTypeMvt.vncmvtRegul, objMvt.typeMvt, "idPrd")
-        Assert.AreEqual(11, objMvt.qte, "Qte")
+        Assert.AreEqual(CDec(11), objMvt.qte, "Qte")
         Assert.AreEqual("Test", objMvt.libelle, "Libelle")
         Assert.AreEqual(vncEtatMVTSTK.vncMVTSTK_nFact, objMvt.Etat.codeEtat, "Etat")
         Assert.AreEqual(123456, objMvt.idFactColisage, "idFactColisage")
@@ -238,11 +238,11 @@ Imports vini_App
 
         Assert.AreEqual("TEST2", oFactColisage2.periode)
         Assert.AreEqual(#1/1/2006#, oFactColisage2.dateFacture)
-        Assert.AreEqual(11.5, oFactColisage2.montantTaxes)
-        Assert.AreEqual(110, oFactColisage2.totalHT)
-        Assert.AreEqual(129.6, oFactColisage2.totalTTC)
+        Assert.AreEqual(11.5D, oFactColisage2.montantTaxes)
+        Assert.AreEqual(110D, oFactColisage2.totalHT)
+        Assert.AreEqual(129.6D, oFactColisage2.totalTTC)
         Assert.AreEqual("TEST COM FACT2", oFactColisage2.CommFacturation.comment)
-        Assert.AreEqual(91, oFactColisage2.montantReglement)
+        Assert.AreEqual(91D, oFactColisage2.montantReglement)
         Assert.AreEqual(#1/2/2006#, oFactColisage2.dateReglement)
         Assert.AreEqual("CHQ TEST2", oFactColisage2.refReglement)
 
@@ -277,11 +277,11 @@ Imports vini_App
         oLgFactCol.qte = 5
         oLgFactCol.pu = 0.15
         oLgFactCol.calculPrixTotal()
-        Assert.AreEqual(0.75, oLgFactCol.MontantHT, "Montant HT")
+        Assert.AreEqual(0.75D, oLgFactCol.MontantHT, "Montant HT")
 
         oFactCol.AjouteLigneFactColisage(oLgFactCol)
 
-        Assert.AreEqual(0.75 + oFactCol.montantTaxes, oFactCol.totalHT)
+        Assert.AreEqual(0.75D + oFactCol.montantTaxes, oFactCol.totalHT)
 
         Assert.IsTrue(oFactCol.save(), "Sauvegarde")
 
@@ -301,8 +301,8 @@ Imports vini_App
         Assert.AreEqual(oLgFactCol.Sorties, 5)
         Assert.AreEqual(oLgFactCol.StockFinal, 20)
         Assert.AreEqual(oLgFactCol.qte, 5)
-        Assert.AreEqual(oLgFactCol.pu, 0.15)
-        Assert.AreEqual(0.75, oLgFactCol.MontantHT, "Montant HT")
+        Assert.AreEqual(oLgFactCol.pu, 0.15D)
+        Assert.AreEqual(0.75D, oLgFactCol.MontantHT, "Montant HT")
 
         oFactCol.bDeleted = True
         oFactCol.save()
@@ -419,19 +419,19 @@ Imports vini_App
         Assert.AreEqual(2, oFactCol1.colLignes.Count, "1 ligne par mois")
 
         oLgFactCol = oFactCol1.colLignes(1)
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(CDate("01/01/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("31/01/1964"), oLgFactCol.dFin, "Date de Fin")
 
         oLgFactCol = oFactCol1.colLignes(2)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD.qteColis(120 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         Assert.AreEqual(CDate("01/02/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("29/02/1964"), oLgFactCol.dFin, "Date de Fin")
 
         oLgFactCol = oFactcol2.colLignes(1)
-        Assert.AreEqual(m_objPRD2.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD2.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
         oLgFactCol = oFactCol3.colLignes(1)
-        Assert.AreEqual(m_objPRD3.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(m_objPRD3.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
 
         oFactCol1.save()
         ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)

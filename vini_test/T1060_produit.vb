@@ -92,9 +92,9 @@ Imports vini_DB
         'I - Création d'un Produit
         '=========================
         objPRD = New Produit("", New Fournisseur, 1990)
-        Assert.AreEqual(0, objPRD.TarifA, "Tarif A")
-        Assert.AreEqual(0, objPRD.TarifB, "Tarif B")
-        Assert.AreEqual(0, objPRD.TarifC, "Tarif B")
+        Assert.AreEqual(CDec(0), objPRD.TarifA, "Tarif A")
+        Assert.AreEqual(CDec(0), objPRD.TarifB, "Tarif B")
+        Assert.AreEqual(CDec(0), objPRD.TarifC, "Tarif B")
         objPRD.code = "FTEST" & Now()
         objPRD.nom = "Produit de test'fklfdkl&é#'(-è_çà)=}}]@^\`|[{#~"
         objPRD.idFournisseur = Fournisseur.getListe()(1).id
@@ -110,9 +110,9 @@ Imports vini_DB
         objPRD.TarifA = 11.5
         objPRD.TarifB = 12.5
         objPRD.TarifC = 13.5
-        Assert.AreEqual(11.5, CDec(objPRD.TarifA), " TarifA")
-        Assert.AreEqual(12.5, objPRD.TarifB, " TarifB")
-        Assert.AreEqual(13.5, objPRD.TarifC, "TarifC")
+        Assert.AreEqual(CDec(11.5), objPRD.TarifA, " TarifA")
+        Assert.AreEqual(CDec(12.5), objPRD.TarifB, " TarifB")
+        Assert.AreEqual(CDec(13.5), objPRD.TarifC, "TarifC")
 
 
         'Test des indicateurs Avant le Save
@@ -161,9 +161,9 @@ Imports vini_DB
         'Rechargement de l'objet
         n = objPRD2.id
         objPRD = Produit.createandload(n)
-        Assert.AreEqual(15.15, objPRD.TarifA, "Load TarifA")
-        Assert.AreEqual(16.16, objPRD.TarifB, "Load TarifB")
-        Assert.AreEqual(17.17, objPRD.TarifC, "Load TarifC")
+        Assert.AreEqual(CDec(15.15), objPRD.TarifA, "Load TarifA")
+        Assert.AreEqual(CDec(16.16), objPRD.TarifB, "Load TarifB")
+        Assert.AreEqual(CDec(17.17), objPRD.TarifC, "Load TarifC")
         Assert.IsTrue(objPRD.Equals(objPRD2))
 
         'IV - Suppression du Produit

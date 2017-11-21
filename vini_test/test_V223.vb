@@ -211,7 +211,7 @@ Imports vini_DB
     <TestMethod()> Public Sub T65_ListeExport()
         Dim oLgCmd As LgCommande
         Dim oSCmd As SousCommande
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
 
 
         'Ajout de 2 Lignes à la commande
@@ -290,7 +290,7 @@ Imports vini_DB
         'Test lafonction SousCommde.getListeTransmises = TransmiseFax + ExportéeInternet
         Dim oLgCmd As LgCommande
         Dim oSCmd As SousCommande
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
 
 
         'Ajout de 3 Lignes à la commandes
@@ -357,7 +357,7 @@ Imports vini_DB
         'Test lafonction SousCommde.getListeAProvionnner = Rapprochée + RapprochéeInternet
         Dim oLgCmd As LgCommande
         Dim oSCmd As SousCommande
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
 
 
         'Ajout de 3 Lignes à la commandes

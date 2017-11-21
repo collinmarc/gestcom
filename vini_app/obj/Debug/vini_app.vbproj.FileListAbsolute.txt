@@ -1440,3 +1440,4 @@ V:\V5\vini_app\bin\Debug\vini_DB.pdb
 V:\V5\vini_app\bin\Debug\vini_DB.xml
 V:\V5\vini_app\bin\Debug\vini_DB.dll.config
 V:\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL
+N:\vinicom\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL

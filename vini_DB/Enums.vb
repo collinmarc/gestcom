@@ -252,4 +252,16 @@ Public Module vncEnums
         Public Shared LGCMD_MtComm As String = "LGCMD_MTCOMM"
 
     End Class
+
+    Public Enum vncTypeExportQuadra As Integer
+        vncExportBafClient = 1
+        vncExportBaFournisseur = 2
+    End Enum
+
+    Public Enum vncOrigineCmd As Integer
+        vncVinicom
+        vncHOBIVIN
+    End Enum
+
+
 End Module

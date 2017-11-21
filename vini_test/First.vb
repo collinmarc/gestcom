@@ -5,7 +5,7 @@
 Public Class First
     <TestMethod()> Public Sub TestOK()
     End Sub
-    <TestMethod()> Public Sub TestNOK()
+    <TestMethod(), Ignore()> Public Sub TestNOK()
         Assert.AreEqual(1, 2)
     End Sub
     <TestMethod(), Ignore()> Public Sub TestIgnore()

@@ -49,7 +49,9 @@ Imports System.Globalization
             System.Threading.Thread.CurrentThread.CurrentCulture = forceDotCulture
         End If
         initConstantes()
+
         Persist.shared_connect()
+        cleanDonneesDeBase()
         Param.LoadcolParams()
         Assert.IsTrue(getIdsReference())
         Persist.shared_disconnect()
@@ -157,7 +159,26 @@ Imports System.Globalization
         Return bReturn
     End Function
 
-    <TestMethod()> Sub T00_Base()
+    Private Function cleanDonneesDeBase() As Boolean
+
+        Dim bReturn As Boolean
+
+        Try
+
+
+            Persist.executeSQLNonQuery("DELETE FROM PRODUIT WHERE PRD_ID > 3500")
+            Persist.executeSQLNonQuery("DELETE FROM CLIENT WHERE CLT_ID > 1100")
+            Persist.executeSQLNonQuery("DELETE FROM FOURNISSEUR WHERE FRN_ID >1000 ")
+
+            bReturn = True
+        Catch ex As Exception
+            bReturn = False
+
+        End Try
+
+        Return bReturn
+    End Function
+    <TestMethod(), Ignore()> Sub T00_Base()
         Dim obj As Fournisseur
         obj = New Fournisseur("TST", "nom")
         Assert.IsTrue(obj.Save)

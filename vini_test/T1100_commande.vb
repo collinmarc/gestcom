@@ -532,7 +532,7 @@ Imports vini_DB
         Dim strNumLg As String
 
         objCMD = New CommandeClient(m_oClient)
-        objCMD.oTiers = m_oClient
+        objCMD.setTiers(m_oClient)
         objCMD.DuppliqueCaracteristiqueTiers()
         Assert.IsTrue(objCMD.save(), "Creation de Commande" & objCMD.getErreur())
 

@@ -107,9 +107,9 @@ Imports vini_DB
         Debug.Assert(m_objPreCommande.id = m_objCLT.id, "Les Ids de precommande et de Client doit être égaux")
         Assert.AreEqual(m_objPreCommande.getlgPrecomCount, 2, "Precommande.count ")
         objLgPRecom = m_objPreCommande.colLignes(1)
-        Assert.AreEqual(150, objLgPRecom.qteHab)
-        Assert.AreEqual(5, objLgPRecom.qteDern)
-        Assert.AreEqual(33, objLgPRecom.prixU)
+        Assert.AreEqual(CDec(150), objLgPRecom.qteHab)
+        Assert.AreEqual(CDec(5), objLgPRecom.qteDern)
+        Assert.AreEqual(CDbl(33), objLgPRecom.prixU)
 
     End Sub
     <TestMethod()> Public Sub T20_InterfaceClient()
@@ -178,9 +178,9 @@ Imports vini_DB
         Debug.Assert(m_objCLT.oPrecommande.id = m_objCLT.id, "Les Ids de precommande et de Client doit être égaux")
         Assert.AreEqual(m_objCLT.getlgPrecomCount, 2, "Precommande.count ")
         objLgPRecom = m_objCLT.oPrecommande.colLignes(1)
-        Assert.AreEqual(150, objLgPRecom.qteHab)
-        Assert.AreEqual(5, objLgPRecom.qteDern)
-        Assert.AreEqual(33, objLgPRecom.prixU)
+        Assert.AreEqual(CDec(150), objLgPRecom.qteHab)
+        Assert.AreEqual(CDec(5), objLgPRecom.qteDern)
+        Assert.AreEqual(CDbl(33), objLgPRecom.prixU)
 
     End Sub
 

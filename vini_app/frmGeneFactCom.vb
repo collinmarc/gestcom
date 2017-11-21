@@ -1,7 +1,7 @@
 Imports vini_DB
 Public Class frmGeneFactCom
     Inherits frmDonBase
-    Protected m_colSousCommandes As Collection
+    Protected m_colSousCommandes As List(Of SousCommande)
     Friend WithEvents m_bsrcFactCom As System.Windows.Forms.BindingSource
     Friend WithEvents dgvFactCom As System.Windows.Forms.DataGridView
     Friend WithEvents code As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -1045,7 +1045,7 @@ Public Class frmGeneFactCom
     Private Sub initFenetre()
         dtDatedeb.Value = DateAdd(DateInterval.Year, -1, Now())
         dtdateFin.Value = Now()
-        m_colSousCommandes = New Collection
+        m_colSousCommandes = New List(Of SousCommande)
         'm_SCMDcourante = Nothing
         'tbTxCommision.Text = Param.getConstante("CST_TX_COMMISSION")
     End Sub
@@ -1074,7 +1074,7 @@ Public Class frmGeneFactCom
         Dim ddeb As Date
         Dim dfin As Date
         Dim codeFourn As String
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
         Dim bReturn As Boolean
         debAffiche()
         setcursorWait()

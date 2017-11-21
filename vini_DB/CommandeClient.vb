@@ -652,7 +652,7 @@ Public Class CommandeClient
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
                         If pIntermediaire IsNot Nothing Then
-                            oSCMD.oTiers = pIntermediaire
+                            oSCMD.setTiers(pIntermediaire)
                         End If
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)

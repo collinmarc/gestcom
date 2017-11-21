@@ -52,6 +52,8 @@ Public Class LgCommande
 #Region "Accesseurs"
     Public Sub New(ByVal pidCommande As Integer, Optional ByVal pidScmd As Integer = 0, Optional ByVal pidBA As Integer = 0)
         m_typedonnee = vncEnums.vncTypeDonnee.LGCOMMANDE
+        m_idSCmd = 0
+
         If pidCommande <> 0 Then
             m_idCmd = pidCommande
         End If

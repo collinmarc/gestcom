@@ -202,12 +202,15 @@
     <Compile Include="clsFTPVinicomNET.vb" />
     <Compile Include="EtatFactHBVGeneree.vb" />
     <Compile Include="EtatFactHBVExportee.vb" />
+    <Compile Include="ExportQuadra.vb" />
     <Compile Include="FactHBV.vb" />
     <Compile Include="Imap\cmdPrestashop.vb" />
     <Compile Include="Imap\Imap.vb" />
     <Compile Include="Imap\ImapBase.vb" />
     <Compile Include="Imap\ImapException.vb" />
     <Compile Include="Imap\ImportPrestashop.vb" />
+    <Compile Include="Observable.vb" />
+    <Compile Include="IObservateur.vb" />
     <Compile Include="lgFactHBV.vb" />
     <Compile Include="LstScmd.vb" />
     <Compile Include="vini_image.vb" />
@@ -384,7 +387,6 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="dsError.xsc">
       <DependentUpon>dsError.xsd</DependentUpon>
     </None>

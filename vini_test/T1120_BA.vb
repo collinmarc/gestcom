@@ -146,19 +146,19 @@ Imports vini_DB
         objLg = objComm.AjouteLigne("10", m_oProduit, 10, 10)
         Assert.IsTrue(objComm.colLignes.Count = 1)
         Assert.IsTrue(objComm.totalHT = 10 * 10)
-        Assert.AreEqual(objComm.totalTTC, CDec(objComm.totalHT * 1.196))
+        Assert.AreEqual(objComm.totalTTC, CDec(objComm.totalHT * 1.2))
         Assert.IsTrue(Not objLg Is Nothing, "Ajout de Ligne impossible")
         Assert.IsTrue(objLg.num = objComm.colLignes.Count * 10)
         objLg = objComm.AjouteLigne("20", m_oProduit, 20, 10)
         Assert.IsTrue(objComm.colLignes.Count = 2)
         Assert.IsTrue(objComm.totalHT = (10 * 10) + (20 * 10))
-        Assert.AreEqual(objComm.totalTTC, CDec(objComm.totalHT * 1.196))
+        Assert.AreEqual(objComm.totalTTC, CDec(objComm.totalHT * 1.2))
         Assert.IsTrue(Not objLg Is Nothing, "Ajout de Ligne impossible")
         Assert.IsTrue(objLg.num = objComm.colLignes.Count * 10)
         objLg = objComm.AjouteLigne("30", m_oProduit, 30, 10)
         Assert.IsTrue(objComm.colLignes.Count = 3)
         Assert.IsTrue(objComm.totalHT = (10 * 10) + (20 * 10) + (30 * 10))
-        Assert.IsTrue(objComm.totalTTC = (objComm.totalHT * 1.196))
+        Assert.IsTrue(objComm.totalTTC = (objComm.totalHT * 1.2))
         Assert.IsTrue(Not objLg Is Nothing, "Ajout de Ligne impossible")
         Assert.IsTrue(objLg.num = objComm.colLignes.Count * 10)
 
@@ -314,7 +314,7 @@ Imports vini_DB
         Assert.IsTrue(objBA.load(nid), "ObjBA.load")
         Assert.IsTrue(objBA.loadcolLignes(), "objBA.loadcolLignes")
         Assert.AreEqual(objBA.colLignes.Count, 2, "colLignes.count ")
-        Assert.AreEqual(objBA.totalTTC, 12, "ObjCMD.totalTTC")
+        Assert.AreEqual(objBA.totalTTC, CDec(12), "ObjCMD.totalTTC")
 
         ''Ajout d'une ligne 
         Assert.IsTrue(Not objBA.AjouteLigne(objBA.getNextNumLg, m_oProduit, 113, 20) Is Nothing, "oclt.AjouteLg 3")
@@ -351,8 +351,8 @@ Imports vini_DB
         Assert.IsTrue(objBA.load(nid), "OCLT.load")
         Assert.AreEqual(objBA.colLignes.Count, 2, "Precommande.count ")
         objLG = objBA.colLignes(1)
-        Assert.AreEqual(objLG.qteCommande, 150)
-        Assert.AreEqual(objLG.prixU, 15)
+        Assert.AreEqual(objLG.qteCommande, CDec(150))
+        Assert.AreEqual(objLG.prixU, CDec(15))
 
         'Maj d'une ligne de la Commande (Qte Livrée)
         objLG = objBA.colLignes.Item(1)
@@ -367,8 +367,8 @@ Imports vini_DB
         Assert.IsTrue(objBA.load(nid), "OCMD.load")
         Assert.AreEqual(objBA.colLignes.Count, 2, "ColLignes.count ")
         objLG = objBA.colLignes(1)
-        Assert.AreEqual(objLG.qteLiv, 100)
-        Assert.AreEqual(objLG.prixU, 16)
+        Assert.AreEqual(objLG.qteLiv, CDec(100))
+        Assert.AreEqual(objLG.prixU, CDec(16))
 
         'Maj d'une ligne de la Commande (Qte Facturée)
         objLG = objBA.colLignes.Item(1)
@@ -383,8 +383,8 @@ Imports vini_DB
         Assert.IsTrue(objBA.load(nid), "OCMD.load")
         Assert.AreEqual(objBA.colLignes.Count, 2, "ColLignes.count ")
         objLG = objBA.colLignes(1)
-        Assert.AreEqual(objLG.qteLiv, 101)
-        Assert.AreEqual(objLG.prixU, 17)
+        Assert.AreEqual(objLG.qteLiv, CDec(101))
+        Assert.AreEqual(objLG.prixU, CDec(17))
 
         objBA.bDeleted = True
         Assert.IsTrue(objBA.save(), "BA.delete")
@@ -443,7 +443,7 @@ Imports vini_DB
         'III- Liste sur le nom
         '=============================
         'a) Caractère générique
-        colBA = BonAppro.getListe(, "A%")
+        colBA = BonAppro.getListe(, "Alber%")
         Assert.IsTrue(colBA.Count > 0, "Nom1:Col.count > 0" & Client.getErreur)
         For Each objBA In colBA
             objBA.load()

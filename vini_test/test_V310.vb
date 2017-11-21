@@ -212,22 +212,22 @@ Imports vini_App
         Assert.AreEqual(2, oFactCol1.colLignes.Count, "1 ligne par mois Facturé")
 
         oLgFactCol = oFactCol1.colLignes(1)
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = PRD1")
+        Assert.AreEqual(CInt(m_objPRD.qteColis(120)), oLgFactCol.StockInitial, "Stock initial = PRD1")
         Assert.AreEqual(CDate("01/01/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("31/1/1964"), oLgFactCol.dFin, "Date de Fin")
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CInt(m_objPRD.qteColis(120)), oLgFactCol.qte, "Qte = Stock I - Cmd")
         oLgFactCol = oFactCol1.colLignes(2)
-        Assert.AreEqual(m_objPRD.qteColis(120), oLgFactCol.StockInitial, "Stock initial = 120")
+        Assert.AreEqual(CInt(m_objPRD.qteColis(120)), oLgFactCol.StockInitial, "Stock initial = 120")
         Assert.AreEqual(CDate("01/02/1964"), oLgFactCol.dDeb, "Date de debut")
         Assert.AreEqual(CDate("29/02/1964"), oLgFactCol.dFin, "Date de Fin")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CInt(m_objPRD.qteColis(120 - 12)), oLgFactCol.qte, "Qte = Stock I - Cmd")
 
         Assert.AreEqual(2, oFactcol2.colLignes.Count, "1 ligne par mois Facturé")
         oLgFactCol = oFactcol2.colLignes(2)
-        Assert.AreEqual(m_objPRD2.qteColis(120 - 24), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CInt(m_objPRD2.qteColis(120 - 24)), oLgFactCol.qte, "Qte = Stock I - Cmd")
         Assert.AreEqual(2, oFactCol3.colLignes.Count, "1 ligne par mois Facturé")
         oLgFactCol = oFactCol3.colLignes(2)
-        Assert.AreEqual(m_objPRD3.qteColis(120 - 6), oLgFactCol.qte, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CInt(m_objPRD3.qteColis(120 - 6)), oLgFactCol.qte, "Qte = Stock I - Cmd")
 
         oFactCol1.save()
         ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
@@ -282,17 +282,17 @@ Imports vini_App
         oCmd = CommandeClient.createandload(nId)
 
         Assert.AreEqual("6138 ZK 35", oCmd.lettreVoiture, "Load LetteVoiture")
-        Assert.AreEqual(15.66, oCmd.coutTransport, "Load CoutTransport")
+        Assert.AreEqual(15.66D, oCmd.coutTransport, "Load CoutTransport")
         Assert.AreEqual("FCT897564", oCmd.refFactTRP, "Load refFactTRP")
 
         oCmd.lettreVoiture = "6138 ZK 35Bis"
-        oCmd.coutTransport = 66.15
+        oCmd.coutTransport = 66.15D
         oCmd.refFactTRP = "FCT897564Bis"
         Assert.IsTrue(oCmd.save(), "Insertion de commande")
 
         oCmd = CommandeClient.createandload(nId)
         Assert.AreEqual("6138 ZK 35Bis", oCmd.lettreVoiture, "Load LetteVoiture")
-        Assert.AreEqual(66.15, oCmd.coutTransport, "Load CoutTransport")
+        Assert.AreEqual(66.15D, oCmd.coutTransport, "Load CoutTransport")
         Assert.AreEqual("FCT897564Bis", oCmd.refFactTRP, "Load refFactTRP")
 
 
@@ -323,7 +323,7 @@ Imports vini_App
         oBA = BonAppro.createandload(nId)
 
         Assert.AreEqual("6138 ZK 35", oBA.lettreVoiture, "Load LetteVoiture")
-        Assert.AreEqual(15.66, oBA.coutTransport, "Load CoutTransport")
+        Assert.AreEqual(15.66D, oBA.coutTransport, "Load CoutTransport")
         Assert.AreEqual("FCT897564", oBA.refFactTRP, "Load refFactTRP")
 
         oBA.lettreVoiture = "6138 ZK 35Bis"
@@ -333,7 +333,7 @@ Imports vini_App
 
         oBA = BonAppro.createandload(nId)
         Assert.AreEqual("6138 ZK 35Bis", oBA.lettreVoiture, "Load LetteVoiture")
-        Assert.AreEqual(66.15, oBA.coutTransport, "Load CoutTransport")
+        Assert.AreEqual(66.15D, oBA.coutTransport, "Load CoutTransport")
         Assert.AreEqual("FCT897564Bis", oBA.refFactTRP, "Load refFactTRP")
 
 

@@ -185,19 +185,19 @@ Imports vini_DB
         'controle des Quantités Commandée 
         'P1
         objP1.load()
-        Assert.AreEqual(10, objP1.qteCommande, "Qte Commandée P1")
+        Assert.AreEqual(CDec(10), objP1.qteCommande, "Qte Commandée P1")
         'P2
         objP2.load()
-        Assert.AreEqual(15, objP2.qteCommande, "Qte Commandée P2")
+        Assert.AreEqual(CDec(15), objP2.qteCommande, "Qte Commandée P2")
         'P3
         objP3.load()
-        Assert.AreEqual(20, objP3.qteCommande, "Qte Commandée P3")
+        Assert.AreEqual(CDec(20), objP3.qteCommande, "Qte Commandée P3")
         'P4
         objP4.load()
-        Assert.AreEqual(25, objP4.qteCommande, "Qte Commandée P4")
+        Assert.AreEqual(CDec(25), objP4.qteCommande, "Qte Commandée P4")
         'P5
         objP5.load()
-        Assert.AreEqual(0, objP5.qteCommande, "Qte Commandée P5")
+        Assert.AreEqual(CDec(0), objP5.qteCommande, "Qte Commandée P5")
 
         'Validation de CMD1
         objCMD1.changeEtat(vncEnums.vncActionEtatCommande.vncActionValider)
@@ -205,19 +205,19 @@ Imports vini_DB
         'controle des Quantités Commandées
         'P1
         objP1.load()
-        Assert.AreEqual(10, objP1.qteCommande, "Qte Commandée P1")
+        Assert.AreEqual(CDec(10), objP1.qteCommande, "Qte Commandée P1")
         'P2
         objP2.load()
-        Assert.AreEqual(15, objP2.qteCommande, "Qte Commandée P2")
+        Assert.AreEqual(CDec(15), objP2.qteCommande, "Qte Commandée P2")
         'P3
         objP3.load()
-        Assert.AreEqual(20, objP3.qteCommande, "Qte Commandée P3")
+        Assert.AreEqual(CDec(20), objP3.qteCommande, "Qte Commandée P3")
         'P4
         objP4.load()
-        Assert.AreEqual(25, objP4.qteCommande, "Qte Commandée P4")
+        Assert.AreEqual(CDec(25), objP4.qteCommande, "Qte Commandée P4")
         'P5
         objP5.load()
-        Assert.AreEqual(0, objP5.qteCommande, "Qte Commandée P5")
+        Assert.AreEqual(CDec(0), objP5.qteCommande, "Qte Commandée P5")
 
         'Livraison de CMD1
         objCMD1.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
@@ -225,19 +225,19 @@ Imports vini_DB
         'controle des Quantités Commandées
         'P1
         objP1.load()
-        Assert.AreEqual(0, objP1.qteCommande, "Qte Commandée P1")
+        Assert.AreEqual(CDec(0), objP1.qteCommande, "Qte Commandée P1")
         'P2
         objP2.load()
-        Assert.AreEqual(0, objP2.qteCommande, "Qte Commandée P2")
+        Assert.AreEqual(0D, objP2.qteCommande, "Qte Commandée P2")
         'P3
         objP3.load()
-        Assert.AreEqual(20, objP3.qteCommande, "Qte Commandée P3")
+        Assert.AreEqual(20D, objP3.qteCommande, "Qte Commandée P3")
         'P4
         objP4.load()
-        Assert.AreEqual(25, objP4.qteCommande, "Qte Commandée P4")
+        Assert.AreEqual(25D, objP4.qteCommande, "Qte Commandée P4")
         'P5
         objP5.load()
-        Assert.AreEqual(0, objP5.qteCommande, "Qte Commandée P5")
+        Assert.AreEqual(0D, objP5.qteCommande, "Qte Commandée P5")
 
         'Suppression de CMD2
         objCMD2.bDeleted = True
@@ -245,19 +245,19 @@ Imports vini_DB
         'controle des Quantités Commandées
         'P1
         objP1.load()
-        Assert.AreEqual(0, objP1.qteCommande, "Qte Commandée P1")
+        Assert.AreEqual(0D, objP1.qteCommande, "Qte Commandée P1")
         'P2
         objP2.load()
-        Assert.AreEqual(0, objP2.qteCommande, "Qte Commandée P2")
+        Assert.AreEqual(0D, objP2.qteCommande, "Qte Commandée P2")
         'P3
         objP3.load()
-        Assert.AreEqual(0, objP3.qteCommande, "Qte Commandée P3")
+        Assert.AreEqual(0D, objP3.qteCommande, "Qte Commandée P3")
         'P4
         objP4.load()
-        Assert.AreEqual(0, objP4.qteCommande, "Qte Commandée P4")
+        Assert.AreEqual(0D, objP4.qteCommande, "Qte Commandée P4")
         'P5
         objP5.load()
-        Assert.AreEqual(0, objP5.qteCommande, "Qte Commandée P5")
+        Assert.AreEqual(0D, objP5.qteCommande, "Qte Commandée P5")
 
         'Suppression de CMD1
         objCMD1.bDeleted = True
@@ -265,19 +265,19 @@ Imports vini_DB
         'controle des Quantités Commandées
         'P1
         objP1.load()
-        Assert.AreEqual(0, objP1.qteCommande, "Qte Commandée P1")
+        Assert.AreEqual(0D, objP1.qteCommande, "Qte Commandée P1")
         'P2
         objP2.load()
-        Assert.AreEqual(0, objP2.qteCommande, "Qte Commandée P2")
+        Assert.AreEqual(0D, objP2.qteCommande, "Qte Commandée P2")
         'P3
         objP3.load()
-        Assert.AreEqual(0, objP3.qteCommande, "Qte Commandée P3")
+        Assert.AreEqual(0D, objP3.qteCommande, "Qte Commandée P3")
         'P4
         objP4.load()
-        Assert.AreEqual(0, objP4.qteCommande, "Qte Commandée P4")
+        Assert.AreEqual(0D, objP4.qteCommande, "Qte Commandée P4")
         'P5
         objP5.load()
-        Assert.AreEqual(0, objP5.qteCommande, "Qte Commandée P5")
+        Assert.AreEqual(0D, objP5.qteCommande, "Qte Commandée P5")
     End Sub
     <TestMethod()> Public Sub T30_colMvtStock()
         Dim objPRD As Produit
@@ -292,15 +292,15 @@ Imports vini_DB
         Assert.AreEqual(objPRD.colmvtStock.Count, 0, "Collection non vide")
 
         'Ajout de 3 mvts des stocks
-        Assert.AreEqual(0, objPRD.QteStock, "Qte en Stock intial")
+        Assert.AreEqual(0D, objPRD.QteStock, "Qte en Stock intial")
         Assert.IsTrue(Not objPRD.ajouteLigneMvtStock("06/02/1964", vncEnums.vncTypeMvt.vncmvtRegul, 0, "Ajoute 10", 10, "PremierMVT") Is Nothing, "Ajout mvt1")
-        Assert.AreEqual(10, objPRD.QteStock, "Qte en Stock 1mvt ")
+        Assert.AreEqual(10D, objPRD.QteStock, "Qte en Stock 1mvt ")
 
         Assert.IsTrue(Not objPRD.ajouteLigneMvtStock("07/02/1964", vncEnums.vncTypeMvt.vncmvtRegul, 0, "Retire 5", -5, "SecondMVT") Is Nothing, "Ajout mvt2")
-        Assert.AreEqual(5, objPRD.QteStock, "Qte en Stock 2mvt")
+        Assert.AreEqual(5D, objPRD.QteStock, "Qte en Stock 2mvt")
 
         Assert.IsTrue(Not objPRD.ajouteLigneMvtStock("08/02/1964", vncEnums.vncTypeMvt.vncmvtRegul, 0, "Ajoute 3", +3, "TroisièmeMVT") Is Nothing, "Ajout mvt3")
-        Assert.AreEqual(8, objPRD.QteStock, "Qte en Stock 3mvt")
+        Assert.AreEqual(8D, objPRD.QteStock, "Qte en Stock 3mvt")
 
         'Sauvegarde du produit
         Assert.IsTrue(objPRD.save(), "objPRD.Save")
@@ -309,11 +309,11 @@ Imports vini_DB
         objPRD = Produit.createandload(nid)
         Assert.IsTrue(objPRD.loadcolmvtStock, "OPRD.LoadcolMvtStock")
         Assert.AreEqual(objPRD.colmvtStock.Count, 3, "colmvtStock.count ")
-        Assert.AreEqual(8, objPRD.QteStock, "Qte en Stock apres rechargement")
+        Assert.AreEqual(8D, objPRD.QteStock, "Qte en Stock apres rechargement")
 
         'Ajout d'une ligne (Bon Appro)
         Assert.IsTrue(Not objPRD.ajouteLigneMvtStock("09/02/1964", vncEnums.vncTypeMvt.vncmvtBonAppro, 0, "Bon Appro 20", 20, "4eme MVT") Is Nothing, "Ajout MVT4")
-        Assert.AreEqual(28, objPRD.QteStock, "Qte en Stock 4mvt")
+        Assert.AreEqual(28D, objPRD.QteStock, "Qte en Stock 4mvt")
         'Sauvegarde de l'objet
         Assert.IsTrue(objPRD.save(), "PRD.Save")
         'Rechargement du client et de sa precommande
@@ -324,7 +324,7 @@ Imports vini_DB
 
         'Suppression d'un mvt de stock (Retire 5)
         objPRD.supprimeLigneMvtStock(2)
-        Assert.AreEqual(33, objPRD.QteStock, "Qte en Stock Apres supreesio de ligne")
+        Assert.AreEqual(33D, objPRD.QteStock, "Qte en Stock Apres supreesio de ligne")
         'Sauvegarde de l'objet
         Assert.IsTrue(objPRD.save(), "PRD.Save")
         'Rechargement de l'objet
@@ -340,7 +340,7 @@ Imports vini_DB
         objMVT.libelle = "Remplace par 11"
         objMVT.save()
         objPRD.recalculStock()
-        Assert.AreEqual(41, objPRD.QteStock, "Qte en Stock Apres remplacement")
+        Assert.AreEqual(41D, objPRD.QteStock, "Qte en Stock Apres remplacement")
 
         'Sauvegarde de l'objet
         Assert.IsTrue(objPRD.save(), "PRD.Save")
@@ -351,7 +351,7 @@ Imports vini_DB
         Assert.IsTrue(objPRD.loadcolmvtStock, "OPRD.LoadcolMvtStock")
         Assert.AreEqual(objPRD.colmvtStock.Count, 3, "colmvtStock.count ")
         objMVT = objPRD.colmvtStock(1)
-        Assert.AreEqual(11, objMVT.qte)
+        Assert.AreEqual(11D, objMVT.qte)
 
         'Suppression du Produit 
         objPRD.bDeleted = True
@@ -380,14 +380,14 @@ Imports vini_DB
         Assert.IsTrue(objP3.save(), "Save P3")
 
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(10, objP1.QteStock, "P1 Qte en Stock")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande")
+        Assert.AreEqual(10D, objP1.QteStock, "P1 Qte en Stock")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(20, objP2.QteStock, "P2 Qte en Stock")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande")
+        Assert.AreEqual(20D, objP2.QteStock, "P2 Qte en Stock")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande")
 
         'Création d'une Commande
         objCmd = New CommandeClient(objClient)
@@ -406,14 +406,14 @@ Imports vini_DB
         Assert.IsTrue(objP1.colmvtStock.Count = 1, "objP1.colmvtStock.Count = 2")
         Assert.IsTrue(objP2.load(), "Chargement P1(1)")
         Assert.IsTrue(objP2.loadcolmvtStock(), "Chargement Stock P1(1)")
-        Assert.AreEqual(10, objP1.QteStock, "P1 Qte en Stock(1)")
-        Assert.AreEqual(11, objP1.qteCommande, "P1 Qte en commande(1)")
+        Assert.AreEqual(10D, objP1.QteStock, "P1 Qte en Stock(1)")
+        Assert.AreEqual(11D, objP1.qteCommande, "P1 Qte en commande(1)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(20, objP2.QteStock, "P2 Qte en Stock(1)")
-        Assert.AreEqual(22, objP2.qteCommande, "P2 Qte en commande(1)")
+        Assert.AreEqual(20D, objP2.QteStock, "P2 Qte en Stock(1)")
+        Assert.AreEqual(22D, objP2.qteCommande, "P2 Qte en commande(1)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(1)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(1)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(1)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(1)")
 
         'Validation de Commande
         objCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionValider)
@@ -426,14 +426,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.load(), "Chargement P2(2)")
         Assert.IsTrue(objP2.loadcolmvtStock(), "Chargement Stock P2(2)")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(10, objP1.QteStock, "P1 Qte en Stock(2)")
-        Assert.AreEqual(11, objP1.qteCommande, "P1 Qte en commande(2)")
+        Assert.AreEqual(10D, objP1.QteStock, "P1 Qte en Stock(2)")
+        Assert.AreEqual(11D, objP1.qteCommande, "P1 Qte en commande(2)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(20, objP2.QteStock, "P2 Qte en Stock(2)")
-        Assert.AreEqual(22, objP2.qteCommande, "P2 Qte en commande(2)")
+        Assert.AreEqual(20D, objP2.QteStock, "P2 Qte en Stock(2)")
+        Assert.AreEqual(22D, objP2.qteCommande, "P2 Qte en commande(2)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(2)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(2)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(2)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(2)")
 
         'Livraison Commande
         objCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
@@ -449,14 +449,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.load(), "Chargement P2(3)")
         Assert.IsTrue(objP2.loadcolmvtStock(), "Chargement Stock P2(3)")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(-1D, objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Annulation de Livraison de commande
         objCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnLivrer)
@@ -468,14 +468,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.loadcolmvtStock(), "Chargement Stock P2(4)")
         Assert.IsTrue(objP1.colmvtStock.Count = 1, "objP1.colmvtStock.Count = 1")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(10, objP1.QteStock, "P1 Qte en Stock(4)")
-        Assert.AreEqual(11, objP1.qteCommande, "P1 Qte en commande(4)")
+        Assert.AreEqual(10D, objP1.QteStock, "P1 Qte en Stock(4)")
+        Assert.AreEqual(11D, objP1.qteCommande, "P1 Qte en commande(4)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(20, objP2.QteStock, "P2 Qte en Stock(4)")
-        Assert.AreEqual(22, objP2.qteCommande, "P2 Qte en commande(4)")
+        Assert.AreEqual(20D, objP2.QteStock, "P2 Qte en Stock(4)")
+        Assert.AreEqual(22D, objP2.qteCommande, "P2 Qte en commande(4)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(4)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(4)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(4)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(4)")
         'Assert.IsTrue(MsgBox("Vérifier que'il n'y a plus que des mvt d'INVENTAIRE(1) dans MVTSTOCK pour L'id Produit " & objP1.id & " et " & objP2.id, MsgBoxStyle.YesNo) = MsgBoxResult.Yes)
 
         'Relivraison de la commande
@@ -504,14 +504,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 1, "objP3.colmvtStock.Count = 1")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1, objP1.QteStock, "P1 Qte en Stock(6)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(6)")
+        Assert.AreEqual(-1D, objP1.QteStock, "P1 Qte en Stock(6)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(6)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(6)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(6)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(6)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(6)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(6)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(6)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(6)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(6)")
 
         'Livraison du Bon D'appro
         Assert.IsTrue(objBA.colLignes.Count <> 0)
@@ -530,14 +530,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Annulation de la livriason du bon D'appro
         objBA.changeEtat(vncEnums.vncActionEtatCommande.vncActionBAAnnLivrer)
@@ -553,14 +553,14 @@ Imports vini_DB
         Assert.AreEqual(1, objP3.colmvtStock.Count, "objP3.colmvtStock.Count = 1")
 
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(-1D, objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(30D, objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Relivraison du BOnAppro
         objBA.changeEtat(vncEnums.vncActionEtatCommande.vncActionBALivrer)
@@ -575,14 +575,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Suppression de Commande
         nidCmd = objCmd.id
@@ -600,14 +600,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Suppression du  BA
         nidBA = objBA.id
@@ -624,14 +624,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         Dim strReponse As String
         strReponse = Persist.executeSQLQuery("SELECT count(*) from mvt_stock where STK_REF_ID = " + nidCmd.ToString() + " or STK_REF_ID = " + nidBA.ToString())
@@ -659,14 +659,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
         'Suppression de la commande directe
         objCmd.bDeleted = True
@@ -682,14 +682,14 @@ Imports vini_DB
         Assert.IsTrue(objP2.colmvtStock.Count = 2, "objP2.colmvtStock.Count = 2")
         Assert.IsTrue(objP3.colmvtStock.Count = 2, "objP3.colmvtStock.Count = 2")
         'Controle Stock P1 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-1 + 12, objP1.QteStock, "P1 Qte en Stock(3)")
-        Assert.AreEqual(0, objP1.qteCommande, "P1 Qte en commande(3)")
+        Assert.AreEqual(CDec(-1 + 12), objP1.QteStock, "P1 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP1.qteCommande, "P1 Qte en commande(3)")
         'Controle Stock P2 (Qte en stock, Qte en commande)
-        Assert.AreEqual(-2, objP2.QteStock, "P2 Qte en Stock(3)")
-        Assert.AreEqual(0, objP2.qteCommande, "P2 Qte en commande(3)")
+        Assert.AreEqual(-2D, objP2.QteStock, "P2 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP2.qteCommande, "P2 Qte en commande(3)")
         'Controle Stock P3 (Qte en stock, Qte en commande)
-        Assert.AreEqual(30 + 32, objP3.QteStock, "P3 Qte en Stock(3)")
-        Assert.AreEqual(0, objP3.qteCommande, "P3 Qte en commande(3)")
+        Assert.AreEqual(CDec(30 + 32), objP3.QteStock, "P3 Qte en Stock(3)")
+        Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
     End Sub
     <TestMethod()> Public Sub T40_TestMvtStock()
@@ -793,7 +793,7 @@ Imports vini_DB
         objP1.loadcolmvtStock()
         objP1.recalculStock()
 
-        Assert.AreEqual(objP1.QteStock, 20, "Qte En stock")
+        Assert.AreEqual(objP1.QteStock, 20D, "Qte En stock")
 
     End Sub
 
@@ -911,11 +911,11 @@ Imports vini_DB
         objP1.ajouteLigneMvtStock("05/02/2001", vncTypeMvt.vncMvtCommandeClient, 0, "CMD 05/02", -7)
         objP1.savecolmvtStock()
 
-        Assert.AreEqual(10 - 5 + 15 - 7 - 1, objP1.QteStock)
-        Assert.AreEqual(10 - 5 + 15, objP1.CalculeStockAu("01/02/2001"))
+        Assert.AreEqual(CDec(10 - 5 + 15 - 7 - 1), objP1.QteStock)
+        Assert.AreEqual(CDec(10 - 5 + 15), objP1.CalculeStockAu("01/02/2001"))
         objP1.genereMvtInventaire("01/02/2001", objP1.CalculeStockAu("01/02/01"))
-        Assert.AreEqual(10 - 5 + 15 - 7 - 1, objP1.QteStock)
-        Assert.AreEqual(10 - 5 + 15, objP1.QteStockDernInventaire)
+        Assert.AreEqual(CDec(10 - 5 + 15 - 7 - 1), objP1.QteStock)
+        Assert.AreEqual(CDbl(10 - 5 + 15), objP1.QteStockDernInventaire)
 
 
     End Sub

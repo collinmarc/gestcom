@@ -536,7 +536,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(m_oClient.CodeCompta, Trim(strLine1.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine1.Substring(9, 2)))
         Assert.AreEqual("060264", strLine1.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(21)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(21)).Substring(0, 20), strLine1.Substring(21, 20))
         Assert.AreEqual("D", strLine1.Substring(41, 1))
         Assert.AreEqual((180.89).ToString("0000000000.00").Replace(".", ""), Trim(strLine1.Substring(42, 13)))
         Assert.AreEqual("010464", Trim(strLine1.Substring(63, 6)))
@@ -546,7 +546,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTETVA")), Trim(strLine2.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine2.Substring(9, 2)))
         Assert.AreEqual("060264", strLine2.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), strLine1.Substring(21, 20))
         Assert.AreEqual("C", strLine2.Substring(41, 1))
         Assert.AreEqual((180.89 - 150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine2.Substring(42, 13)))
 
@@ -555,7 +555,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual(Trim(Param.getConstante("CST_SOC2_COMPTEPRODUIT")), Trim(strLine3.Substring(1, 8)))
         Assert.AreEqual("VE", Trim(strLine3.Substring(9, 2)))
         Assert.AreEqual("060264", strLine3.Substring(14, 6))
-        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), Trim(strLine1.Substring(21, 20)))
+        Assert.AreEqual(("F:" + objFact.code + " " + m_oClient.rs + Space(20)).Substring(0, 20), strLine1.Substring(21, 20))
         Assert.AreEqual("C", strLine3.Substring(41, 1))
         Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine3.Substring(42, 13)))
 

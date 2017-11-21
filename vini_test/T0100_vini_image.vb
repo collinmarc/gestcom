@@ -62,11 +62,11 @@ Public Class T0100_vini_base
     '''<summary>
     '''Test pour Constructeur vini_Image
     '''</summary>
-    <TestMethod()> _
+    <TestMethod(), Ignore()> _
     Public Sub T01_Constructeur()
         Dim pfrnId As Integer = 10 ' TODO: initialisez à une valeur appropriée
-        Dim oImage As vini_image = New vini_image()
-        Dim obj As vini_image
+        Dim oImage As vini_Image = New vini_Image()
+        Dim obj As vini_Image
         Dim nId As Integer
 
         oImage.IdObject = 10
@@ -82,7 +82,7 @@ Public Class T0100_vini_base
         Assert.AreNotEqual(-1, oImage.id, "Id ne doit pas être -1 après un insert")
         nId = oImage.id
 
-        obj = New vini_image()
+        obj = New vini_Image()
         Assert.IsTrue(obj.load(nId), "Load")
         Assert.IsTrue(oImage.Equals(obj), "Egalité après rechargement")
 
@@ -91,7 +91,7 @@ Public Class T0100_vini_base
         Assert.IsTrue(oImage.Save())
         Assert.AreEqual(nId, oImage.id, "Id ne doit pas être modifié après un update")
 
-        obj = New vini_image()
+        obj = New vini_Image()
         Assert.IsTrue(obj.load(nId), "Load")
         Assert.IsTrue(oImage.Equals(obj), "Egalité après rechargement UPDATE")
         Assert.AreEqual(oImage.Desc, obj.Desc)
@@ -100,7 +100,7 @@ Public Class T0100_vini_base
         oImage.bDeleted = True
         Assert.IsTrue(oImage.Save())
 
-        obj = New vini_image()
+        obj = New vini_Image()
         Assert.IsTrue(obj.load(nId), "Load")
         Assert.AreEqual(0, obj.id, "ID à 0 après delete")
 
@@ -110,7 +110,7 @@ Public Class T0100_vini_base
     '''<summary>
     '''Test pour LoadImage et Save Image
     '''</summary>
-    <TestMethod()> _
+    <TestMethod(), Ignore()>
     Public Sub T10_LoadSaveImage()
         Dim oImage As vini_Image = New vini_Image()
         Dim obj As vini_Image
@@ -137,7 +137,7 @@ Public Class T0100_vini_base
     '''<summary>
     '''Test pour Save abd Load Image en baseDeDonnées
     '''</summary>
-    <TestMethod()> _
+    <TestMethod(), Ignore()>
     Public Sub T20_LoadDBSave()
         Dim oImage As vini_Image = New vini_Image()
         Dim obj As vini_Image

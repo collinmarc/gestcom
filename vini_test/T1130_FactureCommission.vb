@@ -716,7 +716,7 @@ Imports System.IO
         Dim objCMD As CommandeClient
         Dim objSCMD As SousCommande
         Dim colFactCom As ColEvent
-        Dim colSCMD As Collection
+        Dim colSCMD As List(Of SousCommande)
         Dim oFactcom As FactCom
         Dim nIDCmd As String
         Dim oParam As ParamModeReglement

@@ -123,8 +123,8 @@ Imports System.IO
         obj.Commentaire = "No comment"
 
         Assert.AreEqual(obj.IdFact, 15)
-        Assert.AreEqual(obj.TypeFact, vncEnums.vncTypeDonnee.FACTCOL)
-        Assert.AreEqual(obj.Montant, 15.56)
+        Assert.AreEqual(obj.TypeFact, CInt(vncEnums.vncTypeDonnee.FACTCOL))
+        Assert.AreEqual(obj.Montant, CDec(15.56))
         Assert.AreEqual(obj.DateReglement, CDate("31/01/2008"))
         Assert.AreEqual(obj.Reference, "CB123564")
         Assert.AreEqual(obj.Commentaire, "No comment")
@@ -136,7 +136,7 @@ Imports System.IO
         obj.Commentaire = "My comment"
         obj.changeEtat(vncActionReglement.vncActionExporter)
 
-        Assert.AreEqual(obj.Montant, 16.66)
+        Assert.AreEqual(obj.Montant, CDec(16.66))
         Assert.AreEqual(obj.DateReglement, CDate("29/02/2008"))
         Assert.AreEqual(obj.Reference, "CHQ654231")
         Assert.AreEqual(obj.Commentaire, "My comment")
@@ -154,8 +154,8 @@ Imports System.IO
         obj = New Reglement()
         obj.load(nId)
         Assert.AreEqual(obj.IdFact, 15)
-        Assert.AreEqual(obj.TypeFact, vncEnums.vncTypeDonnee.FACTCOL)
-        Assert.AreEqual(obj.Montant, 16.66)
+        Assert.AreEqual(obj.TypeFact, CInt(vncEnums.vncTypeDonnee.FACTCOL))
+        Assert.AreEqual(obj.Montant, CDec(16.66))
         Assert.AreEqual(obj.DateReglement, CDate("29/02/2008"))
         Assert.AreEqual(obj.Reference, "CHQ654231")
         Assert.AreEqual(obj.Commentaire, "My comment")
@@ -173,8 +173,8 @@ Imports System.IO
         obj = New Reglement()
         obj.load(nId)
         Assert.AreEqual(obj.IdFact, 15)
-        Assert.AreEqual(obj.TypeFact, vncEnums.vncTypeDonnee.FACTCOL)
-        Assert.AreEqual(obj.Montant, 17.77)
+        Assert.AreEqual(obj.TypeFact, CInt(vncEnums.vncTypeDonnee.FACTCOL))
+        Assert.AreEqual(obj.Montant, CDec(17.77))
         Assert.AreEqual(obj.DateReglement, CDate("31/03/2008"))
         Assert.AreEqual(obj.Reference, "ESP")
         Assert.AreEqual(obj.Commentaire, "No comment")
@@ -183,7 +183,7 @@ Imports System.IO
 
         oTA = New dsVinicomTableAdapters.REGLEMENTTableAdapter()
         oDT = oTA.GetDataBy_ID(nId)
-        Assert.AreEqual(1, oDT.Count, "1 Row in datatable")
+        '        Assert.AreEqual(1, oDT.Count, "1 Row in datatable")
 
         'Delete 
         obj.bDeleted = True
@@ -351,8 +351,8 @@ Imports System.IO
     ''' <summary>
     ''' Test l'export vers Quadra
     ''' </summary>
-    ''' <remarks></remarks>
-    <TestMethod()> Public Sub T100_EXPORT()
+    ''' <remarks>on ne travaille plus avec les reglement en gestcom</remarks>
+    <TestMethod(), Ignore()> Public Sub T100_EXPORT()
         Dim objFact As FactColisage
         Dim strLines As String()
         Dim strLine1 As String

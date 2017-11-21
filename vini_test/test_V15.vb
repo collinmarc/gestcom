@@ -169,7 +169,7 @@ Imports vini_DB
 
         'Vérification de la Quantité en commande Avant
         objPRD.load()
-        Assert.AreEqual(0, objPRD.qteCommande, "Au début QteEn commande = 0")
+        Assert.AreEqual(0D, objPRD.qteCommande, "Au début QteEn commande = 0")
 
         objCmd.typeCommande = vncEnums.vncTypeCommande.vncCmdClientPlateforme
         objCmd.AjouteLigne("10", objPRD, 10, 5.5)
@@ -177,14 +177,14 @@ Imports vini_DB
 
         'Vérification de la Quantité en commande 
         objPRD.load()
-        Assert.AreEqual(10, objPRD.qteCommande, "QteEn commande = 10, car la commande est de type plateforme")
+        Assert.AreEqual(10D, objPRD.qteCommande, "QteEn commande = 10, car la commande est de type plateforme")
 
         objCmd.typeCommande = vncEnums.vncTypeCommande.vncCmdClientDirecte
         objCmd.save()
 
         'Vérification de la Quantité en commande 
         objPRD.load()
-        Assert.AreEqual(0, objPRD.qteCommande, "QteEn commande = 0, car la commande est de type directe")
+        Assert.AreEqual(0D, objPRD.qteCommande, "QteEn commande = 0, car la commande est de type directe")
 
         objCmd.bDeleted = True
         objCmd.save()

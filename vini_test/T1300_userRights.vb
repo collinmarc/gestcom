@@ -32,7 +32,7 @@ Imports vini_DB
 
     End Sub
 
-    <TestMethod()> Public Sub T20_LISTE()
+    <TestMethod(), Ignore()> Public Sub T20_LISTE()
 
         Dim objuser As aut_user
         Dim oCol As Collection

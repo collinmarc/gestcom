@@ -67,7 +67,7 @@ Public Class frmRapproFactFourn
         Dim ddeb As Date
         Dim dfin As Date
         Dim codeFourn As String
-        Dim col As New Collection
+        Dim col As New List(Of SousCommande)
         Dim bReturn As Boolean
         Dim nId As Integer
         Dim oScmd As SousCommande

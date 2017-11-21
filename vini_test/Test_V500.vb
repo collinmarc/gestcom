@@ -162,14 +162,14 @@ Imports vini_App
         Assert.AreEqual(oCmd.caracteristiqueTiers.rs, m_objCLT.rs, "Nom différents après recopie")
 
         'Changement de tiers
-        oCmd.oTiers = m_objCLT2
+        oCmd.setTiers(m_objCLT2)
         'Vérification que les caractéristiques du tiers n'ont pas été recopiées    
         Assert.AreEqual(oCmd.caracteristiqueTiers.nom, m_objCLT.nom, "Nom modifié par la reaffection du tiers")
         Assert.AreEqual(oCmd.caracteristiqueTiers.rs, m_objCLT.rs, "RS modifié par la reaffection du tiers")
 
         'Changement de tiers après réinitialisation
-        oCmd.oTiers = Nothing
-        oCmd.oTiers = m_objCLT2
+        oCmd.setTiers(Nothing)
+        oCmd.setTiers(m_objCLT2)
         'Vérification que les caractéristiques du tiers ont été recopiées    
         Assert.AreEqual(oCmd.caracteristiqueTiers.nom, m_objCLT2.nom, "Nom non modifié par la reaffection du tiers")
         Assert.AreEqual(oCmd.caracteristiqueTiers.rs, m_objCLT2.rs, "RS non modifié par la reaffection du tiers")
@@ -235,14 +235,14 @@ Imports vini_App
         Assert.AreEqual(oBA.caracteristiqueTiers.rs, m_objFRN.rs, "Nom différents après recopie")
 
         'Changement de tiers
-        oBA.oTiers = m_objFRN2
+        oBA.setTiers(m_objFRN2)
         'Vérification que les caractéristiques du tiers n'ont pas été recopiées    
         Assert.AreEqual(oBA.caracteristiqueTiers.nom, m_objFRN.nom, "Nom modifié par la reaffection du tiers")
         Assert.AreEqual(oBA.caracteristiqueTiers.rs, m_objFRN.rs, "RS modifié par la reaffection du tiers")
 
         'Changement de tiers après réinitialisation
-        oBA.oTiers = Nothing
-        oBA.oTiers = m_objFRN2
+        oBA.setTiers(Nothing)
+        oBA.setTiers(m_objFRN2)
         'Vérification que les caractéristiques du tiers ont été recopiées    
         Assert.AreEqual(oBA.caracteristiqueTiers.nom, m_objFRN2.nom, "Nom non modifié par la reaffection du tiers")
         Assert.AreEqual(oBA.caracteristiqueTiers.rs, m_objFRN2.rs, "RS non modifié par la reaffection du tiers")

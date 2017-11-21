@@ -105,7 +105,7 @@ Imports vini_DB
         Assert.AreEqual(objPAR.code, "CONTCODE")
         Assert.AreEqual(objPAR.libelle, "CONTLIB")
         Assert.AreEqual(objPAR.cent, 37.5)
-        Assert.AreEqual(objPAR.bout, 3)
+        Assert.AreEqual(objPAR.bout, CDbl(3))
 
 
 
@@ -244,9 +244,9 @@ Imports vini_DB
         objPAR.load(nId)
         Assert.AreEqual("CODE", objPAR.code)
         Assert.AreEqual("R", objPAR.libelle)
-        Assert.AreEqual(1.5, objPAR.bout)
-        Assert.AreEqual(1.25, objPAR.cent)
-        Assert.AreEqual(0.5, objPAR.poids)
+        Assert.AreEqual(CDbl(1.5), objPAR.bout)
+        Assert.AreEqual(CDbl(1.25), objPAR.cent)
+        Assert.AreEqual(0.5D, objPAR.poids)
 
         objPAR.poids = 2
 
@@ -256,9 +256,9 @@ Imports vini_DB
         objPAR.load(nId)
         Assert.AreEqual("CODE", objPAR.code)
         Assert.AreEqual("R", objPAR.libelle)
-        Assert.AreEqual(1.5, objPAR.bout)
-        Assert.AreEqual(1.25, objPAR.cent)
-        Assert.AreEqual(2, objPAR.poids)
+        Assert.AreEqual(CDbl(1.5), objPAR.bout)
+        Assert.AreEqual(CDbl(1.25), objPAR.cent)
+        Assert.AreEqual(2D, objPAR.poids)
 
         objPAR.bDeleted = True
         Assert.IsTrue(objPAR.Save())

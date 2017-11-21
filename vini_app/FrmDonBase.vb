@@ -3,7 +3,7 @@ Public Class FrmDonBase
     Inherits FrmVinicom
 
     Protected m_ElementCourant As Persist
-    Protected m_TypeDonnees As vncTypeDonnee
+    Protected m_TypeDonnees As vncEnums.vncTypeDonnee
     Protected m_BloquageElementCourant As Boolean = True
 
 #Region "Méthodes ViniCom"

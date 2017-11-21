@@ -231,7 +231,12 @@ Test pour Constructeur FicheTechniqueFourn
  <summary>
  Test l'export vers Quadra
  </summary>
- <remarks></remarks>
+ <remarks>on ne travaille plus avec les reglement en gestcom</remarks>
+</member>
+<member name="T:vini_test.TestImap">
+ <summary>
+ Classe de test à reactiver 
+ </summary>
 </member>
 <member name="M:vini_test.TestImap.TestCkeckMailVinicom">
  <summary>

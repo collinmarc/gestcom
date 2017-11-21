@@ -2054,6 +2054,39 @@ Represents the connection and commands used to retrieve and save data.
  <returns>une Collection de sous commandes</returns>
  <remarks></remarks>
 </member>
+<member name="M:vini_DB.Persist.ListeSCMDFournisseurExportQuadra(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Liste des sous-commandes a Export vers Quadra
+ </summary>
+ <param name="pOrigine">Origine de la commmande "HOBIVIN" ou "VINICOM"</param>
+ <param name="pddeb"></param>
+ <param name="pdfin"></param>
+ <param name="pCodeFourn"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.Persist.ListeSCMDGeneree(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Liste des SousCommandes Genérées 
+ </summary>
+ <param name="pOrigine"></param>
+ <param name="pddeb"></param>
+ <param name="pdfin"></param>
+ <param name="pCodeFourn"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.Persist.ListeSCMDFournisseurNONExportQuadra(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Liste des SousCommandes Genérées dont le fournisseur n'est pas marqué comme 'ExportQuadra'
+ </summary>
+ <param name="pOrigine"></param>
+ <param name="pddeb"></param>
+ <param name="pdfin"></param>
+ <param name="pCodeFourn"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
 <member name="M:vini_DB.Persist.ListeFACTCOMNonReglee(System.String,System.String)">
  <summary>
  Liste des facture de commission non reglee
@@ -2224,6 +2257,16 @@ Represents the connection and commands used to retrieve and save data.
  </summary>
  <param name="pCode"> Code Produit</param>
  <returns>Objet Produit ou null</returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.SousCommande.getListeAExporterQuadra(vini_DB.vncEnums.vncTypeExportQuadra,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
+ </summary>
+ <param name="pddeb"></param>
+ <param name="pdfin"></param>
+ <param name="pStrCodeFourn"></param>
+ <returns></returns>
  <remarks></remarks>
 </member>
 <member name="M:vini_DB.SousCommande.toCSV">

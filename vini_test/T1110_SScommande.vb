@@ -579,7 +579,7 @@ Imports vini_DB
         '1)dans la Commande
         For Each objLG In oCMD.colLignes
             Assert.IsFalse(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
-            Assert.AreEqual(-1, objLG.idSCmd, "objLG.idSCMD= 0")
+            Assert.AreEqual(0, objLG.idSCmd, "objLG.idSCMD= 0")
         Next objLG
         '2) dans chaque Sous Commandes
         Assert.AreEqual(0, oCMD.colSousCommandes.Count, "colSousCommande.count()")
@@ -594,7 +594,7 @@ Imports vini_DB
         oFRN2.Save()
     End Sub
     <TestMethod()> Public Sub T30_ListeSousCommande()
-        Dim colSCMD As Collection
+        Dim colSCMD As List(Of SousCommande)
         Dim objCMDCLT2 As CommandeClient
 
         'Création de la commande et eclatement

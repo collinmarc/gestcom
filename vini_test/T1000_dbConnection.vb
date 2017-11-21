@@ -5,7 +5,7 @@ Imports vini_DB
 
 
 
-<TestClass()> Public Class T1000_dbConnection
+<TestClass(), Ignore()> Public Class T1000_dbConnection
     Inherits test_Base
     <TestMethod()> Public Sub T1Connect_Disconnect()
         Assert.IsTrue(Fournisseur.shared_connect(), Fournisseur.getErreur())

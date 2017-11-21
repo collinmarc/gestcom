@@ -3,7 +3,7 @@ Imports vini_DB
 Public Class frmGestionSCMD
     Inherits frmDonBase
     'Protected getElementCourant() As SousCommande
-    Protected m_colSousCommandes As Collection
+    Protected m_colSousCommandes As List(Of SousCommande)
 
 #Region "Code généré par le Concepteur Windows Form "
     Public Sub New()
@@ -973,7 +973,7 @@ Public Class frmGestionSCMD
     Private Sub initFenetre()
         dtDatedeb.Value = DateAdd(DateInterval.Month, -1, Now())
         dtdateFin.Value = Now()
-        m_colSousCommandes = New Collection
+        m_colSousCommandes = New List(Of SousCommande)
         If setElementCourant2(Nothing) Then
             tbTxCommision.Text = Param.getConstante("CST_TX_COMMISSION")
             '        lbSousCommandes.HorizontalExtent = 1
@@ -1032,7 +1032,7 @@ Public Class frmGestionSCMD
         Dim ddeb As Date
         Dim dfin As Date
         Dim codeFourn As String
-        Dim col As New Collection
+        Dim col As New List(Of SousCommande)
         Dim bReturn As Boolean
         Dim oSCMD As SousCommande
         Dim nId As Long

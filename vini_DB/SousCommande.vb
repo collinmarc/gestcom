@@ -1,5 +1,7 @@
 Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Shared
+Imports System.Collections.Generic
+
 
 '===================================================================================================================================
 'Projet : Vinicom
@@ -573,31 +575,31 @@ Public Class SousCommande
     'Description : Liste des Sous Commande
     'Retour : Rend une collection de Sous commande
     '=======================================================================
-    Public Shared Function getListe(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
-        Dim colReturn As Collection
+    Public Shared Function getListe(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
         shared_connect()
         colReturn = ListeSCMD(pddeb, pdfin, pCodeFourn, pEtat)
         Debug.Assert(Not colReturn Is Nothing, getErreur())
         shared_disconnect()
         Return colReturn
     End Function 'getListe
-    Public Shared Function getListeTransmises(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
-        Dim colReturn As Collection
-        Dim colTemp As Collection
+    Public Shared Function getListeTransmises(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
+        Dim colTemp As List(Of SousCommande)
         Dim objSCMD As SousCommande
 
-        colReturn = New Collection
+        colReturn = New List(Of SousCommande)
         shared_connect()
         colTemp = ListeSCMD(pddeb, pdfin, pCodeFourn, vncEnums.vncEtatCommande.vncSCMDtransmiseFax)
         If Not colTemp Is Nothing Then
             For Each objSCMD In colTemp
-                colReturn.Add(objSCMD, objSCMD.code)
+                colReturn.Add(objSCMD)
             Next
         End If
         colTemp = ListeSCMD(pddeb, pdfin, pCodeFourn, vncEnums.vncEtatCommande.vncSCMDExporteeInt)
         If Not colTemp Is Nothing Then
             For Each objSCMD In colTemp
-                colReturn.Add(objSCMD, objSCMD.code)
+                colReturn.Add(objSCMD)
             Next
         End If
         Debug.Assert(Not colReturn Is Nothing, getErreur())
@@ -610,23 +612,23 @@ Public Class SousCommande
     '/// <param name="pdfin">date de fin</param>
     '/// <returns>une collection</returns>
     '========================================================================
-    Public Shared Function getListeAProvisionner(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
-        Dim colReturn As Collection
-        Dim colTemp As Collection
+    Public Shared Function getListeAProvisionner(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
+        Dim colTemp As List(Of SousCommande)
         Dim objSCMD As SousCommande
 
-        colReturn = New Collection
+        colReturn = New List(Of SousCommande)
         shared_connect()
         colTemp = ListeSCMD(pddeb, pdfin, pCodeFourn, vncEnums.vncEtatCommande.vncSCMDRapprochee)
         If Not colTemp Is Nothing Then
             For Each objSCMD In colTemp
-                colReturn.Add(objSCMD, objSCMD.code)
+                colReturn.Add(objSCMD)
             Next
         End If
         colTemp = ListeSCMD(pddeb, pdfin, pCodeFourn, vncEnums.vncEtatCommande.vncSCMDRapprocheeInt)
         If Not colTemp Is Nothing Then
             For Each objSCMD In colTemp
-                colReturn.Add(objSCMD, objSCMD.code)
+                colReturn.Add(objSCMD)
             Next
         End If
         Debug.Assert(Not colReturn Is Nothing, getErreur())
@@ -640,8 +642,8 @@ Public Class SousCommande
     '/// <param name="pdfin">date de fin</param>
     '/// <returns>une collection</returns>
     '========================================================================
-    Public Shared Function getListeAFacturer(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
-        Dim colReturn As Collection
+    Public Shared Function getListeAFacturer(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
 
         shared_connect()
         colReturn = ListeSCMDAFacturerCom(pddeb, pdfin, pCodeFourn)
@@ -656,8 +658,8 @@ Public Class SousCommande
     '/// <param name="pdfin">date de fin</param>
     '/// <returns>une collection</returns>
     '========================================================================
-    Public Shared Function getListeExportee(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT) As Collection
-        Dim colReturn As Collection
+    Public Shared Function getListeExportee(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT) As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
         shared_connect()
         colReturn = ListeSCMD(pddeb, pdfin, , vncEnums.vncEtatCommande.vncSCMDExporteeInt)
         Debug.Assert(Not colReturn Is Nothing, getErreur())
@@ -670,26 +672,41 @@ Public Class SousCommande
     '/// <param name="pdfin">date de fin</param>
     '/// <returns>une collection</returns>
     '========================================================================
-    Public Shared Function getListeAExporter(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pStrCodeFourn As String = "") As Collection
-        Dim colReturn As Collection
+    Public Shared Function getListeAExporter(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
         shared_connect()
         colReturn = ListeSCMDAExporterInternet(pddeb, pdfin, pStrCodeFourn)
         Debug.Assert(Not colReturn Is Nothing, getErreur())
         shared_disconnect()
         Return colReturn
     End Function 'getListeExportee
-    '========================================================================
-    '/// <summary>Rend une liste de sous commande exportées</summary>
-    '/// <param name="pddeb">date de debut</param>
-    '/// <param name="pdfin">date de fin</param>
-    '/// <returns>une collection</returns>
-    '========================================================================
-    Public Shared Function getListeAExporterQuadra(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pStrCodeFourn As String = "") As Collection
-        Dim colReturn As Collection
+    ''' <summary>
+    ''' Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
+    ''' </summary>
+    ''' <param name="pddeb"></param>
+    ''' <param name="pdfin"></param>
+    ''' <param name="pStrCodeFourn"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function getListeAExporterQuadra(pTypeExport As vncTypeExportQuadra, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As New List(Of SousCommande)
         shared_connect()
-        colReturn = ListeSCMDAExporterQuadra(pddeb, pdfin, pStrCodeFourn)
-        Debug.Assert(Not colReturn Is Nothing, getErreur())
+
+        'Voir PR1710-035
+        '===============
+        If pTypeExport = vncTypeExportQuadra.vncExportBafClient Then
+            'Export des SousCommandes Issues du site Vinicom dont les fournisseurs sont marqués comme 'ExportQuadra'
+            colReturn = ListeSCMDFournisseurExportQuadra(vncOrigineCmd.vncVinicom, pddeb, pdfin, pStrCodeFourn)
+            'Export des SousCommandes issues du Site Hobivin
+            colReturn = ListeSCMDGeneree(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+        End If
+        If pTypeExport = vncTypeExportQuadra.vncExportBaFournisseur Then
+            'Export des SousCommandes Issues du site HOBIVIN dont les fournisseurs ne sont pas marqués comme 'ExportQuadra'
+            colReturn = ListeSCMDFournisseurNONExportQuadra(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+        End If
+
         shared_disconnect()
+
         Return colReturn
     End Function 'getListeExportee
     '========================================================================

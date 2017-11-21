@@ -1,4 +1,6 @@
-Imports system.IO
+Imports System.IO
+Imports System.Collections.Generic
+
 Public Class FactCom
     Inherits Facture
 
@@ -136,7 +138,7 @@ Public Class FactCom
 
 #End Region
 
-    Public Shared Function createFactComs(ByVal pcolSCMD As Collection, Optional ByVal pdateFact As Date = DATE_DEFAUT, Optional ByVal pdateStat As Date = DATE_DEFAUT, Optional ByVal pPeriode As String = "") As ColEvent
+    Public Shared Function createFactComs(ByVal pcolSCMD As List(Of SousCommande), Optional ByVal pdateFact As Date = DATE_DEFAUT, Optional ByVal pdateStat As Date = DATE_DEFAUT, Optional ByVal pPeriode As String = "") As ColEvent
 
         '======================================================================================
         'Function : createFactComs

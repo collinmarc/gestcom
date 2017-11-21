@@ -4549,7 +4549,7 @@ Public Class frmSaisieCommande
     End Sub 'Rechercheclient
     Protected Overridable Sub setTiers(poTiers As Tiers)
         m_Tiers_Courant = poTiers
-        getCommandeCourante.oTiers = poTiers
+        getCommandeCourante.setTiers(poTiers)
     End Sub
 
     'Dupplique l'adresse de livraison sur l'adresse de facturation

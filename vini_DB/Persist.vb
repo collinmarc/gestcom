@@ -4906,7 +4906,7 @@ Public MustInherit Class Persist
             objCMDCLT.caracteristiqueTiers.banque = GetString(objRS, "CMD_CLT_BANQUE")
             objCMDCLT.caracteristiqueTiers.idModeReglement = GetString(objRS, "CMD_CLT_RGLMT_ID")
             objCMDCLT.caracteristiqueTiers.libModeReglement = GetString(objRS, "PAR_VALUE")
-            objCMDCLT.oTiers = New Client
+            objCMDCLT.setTiers(New Client)
             nId = GetString(objRS, "CMD_CLT_ID")
             objCMDCLT.oTiers.setid(nId)
             objCMDCLT.dateCommande = GetString(objRS, "CMD_DATE")
@@ -6068,13 +6068,13 @@ Public MustInherit Class Persist
             Return False
         End Try
     End Function 'DeleteSCMD
-    Protected Shared Function ListeSCMD(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
+    Protected Shared Function ListeSCMD(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As List(Of SousCommande)
         '============================================================================
         'Function : listeSCMD
         'Description : Rend une liste de sous commandes
         '============================================================================
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New Collection
+        Dim colReturn As New List(Of SousCommande)
         '        Dim objParam As OleDbParameter
         Dim sqlString As String = "SELECT " & _
                                 "SOUSCOMMANDE.SCMD_ID, " & _
@@ -6180,13 +6180,13 @@ Public MustInherit Class Persist
     ''' <param name="pCodeFourn">code Fournisseur ou ""</param>
     ''' <returns>une Collection de sous commandes</returns>
     ''' <remarks></remarks>
-    Protected Shared Function ListeSCMDAFacturerCom(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
+    Protected Shared Function ListeSCMDAFacturerCom(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
         '============================================================================
         'Function : listeSCMD
         'Description : Rend une liste de sous commandes
         '============================================================================
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New Collection
+        Dim colReturn As New List(Of SousCommande)
         Dim sqlString As String = "SELECT " & _
                                 "SOUSCOMMANDE.SCMD_ID, " & _
                                 "SOUSCOMMANDE.SCMD_CODE, " & _
@@ -6272,9 +6272,10 @@ Public MustInherit Class Persist
 
         Return colReturn
     End Function 'ListeSCMDAFacturerCom
-    Private Shared Function selectSCMD(ByVal objCommand As OleDbCommand) As Collection
+
+    Private Shared Function selectSCMD(ByVal objCommand As OleDbCommand) As List (of SousCommande)
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New Collection
+        Dim colReturn As New List(Of SousCommande)
         Dim objSCMD As SousCommande
         Dim objRS As OleDbDataReader = Nothing
         Dim nId As Integer
@@ -6396,7 +6397,7 @@ Public MustInherit Class Persist
                     End Try
                     objSCMD.m_bResume = True
                     objSCMD.resetBooleans()
-                    colReturn.Add(objSCMD, objSCMD.code)
+                    colReturn.Add(objSCMD)
                 Catch ex As InvalidCastException
                     colReturn = Nothing
                     Exit While
@@ -6412,13 +6413,13 @@ Public MustInherit Class Persist
         Return colReturn
 
     End Function ' selectSCMD
-    Protected Shared Function ListeSCMDAExporterInternet(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
+    Protected Shared Function ListeSCMDAExporterInternet(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
         '============================================================================
         'Function : listeSCMD
         'Description : Rend une liste de sous commandes
         '============================================================================
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New Collection
+        Dim colReturn As New List(Of SousCommande)
         '        Dim objParam As OleDbParameter
         Dim sqlString As String = "SELECT " & _
                                 "SOUSCOMMANDE.SCMD_ID, " & _
@@ -6507,13 +6508,18 @@ Public MustInherit Class Persist
 
         Return colReturn
     End Function 'ListeSCMDAExporterInternet
-    Protected Shared Function ListeSCMDAExporterQuadra(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "") As Collection
-        '============================================================================
-        'Function : listeSCMD
-        'Description : Rend une liste de sous commandes
-        '============================================================================
+    ''' <summary>
+    ''' Liste des sous-commandes a Export vers Quadra
+    ''' </summary>
+    ''' <param name="pOrigine">Origine de la commmande "HOBIVIN" ou "VINICOM"</param>
+    ''' <param name="pddeb"></param>
+    ''' <param name="pdfin"></param>
+    ''' <param name="pCodeFourn"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeSCMDFournisseurExportQuadra(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New Collection
+        Dim colReturn As New List(Of SousCommande)
         '        Dim objParam As OleDbParameter
         Dim sqlString As String = "SELECT " & _
                                 "SOUSCOMMANDE.SCMD_ID, " & _
@@ -6584,9 +6590,18 @@ Public MustInherit Class Persist
 
         End If
 
-        'On ne pred que les sous commande Générée
+        'On ne prend que les sous commande Générée
         strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
         objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
+
+        'On choisi l'origine des commandes
+        If pOrigine = vncOrigineCmd.vncVinicom Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+        End If
+        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+        End If
+
 
 
         'On ne pred que les sous commande des fournisseurs  marqués  comme export Quadra
@@ -6601,7 +6616,223 @@ Public MustInherit Class Persist
         colReturn = selectSCMD(objCommand)
 
         Return colReturn
-    End Function 'ListeSCMDAExporterQuadra
+    End Function 'ListeSCMDFournisseurExportQuadra
+    ''' <summary>
+    ''' Liste des SousCommandes Genérées 
+    ''' </summary>
+    ''' <param name="pOrigine"></param>
+    ''' <param name="pddeb"></param>
+    ''' <param name="pdfin"></param>
+    ''' <param name="pCodeFourn"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeSCMDGeneree(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Dim colReturn As New List(Of SousCommande)
+        '        Dim objParam As OleDbParameter
+        Dim sqlString As String = "SELECT " & _
+                                "SOUSCOMMANDE.SCMD_ID, " & _
+                                "SOUSCOMMANDE.SCMD_CODE, " & _
+                                "SOUSCOMMANDE.SCMD_DATE, " & _
+                                "COMMANDE.CMD_ID, " & _
+                                "COMMANDE.CMD_CODE, " & _
+                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
+                                "SOUSCOMMANDE.SCMD_ETAT, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
+                                "FOURNISSEUR.FRN_ID, " & _
+                                "FOURNISSEUR.FRN_CODE, " & _
+                                "FOURNISSEUR.FRN_RS, " & _
+                                "CLIENT.CLT_ID, " & _
+                                "CLIENT.CLT_CODE, " & _
+                                "CLIENT.CLT_RS, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
+                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
+                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
+                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
+                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
+                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
+                                "FROM " & _
+                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
+                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
+                                " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
+
+
+        Dim strWhere As String = ""
+        Dim objCommand As OleDbCommand
+        Dim strChampDate As String
+        Dim objParam As OleDbParameter
+
+
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+
+        'Détermination du champ date
+        strChampDate = "SCMD_DATE"
+
+        'Préparation du critere 
+
+        If pddeb <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " " & strChampDate & " >=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
+
+        End If
+        If pdfin <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " " & strChampDate & " <=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
+
+        End If
+        If pCodeFourn <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pCodeFourn)
+
+        End If
+
+        'On ne prend que les sous commande Générée
+        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
+        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
+
+        'On choisi l'origine des commandes
+        If pOrigine = vncOrigineCmd.vncVinicom Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+        End If
+        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+        End If
+
+
+        If strWhere <> "" Then
+            sqlString = sqlString & " WHERE " & strWhere
+        End If
+        sqlString = sqlString & " ORDER BY  SOUSCOMMANDE.SCMD_CODE ASC"
+        objCommand.CommandText = sqlString
+
+        colReturn = selectSCMD(objCommand)
+
+        Return colReturn
+    End Function 'ListeSCMDFournisseurNONExportQuadra
+
+    ''' <summary>
+    ''' Liste des SousCommandes Genérées dont le fournisseur n'est pas marqué comme 'ExportQuadra'
+    ''' </summary>
+    ''' <param name="pOrigine"></param>
+    ''' <param name="pddeb"></param>
+    ''' <param name="pdfin"></param>
+    ''' <param name="pCodeFourn"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeSCMDFournisseurNONExportQuadra(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Dim colReturn As New List(Of SousCommande)
+        '        Dim objParam As OleDbParameter
+        Dim sqlString As String = "SELECT " & _
+                                "SOUSCOMMANDE.SCMD_ID, " & _
+                                "SOUSCOMMANDE.SCMD_CODE, " & _
+                                "SOUSCOMMANDE.SCMD_DATE, " & _
+                                "COMMANDE.CMD_ID, " & _
+                                "COMMANDE.CMD_CODE, " & _
+                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
+                                "SOUSCOMMANDE.SCMD_ETAT, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
+                                "FOURNISSEUR.FRN_ID, " & _
+                                "FOURNISSEUR.FRN_CODE, " & _
+                                "FOURNISSEUR.FRN_RS, " & _
+                                "CLIENT.CLT_ID, " & _
+                                "CLIENT.CLT_CODE, " & _
+                                "CLIENT.CLT_RS, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
+                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
+                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
+                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
+                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
+                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
+                                "FROM " & _
+                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
+                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
+                                " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
+
+
+        Dim strWhere As String = ""
+        Dim objCommand As OleDbCommand
+        Dim strChampDate As String
+        Dim objParam As OleDbParameter
+
+
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+
+        'Détermination du champ date
+        strChampDate = "SCMD_DATE"
+
+        'Préparation du critere 
+
+        If pddeb <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " " & strChampDate & " >=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
+
+        End If
+        If pdfin <> DATE_DEFAUT Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & " " & strChampDate & " <=  ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
+
+        End If
+        If pCodeFourn <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
+            objParam = objCommand.Parameters.AddWithValue("?", pCodeFourn)
+
+        End If
+
+        'On ne prend que les sous commande Générée
+        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
+        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
+
+        'On choisi l'origine des commandes
+        If pOrigine = vncOrigineCmd.vncVinicom Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+        End If
+        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
+            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+        End If
+
+
+
+        'On ne pred que les sous commande des fournisseurs  marqués  comme export Quadra
+        strWhere = strWhere + " AND FOURNISSEUR.FRN_BEXP_INTERNET <> 2 "
+
+        If strWhere <> "" Then
+            sqlString = sqlString & " WHERE " & strWhere
+        End If
+        sqlString = sqlString & " ORDER BY  SOUSCOMMANDE.SCMD_CODE ASC"
+        objCommand.CommandText = sqlString
+
+        colReturn = selectSCMD(objCommand)
+
+        Return colReturn
+    End Function 'ListeSCMDFournisseurNONExportQuadra
+
     Protected Shared Function ListeFACTCOMEtat(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
         '============================================================================
         'Function : ListeFACTCOMEtat
@@ -7160,6 +7391,9 @@ Public MustInherit Class Persist
 
                 Try 'ID de la Souscommande
                     idscmd = getInteger(objRS, "LGCM_SCMD_ID")
+                    If idscmd = -1 Then
+                        idscmd = 0
+                    End If
                 Catch ex As InvalidCastException
                     idscmd = 0
                 End Try
@@ -7209,12 +7443,12 @@ Public MustInherit Class Persist
                     bEclatee = False
                 End Try
                 Try 'Poids de la ligne
-                    poids = getInteger(objRS, "LGCM_POIDS")
+                    poids = GetString(objRS, "LGCM_POIDS")
                 Catch ex As InvalidCastException
                     poids = 0
                 End Try
                 Try 'Nombre de colis
-                    qteColis = getInteger(objRS, "LGCM_QTE_COLIS")
+                    qteColis = GetValue(objRS, "LGCM_QTE_COLIS")
                 Catch ex As InvalidCastException
                     qteColis = 0
                 End Try
@@ -8507,7 +8741,7 @@ Public MustInherit Class Persist
             End Try
 
             Try 'IDFournisseur
-                objBA.oTiers = New Fournisseur
+                objBA.setTiers(New Fournisseur)
                 nId = GetString(objRS, "CMD_FRN_ID")
                 objBA.oTiers.setid(nId)
             Catch ex As InvalidCastException

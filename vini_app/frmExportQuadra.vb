@@ -1,7 +1,11 @@
 Imports vini_DB
 Public Class frmExportQuadra
     Inherits FrmVinicom
+    Implements IObservateur
+
     Protected m_colCommandes As List(Of SousCommande)
+
+
 
 #Region " Code généré par le Concepteur Windows Form "
 
@@ -53,6 +57,8 @@ Public Class frmExportQuadra
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents ckSaveScmd As System.Windows.Forms.CheckBox
+    Friend WithEvents rbBonAFactClient As System.Windows.Forms.RadioButton
+    Friend WithEvents rbBonAchatFourn As System.Windows.Forms.RadioButton
     Friend WithEvents tbExportQuadraFolder As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -78,6 +84,8 @@ Public Class frmExportQuadra
         Me.tbExportQuadraFolder = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ckSaveScmd = New System.Windows.Forms.CheckBox()
+        Me.rbBonAFactClient = New System.Windows.Forms.RadioButton()
+        Me.rbBonAchatFourn = New System.Windows.Forms.RadioButton()
         CType(Me.dgvSCmd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcSCMD, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -239,7 +247,7 @@ Public Class frmExportQuadra
         '
         Me.tbExportQuadraFolder.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tbExportQuadraFolder.Location = New System.Drawing.Point(533, 31)
+        Me.tbExportQuadraFolder.Location = New System.Drawing.Point(533, 61)
         Me.tbExportQuadraFolder.Name = "tbExportQuadraFolder"
         Me.tbExportQuadraFolder.Size = New System.Drawing.Size(323, 20)
         Me.tbExportQuadraFolder.TabIndex = 139
@@ -247,7 +255,7 @@ Public Class frmExportQuadra
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(395, 34)
+        Me.Label2.Location = New System.Drawing.Point(395, 64)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(132, 13)
         Me.Label2.TabIndex = 140
@@ -263,10 +271,34 @@ Public Class frmExportQuadra
         Me.ckSaveScmd.Text = "SaveAutoDesSousCommande"
         Me.ckSaveScmd.UseVisualStyleBackColor = True
         '
+        'rbBonAFactClient
+        '
+        Me.rbBonAFactClient.AutoSize = True
+        Me.rbBonAFactClient.Location = New System.Drawing.Point(398, 30)
+        Me.rbBonAFactClient.Name = "rbBonAFactClient"
+        Me.rbBonAFactClient.Size = New System.Drawing.Size(124, 17)
+        Me.rbBonAFactClient.TabIndex = 142
+        Me.rbBonAFactClient.TabStop = True
+        Me.rbBonAFactClient.Text = "Bon a Facturer Client"
+        Me.rbBonAFactClient.UseVisualStyleBackColor = True
+        '
+        'rbBonAchatFourn
+        '
+        Me.rbBonAchatFourn.AutoSize = True
+        Me.rbBonAchatFourn.Location = New System.Drawing.Point(533, 32)
+        Me.rbBonAchatFourn.Name = "rbBonAchatFourn"
+        Me.rbBonAchatFourn.Size = New System.Drawing.Size(132, 17)
+        Me.rbBonAchatFourn.TabIndex = 143
+        Me.rbBonAchatFourn.TabStop = True
+        Me.rbBonAchatFourn.Text = "Bon Achat Fournisseur"
+        Me.rbBonAchatFourn.UseVisualStyleBackColor = True
+        '
         'frmExportQuadra
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(868, 470)
+        Me.Controls.Add(Me.rbBonAchatFourn)
+        Me.Controls.Add(Me.rbBonAFactClient)
         Me.Controls.Add(Me.ckSaveScmd)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tbExportQuadraFolder)
@@ -331,6 +363,8 @@ Public Class frmExportQuadra
 
         ckSaveScmd.Checked = True
         ckSaveScmd.Enabled = True
+
+
     End Sub
 
     Private Sub afficheListeScmd()
@@ -356,7 +390,7 @@ Public Class frmExportQuadra
         Dim ddeb As Date
         Dim dfin As Date
         Dim strCodeFourn As String
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
         Dim bReturn As Boolean
         debAffiche()
         setcursorWait()
@@ -365,7 +399,7 @@ Public Class frmExportQuadra
             ddeb = dtDatedeb.Value.ToShortDateString
             dfin = dtdateFin.Value.ToShortDateString
             strCodeFourn = tbCodeFournisseur.Text
-            col = SousCommande.getListeAExporterQuadra(ddeb, dfin, strCodeFourn)
+            col = SousCommande.getListeAExporterQuadra(vncEnums.vncOrigineCmd.vncVinicom, ddeb, dfin, strCodeFourn)
             'Recupération de la liste des sous commande 
             If col Is Nothing Then
                 bReturn = False
@@ -379,7 +413,8 @@ Public Class frmExportQuadra
 
         Catch ex As Exception
             bReturn = False
-            Debug.Assert(bReturn, ex.ToString)
+            Log("frmExportQuadra.getListScmd() ERR" + ex.Message)
+ 
         End Try
         finAffiche()
         restoreCursor()
@@ -388,15 +423,23 @@ Public Class frmExportQuadra
 
 
 
-
-
-    Private Sub ExportertBafVersQuadra()
+#Region "Export"
+    ''' <summary>
+    ''' Export vers quadra
+    '''     Appel la Methode ExportBafQuadra au travers D'un backGroundWorker
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub ExportertVersQuadra()
         Me.ProgressBar1.Minimum = 0
         Me.ProgressBar1.Maximum = m_colCommandes.Count + 5
+        Me.ProgressBar1.Value = Me.ProgressBar1.Minimum
+
         setcursorWait()
         BackgroundWorker1.RunWorkerAsync()
-    End Sub
+        restoreCursor()
 
+    End Sub
+#Region "Methodes backGoundWorker"
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         exporter()
     End Sub
@@ -404,58 +447,31 @@ Public Class frmExportQuadra
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
         ProgressBar1.Value = ProgressBar1.Value + 1
     End Sub
-
+#End Region
 
     Private Function exporter() As Boolean
-        Debug.Assert(Not m_colCommandes Is Nothing)
 
-        Dim objSCMD As SousCommande
-        Dim bExportOK As Boolean = True
-        Dim bReturn As Boolean
-        Dim strFile As String
-        Dim strFolder As String
-        Dim ofrn As Fournisseur
-
-        Try
-            bReturn = False
-            strFolder = tbExportQuadraFolder.Text
-            If Not My.Computer.FileSystem.DirectoryExists(strFolder) Then
-                My.Computer.FileSystem.CreateDirectory(strFolder)
-            End If
-            strFile = strFolder & "/Export" & Now.Year & Now.Month & Now.Day & Now.Hour & Now.Minute & Now.Second & ".csv"
-
-            BackgroundWorker1.ReportProgress(1)
-
-            'Parcours de la liste des souscommandes et génération du fichier CSV
-            For Each objSCMD In m_bsrcSCMD
-                objSCMD.load()
-                'Normalement inutile car , seul les SousCommande exportables sont chargées
-                ofrn = Fournisseur.createandload(objSCMD.Fournisseurid)
-                If ofrn.bExportInternet = 2 Then
-                    objSCMD.loadcolLignes()
-                    If objSCMD.colLignes.Count > 0 Then
-                        objSCMD.toCSVQuadra(strFile)
-                        objSCMD.ValiderExportQuadra()
-                        'Il faut sauvegarder les sous commandes car l'export a été réalisé
-                        If ckSaveScmd.Checked Then
-                            objSCMD.Save()
-                        End If
-                    End If
-                    BackgroundWorker1.ReportProgress(1)
-                End If
-
-            Next
-
-        Catch ex As Exception
-            MsgBox("Erreur" + ex.Message)
-
-        End Try
-        Me.Cursor = Cursors.Default
+        Dim objExport As New ExportQuadra
+        'je m'ajoute commme obervateur de l'évenement
+        objExport.AjouteObservateur(Me)
+        'J'execute le traitement
+        objExport.ExportBaf(m_colCommandes, tbExportQuadraFolder.Text, vncEnums.vncTypeExportQuadra.vncExportBafClient, ckSaveScmd.Checked)
 
     End Function 'exporter
 
+    ''' <summary>
+    ''' Actualisation du travail
+    ''' </summary>
+    ''' <param name="pObj"></param>
+    ''' <remarks></remarks>
+    Public Sub Actualiser(pObj As Observable) Implements IObservateur.Actualiser
+        BackgroundWorker1.ReportProgress(1)
+    End Sub
+
+#End Region
+
+
     Private Sub Log(ByVal strMessage As String)
-        System.IO.File.AppendAllText("./vini_internet.trace", Now() + " " + strMessage + vbCrLf)
         Trace.WriteLine(Now() + " " + strMessage)
     End Sub
 #End Region
@@ -475,9 +491,8 @@ Public Class frmExportQuadra
     End Sub
 
     Private Sub cbExporter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbExporter.Click
-        Call ExportertBafVersQuadra()
+        Call ExportertVersQuadra()
     End Sub
-
 
 
 
@@ -489,10 +504,11 @@ Public Class frmExportQuadra
         'AddHandler cbGenerer.Click, AddressOf ControlUpdated
     End Sub
 
- 
+
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         ProgressBar1.Value = ProgressBar1.Maximum
         cbExporter.Enabled = False
         restoreCursor()
     End Sub
+
 End Class

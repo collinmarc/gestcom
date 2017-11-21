@@ -261,22 +261,27 @@ Public MustInherit Class Commande
         Get
             Return m_oTiers
         End Get
-        Set(ByVal Value As Tiers)
-            If oTiers Is Nothing Or (oTiers IsNot Nothing And oTiers.id = 0) Then
-                If Not Value Is Nothing Then
-                    m_oTiers = Value
-                    'on ne dupplique les informations de tiers que si l'original était vide
-                    DuppliqueCaracteristiqueTiers()
-                    RaiseUpdated()
-                End If
-            Else
-                If Not oTiers.Equals(Value) Then
-                    m_oTiers = Value
-                    RaiseUpdated()
-                End If
-            End If
+        Private Set(ByVal Value As Tiers)
+            setTiers(Value)
         End Set
     End Property ' oTiers
+    Public Sub setTiers(Value As Tiers)
+        If m_oTiers Is Nothing Then
+            If Not Value Is Nothing Then
+                m_oTiers = Value
+                'on ne dupplique les informations de tiers que si l'original était vide
+                DuppliqueCaracteristiqueTiers()
+                RaiseUpdated()
+            End If
+        Else
+            If Not oTiers.Equals(Value) Then
+                m_oTiers = Value
+                RaiseUpdated()
+            End If
+        End If
+
+    End Sub
+
     ''' <summary>
     ''' Rend la Raison sociale du Tiers 
     ''' </summary>

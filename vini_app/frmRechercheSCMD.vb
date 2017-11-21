@@ -250,7 +250,7 @@ Public Class frmRechercheSCMD
         Dim ddeb As Date
         Dim dfin As Date
         Dim codeFourn As String
-        Dim col As Collection
+        Dim col As List(Of SousCommande)
         Dim oSCMD As SousCommande
         Try
 

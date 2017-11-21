@@ -59,6 +59,7 @@ Imports vini_DB
 
         Dim objSCMD As SousCommande
         Dim objCol As Collection
+        Dim objColScmd As List(Of SousCommande)
         Dim objColF As ColEvent
         Dim objFactCom1 As FactCom
         Dim objFactCom2 As FactCom
@@ -153,29 +154,30 @@ Imports vini_DB
 
 
         'Creation des Factures de Commissions
-        objCol = New Collection
+        objColScmd = New List(Of SousCommande)()
         For Each objSCMD In objCMD1.colSousCommandes
-            objCol.Add(objSCMD)
+            objColScmd.Add(objSCMD)
         Next
-        objColF = FactCom.createFactComs(objCol, objCMD1.dateCommande, objCMD1.dateCommande, objCMD1.dateCommande.ToString)
+        objColF = FactCom.createFactComs(objColScmd, objCMD1.dateCommande, objCMD1.dateCommande, objCMD1.dateCommande.ToString)
         objFactCom1 = objColF(1)
         Assert.IsTrue(objFactCom1.Save())
 
         'Creation des Factures de Commissions
-        objCol = New Collection
+        objColScmd = New List(Of SousCommande)
         For Each objSCMD In objCMD2.colSousCommandes
-            objCol.Add(objSCMD)
+            objColScmd.Add(objSCMD)
         Next
-        objColF = FactCom.createFactComs(objCol, objCMD2.dateCommande, objCMD2.dateCommande, objCMD2.dateCommande.ToString)
+        objColF = FactCom.createFactComs(objColScmd, objCMD2.dateCommande, objCMD2.dateCommande, objCMD2.dateCommande.ToString)
         objFactCom2 = objColF(1)
         Assert.IsTrue(objFactCom2.Save())
 
         'Creation des Factures de Commissions
-        objCol = New Collection
+        objColScmd = New List(Of SousCommande)
+
         For Each objSCMD In objCMD3.colSousCommandes
-            objCol.Add(objSCMD)
+            objColScmd.Add(objSCMD)
         Next
-        objColF = FactCom.createFactComs(objCol, objCMD3.dateCommande, objCMD3.dateCommande, objCMD3.dateCommande.ToString)
+        objColF = FactCom.createFactComs(objColScmd, objCMD3.dateCommande, objCMD3.dateCommande, objCMD3.dateCommande.ToString)
         objFactCom3 = objColF(1)
         Assert.IsTrue(objFactCom3.Save())
 
@@ -239,6 +241,8 @@ Imports vini_DB
 
         Dim objSCMD As SousCommande
         Dim objCol As Collection
+        Dim objColScmd As List(Of SousCommande)
+
         Dim objColF As ColEvent
         Dim objFactCom1 As FactCom
         Dim objFactCom2 As FactCom
@@ -332,20 +336,20 @@ Imports vini_DB
 
 
         'Creation des Factures de Commissions
-        objCol = New Collection
+        objColScmd = New List(Of SousCommande)
         For Each objSCMD In objCMD1.colSousCommandes
-            objCol.Add(objSCMD)
+            objColScmd.Add(objSCMD)
         Next
-        objColF = FactCom.createFactComs(objCol, objCMD1.dateCommande, objCMD1.dateCommande, objCMD1.dateCommande.ToString)
+        objColF = FactCom.createFactComs(objColScmd, objCMD1.dateCommande, objCMD1.dateCommande, objCMD1.dateCommande.ToString)
         objFactCom1 = objColF(1)
         Assert.IsTrue(objFactCom1.Save())
 
         'Creation des Factures de Commissions
-        objCol = New Collection
+        objColScmd = New List(Of SousCommande)
         For Each objSCMD In objCMD2.colSousCommandes
-            objCol.Add(objSCMD)
+            objColScmd.Add(objSCMD)
         Next
-        objColF = FactCom.createFactComs(objCol, objCMD2.dateCommande, objCMD2.dateCommande, objCMD2.dateCommande.ToString)
+        objColF = FactCom.createFactComs(objColScmd, objCMD2.dateCommande, objCMD2.dateCommande, objCMD2.dateCommande.ToString)
         objFactCom2 = objColF(1)
         Assert.IsTrue(objFactCom2.Save())
 

@@ -3,7 +3,7 @@ Imports System
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports vini_DB
 
-<TestClass()> Public Class test_FTP
+<TestClass(), Ignore()> Public Class test_FTP
     Inherits test_Base
     Private m_FTP As clsFTPVinicom
     <TestInitialize()> Public Overrides Sub TestInitialize()
@@ -11,7 +11,8 @@ Imports vini_DB
         m_FTP = New clsFTPVinicom("ftp.phpnet.org", "marccollin_vnctest", "vinicom")
         m_FTP.setWaitParam(1, 5)
     End Sub
-    <TestMethod()> Public Sub T10_LOCK()
+    <TestMethod(), Ignore()>
+    Public Sub T10_LOCK()
 
 
 
@@ -20,7 +21,7 @@ Imports vini_DB
 
         Debug.Print(Now() + "End of Test")
     End Sub 'T10_LOCK
-    <TestMethod()> Public Sub T40_FTPVINICOMUPLOAD()
+    <TestMethod(), Ignore()> Public Sub T40_FTPVINICOMUPLOAD()
         Dim nFile As Integer
 
         Assert.AreEqual(m_FTP.ftpConnection.Hostname, "ftp://ftp.phpnet.org", "HostName")
@@ -56,7 +57,7 @@ Imports vini_DB
         My.Computer.FileSystem.DeleteDirectory("./T40", FileIO.DeleteDirectoryOption.DeleteAllContents)
         Debug.Print(Now() + "End of Test")
     End Sub 'T50_FTPVINICOMUPLOAD
-    <TestMethod()> Public Sub T50_FTPVINICOMDOWNLOAD()
+    <TestMethod(), Ignore()> Public Sub T50_FTPVINICOMDOWNLOAD()
         Dim nFile As Integer
 
         'm_FTP.connect()
@@ -81,7 +82,7 @@ Imports vini_DB
         My.Computer.FileSystem.DeleteDirectory("./T50", FileIO.DeleteDirectoryOption.DeleteAllContents)
 
     End Sub 'T50_FTPVINICOMDOWNLOAD
-    <TestMethod()> Public Sub T60_DeteRemoteFile()
+    <TestMethod(), Ignore()> Public Sub T60_DeteRemoteFile()
         Dim nFile As Integer
 
         My.Computer.FileSystem.CreateDirectory("./T60")

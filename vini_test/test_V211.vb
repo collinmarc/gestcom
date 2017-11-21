@@ -63,7 +63,7 @@ Imports vini_DB
         objCmd.AjouteLigne("10", m_objPRD, qte, 10.63)
 
         objCmd.CalcPoidsColis()
-        Assert.AreEqual(2, objCmd.qteColis, "Il faut 2 colis")
+        Assert.AreEqual(CDec(2), objCmd.qteColis, "Il faut 2 colis")
 
     End Sub
 
