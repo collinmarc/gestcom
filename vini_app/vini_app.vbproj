@@ -1381,6 +1381,7 @@
     <Content Include="Requetes\Cretate_EXPORTParam.sql" />
     <Content Include="Requetes\extractPreCommande.sql" />
     <Content Include="Requetes\RQ_CLEAN.sql" />
+    <Content Include="Requetes\ToV5.9.1.sql" />
     <Content Include="Requetes\V5.6To5.7.sql" />
     <Content Include="Requetes\V5.6TOV5.7.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

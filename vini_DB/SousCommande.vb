@@ -690,19 +690,23 @@ Public Class SousCommande
     ''' <remarks></remarks>
     Public Shared Function getListeAExporterQuadra(pTypeExport As vncTypeExportQuadra, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
         Dim colReturn As New List(Of SousCommande)
+        Dim colTemp As List(Of SousCommande)
         shared_connect()
 
         'Voir PR1710-035
         '===============
         If pTypeExport = vncTypeExportQuadra.vncExportBafClient Then
             'Export des SousCommandes Issues du site Vinicom dont les fournisseurs sont marqués comme 'ExportQuadra'
-            colReturn = ListeSCMDFournisseurExportQuadra(vncOrigineCmd.vncVinicom, pddeb, pdfin, pStrCodeFourn)
+            colTemp = ListeSCMDFournisseurExportQuadra(vncOrigineCmd.vncVinicom, pddeb, pdfin, pStrCodeFourn)
+            colReturn.AddRange(colTemp)
             'Export des SousCommandes issues du Site Hobivin
-            colReturn = ListeSCMDGeneree(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+            colTemp = ListeSCMDGeneree(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+            colReturn.AddRange(colTemp)
         End If
         If pTypeExport = vncTypeExportQuadra.vncExportBaFournisseur Then
             'Export des SousCommandes Issues du site HOBIVIN dont les fournisseurs ne sont pas marqués comme 'ExportQuadra'
-            colReturn = ListeSCMDFournisseurNONExportQuadra(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+            colTemp = ListeSCMDFournisseurNONExportQuadra(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
+            colReturn.AddRange(colTemp)
         End If
 
         shared_disconnect()
@@ -956,67 +960,144 @@ Public Class SousCommande
 
 
     ''' <summary>
-    ''' Export d'une Sous commande au format CSV pour être exportée Par le Logiciel QuadraFact
+    ''' Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>Nom du fichier généré ou ""</returns>
     ''' <remarks></remarks>
-    Public Function toCSVQuadra(pfile As String) As Boolean
+    Public Function toCSVQuadraFact(pstrFile As String, pTypeExport As vncTypeExportQuadra) As String
         Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
-        Dim strResult1Line As String
         Dim objLgCommande As LgCommande
         Dim objProduit As Produit
         Dim bReturn As Boolean
-        bReturn = False
+        Dim oTA As vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter
+        Dim oDT As vini_DB.dsVinicom.EXPORTPARAMDataTable
+        Dim oRow As vini_DB.dsVinicom.EXPORTPARAMRow
+        Dim nbChamps As Integer
+        Dim nChamps As Integer
+        Dim strLine As String
+        Dim strValeur As String
+        Dim strCodeExport As String = "QFACT"
 
+        bReturn = False
         Try
+
+
+            oTA = New vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter()
+            oTA.Connection = Persist.oleDBConnection
+
+            'Lecture des champs de la ligne 1
+            oDT = oTA.GetDataBy_TYPE_NLIGNE(strCodeExport, 1)
+            'Recupéation du nombre de champs
+            nbChamps = oTA.getNbChamps(strCodeExport, 1)
+
             'Création de l'entête du fichier si nécessaire
-            If Not System.IO.File.Exists(pfile) Then
-                System.IO.File.AppendAllText(pfile, "Identifiant;Reference1;DatePiece;PieceRegroup;CodeARTICLE;Quantite;PrixHT" & vbCrLf)
+            If Not System.IO.File.Exists(pstrFile) Then
+                strLine = ""
+                For nChamps = 1 To nbChamps
+                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
+                    If oRow IsNot Nothing Then
+                        If oRow.EXP_LONGUEUR = 0 Then
+                            strLine = strLine + Trim(oRow.EXP_VALEUR)
+                        Else
+                            strLine = strLine + Left(oRow.EXP_VALEUR + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                        End If
+                    End If
+
+                Next
+
+                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
             End If
+
             'Ajout d'une ligne par Ligne de produit
             For Each objLgCommande In colLignes
-                strResult1Line = ""
+                strLine = ""
                 objProduit = Produit.createandload(objLgCommande.oProduit.id) 'Chargement du produit
 
-                'Identifiant
-                strResult1Line = strResult1Line & Trim(Me.oClient.code) & ";"
-                'Reference1
-                strResult1Line = strResult1Line & Trim(Me.codeCommandeClient) & ";"
-                'DatePiece
-                strResult1Line = strResult1Line & Trim(Format(Me.dateCommande, "yyMMdd")) & ";"
-                'PieceRegroup
-                strResult1Line = strResult1Line & Trim(Me.codeCommandeClient) & ";"
-                ' CodeARTICLE
-                strResult1Line = strResult1Line & Trim(objProduit.code) & ";"
-                'Quantite
-                strResult1Line = strResult1Line & Trim(objLgCommande.qteLiv) & ";"
-                'PrixHT
+                For nChamps = 1 To nbChamps
+                    'Pour chaque Champs
+                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
+                    If oRow IsNot Nothing Then
+                        strValeur = ""
+                        If Trim(oRow.EXP_TYPECHAMPS).Equals("C") Then
+                            'Exportation d'une Constante
+                            strValeur = oRow.EXP_VALEUR
+                        End If
+                        If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
+                            'Exportation d'une Valeur
+                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande, pTypeExport)
+                        End If
 
-                If objLgCommande.qteLiv <> 0 Then
-                    strResult1Line = strResult1Line & Trim(objLgCommande.prixHT / objLgCommande.qteLiv)
-                Else
-                    strResult1Line = strResult1Line & "0"
-                End If
-
-
+                        'Si la longueur est égale à 0 => Trim
+                        If oRow.EXP_LONGUEUR = 0 Then
+                            strLine = strLine + Trim(strValeur)
+                        Else
+                            strLine = strLine + Left(strValeur + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                        End If
+                    End If
+                Next 'champs
                 'Remplacement des caractères spéciaux
-                strResult1Line = Replace(strResult1Line, vbCrLf, "--")
-                strResult1Line = Replace(strResult1Line, vbCr, "-")
-                strResult1Line = Replace(strResult1Line, vbLf, "-")
-                strResult1Line = Replace(strResult1Line, vbNullChar, "-")
-                strResult1Line = Replace(strResult1Line, vbTab, "-")
-                strResult1Line = Replace(strResult1Line, vbBack, "-")
+                strLine = Replace(strLine, vbCrLf, "--")
+                strLine = Replace(strLine, vbCr, "-")
+                strLine = Replace(strLine, vbLf, "-")
+                strLine = Replace(strLine, vbNullChar, "-")
+                strLine = Replace(strLine, vbTab, "-")
+                strLine = Replace(strLine, vbBack, "-")
+
+
                 'Ajout de la ligne dans le fichier
-                System.IO.File.AppendAllText(pfile, strResult1Line & vbCrLf)
+                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
 
             Next objLgCommande
             bReturn = True
+
         Catch ex As Exception
-            Debug.Print("SousCommande.toCSVQuadra ERR" & ex.Message)
+            Trace.WriteLine("SousCommande.toCSVQuadra ERR" & ex.Message)
             bReturn = False
         End Try
         Return bReturn
     End Function 'ToCSVQuadra
+
+    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande, pTypeExport As vncTypeExportQuadra) As String
+        Dim strReturn As String
+        strReturn = String.Empty
+
+        Try
+
+            Select Case pstrAttributeName.ToUpper()
+                Case "IDENTIFIANT"
+                    If pTypeExport = vncTypeExportQuadra.vncExportBafClient Then
+                        strReturn = Trim(Me.oClient.code)
+                    Else
+                        strReturn = Trim(Me.oFournisseur.code)
+                    End If
+                Case "REFERENCE1"
+                        strReturn = Trim(Me.codeCommandeClient)
+                        Case "DATEPIECE"
+                        strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
+                        Case "PIECEREGROUP"
+                        strReturn = Trim(Me.codeCommandeClient)
+                        Case "DATEPEIECE"
+                        strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
+                        Case "CODEARTICLE"
+                        strReturn = Trim(pLgCommande.oProduit.code)
+                        Case "QUANTITE"
+                        strReturn = Trim(pLgCommande.qteLiv)
+                        Case "PRIXHT"
+                        If pLgCommande.qteLiv <> 0 Then
+                            strReturn = Trim(pLgCommande.prixHT / pLgCommande.qteLiv)
+                        Else
+                            strReturn = "0"
+                        End If
+
+            End Select
+        Catch ex As Exception
+            setError(System.Environment.StackTrace, ex.Message)
+            strReturn = ""
+        End Try
+
+        Return strReturn
+    End Function
+
     ''' <summary>
     ''' Valider l'export quadra : Chagement d'état de la sousCommande
     ''' </summary>
@@ -1043,7 +1124,7 @@ Public Class SousCommande
 
             bReturn = True
         Catch ex As Exception
-            Debug.Print("SousCommande.toCSVQuadra ERR" & ex.Message)
+            Trace.WriteLine("SousCommande.ValiderExportQuadra ERR" & ex.Message)
             bReturn = False
         End Try
         Return bReturn

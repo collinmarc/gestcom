@@ -71,47 +71,6 @@ Imports vini_App
         MyBase.TestCleanup()
     End Sub
 
-    ''' <summary>
-    ''' Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
-    ''' commandes et Bon Appo
-    ''' 
-    ''' </summary>
-    ''' <remarks></remarks>
-    <TestMethod()> Public Sub T01_ExportQuadra()
-        Dim objCMD As CommandeClient
-        Dim oSCMD As SousCommande
-        Dim oLg As LgCommande
-
-
-        'Creation d'une Commande
-        objCMD = New CommandeClient(m_objCLT)
-        objCMD.RaisonSocialeLivraison = "RSLIVRAISON"
-        objCMD.NomLivraison = "NOMLIVRAISON"
-        objCMD.dateCommande = "06/02/2010"
-        oLg = objCMD.AjouteLigne("10", m_objPRD, 15, 15.5)
-        oLg.qteLiv = oLg.qteCommande
-        objCMD.changeEtat(vncActionEtatCommande.vncActionValider)
-        objCMD.save()
-
-        Assert.IsTrue(objCMD.generationSousCommande())
-        Assert.AreEqual(1, objCMD.colSousCommandes.Count)
-        oSCMD = objCMD.colSousCommandes(1)
-
-        If System.IO.File.Exists("./adel.csv") Then
-            System.IO.File.Delete("./adel.csv")
-        End If
-        oSCMD.toCSVQuadra("./adel.csv")
-
-        Assert.IsTrue(System.IO.File.Exists("./adel.csv"))
-        'Il y a Bien 2 lignes dans le fichier
-
-        Assert.AreEqual(2, System.IO.File.ReadAllLines("./adel.csv").Count)
-        Assert.IsTrue(oSCMD.ValiderExportQuadra())
-        Assert.AreEqual(vncEnums.vncEtatCommande.vncSCMDFacturee, oSCMD.EtatCode)
-        Assert.IsTrue(oSCMD.bExportInternet)
-        '        oSCMD.delete()
-        objCMD.delete()
-    End Sub
 
 End Class
 

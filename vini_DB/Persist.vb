@@ -6596,10 +6596,10 @@ Public MustInherit Class Persist
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
         End If
         If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
         End If
 
 
@@ -6705,10 +6705,10 @@ Public MustInherit Class Persist
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
         End If
         If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
         End If
 
 
@@ -6811,10 +6811,10 @@ Public MustInherit Class Persist
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'VINICOM'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
         End If
         If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.ORIGINE = 'HOBIVIN'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
         End If
 
 

@@ -274,6 +274,7 @@ Public Class frmExportQuadra
         'rbBonAFactClient
         '
         Me.rbBonAFactClient.AutoSize = True
+        Me.rbBonAFactClient.Checked = True
         Me.rbBonAFactClient.Location = New System.Drawing.Point(398, 30)
         Me.rbBonAFactClient.Name = "rbBonAFactClient"
         Me.rbBonAFactClient.Size = New System.Drawing.Size(124, 17)
@@ -289,7 +290,6 @@ Public Class frmExportQuadra
         Me.rbBonAchatFourn.Name = "rbBonAchatFourn"
         Me.rbBonAchatFourn.Size = New System.Drawing.Size(132, 17)
         Me.rbBonAchatFourn.TabIndex = 143
-        Me.rbBonAchatFourn.TabStop = True
         Me.rbBonAchatFourn.Text = "Bon Achat Fournisseur"
         Me.rbBonAchatFourn.UseVisualStyleBackColor = True
         '
@@ -339,6 +339,8 @@ Public Class frmExportQuadra
         cbAfficher.Enabled = True
         tbCodeFournisseur.Enabled = True
         tbExportQuadraFolder.Enabled = True
+        rbBonAchatFourn.Enabled = True
+        rbBonAFactClient.Enabled = True
 
     End Sub
 
@@ -392,6 +394,7 @@ Public Class frmExportQuadra
         Dim strCodeFourn As String
         Dim col As List(Of SousCommande)
         Dim bReturn As Boolean
+        Dim nTypeExport As vncTypeExportQuadra
         debAffiche()
         setcursorWait()
         Try
@@ -399,7 +402,12 @@ Public Class frmExportQuadra
             ddeb = dtDatedeb.Value.ToShortDateString
             dfin = dtdateFin.Value.ToShortDateString
             strCodeFourn = tbCodeFournisseur.Text
-            col = SousCommande.getListeAExporterQuadra(vncEnums.vncOrigineCmd.vncVinicom, ddeb, dfin, strCodeFourn)
+            If rbBonAFactClient.Checked Then
+                nTypeExport = vncTypeExportQuadra.vncExportBafClient
+            Else
+                nTypeExport = vncTypeExportQuadra.vncExportBaFournisseur
+            End If
+            col = SousCommande.getListeAExporterQuadra(nTypeExport, ddeb, dfin, strCodeFourn)
             'Recupération de la liste des sous commande 
             If col Is Nothing Then
                 bReturn = False
@@ -452,10 +460,16 @@ Public Class frmExportQuadra
     Private Function exporter() As Boolean
 
         Dim objExport As New ExportQuadra
+        Dim nTypeExport As vncTypeExportQuadra
         'je m'ajoute commme obervateur de l'évenement
         objExport.AjouteObservateur(Me)
+        If rbBonAFactClient.Checked Then
+            nTypeExport = vncTypeExportQuadra.vncExportBafClient
+        Else
+            nTypeExport = vncTypeExportQuadra.vncExportBaFournisseur
+        End If
         'J'execute le traitement
-        objExport.ExportBaf(m_colCommandes, tbExportQuadraFolder.Text, vncEnums.vncTypeExportQuadra.vncExportBafClient, ckSaveScmd.Checked)
+        objExport.ExportBaf(m_colCommandes, tbExportQuadraFolder.Text, nTypeExport, ckSaveScmd.Checked)
 
     End Function 'exporter
 

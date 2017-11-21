@@ -101,6 +101,18 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
+<member name="M:vini_test.T1110_sscommande.T101_ExportQuadra">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1110_sscommande.T102_ExportQuadracomplet">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
+ </summary>
+ <remarks></remarks>
+</member>
 <member name="M:vini_test.T1130_FactCommission.T20_EXPORT">
  <summary>
  Test l'export d'une facture de comm
@@ -326,14 +338,6 @@ Test pour Constructeur FicheTechniqueFourn
 <member name="M:vini_test.test_V423.T01_IDSCMD">
  <summary>
  La sauvegarde d'une commandeclient => l'id de SCMD = 0
- 
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:vini_test.test_V560.T01_ExportQuadra">
- <summary>
- Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
- commandes et Bon Appo
  
  </summary>
  <remarks></remarks>

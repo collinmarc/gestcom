@@ -2276,11 +2276,11 @@ Represents the connection and commands used to retrieve and save data.
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:vini_DB.SousCommande.toCSVQuadra(System.String)">
+<member name="M:vini_DB.SousCommande.toCSVQuadraFact(System.String,vini_DB.vncEnums.vncTypeExportQuadra)">
  <summary>
- Export d'une Sous commande au format CSV pour être exportée Par le Logiciel QuadraFact
+ Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
  </summary>
- <returns></returns>
+ <returns>Nom du fichier généré ou ""</returns>
  <remarks></remarks>
 </member>
 <member name="M:vini_DB.SousCommande.ValiderExportQuadra">

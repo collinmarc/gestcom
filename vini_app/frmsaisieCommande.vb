@@ -5104,11 +5104,11 @@ Public Class frmSaisieCommande
     End Sub
 
     Private Sub cbxOrigine_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxOrigine.SelectedIndexChanged
-        If cbxOrigine.Text = "HOBIVIN" Then
-            SSTabCommandeClient.TabPages.Add(tpFactHbv)
-        Else
-            SSTabCommandeClient.TabPages.RemoveByKey(tpFactHbv.Name)
+        'If cbxOrigine.Text = "HOBIVIN" Then
+        '    SSTabCommandeClient.TabPages.Add(tpFactHbv)
+        'Else
+        '    SSTabCommandeClient.TabPages.RemoveByKey(tpFactHbv.Name)
 
-        End If
+        'End If
     End Sub
 End Class
