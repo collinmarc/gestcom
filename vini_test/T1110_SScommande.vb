@@ -102,6 +102,9 @@ Imports System.IO
 
         objSCMD2 = New SousCommande(m_oCmd, m_oFourn)
 
+        Assert.IsTrue(objSCMD2.Selected)
+
+
         objSCMD2.code = "CODE"
         objSCMD2.dateCommande = CDate("06/02/1964")
         objSCMD2.dateLivraison = CDate("06/02/1964")

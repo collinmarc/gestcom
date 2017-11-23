@@ -791,6 +791,79 @@ Imports System.IO
 
     End Sub
     ''' <summary>
+    ''' Test l'attribut Selected des sousCommandes dans la génération des Fact de comm
+    ''' </summary>
+    <TestMethod()> Public Sub T90_GenerationFactureCommissionsSelected()
+        Dim objCMD As CommandeClient
+        Dim objSCMD As SousCommande
+        Dim colFactCom As ColEvent
+        Dim colSCMD As List(Of SousCommande)
+        Dim oFactcom As FactCom
+        Dim nIDCmd As String
+        Dim oParam As ParamModeReglement
+
+
+        'Création d'un mode de reglement 30 fin de mois
+        oParam = New ParamModeReglement()
+        oParam.code = "TEST30FDM"
+        oParam.dDebutEcheance = "FDM"
+        oParam.valeur2 = 30
+        Assert.IsTrue(oParam.Save())
+        m_oFourn.idModeReglement1 = oParam.id
+        Assert.IsTrue(m_oFourn.Save())
+
+        'Création d'un mode de reglement comptant
+        oParam = New ParamModeReglement()
+        oParam.dDebutEcheance = "FACT"
+        oParam.code = "TESTCOMPTANT"
+        oParam.valeur2 = 0
+        Assert.IsTrue(oParam.Save())
+        m_oFourn2.idModeReglement1 = oParam.id
+        Assert.IsTrue(m_oFourn2.Save())
+
+        'CREATION D'UNE COMMANDE CLIENT
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+        'Ajout de 2 lignes de Commandes
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit, 12, 20, True, 120, (120 * 1.196))
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit2, 12, 20, True, 125, (125 * 1.196))
+        ''Sauvegarde de la commande
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+        nIDCmd = objCMD.id
+        objCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+        'Génération des Sous-Commandes
+        objCMD.generationSousCommande()
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+
+        For Each objSCMD In objCMD.colSousCommandes
+            objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+            objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
+            objSCMD.refFactFournisseur = "FACTFRN" + Now()
+            objSCMD.totalHTFacture = objSCMD.totalHT
+            objSCMD.totalTTCFacture = objSCMD.totalTTC
+            objSCMD.dateFactFournisseur = CDate("06/02/1968") ' Date facture fournisseur <> date de commande
+            Assert.IsTrue(objSCMD.Save(), "Sauvegarde de la sous Commande")
+        Next objSCMD
+
+        '==============================================================================
+        colSCMD = SousCommande.getListeAFacturer(CDate("01/02/1968"), CDate("28/02/1968"))
+        Assert.AreEqual(2, colSCMD.Count)
+
+        colFactCom = FactCom.createFactComs(colSCMD, CDate("28/02/1968"), , "FEVRIER 1968")
+        Assert.AreEqual(2, colFactCom.Count)
+
+        'Déselection de la première sous commande
+        colSCMD(0).Selected = False
+        colFactCom = FactCom.createFactComs(colSCMD, CDate("28/02/1968"), , "FEVRIER 1968")
+        Assert.AreEqual(1, colFactCom.Count)
+
+
+
+
+
+    End Sub
+    ''' <summary>
     ''' test de la fonction GetAtributeValue pour l'export QUADRA
     ''' </summary>
     ''' <remarks></remarks>

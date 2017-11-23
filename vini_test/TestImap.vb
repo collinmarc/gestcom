@@ -9,7 +9,7 @@ Imports System.Text.RegularExpressions
 ''' <summary>
 ''' Classe de test à reactiver 
 ''' </summary>
-<TestClass(), Ignore()> Public Class TestImap
+<TestClass()> Public Class TestImap
     Inherits test_Base
     Private Sub CleanImap()
         Dim oImap As New Imap()
@@ -182,7 +182,7 @@ Imports System.Text.RegularExpressions
     End Sub
 
     <TestMethod()> Public Sub TestSendMailCmd()
-        Dim mail As MailMessage = New MailMessage("contact@marccollin.com", "marccollintest@gmail.com")
+        Dim mail As MailMessage = New MailMessage("marc@marccollin.com", "marccollintest@gmail.com")
 
         mail.Subject = "TEST"
         mail.IsBodyHtml = False
@@ -214,17 +214,20 @@ Imports System.Text.RegularExpressions
 
 
         Dim smtp As SmtpClient = New SmtpClient()
-        '        smtp.Host = "smtp.googlemail.com"
-        '        smtp.Port = 587
-        '        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3.")
-        '        smtp.EnableSsl = True
-
-        smtp.Host = "smtpauth.phpnet.org"
-        smtp.Port = 8025
-        '        smtp.EnableSsl = True
-        smtp.Credentials = New System.Net.NetworkCredential("contact@marccollin.com", "tphhgv3")
-
+        smtp.Host = "smtp.googlemail.com"
+        smtp.Port = 587
+        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3..")
+        smtp.EnableSsl = True
         smtp.Send(mail)
+
+        smtp = New SmtpClient()
+        'Connection avec PHPNET
+                smtp.Host = "smtpauth.phpnet.org"
+        smtp.Port = 8025
+        'smtp.EnableSsl = True
+        smtp.Credentials = New System.Net.NetworkCredential("marc@marccollin.com", "tphhgv3..")
+        smtp.Send(mail)
+
     End Sub
     <TestMethod()> Public Sub TestCleanDB()
 

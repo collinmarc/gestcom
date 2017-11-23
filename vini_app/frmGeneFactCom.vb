@@ -59,11 +59,14 @@ Public Class frmGeneFactCom
     Friend WithEvents IdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents TypeDonneeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents BResumeDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
-    Friend WithEvents CodeDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FournisseurCode As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents TiersRSDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DateCommandeDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents totalHTFacture As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents ckSelect As CheckBox
+    Friend WithEvents SelectedColum As DataGridViewCheckBoxColumn
+    Friend WithEvents FournisseurCode As DataGridViewTextBoxColumn
+    Friend WithEvents FournisseurRS As DataGridViewTextBoxColumn
+    Friend WithEvents dateFactFournisseur As DataGridViewTextBoxColumn
+    Friend WithEvents totalHTFacture As DataGridViewTextBoxColumn
+    Friend WithEvents refFactFournisseur As DataGridViewTextBoxColumn
     Protected m_colFact As ColEvent
     'Protected getElementCourant() As FactCom
 
@@ -127,104 +130,111 @@ Public Class frmGeneFactCom
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
     Friend WithEvents cbSauvegarder As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdateFin = New System.Windows.Forms.DateTimePicker
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.cbGenerer = New System.Windows.Forms.Button
-        Me.cbAnnGenerer = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.dtDateFacture = New System.Windows.Forms.DateTimePicker
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.dtDateStatistique = New System.Windows.Forms.DateTimePicker
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.tbPeriode = New System.Windows.Forms.TextBox
-        Me.grpFact = New System.Windows.Forms.GroupBox
-        Me.dtDateStatCourante = New System.Windows.Forms.DateTimePicker
+        Me.components = New System.ComponentModel.Container()
+        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdateFin = New System.Windows.Forms.DateTimePicker()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.cbGenerer = New System.Windows.Forms.Button()
+        Me.cbAnnGenerer = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtDateFacture = New System.Windows.Forms.DateTimePicker()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.dtDateStatistique = New System.Windows.Forms.DateTimePicker()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.tbPeriode = New System.Windows.Forms.TextBox()
+        Me.grpFact = New System.Windows.Forms.GroupBox()
+        Me.dtDateStatCourante = New System.Windows.Forms.DateTimePicker()
         Me.m_bsrcFactCom = New System.Windows.Forms.BindingSource(Me.components)
-        Me.dtDateFactCourante = New System.Windows.Forms.DateTimePicker
-        Me.cbAppliquer = New System.Windows.Forms.Button
-        Me.tbPeriodeFactCourante = New System.Windows.Forms.TextBox
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.tbMontantTTCFactCourante = New vini_app.textBoxCurrency
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbMontantHTFactCourante = New vini_app.textBoxCurrency
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.liFournisseur = New System.Windows.Forms.LinkLabel
-        Me.liFactCom = New System.Windows.Forms.LinkLabel
-        Me.cbRecherche = New System.Windows.Forms.Button
-        Me.cbSauvegarder = New System.Windows.Forms.Button
-        Me.dgvFactCom = New System.Windows.Forms.DataGridView
-        Me.code = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.totalTTC = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateStatistiqueDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.PeriodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.RefReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MontantReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ShortResumeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BcolReglementLoadedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.BExportInternetDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateFactureDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.EtatDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.EtatLibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.OTiersDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TiersRSDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ColLignesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TotalHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TotalTTCDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.OTransporteurDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.IdParamTVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateValidationDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateEnlevementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.RefLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CaracteristiqueTiersDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CommCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CommLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CommFacturationDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CommLibreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BcolLignesLoadedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.BcolLignesUpatedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.QteColisDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.QtePalettesPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.QtePalettesNonPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.PoidsDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.PuPalettesPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.PuPalettesNonPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MontantTransportDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.CoutTransportDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LettreVoitureDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.RefFactTRPDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MontantCommissionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BNewDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.BDeletedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.BUpdatedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.IdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TypeDonneeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BResumeDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.dtDateFactCourante = New System.Windows.Forms.DateTimePicker()
+        Me.cbAppliquer = New System.Windows.Forms.Button()
+        Me.tbPeriodeFactCourante = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tbMontantTTCFactCourante = New vini_app.textBoxCurrency()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbMontantHTFactCourante = New vini_app.textBoxCurrency()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.liFournisseur = New System.Windows.Forms.LinkLabel()
+        Me.liFactCom = New System.Windows.Forms.LinkLabel()
+        Me.cbRecherche = New System.Windows.Forms.Button()
+        Me.cbSauvegarder = New System.Windows.Forms.Button()
+        Me.dgvFactCom = New System.Windows.Forms.DataGridView()
+        Me.code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.totalTTC = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateStatistiqueDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PeriodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RefReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontantReglementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ShortResumeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BcolReglementLoadedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BExportInternetDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateFactureDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EtatDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EtatLibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OTiersDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TiersRSDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColLignesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalTTCDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OTransporteurDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IdParamTVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateValidationDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateEnlevementDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RefLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CaracteristiqueTiersDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CommCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CommLivraisonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CommFacturationDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CommLibreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BcolLignesLoadedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BcolLignesUpatedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.QteColisDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QtePalettesPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QtePalettesNonPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PoidsDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PuPalettesPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PuPalettesNonPrepareesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontantTransportDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CoutTransportDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LettreVoitureDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RefFactTRPDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontantCommissionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BNewDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BDeletedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BUpdatedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.IdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TypeDonneeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BResumeDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.m_bsrcSousCommande = New System.Windows.Forms.BindingSource(Me.components)
-        Me.dgvSousCommandes = New System.Windows.Forms.DataGridView
-        Me.CodeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.FournisseurCode = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TiersRSDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DateCommandeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.totalHTFacture = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.dgvSousCommandes = New System.Windows.Forms.DataGridView()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.ckSelect = New System.Windows.Forms.CheckBox()
+        Me.SelectedColum = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.FournisseurCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FournisseurRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dateFactFournisseur = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.totalHTFacture = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.refFactFournisseur = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpFact.SuspendLayout()
         CType(Me.m_bsrcFactCom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvFactCom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcSousCommande, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvSousCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
         Me.SuspendLayout()
         '
         'tbCodeFournisseur
@@ -276,30 +286,36 @@ Public Class frmGeneFactCom
         '
         'cbAfficher
         '
+        Me.cbAfficher.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbAfficher.BackColor = System.Drawing.SystemColors.Control
         Me.cbAfficher.Cursor = System.Windows.Forms.Cursors.Default
         Me.cbAfficher.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.cbAfficher.Location = New System.Drawing.Point(8, 80)
+        Me.cbAfficher.Location = New System.Drawing.Point(44, 3)
         Me.cbAfficher.Name = "cbAfficher"
         Me.cbAfficher.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cbAfficher.Size = New System.Drawing.Size(352, 25)
+        Me.cbAfficher.Size = New System.Drawing.Size(349, 25)
         Me.cbAfficher.TabIndex = 4
         Me.cbAfficher.Text = "A&fficher"
         Me.cbAfficher.UseVisualStyleBackColor = False
         '
         'cbGenerer
         '
-        Me.cbGenerer.Location = New System.Drawing.Point(368, 160)
+        Me.cbGenerer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbGenerer.Location = New System.Drawing.Point(4, 487)
         Me.cbGenerer.Name = "cbGenerer"
-        Me.cbGenerer.Size = New System.Drawing.Size(80, 24)
+        Me.cbGenerer.Size = New System.Drawing.Size(389, 24)
         Me.cbGenerer.TabIndex = 8
         Me.cbGenerer.Text = "- Générer ->"
         '
         'cbAnnGenerer
         '
-        Me.cbAnnGenerer.Location = New System.Drawing.Point(368, 192)
+        Me.cbAnnGenerer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbAnnGenerer.Location = New System.Drawing.Point(3, 212)
         Me.cbAnnGenerer.Name = "cbAnnGenerer"
-        Me.cbAnnGenerer.Size = New System.Drawing.Size(80, 24)
+        Me.cbAnnGenerer.Size = New System.Drawing.Size(522, 24)
         Me.cbAnnGenerer.TabIndex = 16
         Me.cbAnnGenerer.Text = "<- Annule -<"
         '
@@ -352,7 +368,8 @@ Public Class frmGeneFactCom
         '
         'grpFact
         '
-        Me.grpFact.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grpFact.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grpFact.Controls.Add(Me.dtDateStatCourante)
         Me.grpFact.Controls.Add(Me.dtDateFactCourante)
         Me.grpFact.Controls.Add(Me.cbAppliquer)
@@ -366,9 +383,9 @@ Public Class frmGeneFactCom
         Me.grpFact.Controls.Add(Me.Label2)
         Me.grpFact.Controls.Add(Me.liFournisseur)
         Me.grpFact.Controls.Add(Me.liFactCom)
-        Me.grpFact.Location = New System.Drawing.Point(456, 352)
+        Me.grpFact.Location = New System.Drawing.Point(3, 276)
         Me.grpFact.Name = "grpFact"
-        Me.grpFact.Size = New System.Drawing.Size(536, 248)
+        Me.grpFact.Size = New System.Drawing.Size(906, 235)
         Me.grpFact.TabIndex = 15
         Me.grpFact.TabStop = False
         '
@@ -396,7 +413,8 @@ Public Class frmGeneFactCom
         '
         'cbAppliquer
         '
-        Me.cbAppliquer.Location = New System.Drawing.Point(424, 216)
+        Me.cbAppliquer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbAppliquer.Location = New System.Drawing.Point(1192, 199)
         Me.cbAppliquer.Name = "cbAppliquer"
         Me.cbAppliquer.Size = New System.Drawing.Size(104, 24)
         Me.cbAppliquer.TabIndex = 7
@@ -498,27 +516,28 @@ Public Class frmGeneFactCom
         '
         'cbSauvegarder
         '
-        Me.cbSauvegarder.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbSauvegarder.Location = New System.Drawing.Point(616, 320)
+        Me.cbSauvegarder.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbSauvegarder.Location = New System.Drawing.Point(3, 242)
         Me.cbSauvegarder.Name = "cbSauvegarder"
-        Me.cbSauvegarder.Size = New System.Drawing.Size(80, 23)
+        Me.cbSauvegarder.Size = New System.Drawing.Size(522, 28)
         Me.cbSauvegarder.TabIndex = 126
         Me.cbSauvegarder.Text = "Sauvegarder"
         '
         'dgvFactCom
         '
         Me.dgvFactCom.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvFactCom.AutoGenerateColumns = False
         Me.dgvFactCom.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvFactCom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvFactCom.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.code, Me.TiersRS, Me.totalHT, Me.totalTTC, Me.DateReglementDataGridViewTextBoxColumn, Me.DateStatistiqueDataGridViewTextBoxColumn, Me.PeriodeDataGridViewTextBoxColumn, Me.RefReglementDataGridViewTextBoxColumn, Me.MontantReglementDataGridViewTextBoxColumn, Me.ShortResumeDataGridViewTextBoxColumn, Me.BcolReglementLoadedDataGridViewCheckBoxColumn, Me.BExportInternetDataGridViewCheckBoxColumn, Me.CodeDataGridViewTextBoxColumn, Me.DateCommandeDataGridViewTextBoxColumn, Me.DateFactureDataGridViewTextBoxColumn, Me.EtatDataGridViewTextBoxColumn, Me.EtatLibelleDataGridViewTextBoxColumn, Me.OTiersDataGridViewTextBoxColumn, Me.TiersRSDataGridViewTextBoxColumn, Me.ColLignesDataGridViewTextBoxColumn, Me.TotalHTDataGridViewTextBoxColumn, Me.TotalTTCDataGridViewTextBoxColumn, Me.OTransporteurDataGridViewTextBoxColumn, Me.IdParamTVADataGridViewTextBoxColumn, Me.DateValidationDataGridViewTextBoxColumn, Me.DateLivraisonDataGridViewTextBoxColumn, Me.DateEnlevementDataGridViewTextBoxColumn, Me.RefLivraisonDataGridViewTextBoxColumn, Me.CaracteristiqueTiersDataGridViewTextBoxColumn, Me.CommCommandeDataGridViewTextBoxColumn, Me.CommLivraisonDataGridViewTextBoxColumn, Me.CommFacturationDataGridViewTextBoxColumn, Me.CommLibreDataGridViewTextBoxColumn, Me.BcolLignesLoadedDataGridViewCheckBoxColumn, Me.BcolLignesUpatedDataGridViewCheckBoxColumn, Me.QteColisDataGridViewTextBoxColumn, Me.QtePalettesPrepareesDataGridViewTextBoxColumn, Me.QtePalettesNonPrepareesDataGridViewTextBoxColumn, Me.PoidsDataGridViewTextBoxColumn, Me.PuPalettesPrepareesDataGridViewTextBoxColumn, Me.PuPalettesNonPrepareesDataGridViewTextBoxColumn, Me.MontantTransportDataGridViewTextBoxColumn, Me.CoutTransportDataGridViewTextBoxColumn, Me.LettreVoitureDataGridViewTextBoxColumn, Me.RefFactTRPDataGridViewTextBoxColumn, Me.MontantCommissionDataGridViewTextBoxColumn, Me.BNewDataGridViewCheckBoxColumn, Me.BDeletedDataGridViewCheckBoxColumn, Me.BUpdatedDataGridViewCheckBoxColumn, Me.IdDataGridViewTextBoxColumn, Me.TypeDonneeDataGridViewTextBoxColumn, Me.BResumeDataGridViewCheckBoxColumn})
         Me.dgvFactCom.DataSource = Me.m_bsrcFactCom
-        Me.dgvFactCom.Location = New System.Drawing.Point(483, 104)
+        Me.dgvFactCom.Location = New System.Drawing.Point(3, 3)
         Me.dgvFactCom.Name = "dgvFactCom"
         Me.dgvFactCom.RowHeadersVisible = False
-        Me.dgvFactCom.Size = New System.Drawing.Size(509, 210)
+        Me.dgvFactCom.Size = New System.Drawing.Size(522, 203)
         Me.dgvFactCom.TabIndex = 127
         '
         'code
@@ -648,6 +667,7 @@ Public Class frmGeneFactCom
         Me.OTiersDataGridViewTextBoxColumn.DataPropertyName = "oTiers"
         Me.OTiersDataGridViewTextBoxColumn.HeaderText = "oTiers"
         Me.OTiersDataGridViewTextBoxColumn.Name = "OTiersDataGridViewTextBoxColumn"
+        Me.OTiersDataGridViewTextBoxColumn.ReadOnly = True
         Me.OTiersDataGridViewTextBoxColumn.Width = 61
         '
         'TiersRSDataGridViewTextBoxColumn
@@ -908,27 +928,64 @@ Public Class frmGeneFactCom
         '
         Me.dgvSousCommandes.AllowUserToAddRows = False
         Me.dgvSousCommandes.AllowUserToDeleteRows = False
-        Me.dgvSousCommandes.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.dgvSousCommandes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvSousCommandes.AutoGenerateColumns = False
         Me.dgvSousCommandes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvSousCommandes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvSousCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodeDataGridViewTextBoxColumn1, Me.FournisseurCode, Me.TiersRSDataGridViewTextBoxColumn1, Me.DateCommandeDataGridViewTextBoxColumn1, Me.totalHTFacture})
+        Me.dgvSousCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SelectedColum, Me.FournisseurCode, Me.FournisseurRS, Me.dateFactFournisseur, Me.totalHTFacture, Me.refFactFournisseur})
         Me.dgvSousCommandes.DataSource = Me.m_bsrcSousCommande
-        Me.dgvSousCommandes.Location = New System.Drawing.Point(10, 114)
+        Me.dgvSousCommandes.Location = New System.Drawing.Point(4, 29)
         Me.dgvSousCommandes.Name = "dgvSousCommandes"
-        Me.dgvSousCommandes.ReadOnly = True
         Me.dgvSousCommandes.RowHeadersVisible = False
-        Me.dgvSousCommandes.Size = New System.Drawing.Size(352, 486)
+        Me.dgvSousCommandes.Size = New System.Drawing.Size(389, 452)
         Me.dgvSousCommandes.TabIndex = 128
         '
-        'CodeDataGridViewTextBoxColumn1
+        'SplitContainer1
         '
-        Me.CodeDataGridViewTextBoxColumn1.DataPropertyName = "code"
-        Me.CodeDataGridViewTextBoxColumn1.HeaderText = "code"
-        Me.CodeDataGridViewTextBoxColumn1.Name = "CodeDataGridViewTextBoxColumn1"
-        Me.CodeDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.CodeDataGridViewTextBoxColumn1.Width = 56
+        Me.SplitContainer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.SplitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SplitContainer1.Location = New System.Drawing.Point(8, 85)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.ckSelect)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.cbAfficher)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.dgvSousCommandes)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.cbGenerer)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.dgvFactCom)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.cbSauvegarder)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.grpFact)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.cbAnnGenerer)
+        Me.SplitContainer1.Size = New System.Drawing.Size(976, 518)
+        Me.SplitContainer1.SplitterDistance = 404
+        Me.SplitContainer1.SplitterWidth = 10
+        Me.SplitContainer1.TabIndex = 129
+        '
+        'ckSelect
+        '
+        Me.ckSelect.AutoSize = True
+        Me.ckSelect.Location = New System.Drawing.Point(13, 14)
+        Me.ckSelect.Name = "ckSelect"
+        Me.ckSelect.Size = New System.Drawing.Size(15, 14)
+        Me.ckSelect.TabIndex = 129
+        Me.ckSelect.ThreeState = True
+        Me.ckSelect.UseVisualStyleBackColor = True
+        '
+        'SelectedColum
+        '
+        Me.SelectedColum.DataPropertyName = "Selected"
+        Me.SelectedColum.HeaderText = "Sel"
+        Me.SelectedColum.Name = "SelectedColum"
+        Me.SelectedColum.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.SelectedColum.Width = 28
         '
         'FournisseurCode
         '
@@ -938,39 +995,43 @@ Public Class frmGeneFactCom
         Me.FournisseurCode.ReadOnly = True
         Me.FournisseurCode.Width = 54
         '
-        'TiersRSDataGridViewTextBoxColumn1
+        'FournisseurRS
         '
-        Me.TiersRSDataGridViewTextBoxColumn1.DataPropertyName = "TiersRS"
-        Me.TiersRSDataGridViewTextBoxColumn1.HeaderText = "Client"
-        Me.TiersRSDataGridViewTextBoxColumn1.Name = "TiersRSDataGridViewTextBoxColumn1"
-        Me.TiersRSDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.TiersRSDataGridViewTextBoxColumn1.Width = 58
+        Me.FournisseurRS.DataPropertyName = "FournisseurRS"
+        Me.FournisseurRS.HeaderText = "Nom Producteur"
+        Me.FournisseurRS.Name = "FournisseurRS"
+        Me.FournisseurRS.ReadOnly = True
         '
-        'DateCommandeDataGridViewTextBoxColumn1
+        'dateFactFournisseur
         '
-        Me.DateCommandeDataGridViewTextBoxColumn1.DataPropertyName = "dateCommande"
-        Me.DateCommandeDataGridViewTextBoxColumn1.HeaderText = "date CMD"
-        Me.DateCommandeDataGridViewTextBoxColumn1.Name = "DateCommandeDataGridViewTextBoxColumn1"
-        Me.DateCommandeDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DateCommandeDataGridViewTextBoxColumn1.Width = 80
+        Me.dateFactFournisseur.DataPropertyName = "dateFactFournisseur"
+        Me.dateFactFournisseur.HeaderText = "date Fact "
+        Me.dateFactFournisseur.Name = "dateFactFournisseur"
+        Me.dateFactFournisseur.ReadOnly = True
+        Me.dateFactFournisseur.Width = 74
         '
         'totalHTFacture
         '
         Me.totalHTFacture.DataPropertyName = "totalHTFacture"
-        Me.totalHTFacture.HeaderText = "HT Fact"
+        Me.totalHTFacture.HeaderText = "HT Facturé"
         Me.totalHTFacture.Name = "totalHTFacture"
         Me.totalHTFacture.ReadOnly = True
-        Me.totalHTFacture.Width = 71
+        Me.totalHTFacture.Width = 79
+        '
+        'refFactFournisseur
+        '
+        Me.refFactFournisseur.DataPropertyName = "refFactFournisseur"
+        Me.refFactFournisseur.HeaderText = "ref Fact "
+        Me.refFactFournisseur.Name = "refFactFournisseur"
+        Me.refFactFournisseur.ReadOnly = True
+        Me.refFactFournisseur.Width = 66
         '
         'frmGeneFactCom
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(997, 630)
-        Me.Controls.Add(Me.dgvSousCommandes)
-        Me.Controls.Add(Me.dgvFactCom)
-        Me.Controls.Add(Me.cbSauvegarder)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.cbRecherche)
-        Me.Controls.Add(Me.grpFact)
         Me.Controls.Add(Me.tbPeriode)
         Me.Controls.Add(Me.tbCodeFournisseur)
         Me.Controls.Add(Me.Label6)
@@ -978,23 +1039,24 @@ Public Class frmGeneFactCom
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.dtDateFacture)
         Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.cbAnnGenerer)
-        Me.Controls.Add(Me.cbGenerer)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.dtdateFin)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dtDatedeb)
         Me.Controls.Add(Me.Label14)
-        Me.Controls.Add(Me.cbAfficher)
         Me.Name = "frmGeneFactCom"
         Me.Text = "Génération de factures de commissions"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.grpFact.ResumeLayout(False)
         Me.grpFact.PerformLayout()
         CType(Me.m_bsrcFactCom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvFactCom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.m_bsrcSousCommande, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvSousCommandes, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.PerformLayout()
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1025,6 +1087,15 @@ Public Class frmGeneFactCom
         For Each objControl In grpFact.Controls
             objControl.Enabled = True
         Next objControl
+        SplitContainer1.Enabled = True
+        dgvSousCommandes.Enabled = True
+        ckSelect.Enabled = True
+
+
+
+
+
+
 
     End Sub
     Protected Overrides Function creerElement() As Boolean
@@ -1063,9 +1134,11 @@ Public Class frmGeneFactCom
         Next obj
 
         cbGenerer.Enabled = True
+        CalcCkSlected()
 
         finAffiche()
-        restoreCursor()
+        Me.Cursor = Cursors.Default
+
 
     End Sub 'AfficheListeSousCommande
 
@@ -1167,9 +1240,7 @@ Public Class frmGeneFactCom
         Next
 
         m_colFact = New ColEvent
-        If setListeSousCommandes() Then
-            afficheListeSousCommande()
-        End If
+
         restoreCursor()
 
         Return bReturn
@@ -1194,6 +1265,7 @@ Public Class frmGeneFactCom
         debAffiche()
         setcursorWait()
 
+
         m_bsrcFactCom.Clear()
         For Each objFactCom In m_colFact
             m_bsrcFactCom.Add(objFactCom)
@@ -1203,6 +1275,35 @@ Public Class frmGeneFactCom
         finAffiche()
 
     End Sub
+    Private Sub CalcCkSlected()
+        Dim obj As SousCommande
+
+        Dim bSelect As Boolean = True
+        Dim bPartial As Boolean = False
+        For Each obj In m_colSousCommandes
+            If (obj.Selected <> bSelect) Then
+                bSelect = Not bSelect
+                bPartial = True
+            End If
+
+        Next obj
+
+        If bPartial Then
+            ckSelect.CheckState = CheckState.Indeterminate
+        Else
+            If bSelect Then
+                ckSelect.CheckState = CheckState.Checked
+            Else
+                ckSelect.CheckState = CheckState.Unchecked
+
+            End If
+
+        End If
+
+
+    End Sub
+
+
     Private Function appliqueModifications() As Boolean
         Dim objFactCom As FactCom
         Dim bReturn As Boolean
@@ -1391,5 +1492,30 @@ Public Class frmGeneFactCom
             afficheListeFactures()
             grpFact.Enabled = True
         End If
+    End Sub
+
+    Private Sub ckSelect_CheckedChanged(sender As Object, e As EventArgs) Handles ckSelect.CheckedChanged
+        If ckSelect.CheckState = CheckState.Checked Or ckSelect.CheckState = CheckState.Unchecked Then
+            setcursorWait()
+            For Each oSCMD As SousCommande In m_bsrcSousCommande
+                If ckSelect.CheckState = CheckState.Checked Then
+                    'Selection de tous les ligne de la liste
+                    oSCMD.Selected = True
+                End If
+                If ckSelect.CheckState = CheckState.Unchecked Then
+                    'Delection Selection de tous les ligne de la liste
+                    oSCMD.Selected = False
+                End If
+            Next
+
+            m_bsrcSousCommande.ResetBindings(False)
+
+            restoreCursor()
+
+        End If
+    End Sub
+
+    Private Sub m_bsrcSousCommande_ListChanged(sender As Object, e As System.ComponentModel.ListChangedEventArgs) Handles m_bsrcSousCommande.ListChanged
+
     End Sub
 End Class

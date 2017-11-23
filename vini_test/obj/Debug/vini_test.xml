@@ -137,6 +137,11 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
+<member name="M:vini_test.T1130_FactCommission.T90_GenerationFactureCommissionsSelected">
+ <summary>
+ Test l'attribut Selected des sousCommandes dans la génération des Fact de comm
+ </summary>
+</member>
 <member name="M:vini_test.T1130_FactCommission.T100_getAttributeValue">
  <summary>
  test de la fonction GetAtributeValue pour l'export QUADRA

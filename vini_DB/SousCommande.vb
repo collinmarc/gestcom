@@ -80,6 +80,8 @@ Public Class SousCommande
         m_codeCommande = poCommandeClient.code
         m_bExportInternet = False
         majBooleenAlaFinDuNew()
+        Me.Selected = True  'Selection pour la création de factures de commsions
+
     End Sub
 
     Friend Sub New()
@@ -364,6 +366,16 @@ Public Class SousCommande
                 Return 0
             End If
         End Get
+    End Property
+
+    Private bSelected As Boolean
+    Public Property Selected() As Boolean
+        Get
+            Return bSelected
+        End Get
+        Set(ByVal value As Boolean)
+            bSelected = value
+        End Set
     End Property
 #End Region
 #Region "Fonction communes"

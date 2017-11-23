@@ -166,23 +166,27 @@ Public Class FactCom
             ocolReturn = New ColEvent
             'Parcours de toutes les sousCommandes de la collection
             For Each objSCMD In pcolSCMD
-                'A-t-on déjà crée une facture de commission pour ce fournissseur
-                If ocolReturn.keyExists(objSCMD.oFournisseur.code) Then
-                    'Une Facture à déjà été créée pour ce fournisseur
-                    objFactCom = ocolReturn(objSCMD.oFournisseur.code)
-                Else
-                    'Il n'y a pas de facture pour ce fournisseur
-                    'Création de la facture de commission
-                    objSCMD.oFournisseur.load()
-                    objFactCom = New FactCom(objSCMD.oFournisseur)
-                    objFactCom.dateFacture = pdateFact
-                    objFactCom.dateStatistique = pdateStat
-                    objFactCom.periode = pPeriode
-                    'Ajout de la facture à la collection 
-                    ocolReturn.Add(objFactCom, objSCMD.oFournisseur.code)
-                End If
-                'Ajout de la SousCommande dans la facture
-                objFactCom.AjouteLigneFactCom(objSCMD)
+                If objSCMD.Selected Then
+
+                    'A-t-on déjà crée une facture de commission pour ce fournissseur
+                    If ocolReturn.keyExists(objSCMD.oFournisseur.code) Then
+                        'Une Facture à déjà été créée pour ce fournisseur
+                        objFactCom = ocolReturn(objSCMD.oFournisseur.code)
+                    Else
+                        'Il n'y a pas de facture pour ce fournisseur
+                        'Création de la facture de commission
+                        objSCMD.oFournisseur.load()
+                        objFactCom = New FactCom(objSCMD.oFournisseur)
+                        objFactCom.dateFacture = pdateFact
+                        objFactCom.dateStatistique = pdateStat
+                        objFactCom.periode = pPeriode
+                        'Ajout de la facture à la collection 
+                        ocolReturn.Add(objFactCom, objSCMD.oFournisseur.code)
+                    End If
+                    'Ajout de la SousCommande dans la facture
+                    objFactCom.AjouteLigneFactCom(objSCMD)
+                End If 'Selected
+
             Next
         Catch ex As Exception
             ocolReturn = Nothing
