@@ -10,6 +10,6 @@
     <ErrorReportUrlHistory />
     <FallbackCulture>fr-FR</FallbackCulture>
     <VerifyUploadedFiles>true</VerifyUploadedFiles>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

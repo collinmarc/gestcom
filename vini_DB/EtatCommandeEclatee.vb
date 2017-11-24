@@ -13,6 +13,8 @@ Public Class EtatCommandeEclatee
             Case vncEnums.vncActionEtatCommande.vncActionAnnEclater
                 m_actionSousCommande = vncEnums.vncGenererSupprimer.vncSupprimer
                 nReturn = vncEnums.vncEtatCommande.vncLivree
+            Case vncEnums.vncActionEtatCommande.vncActionTransmettre
+                nReturn = vncEnums.vncEtatCommande.vncTransmiseQuadra
             Case Else
                 nReturn = vncEnums.vncEtatCommande.vncEclatee
         End Select

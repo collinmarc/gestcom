@@ -200,6 +200,9 @@ Public MustInherit Class Commande
         m_oCaracteristiquesTiers = New Tiers("", "")
         m_bColLgInsertorDelete = False
         m_oLgCourante = Nothing
+
+        Me.Selected = True  'Selection pour la création de factures de commsions
+
     End Sub
 
 
@@ -288,7 +291,7 @@ Public MustInherit Class Commande
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property TiersRS() As String
+    Public Overridable ReadOnly Property TiersRS() As String
         Get
             If oTiers IsNot Nothing Then
                 Return m_oTiers.rs
@@ -303,7 +306,7 @@ Public MustInherit Class Commande
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property TiersCode() As String
+    Public Overridable ReadOnly Property TiersCode() As String
         Get
             If oTiers IsNot Nothing Then
                 Return m_oTiers.code
@@ -1038,465 +1041,6 @@ Public MustInherit Class Commande
     Private Sub m_oCaracteristiquesTiers_Updated() Handles m_oCaracteristiquesTiers.Updated
         RaiseUpdated()
     End Sub
-
-    Public Function SetProperty(pKey As String, pValue As String) As Boolean
-        Dim bReturn As Boolean
-        Try
-            Select Case pKey
-                Case vncObjectProperties.CMD_ID
-                    setid(CInt(pValue))
-                    bReturn = True
-                Case vncObjectProperties.CMD_CODE
-                    code = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_dateCommande
-                    dateCommande = ConvertJJMMAAAToDate(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_etat
-                    setEtat(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_TotalHT
-                    totalHT = CDec(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_TotalTTC
-                    totalTTC = CDec(pValue)
-                    bReturn = True
-
-                Case vncObjectProperties.CMD_TransporteurCODE
-                    Dim oParam As Transporteur
-                    oParam = Transporteur.colTransporteur.Item(pValue)
-                    If Not oParam Is Nothing Then
-                        Me.oTransporteur = oParam
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Transporteur code = " + pValue + " Non trouvé")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.CMD_dateValidation
-                    dateValidation = ConvertJJMMAAAToDate(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_dateEnlevement
-                    dateEnlevement = ConvertJJMMAAAToDate(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_dateLivraison
-                    dateLivraison = ConvertJJMMAAAToDate(pValue)
-                    bReturn = True
-                Case vncObjectProperties.CMD_RefLivraison
-                    refLivraison = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TiersCODE
-                    Dim oCol As Collection
-                    Dim oTiers As Tiers
-                    oTiers = Nothing
-                    oCol = Client.getListe(pValue)
-                    If Not oCol Is Nothing Then
-                        If (oCol.Count = 1) Then
-                            oTiers = oCol.Item(1)
-                        End If
-                    End If
-
-                    If Not oTiers Is Nothing Then
-                        oTiers.load()
-                        Me.oTiers = oTiers
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Tiers code = " + pValue + " Non trouvé")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.CMD_TIERS_NOM
-                    Me.caracteristiqueTiers.nom = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_RS
-                    Me.caracteristiqueTiers.rs = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIV1
-                    Me.caracteristiqueTiers.AdresseLivraison.rue1 = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIV2
-                    Me.caracteristiqueTiers.AdresseLivraison.rue2 = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVCP
-                    Me.caracteristiqueTiers.AdresseLivraison.cp = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVVILLE
-                    Me.caracteristiqueTiers.AdresseLivraison.ville = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVTEL
-                    Me.caracteristiqueTiers.AdresseLivraison.tel = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVFAX
-                    Me.caracteristiqueTiers.AdresseLivraison.fax = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVPORT
-                    Me.caracteristiqueTiers.AdresseLivraison.port = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADLIVEMAIL
-                    Me.caracteristiqueTiers.AdresseLivraison.Email = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACT1
-                    Me.caracteristiqueTiers.AdresseFacturation.rue1 = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACT2
-                    Me.caracteristiqueTiers.AdresseFacturation.rue2 = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTCP
-                    Me.caracteristiqueTiers.AdresseFacturation.cp = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTVILLE
-                    Me.caracteristiqueTiers.AdresseFacturation.ville = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTTEL
-                    Me.caracteristiqueTiers.AdresseFacturation.tel = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTFAX
-                    Me.caracteristiqueTiers.AdresseFacturation.fax = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTPORT
-                    Me.caracteristiqueTiers.AdresseFacturation.port = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_TIERS_ADFACTEMAIL
-                    Me.caracteristiqueTiers.AdresseFacturation.Email = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_qteColis
-                    Me.qteColis = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_qtePalettesNonPreparees
-                    Me.qtePalettesNonPreparees = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_qtePalettesPreparees
-                    Me.qtePalettesPreparees = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_poids
-                    Me.poids = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_puPalettesNonPreparees
-                    Me.puPalettesNonPreparees = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_puPalettesPreparees
-                    Me.puPalettesPreparees = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_MontantTransport
-                    Me.montantTransport = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_LettreVoiture
-                    Me.lettreVoiture = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_CoutTransport
-                    Me.coutTransport = CType(pValue, Decimal)
-                    bReturn = True
-                Case vncObjectProperties.CMD_RefFactTrp
-                    Me.refFactTRP = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_ComentCom
-                    Me.CommentaireCommandeText = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_ComentLiv
-                    Me.CommentaireLivraisonText = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_ComentFact
-                    Me.CommentaireFacturationText = pValue
-                    bReturn = True
-                Case vncObjectProperties.CMD_ComentLibre
-                    Me.CommentaireLibreText = pValue
-                    bReturn = True
-                Case (vncObjectProperties.LGCMD_num)
-                    'Recherche de la Ligne avec son Numéro
-                    Dim oLg As LgCommande
-                    Dim nValue As Integer
-                    nValue = CType(pValue, Integer)
-                    If Not bcolLignesLoaded Then
-                        LoadcolLGCMD()
-                    End If
-                    m_oLgCourante = Nothing
-                    For Each oLg In colLignes
-                        If oLg.num = nValue Then
-                            m_oLgCourante = oLg
-                        End If
-                    Next
-                    If m_oLgCourante Is Nothing Then
-                        m_oLgCourante = AjouteLigne() ' AjouteLigne d'une lign vide
-                    Else
-                        bReturn = True
-                    End If
-
-                Case vncObjectProperties.LGCMD_PRD_CODE
-                    Dim oProduit As Produit
-                    Dim oCol As Collection
-                    oProduit = Nothing
-                    oCol = Produit.getListe(vncEnums.vncTypeProduit.vncTous, pValue)
-                    If oCol Is Nothing Then
-                        Trace.WriteLine("produit code = " + pValue + " introuvable")
-                        bReturn = False
-                    Else
-                        If oCol.Count <> 1 Then
-                            Trace.WriteLine("produit code = " + pValue + " introuvable")
-                            bReturn = False
-                        Else
-                            oProduit = CType(oCol(1), Produit)
-                            If Not m_oLgCourante Is Nothing Then
-                                m_oLgCourante.oProduit = oProduit
-                                bReturn = True
-                            Else
-                                Trace.WriteLine("Pas de ligne courante")
-                                bReturn = False
-                            End If
-                        End If
-                    End If
-
-                Case vncObjectProperties.LGCMD_qteCom
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.qteCommande = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_qteLiv
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.qteLiv = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_qteFact
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.qteFact = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_prixU
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.prixU = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_prixHT
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.prixHT = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_prixTTC
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.prixTTC = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_bGratuit
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.bGratuit = CType(pValue, Boolean)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_poids
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.poids = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-
-                Case vncObjectProperties.LGCMD_qteColis
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.qteColis = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_TxComm
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.TxComm = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-                Case vncObjectProperties.LGCMD_MtComm
-                    If Not m_oLgCourante Is Nothing Then
-                        m_oLgCourante.MtComm = CType(pValue, Decimal)
-                        bReturn = True
-                    Else
-                        Trace.WriteLine("Pas de ligne courante")
-                        bReturn = False
-                    End If
-
-            End Select
-        Catch ex As InvalidCastException
-            Trace.Write("Erreur en Conversion de " + pKey + "," + pValue)
-            bReturn = False
-        Catch ex As Exception
-            Trace.Write(ex.Message)
-            bReturn = False
-        End Try
-        Return bReturn
-    End Function 'SetProperty
-    Public Function getProperty(pKey As String) As String
-        Dim strReturn As String
-        strReturn = ""
-        Try
-            Select Case pKey
-                Case vncObjectProperties.CMD_ID
-                    strReturn = Format(Me.id, "g")
-                Case vncObjectProperties.CMD_CODE
-                    strReturn = code
-                Case vncObjectProperties.CMD_dateCommande
-                    strReturn = Format(Me.dateCommande, "ddMMyyyy")
-                Case vncObjectProperties.CMD_etat
-                    strReturn = Me.etat.codeEtat
-                Case vncObjectProperties.CMD_TotalHT
-                    strReturn = Format(totalHT, "F")
-                Case vncObjectProperties.CMD_TotalTTC
-                    strReturn = Format(totalTTC, "F")
-
-                Case vncObjectProperties.CMD_TransporteurCODE
-                    strReturn = oTransporteur.code
-                Case vncObjectProperties.CMD_dateValidation
-                    strReturn = Format(dateValidation, "ddMMyyyy")
-                Case vncObjectProperties.CMD_dateEnlevement
-                    strReturn = Format(dateEnlevement, "ddMMyyyy")
-                Case vncObjectProperties.CMD_dateLivraison
-                    strReturn = Format(dateLivraison, "ddMMyyyy")
-                Case vncObjectProperties.CMD_RefLivraison
-                    strReturn = refLivraison
-                Case vncObjectProperties.CMD_TiersCODE
-                    strReturn = oTiers.code
-                Case vncObjectProperties.CMD_TIERS_NOM
-                    strReturn = Me.caracteristiqueTiers.nom
-                Case vncObjectProperties.CMD_TIERS_RS
-                    strReturn = Me.caracteristiqueTiers.rs
-                Case vncObjectProperties.CMD_TIERS_ADLIV1
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.rue1
-                Case vncObjectProperties.CMD_TIERS_ADLIV2
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.rue2
-                Case vncObjectProperties.CMD_TIERS_ADLIVCP
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.cp
-
-                Case vncObjectProperties.CMD_TIERS_ADLIVVILLE
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.ville
-
-                Case vncObjectProperties.CMD_TIERS_ADLIVTEL
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.tel
-
-                Case vncObjectProperties.CMD_TIERS_ADLIVFAX
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.fax
-
-                Case vncObjectProperties.CMD_TIERS_ADLIVPORT
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.port
-
-                Case vncObjectProperties.CMD_TIERS_ADLIVEMAIL
-                    strReturn = Me.caracteristiqueTiers.AdresseLivraison.Email
-
-                Case vncObjectProperties.CMD_TIERS_ADFACT1
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.rue1
-
-                Case vncObjectProperties.CMD_TIERS_ADFACT2
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.rue2
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTCP
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.cp
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTVILLE
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.ville
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTTEL
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.tel
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTFAX
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.fax
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTPORT
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.port
-
-                Case vncObjectProperties.CMD_TIERS_ADFACTEMAIL
-                    strReturn = Me.caracteristiqueTiers.AdresseFacturation.Email
-
-                Case vncObjectProperties.CMD_qteColis
-                    strReturn = Format(Me.qteColis, "F")
-
-                Case vncObjectProperties.CMD_qtePalettesNonPreparees
-                    strReturn = Format(Me.qtePalettesNonPreparees, "F")
-
-                Case vncObjectProperties.CMD_qtePalettesPreparees
-                    strReturn = Format(Me.qtePalettesPreparees, "F")
-
-                Case vncObjectProperties.CMD_poids
-                    strReturn = Format(Me.poids, "F")
-
-                Case vncObjectProperties.CMD_puPalettesNonPreparees
-                    strReturn = Format(Me.puPalettesNonPreparees, "F")
-
-                Case vncObjectProperties.CMD_puPalettesPreparees
-                    strReturn = Format(Me.puPalettesPreparees, "F")
-
-                Case vncObjectProperties.CMD_MontantTransport
-                    strReturn = Format(Me.montantTransport, "F")
-
-                Case vncObjectProperties.CMD_LettreVoiture
-                    strReturn = Me.lettreVoiture
-
-                Case vncObjectProperties.CMD_CoutTransport
-                    strReturn = Format(Me.coutTransport, "F")
-
-                Case vncObjectProperties.CMD_RefFactTrp
-                    strReturn = Me.refFactTRP
-
-                Case vncObjectProperties.CMD_ComentCom
-                    strReturn = Me.CommentaireCommandeText
-                Case vncObjectProperties.CMD_ComentLiv
-                    strReturn = Me.CommentaireLivraisonText
-                Case vncObjectProperties.CMD_ComentFact
-                    strReturn = Me.CommentaireFacturationText
-                Case vncObjectProperties.CMD_ComentLibre
-                    strReturn = Me.CommentaireLibreText
-
-                Case (vncObjectProperties.LGCMD_num)
-                    strReturn = Format(m_oLgCourante.num, "g")
-                Case vncObjectProperties.LGCMD_PRD_CODE
-                    strReturn = m_oLgCourante.oProduit.code
-                Case vncObjectProperties.LGCMD_qteCom
-                    strReturn = Format(m_oLgCourante.qteCommande, "g")
-                Case vncObjectProperties.LGCMD_qteLiv
-                    strReturn = Format(m_oLgCourante.qteLiv, "g")
-                Case vncObjectProperties.LGCMD_prixU
-                    strReturn = Format(m_oLgCourante.prixU, "F")
-                Case vncObjectProperties.LGCMD_prixHT
-                    strReturn = Format(m_oLgCourante.prixHT, "F")
-                Case vncObjectProperties.LGCMD_prixTTC
-                    strReturn = Format(m_oLgCourante.prixTTC, "F")
-                Case vncObjectProperties.LGCMD_bGratuit
-                    strReturn = Format(m_oLgCourante.bGratuit, "TRUE/FALSE")
-                Case vncObjectProperties.LGCMD_poids
-                    strReturn = Format(m_oLgCourante.poids, "F")
-                Case vncObjectProperties.LGCMD_qteColis
-                    strReturn = Format(m_oLgCourante.qteColis, "F")
-                Case vncObjectProperties.LGCMD_TxComm
-                    strReturn = Format(m_oLgCourante.TxComm, "F")
-                Case vncObjectProperties.LGCMD_MtComm
-                    strReturn = Format(m_oLgCourante.MtComm, "F")
-
-            End Select
-        Catch ex As InvalidCastException
-            Trace.Write("Erreur en Conversion de " + pKey)
-            strReturn = ""
-        Catch ex As Exception
-            Trace.Write(ex.Message)
-            strReturn = ""
-        End Try
-        Return strReturn
-    End Function 'getProperty
     Public Function setLgCourante(pLg As LgCommande) As Boolean
         Dim bReturn As Boolean
         Try
@@ -1509,62 +1053,6 @@ Public MustInherit Class Commande
         Return bReturn
     End Function
 
-    Public Shared Function importCommandeClient(pstrFileName As String) As CommandeClient
-        Dim oReturn As Commande
-        Dim oCmd As CommandeClient
-        Dim oCLT As Client
-        Dim oMyReader As FileIO.TextFieldParser
-        Dim currentRow As String()
-        Dim nField As Integer
-        Dim oParam As ExportParam
-        Dim oColExportParam As Collection
-        Dim oLgCmd As LgCommande
-        Try
-            If Not My.Computer.FileSystem.FileExists(pstrFileName) Then
-                Throw New Exception("Fichier d'entrée inexistant")
-            End If
-            'Lecture des paramètres d'importation
-            oColExportParam = ExportParam.GetListe("CMDCLT")
-            If oColExportParam Is Nothing Then
-                Throw New Exception("No Param Found")
-            End If
-            If oColExportParam.Count = 0 Then
-                Throw New Exception("No Param Found")
-            End If
-            'Création d'une commande vide
-            oCLT = New Client()
-            oCmd = New CommandeClient(oCLT)
-            'Parcours du fichier texte (il concerne toute la commande)
-            oMyReader = My.Computer.FileSystem.OpenTextFieldParser(pstrFileName, ";")
-            nField = 0
-            While Not oMyReader.EndOfData
-                oLgCmd = oCmd.AjouteLigne()
-                oCmd.setLgCourante(oLgCmd)
-                currentRow = oMyReader.ReadFields()
-                If (oColExportParam.Count < currentRow.Length) Then
-                    Throw New Exception("Le nombre de champs dans le fichier texte dépasse le nombre de paramètre")
-                End If
-                For nField = 0 To currentRow.Length - 1
-                    oParam = oColExportParam.Item(nField + 1)
-                    If currentRow(nField).Length > 0 Then
-                        oCmd.SetProperty(oParam.Valeur, currentRow(nField))
-                    End If
-                Next
-                oCmd.m_oLgCourante.calcPoidsColis()
-                oCmd.m_oLgCourante.CalculCommission()
-                oCmd.m_oLgCourante.calculPrixTotal()
-            End While
-
-            oCmd.calculPrixTotal()
-            oCmd.CalcMontantTransport()
-            oMyReader.Close()
-            oReturn = oCmd
-        Catch ex As Exception
-            Trace.WriteLine(ex.Message)
-            oReturn = Nothing
-        End Try
-        Return oReturn
-    End Function
 
 
     ''' <summary>
@@ -1572,7 +1060,7 @@ Public MustInherit Class Commande
     ''' </summary>
     ''' <returns>Nom du fichier généré ou ""</returns>
     ''' <remarks></remarks>
-    Public Function toCSVQuadraFact(pstrFile As String, pTypeExport As vncTypeExportQuadra) As String
+    Public Function toCSVQuadraFact(pstrFile As String) As String
         Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
         Dim objLgCommande As LgCommande
         Dim objProduit As Produit
@@ -1632,7 +1120,7 @@ Public MustInherit Class Commande
                         End If
                         If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
                             'Exportation d'une Valeur
-                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande, pTypeExport)
+                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande)
                         End If
 
                         'Si la longueur est égale à 0 => Trim
@@ -1665,7 +1153,7 @@ Public MustInherit Class Commande
         Return bReturn
     End Function 'ToCSVQuadra
 
-    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande, pTypeExport As vncTypeExportQuadra) As String
+    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande) As String
         Dim strReturn As String
         strReturn = String.Empty
 
@@ -1673,7 +1161,7 @@ Public MustInherit Class Commande
 
             Select Case pstrAttributeName.ToUpper()
                 Case "IDENTIFIANT"
-                    strReturn = Trim(Me.getCodeTiers())
+                    strReturn = Trim(Me.TiersCode)
                 Case "REFERENCE1"
                     strReturn = Trim(Me.getCodeCommande())
                 Case "DATEPIECE"
@@ -1719,10 +1207,24 @@ Public MustInherit Class Commande
     Public Overridable Function getCodeCommande() As String
         Return code
     End Function
-    Public Overridable Function getCodeTiers() As String
-        Return oTiers.code
 
-    End Function
-
+    Private m_origine As String
+    Public Property Origine() As String
+        Get
+            Return m_origine
+        End Get
+        Set(ByVal value As String)
+            m_origine = value
+        End Set
+    End Property
+    Private bSelected As Boolean
+    Public Property Selected() As Boolean
+        Get
+            Return bSelected
+        End Get
+        Set(ByVal value As Boolean)
+            bSelected = value
+        End Set
+    End Property
 
 End Class ' Commande

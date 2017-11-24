@@ -118,7 +118,7 @@ Imports System.IO
             System.IO.File.Delete(strFile)
         End If
 
-        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
+        oSCMD.toCSVQuadraFact(strFile)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -176,7 +176,7 @@ Imports System.IO
         If System.IO.File.Exists(strFile) Then
             System.IO.File.Delete(strFile)
         End If
-        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
+        oSCMD.toCSVQuadraFact(strFile)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -206,7 +206,7 @@ Imports System.IO
         If System.IO.File.Exists(strFile) Then
             System.IO.File.Delete(strFile)
         End If
-        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBaFournisseur)
+        oSCMD.toCSVQuadraFact(strFile)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -231,7 +231,6 @@ Imports System.IO
         Dim objCMDH As CommandeClient
         Dim oSCMD As SousCommande
         Dim oLg As LgCommande
-        Dim strFile As String
 
         'Founisseur Vinicom
         m_oFourn.bExportInternet = vncTypeExportScmd.vncExportInternet 'Fournisseur Vinicom
@@ -300,6 +299,7 @@ Imports System.IO
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportQuadra), oSCMD.oFournisseur.bExportInternet)
         Assert.AreEqual("VINICOM", CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
+        Assert.AreEqual(m_oClient.code, oSCMD.TiersCode)
 
         'Second Element à Exporter
         'une commande HOBIVIN avec les 2 produits
@@ -307,6 +307,7 @@ Imports System.IO
         objCMDH = oExport.ListCmd(1)
         Assert.AreEqual("HOBIVIN", objCMDH.Origine)
         Assert.AreEqual(2, objCMDH.colLignes.Count)
+        Assert.AreEqual(m_oClient.code, oSCMD.TiersCode)
 
         'Export de type Ba Fournisseur
         oExport.typeExport = vncTypeExportQuadra.vncExportBaFournisseur
@@ -319,66 +320,8 @@ Imports System.IO
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportInternet), oSCMD.oFournisseur.bExportInternet)
         Assert.AreEqual("HOBIVIN", CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
+        Assert.AreEqual(m_oFourn.code, oSCMD.TiersCode)
 
-
-
-
-
-        ''Export de la SECONDE SousCommande (CMD VINICOM, PROD HOBIVIN)
-        ''Export de type BAFClient (Facture à générer par QuadraFact)
-        'oSCMD = objCMDV.colSousCommandes(2)
-        'Assert.AreEqual(CInt(vncTypeExportScmd.vncExportQuadra), oSCMD.oFournisseur.bExportInternet)
-
-        'strFile = "./adel.csv"
-        'If System.IO.File.Exists(strFile) Then
-        '    System.IO.File.Delete(strFile)
-        'End If
-        'oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
-
-        'Assert.IsTrue(System.IO.File.Exists(strFile))
-        ''Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
-        'Assert.AreEqual(2, System.IO.File.ReadAllLines(strFile).Count)
-        'Debug.WriteLine(File.ReadAllText(strFile))
-
-        'Dim strLine As String = File.ReadAllLines(strFile)(1)
-        'Dim tab As String()
-        'tab = strLine.Split(";")
-        'Assert.AreEqual(tab(0), m_oClient.code)
-        'Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
-        'Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        'Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
-        'Assert.AreEqual(tab(4), m_oProduit2.code)
-        'Assert.AreEqual(tab(5), "25")
-        'Assert.AreEqual(tab(6), "25.5")
-
-
-        ''Export de la Première SousCommande (CMD VINICOM, PROD VINICOM)
-        ''Normalement cette Souscommande n'est pas Exportée sous Quadra
-        ''même traitement qu'une commande "HOBIVIN" avec un produit VINICOM
-        ''Export de type BAFFournisseur (Mise à jour des stocks dans QuadraFact)
-        'm_oCmd.Origine = "HOBIVIN"
-
-        'oSCMD = objCMDV.colSousCommandes(1)
-        'strFile = "./adel.csv"
-        'If System.IO.File.Exists(strFile) Then
-        '    System.IO.File.Delete(strFile)
-        'End If
-        'oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBaFournisseur)
-
-        'Assert.IsTrue(System.IO.File.Exists(strFile))
-        ''Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
-        'Assert.AreEqual(2, System.IO.File.ReadAllLines(strFile).Count)
-        'Debug.WriteLine(File.ReadAllText(strFile))
-
-        'strLine = File.ReadAllLines(strFile)(1)
-        'tab = strLine.Split(";")
-        'Assert.AreEqual(tab(0), oSCMD.oFournisseur.code) 'Cette fois c'est le code fournisseur
-        'Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
-        'Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        'Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
-        'Assert.AreEqual(tab(4), m_oProduit.code)
-        'Assert.AreEqual(tab(5), "15")
-        'Assert.AreEqual(tab(6), "15.5")
 
         objCMDV.bDeleted = True
         objCMDV.save()
@@ -387,4 +330,173 @@ Imports System.IO
         oInter.save()
     End Sub
 
+    <TestMethod()>
+    Public Sub TestValidationExportBafClient()
+
+        Dim objCMDV As CommandeClient
+        Dim objCMDH As CommandeClient
+        Dim oSCMD As SousCommande
+        Dim oLg As LgCommande
+
+        'Founisseur Vinicom
+        m_oFourn.bExportInternet = vncTypeExportScmd.vncExportInternet 'Fournisseur Vinicom
+        m_oFourn.Save()
+        m_oProduit.idFournisseur = m_oFourn.id
+        m_oProduit.save()
+
+        'Fournisseur HOBIVIN
+        m_oFourn2.bExportInternet = vncTypeExportScmd.vncExportQuadra 'Fournisseur HOBIVIN
+        m_oFourn2.Save()
+        m_oProduit2.idFournisseur = m_oFourn2.id
+        m_oProduit2.save()
+
+        'Client intermédiaire
+        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        oInter.idTypeClient = Param.getTypeClientIntermediaire().id
+        oInter.save()
+
+
+        'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
+        objCMDV = New CommandeClient(m_oClient)
+        objCMDV.dateCommande = New Date(1964, 2, 6)
+        objCMDV.Origine = "VINICOM"
+        oLg = objCMDV.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMDV.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
+        oLg.qteLiv = oLg.qteCommande
+        objCMDV.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMDV.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMDV.save()
+        'Commande Vinicom Donc pas d'intermédiaire
+        Assert.IsTrue(objCMDV.generationSousCommande())
+        objCMDV.save()
+
+        Assert.AreEqual(2, objCMDV.colSousCommandes.Count)  '2 sous Commandes générées
+
+        'Creation d'une Commande "HOBIVIN" avec un produit Vinicom et un produit HOBIVIN
+        objCMDH = New CommandeClient(m_oClient)
+        objCMDH.dateCommande = New Date(1964, 2, 7)
+        objCMDH.Origine = "HOBIVIN"
+        oLg = objCMDH.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMDH.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
+        oLg.qteLiv = oLg.qteCommande
+        objCMDH.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMDH.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMDH.save()
+        'Commande HOBIVIN Donc un intermédiaire
+        Assert.IsTrue(objCMDH.generationSousCommande(oInter))
+        objCMDH.save()
+        Assert.AreEqual(2, objCMDH.colSousCommandes.Count)  '2 sous Commandes générées
+
+        Dim oExport As New ExportQuadra(New Date(1964, 2, 1), New Date(1964, 3, 1), vncTypeExportQuadra.vncExportBafClient, ".", True)
+
+        'Export de type Baf Client
+        oExport.typeExport = vncTypeExportQuadra.vncExportBafClient
+        oExport.loadListCmd()
+        oExport.ExportBaf()
+        'Test de la validation
+
+        For Each oCmd As Commande In oExport.ListCmd
+            If (TypeOf (oCmd) Is CommandeClient) Then
+                Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
+            End If
+            If (TypeOf (oCmd) Is SousCommande) Then
+                Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oCmd.EtatCode)
+
+            End If
+
+        Next
+
+        objCMDV.bDeleted = True
+        objCMDV.save()
+
+        oInter.bDeleted = True
+        oInter.save()
+    End Sub
+
+    <TestMethod()>
+    Public Sub TestValidationExportBaFournisseur()
+
+        Dim objCMDV As CommandeClient
+        Dim objCMDH As CommandeClient
+        Dim oSCMD As SousCommande
+        Dim oLg As LgCommande
+
+        'Founisseur Vinicom
+        m_oFourn.bExportInternet = vncTypeExportScmd.vncExportInternet 'Fournisseur Vinicom
+        m_oFourn.Save()
+        m_oProduit.idFournisseur = m_oFourn.id
+        m_oProduit.save()
+
+        'Fournisseur HOBIVIN
+        m_oFourn2.bExportInternet = vncTypeExportScmd.vncExportQuadra 'Fournisseur HOBIVIN
+        m_oFourn2.Save()
+        m_oProduit2.idFournisseur = m_oFourn2.id
+        m_oProduit2.save()
+
+        'Client intermédiaire
+        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        oInter.idTypeClient = Param.getTypeClientIntermediaire().id
+        oInter.save()
+
+
+        'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
+        objCMDV = New CommandeClient(m_oClient)
+        objCMDV.dateCommande = New Date(1964, 2, 6)
+        objCMDV.Origine = "VINICOM"
+        oLg = objCMDV.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMDV.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
+        oLg.qteLiv = oLg.qteCommande
+        objCMDV.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMDV.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMDV.save()
+        'Commande Vinicom Donc pas d'intermédiaire
+        Assert.IsTrue(objCMDV.generationSousCommande())
+        objCMDV.save()
+
+        Assert.AreEqual(2, objCMDV.colSousCommandes.Count)  '2 sous Commandes générées
+
+        'Creation d'une Commande "HOBIVIN" avec un produit Vinicom et un produit HOBIVIN
+        objCMDH = New CommandeClient(m_oClient)
+        objCMDH.dateCommande = New Date(1964, 2, 7)
+        objCMDH.Origine = "HOBIVIN"
+        oLg = objCMDH.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMDH.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
+        oLg.qteLiv = oLg.qteCommande
+        objCMDH.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMDH.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMDH.save()
+        'Commande HOBIVIN Donc un intermédiaire
+        Assert.IsTrue(objCMDH.generationSousCommande(oInter))
+        objCMDH.save()
+        Assert.AreEqual(2, objCMDH.colSousCommandes.Count)  '2 sous Commandes générées
+
+        Dim oExport As New ExportQuadra(New Date(1964, 2, 1), New Date(1964, 3, 1), vncTypeExportQuadra.vncExportBafClient, ".", True)
+
+        'Export de type Baf Client
+        oExport.typeExport = vncTypeExportQuadra.vncExportBaFournisseur
+        oExport.loadListCmd()
+        oExport.ExportBaf()
+        'Test de la validation
+
+        For Each oCmd As Commande In oExport.ListCmd
+            If (TypeOf (oCmd) Is CommandeClient) Then
+                Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
+            End If
+            If (TypeOf (oCmd) Is SousCommande) Then
+                Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oCmd.EtatCode)
+
+            End If
+
+        Next
+
+        objCMDV.bDeleted = True
+        objCMDV.save()
+
+        oInter.bDeleted = True
+        oInter.save()
+    End Sub
 End Class

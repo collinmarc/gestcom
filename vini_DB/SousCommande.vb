@@ -80,7 +80,8 @@ Public Class SousCommande
         m_codeCommande = poCommandeClient.code
         m_bExportInternet = False
         majBooleenAlaFinDuNew()
-        Me.Selected = True  'Selection pour la création de factures de commsions
+
+        Origine = poCommandeClient.Origine
 
     End Sub
 
@@ -368,15 +369,6 @@ Public Class SousCommande
         End Get
     End Property
 
-    Private bSelected As Boolean
-    Public Property Selected() As Boolean
-        Get
-            Return bSelected
-        End Get
-        Set(ByVal value As Boolean)
-            bSelected = value
-        End Set
-    End Property
 
 
 #End Region
@@ -737,39 +729,6 @@ Public Class SousCommande
 
     End Function
 
-    ''' <summary>
-    ''' Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
-    ''' </summary>
-    ''' <param name="pddeb"></param>
-    ''' <param name="pdfin"></param>
-    ''' <param name="pStrCodeFourn"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Shared Function getListeAExporterQuadra(pTypeExport As vncTypeExportQuadra, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
-        Dim colReturn As New List(Of SousCommande)
-        Dim colTemp As List(Of SousCommande)
-        shared_connect()
-
-        'Voir PR1710-035
-        '===============
-        If pTypeExport = vncTypeExportQuadra.vncExportBafClient Then
-            'Export des SousCommandes Issues du site Vinicom dont les fournisseurs sont marqués comme 'ExportQuadra'
-            colTemp = ListeSCMDFournisseurExportQuadra(vncOrigineCmd.vncVinicom, pddeb, pdfin, pStrCodeFourn)
-            colReturn.AddRange(colTemp)
-            'Export des SousCommandes issues du Site Hobivin
-            colTemp = ListeSCMDGeneree(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
-            colReturn.AddRange(colTemp)
-        End If
-        If pTypeExport = vncTypeExportQuadra.vncExportBaFournisseur Then
-            'Export des SousCommandes Issues du site HOBIVIN dont les fournisseurs ne sont pas marqués comme 'ExportQuadra'
-            colTemp = ListeSCMDFournisseurNONExportQuadra(vncOrigineCmd.vncHOBIVIN, pddeb, pdfin, pStrCodeFourn)
-            colReturn.AddRange(colTemp)
-        End If
-
-        shared_disconnect()
-
-        Return colReturn
-    End Function 'getListeExportee
     '========================================================================
     '/// <summary>Genere le bon à Facturer dans un fichier PDF</summary>
     '/// <param name="strPathToReport">Emplacement des états Crystal Report</param>
@@ -1134,16 +1093,31 @@ Public Class SousCommande
         Return codeCommandeClient
     End Function
 
-    Public Overrides Function getCodeTiers() As String
-        If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
-            'c'est un produit HOBIVIN
-            Return MyBase.getCodeTiers()
-        Else
-            'C'est un produit VINICOM
-            Return oFournisseur.code
-        End If
-    End Function
+    Public Overrides ReadOnly Property TiersCode() As String
+        Get
+            If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                'c'est un produit HOBIVIN
+                Return MyBase.TiersCode()
+            Else
+                'C'est un produit VINICOM
+                Return oFournisseur.code
+            End If
 
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property TiersRS() As String
+        Get
+            If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                'c'est un produit HOBIVIN
+                Return MyBase.TiersRS
+            Else
+                'C'est un produit VINICOM
+                Return oFournisseur.rs
+            End If
+
+        End Get
+    End Property
 #End Region
 
 End Class

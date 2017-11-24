@@ -1160,6 +1160,7 @@ N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmCAProducteurClient.resources
 N:\vinicom\V5\vini_app\bin\Debug\Requetes\V5.8TOV5.9.sql
 N:\vinicom\V5\vini_app\bin\Debug\ModeReglmtQuadra.csv
 N:\vinicom\V5\vini_app\obj\Debug\vini_app.frmGestFactCom.resources
+N:\vinicom\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL
 V:\V5\vini_app\obj\Debug\vini_app.vbprojResolveAssemblyReference.cache
 V:\V5\vini_app\obj\Debug\vini_app.dlgBackupRestore.resources
 V:\V5\vini_app\obj\Debug\vini_app.dlgExportWebEDI.resources
@@ -1199,7 +1200,6 @@ V:\V5\vini_app\obj\Debug\vini_app.frmGestFactTRP.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmGestParamModeReglement.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmGestTarif.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmHistoriqueArticles.resources
-V:\V5\vini_app\obj\Debug\vini_app.frmImportcommandeClient.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmJournalAnnonces.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmLibere.resources
 V:\V5\vini_app\obj\Debug\vini_app.frmListeCommandes.resources
@@ -1247,9 +1247,6 @@ V:\V5\vini_app\obj\Debug\vini_app.textBoxNumeric.resources
 V:\V5\vini_app\obj\Debug\vini_app.textBoxStrNumeric.resources
 V:\V5\vini_app\obj\Debug\vini_app.vbproj.GenerateResource.Cache
 V:\V5\vini_app\obj\Debug\vini_app.vbproj.CoreCompileInputs.cache
-V:\V5\vini_app\obj\Debug\vini_app.exe
-V:\V5\vini_app\obj\Debug\vini_app.xml
-V:\V5\vini_app\obj\Debug\vini_app.pdb
 V:\V5\vini_app\bin\Debug\ModeReglmtQuadra.csv
 V:\V5\vini_app\bin\Debug\Requetes\V5.8TOV5.9.sql
 V:\V5\vini_app\bin\Debug\crBilanFinancierClient.rpt
@@ -1322,6 +1319,7 @@ V:\V5\vini_app\bin\Debug\crListeCAMensuelClient.rpt
 V:\V5\vini_app\bin\Debug\crTableauCAClient.rpt
 V:\V5\vini_app\bin\Debug\Readme.txt
 V:\V5\vini_app\bin\Debug\Requetes\V5.6TOV5.7.sql
+V:\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL
 V:\V5\vini_app\bin\Debug\Requetes\VxxTOV5.6.sql
 V:\V5\vini_app\bin\Debug\crFactHobivin.rpt
 V:\V5\vini_app\bin\Debug\crEnteteHBV.rpt
@@ -1439,5 +1437,6 @@ V:\V5\vini_app\bin\Debug\Microsoft.MSXML.dll
 V:\V5\vini_app\bin\Debug\vini_DB.pdb
 V:\V5\vini_app\bin\Debug\vini_DB.xml
 V:\V5\vini_app\bin\Debug\vini_DB.dll.config
-V:\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL
-N:\vinicom\V5\vini_app\bin\Debug\Requetes\V5.9.003ToV5.9.004.SQL
+V:\V5\vini_app\obj\Debug\vini_app.exe
+V:\V5\vini_app\obj\Debug\vini_app.xml
+V:\V5\vini_app\obj\Debug\vini_app.pdb

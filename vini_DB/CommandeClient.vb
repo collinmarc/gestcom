@@ -44,7 +44,6 @@ Public Class CommandeClient
     Protected m_bUpdatePrecommande As Boolean = True     'Mise à jour des précommandes (par defaut = vrai)
     Protected m_IDPrestashop As Long
     Protected m_NamePrestashop As String
-    Protected m_Origine As String
 #End Region
 #Region "Accesseurs"
     Public Sub New(ByVal poClient As Client)
@@ -60,7 +59,7 @@ Public Class CommandeClient
         m_RaisonSocialeLivraison = ""
         m_bUpdatePrecommande = True
         m_NamePrestashop = ""
-        m_Origine = "VINICOM"
+        Origine = "VINICOM"
         Debug.Assert(Not m_oTransporteur Is Nothing)
         Debug.Assert(Not etat Is Nothing)
         majBooleenAlaFinDuNew()
@@ -205,17 +204,6 @@ Public Class CommandeClient
         Set(value As String)
             If value <> m_NamePrestashop Then
                 m_NamePrestashop = value
-                RaiseUpdated()
-            End If
-        End Set
-    End Property
-    Public Property Origine As String
-        Get
-            Return m_Origine
-        End Get
-        Set(value As String)
-            If value <> m_Origine Then
-                m_Origine = value
                 RaiseUpdated()
             End If
         End Set
@@ -1230,11 +1218,6 @@ Public Class CommandeClient
             For Each objLgCommande In colLignes
                 objLgCommande.qteFact = objLgCommande.qteLiv
             Next objLgCommande
-
-            'changement d'état de la sous Commandes
-            'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
 
             bReturn = True
         Catch ex As Exception

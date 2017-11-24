@@ -60,6 +60,35 @@ Public Class ExportQuadra
         End Set
     End Property
 
+    Public Property isExportBafClient As Boolean
+        Get
+            Return typeExport = vncTypeExportQuadra.vncExportBafClient
+        End Get
+        Set(ByVal value As Boolean)
+            If value Then
+                typeExport = vncTypeExportQuadra.vncExportBafClient
+
+            Else
+                typeExport = vncTypeExportQuadra.vncExportBaFournisseur
+
+            End If
+        End Set
+    End Property
+    Public Property isExportBaFournisseur As Boolean
+        Get
+            Return typeExport = vncTypeExportQuadra.vncExportBaFournisseur
+        End Get
+        Set(ByVal value As Boolean)
+            If Not value Then
+                typeExport = vncTypeExportQuadra.vncExportBafClient
+
+            Else
+                typeExport = vncTypeExportQuadra.vncExportBaFournisseur
+
+            End If
+        End Set
+    End Property
+
     Public Sub New(pDateDeb As Date, pdateFin As Date, ptype As vncTypeExportQuadra, pFolder As String, Optional pbSaveCmd As Boolean = True)
 
         dateDeb = pDateDeb
@@ -86,7 +115,7 @@ Public Class ExportQuadra
 
         Debug.Assert(Not ListCmd Is Nothing)
 
-        Dim objSCMD As Commande
+        Dim objCMD As Commande
         Dim bExportOK As Boolean = True
         Dim bReturn As Boolean
         Dim strFile As String
@@ -103,24 +132,29 @@ Public Class ExportQuadra
             End Select
 
             bReturn = False
-            If Not My.Computer.FileSystem.DirectoryExists(strFile) Then
-                My.Computer.FileSystem.CreateDirectory(strFile)
+            If Not My.Computer.FileSystem.DirectoryExists(folder) Then
+                My.Computer.FileSystem.CreateDirectory(folder)
             End If
 
             'Génération du nom de fichier en fonction du type d'export
+            If System.IO.File.Exists(strFile) Then
+                System.IO.File.Delete(strFile)
+            End If
 
             Call Notifier()
 
             'Parcours de la liste des souscommandes et génération du fichier CSV
-            For Each objSCMD In ListCmd
-                objSCMD.load()
-                objSCMD.loadcolLignes()
-                If objSCMD.colLignes.Count > 0 Then
-                    objSCMD.toCSVQuadraFact(strFile, typeExport)
-                    objSCMD.ValiderExportQuadra()
-                    'Il faut sauvegarder les sous commandes car l'export a été réalisé
-                    If Me.bSaveCmd Then
-                        objSCMD.Save()
+            For Each objCMD In ListCmd
+                If objCMD.Selected Then
+                    objCMD.load()
+                    objCMD.loadcolLignes()
+                    If objCMD.colLignes.Count > 0 Then
+                        objCMD.toCSVQuadraFact(strFile)
+                        objCMD.ValiderExportQuadra()
+                        'Il faut sauvegarder les sous commandes car l'export a été réalisé
+                        If Me.bSaveCmd Then
+                            objCMD.Save()
+                        End If
                     End If
                 End If
                 Notifier()
@@ -162,6 +196,14 @@ Public Class ExportQuadra
                     Me.ListCmd.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin))
                     Me.ListCmd.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncPasExport, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin))
             End Select
+
+            For Each ocmd As Commande In ListCmd
+                If TypeOf (ocmd) Is SousCommande Then
+                    Dim oScmd As SousCommande
+                    oScmd = ocmd
+                    oScmd.oFournisseur.load()
+                End If
+            Next
             bReturn = True
         Catch ex As Exception
             setError(Environment.StackTrace, ex.Message)

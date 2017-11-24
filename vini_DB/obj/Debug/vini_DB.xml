@@ -98,7 +98,7 @@ vini_DB
  <returns></returns>
  <remarks>le calcul de la commssion n'est effectuté que pour les commande</remarks>
 </member>
-<member name="M:vini_DB.Commande.toCSVQuadraFact(System.String,vini_DB.vncEnums.vncTypeExportQuadra)">
+<member name="M:vini_DB.Commande.toCSVQuadraFact(System.String)">
  <summary>
  Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
  </summary>
@@ -2314,16 +2314,6 @@ Represents the connection and commands used to retrieve and save data.
  <summary>
  Valider l'export quadra : Changement d'état de la sousCommande
  </summary>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:vini_DB.SousCommande.getListeAExporterQuadra(vini_DB.vncEnums.vncTypeExportQuadra,System.DateTime,System.DateTime,System.String)">
- <summary>
- Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
- </summary>
- <param name="pddeb"></param>
- <param name="pdfin"></param>
- <param name="pStrCodeFourn"></param>
  <returns></returns>
  <remarks></remarks>
 </member>
