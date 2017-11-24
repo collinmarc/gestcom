@@ -487,7 +487,6 @@ Imports vini_DB
         objCMDCLT2.oTransporteur.AdresseLivraison.nom = "LE CALVEZ"
         objCMDCLT2.oTransporteur.AdresseLivraison.ville = "CHATEAU GIRON"
         objCMDCLT2.oTransporteur.AdresseLivraison.cp = "35"
-        objCMDCLT2.changeEtat(vncEnums.vncActionEtatCommande.vncActionTransmettre)
         Assert.IsTrue(objCMDCLT2.etat.codeEtat = vncEnums.vncEtatCommande.vncEnCoursSaisie)
         objCMDCLT2.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnValider)
         Assert.IsTrue(objCMDCLT2.etat.codeEtat = vncEnums.vncEtatCommande.vncEnCoursSaisie)

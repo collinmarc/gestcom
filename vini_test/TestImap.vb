@@ -644,7 +644,7 @@ Imports System.Text.RegularExpressions
         ocmd = cmdprestashop.readXML(strIn)
         Assert.AreEqual(ocmd.id, "2")
         Assert.AreEqual(ocmd.name, "aqwzsx")
-        Assert.AreEqual(ocmd.name, "VINICOM")
+        Assert.AreEqual(ocmd.origine, "VINICOM")
         Assert.AreEqual(ocmd.livraison_company, "MCII")
         Assert.AreEqual(ocmd.livraison_name, "Collin")
         Assert.AreEqual(ocmd.livraison_firstname, "MCII")
@@ -709,7 +709,7 @@ Imports System.Text.RegularExpressions
 
     End Sub
 
-    <TestMethod()> Public Sub testGetClientPrestashop()
+    <TestMethod(), Ignore> Public Sub testGetClientPrestashop()
         Dim oClient As Client
         oClient = Client.createandloadPrestashop(99)
         Assert.IsNull(oClient)
@@ -774,22 +774,25 @@ Imports System.Text.RegularExpressions
         'Création du client
         Dim oClient As New Client()
         oClient.code = "CLTTST"
-        oClient.idPrestashop = 99
+        oClient.idPrestashop = Now().Hour() & Now.Minute & Now().Second()
+
+
         Assert.IsTrue(oClient.Save())
         'On Créé le produit
-        Dim obj As Fournisseur
-        obj = New Fournisseur("TST", "nom")
-        Assert.IsTrue(obj.Save)
-        Dim oProduit As New Produit("PRD1", obj, 2010)
-        Assert.IsTrue(oProduit.Save())
-        oProduit = New Produit("PRD2", obj, 2010)
+        Dim objFRN As Fournisseur
+        objFRN = New Fournisseur("TST", "nom")
+        Assert.IsTrue(objFRN.Save)
+        Dim oProduit As New Produit("PRD1", objFRN, 2010)
+        Assert.IsTrue(oProduit.save())
+        oProduit = New Produit("PRD2", objFRN, 2010)
         Assert.IsTrue(oProduit.Save())
 
-
+        'Création de la Commande D'import Prestashop (simulation de la lecture du XML)
         Dim oCmd As New cmdprestashop()
-        oCmd.customer_id = 99
+        oCmd.customer_id = oClient.idPrestashop
         oCmd.id = 1
         oCmd.name = "ZSXEDC"
+        oCmd.company = "MyCompany"
         oCmd.livraison_company = "TEST MCII"
         oCmd.livraison_name = "Marc Collin"
         oCmd.AddLigne("PRD1", 10, 5.5)
@@ -807,7 +810,7 @@ Imports System.Text.RegularExpressions
         Assert.AreEqual(oCmd.name, oCmdClt.NamePrestashop)
         Assert.AreEqual(oClient.code, oCmdClt.TiersCode)
         Assert.AreEqual(oCmd.livraison_company, oCmdClt.caracteristiqueTiers.rs)
-        Assert.AreEqual(oCmd.livraison_name, oCmdClt.caracteristiqueTiers.nom)
+        Assert.AreEqual(oCmd.company, oCmdClt.caracteristiqueTiers.nom)
         Assert.AreEqual(oCmd.livraison_company, oCmdClt.RaisonSocialeLivraison)
         Assert.AreEqual(oCmd.livraison_name & " " & oCmd.livraison_firstname, oCmdClt.NomLivraison)
         Assert.AreEqual(oCmd.livraison_name & " " & oCmd.livraison_firstname, oCmdClt.caracteristiqueTiers.AdresseLivraisonNom)
@@ -832,6 +835,18 @@ Imports System.Text.RegularExpressions
             Assert.AreEqual(oLg.prixunitaire, oLgCmd.prixU)
 
         Next
+
+        oProduit.bDeleted = True
+        oProduit.save()
+        objFRN.bDeleted = True
+        objFRN.Save()
+        oClient.bDeleted = True
+        oClient.save()
+
+
+
+
+
 
     End Sub
     Private Sub EnvoiMailCmd2()
@@ -927,7 +942,7 @@ Imports System.Text.RegularExpressions
         Dim smtp As SmtpClient = New SmtpClient()
         smtp.Host = "smtp.googlemail.com"
         smtp.Port = 587
-        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3.")
+        smtp.Credentials = New System.Net.NetworkCredential("marccollin.com@gmail.com", "tphhgv3..")
         smtp.EnableSsl = True
 
         smtp.Send(mail)

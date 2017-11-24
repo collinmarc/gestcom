@@ -377,6 +377,8 @@ Public Class SousCommande
             bSelected = value
         End Set
     End Property
+
+
 #End Region
 #Region "Fonction communes"
     '=======================================================================
@@ -684,14 +686,57 @@ Public Class SousCommande
     '/// <param name="pdfin">date de fin</param>
     '/// <returns>une collection</returns>
     '========================================================================
-    Public Shared Function getListeAExporter(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
+    ''' <summary>
+    ''' Rend une liste de sous commande à Exporter 
+    ''' </summary>
+    ''' <param name="pTypeExport">Type d'export (1=ExportInternet, 2 = ExportQuadra)</param>
+    ''' <param name="pOrigine">Origine de la Commande</param>
+    ''' <param name="pddeb">Date De Debut</param>
+    ''' <param name="pdfin">Date de fin </param>
+    ''' <param name="pStrCodeFourn">Code Fournisseur (Facultatif)</param>
+    ''' <returns></returns>
+    Public Shared Function getListeAExporter(pTypeExport As vncTypeExportScmd, pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
         Dim colReturn As List(Of SousCommande)
         shared_connect()
-        colReturn = ListeSCMDAExporterInternet(pddeb, pdfin, pStrCodeFourn)
+        colReturn = ListeSCMDAExporterInternet(pOrigine, pddeb, pdfin, pStrCodeFourn, pTypeExport)
         Debug.Assert(Not colReturn Is Nothing, getErreur())
         shared_disconnect()
         Return colReturn
     End Function 'getListeExportee
+
+    ''' <summary>
+    ''' Valider l'export quadra : Changement d'état de la sousCommande
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overrides Function ValiderExportQuadra() As Boolean
+        Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
+        Dim objLgCommande As LgCommande
+        Dim bReturn As Boolean
+        bReturn = False
+
+        Try
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+            Me.bExportInternet = True
+            'Quantité Facturée = Quantité Livrée
+            For Each objLgCommande In colLignes
+                objLgCommande.qteFact = objLgCommande.qteLiv
+            Next objLgCommande
+
+            'changement d'état de la sous Commandes
+            'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
+
+            bReturn = True
+        Catch ex As Exception
+            setError("SousCommande.ValiderExportQuadra ERR" & ex.Message)
+            bReturn = False
+        End Try
+        Return bReturn
+
+    End Function
+
     ''' <summary>
     ''' Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
     ''' </summary>
@@ -971,177 +1016,7 @@ Public Class SousCommande
     End Function 'ToCSV
 
 
-    ''' <summary>
-    ''' Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
-    ''' </summary>
-    ''' <returns>Nom du fichier généré ou ""</returns>
-    ''' <remarks></remarks>
-    Public Function toCSVQuadraFact(pstrFile As String, pTypeExport As vncTypeExportQuadra) As String
-        Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
-        Dim objLgCommande As LgCommande
-        Dim objProduit As Produit
-        Dim bReturn As Boolean
-        Dim oTA As vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter
-        Dim oDT As vini_DB.dsVinicom.EXPORTPARAMDataTable
-        Dim oRow As vini_DB.dsVinicom.EXPORTPARAMRow
-        Dim nbChamps As Integer
-        Dim nChamps As Integer
-        Dim strLine As String
-        Dim strValeur As String
-        Dim strCodeExport As String = "QFACT"
 
-        bReturn = False
-        Try
-
-
-            oTA = New vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter()
-            oTA.Connection = Persist.oleDBConnection
-
-            'Lecture des champs de la ligne 1
-            oDT = oTA.GetDataBy_TYPE_NLIGNE(strCodeExport, 1)
-            'Recupéation du nombre de champs
-            nbChamps = oTA.getNbChamps(strCodeExport, 1)
-
-            'Création de l'entête du fichier si nécessaire
-            If Not System.IO.File.Exists(pstrFile) Then
-                strLine = ""
-                For nChamps = 1 To nbChamps
-                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
-                    If oRow IsNot Nothing Then
-                        If oRow.EXP_LONGUEUR = 0 Then
-                            strLine = strLine + Trim(oRow.EXP_VALEUR)
-                        Else
-                            strLine = strLine + Left(oRow.EXP_VALEUR + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
-                        End If
-                    End If
-
-                Next
-
-                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
-            End If
-
-            'Ajout d'une ligne par Ligne de produit
-            For Each objLgCommande In colLignes
-                strLine = ""
-                objProduit = Produit.createandload(objLgCommande.oProduit.id) 'Chargement du produit
-
-                For nChamps = 1 To nbChamps
-                    'Pour chaque Champs
-                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
-                    If oRow IsNot Nothing Then
-                        strValeur = ""
-                        If Trim(oRow.EXP_TYPECHAMPS).Equals("C") Then
-                            'Exportation d'une Constante
-                            strValeur = oRow.EXP_VALEUR
-                        End If
-                        If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
-                            'Exportation d'une Valeur
-                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande, pTypeExport)
-                        End If
-
-                        'Si la longueur est égale à 0 => Trim
-                        If oRow.EXP_LONGUEUR = 0 Then
-                            strLine = strLine + Trim(strValeur)
-                        Else
-                            strLine = strLine + Left(strValeur + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
-                        End If
-                    End If
-                Next 'champs
-                'Remplacement des caractères spéciaux
-                strLine = Replace(strLine, vbCrLf, "--")
-                strLine = Replace(strLine, vbCr, "-")
-                strLine = Replace(strLine, vbLf, "-")
-                strLine = Replace(strLine, vbNullChar, "-")
-                strLine = Replace(strLine, vbTab, "-")
-                strLine = Replace(strLine, vbBack, "-")
-
-
-                'Ajout de la ligne dans le fichier
-                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
-
-            Next objLgCommande
-            bReturn = True
-
-        Catch ex As Exception
-            Trace.WriteLine("SousCommande.toCSVQuadra ERR" & ex.Message)
-            bReturn = False
-        End Try
-        Return bReturn
-    End Function 'ToCSVQuadra
-
-    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande, pTypeExport As vncTypeExportQuadra) As String
-        Dim strReturn As String
-        strReturn = String.Empty
-
-        Try
-
-            Select Case pstrAttributeName.ToUpper()
-                Case "IDENTIFIANT"
-                    If pTypeExport = vncTypeExportQuadra.vncExportBafClient Then
-                        strReturn = Trim(Me.oClient.code)
-                    Else
-                        strReturn = Trim(Me.oFournisseur.code)
-                    End If
-                Case "REFERENCE1"
-                        strReturn = Trim(Me.codeCommandeClient)
-                        Case "DATEPIECE"
-                        strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
-                        Case "PIECEREGROUP"
-                        strReturn = Trim(Me.codeCommandeClient)
-                        Case "DATEPEIECE"
-                        strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
-                        Case "CODEARTICLE"
-                        strReturn = Trim(pLgCommande.oProduit.code)
-                        Case "QUANTITE"
-                        strReturn = Trim(pLgCommande.qteLiv)
-                        Case "PRIXHT"
-                        If pLgCommande.qteLiv <> 0 Then
-                            strReturn = Trim(pLgCommande.prixHT / pLgCommande.qteLiv)
-                        Else
-                            strReturn = "0"
-                        End If
-
-            End Select
-        Catch ex As Exception
-            setError(System.Environment.StackTrace, ex.Message)
-            strReturn = ""
-        End Try
-
-        Return strReturn
-    End Function
-
-    ''' <summary>
-    ''' Valider l'export quadra : Chagement d'état de la sousCommande
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Function ValiderExportQuadra() As Boolean
-        Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
-        Dim objLgCommande As LgCommande
-        Dim bReturn As Boolean
-        bReturn = False
-
-        Try
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
-            Me.bExportInternet = True
-            'Quantité Facturée = Quantité Livrée
-            For Each objLgCommande In colLignes
-                objLgCommande.qteFact = objLgCommande.qteLiv
-            Next objLgCommande
-
-            'changement d'état de la sous Commandes
-            'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
-
-            bReturn = True
-        Catch ex As Exception
-            Trace.WriteLine("SousCommande.ValiderExportQuadra ERR" & ex.Message)
-            bReturn = False
-        End Try
-        Return bReturn
-
-    End Function
 
 
     '/// <summary>Create a CSV string for simulate internet export
@@ -1254,5 +1129,21 @@ Public Class SousCommande
         Return bReturn
     End Function
 
+#Region "Surchargée Methode pour l'export Quadra"
+    Public Overrides Function getCodeCommande() As String
+        Return codeCommandeClient
+    End Function
+
+    Public Overrides Function getCodeTiers() As String
+        If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+            'c'est un produit HOBIVIN
+            Return MyBase.getCodeTiers()
+        Else
+            'C'est un produit VINICOM
+            Return oFournisseur.code
+        End If
+    End Function
+
+#End Region
 
 End Class

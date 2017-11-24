@@ -373,9 +373,8 @@ Public Class LgFactTRP
     '===================================
     Public Function dupliqueinfosCommande(ByVal objCmd As CommandeClient) As Boolean
         Debug.Assert(objCmd.id <> 0, "Id de la commande <> 0")
-        Debug.Assert(objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncLivree Or _
-            objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncTransmise Or _
-            objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncEclatee Or _
+        Debug.Assert(objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncLivree Or
+            objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncEclatee Or
             objCmd.etat.codeEtat <> vncEnums.vncEtatCommande.vncRapprochee _
             , "Etat de la commande incorect" & objCmd.etat.libelle)
 

@@ -3926,7 +3926,7 @@ Public Class frmSaisieCommande
                 'Type de Commande 
                 rbTypeCmdDirecte.Enabled = False
                 rbTypeCmdPlateforme.Enabled = False
-            Case vncEnums.vncEtatCommande.vncTransmise
+            Case vncEnums.vncEtatCommande.vncTransmiseQuadra
                 ckCmdValide.Checked = True
                 dtDateValidation.Enabled = False
                 ckCmdValide.Enabled = False

@@ -627,7 +627,8 @@ Public Class CommandeClient
         Dim oFRN As Fournisseur
         Dim oSCMD As SousCommande
 
-
+        'On vide la collection des sousCommande par securité
+        m_colSousCommande.clear()
         oSCMD = Nothing
         bReturn = False
         bFini = False
@@ -1212,4 +1213,35 @@ Public Class CommandeClient
         Return bReturn
     End Function 'controleStockDispo
 
+    ''' <summary>
+    ''' Valider l'export quadra : Changement d'état de la sousCommande
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overrides Function ValiderExportQuadra() As Boolean
+        Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
+        Dim objLgCommande As LgCommande
+        Dim bReturn As Boolean
+        bReturn = False
+
+        Try
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionTransmettre)
+            'Quantité Facturée = Quantité Livrée
+            For Each objLgCommande In colLignes
+                objLgCommande.qteFact = objLgCommande.qteLiv
+            Next objLgCommande
+
+            'changement d'état de la sous Commandes
+            'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
+            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
+
+            bReturn = True
+        Catch ex As Exception
+            setError("CommandeClient.ValiderExportQuadra ERR" & ex.Message)
+            bReturn = False
+        End Try
+        Return bReturn
+
+    End Function
 End Class ' CommandeClient

@@ -480,4 +480,15 @@ Public Class Param
         End Try
         Return bReturn
     End Function
+
+    Public Shared Function getTypeClientIntermediaire() As Param
+        Dim oReturn As Param = Nothing
+
+        For Each oParam As Param In Param.colTypeClient
+            If oParam.valeur.ToUpper() = "Intermediaire".ToUpper() Or oParam.valeur.ToUpper = "Intermédiaire".ToUpper Then
+                oReturn = oParam
+            End If
+        Next
+        Return oReturn
+    End Function
 End Class

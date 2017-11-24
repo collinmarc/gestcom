@@ -457,7 +457,9 @@ Public Class frmExportInternet
             ddeb = dtDatedeb.Value.ToShortDateString
             dfin = dtdateFin.Value.ToShortDateString
             strCodeFourn = tbCodeFournisseur.Text
-            col = SousCommande.getListeAExporter(ddeb, dfin, strCodeFourn)
+            col = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncVinicom, ddeb, dfin, strCodeFourn)
+            'Ajout des SousCommande Hobivin ayant des Fournisseurs vinicom
+            col.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, ddeb, dfin, strCodeFourn))
             'Recupération de la liste des sous commande non Exportées
             If col Is Nothing Then
                 bReturn = False

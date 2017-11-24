@@ -98,6 +98,28 @@ vini_DB
  <returns></returns>
  <remarks>le calcul de la commssion n'est effectuté que pour les commande</remarks>
 </member>
+<member name="M:vini_DB.Commande.toCSVQuadraFact(System.String,vini_DB.vncEnums.vncTypeExportQuadra)">
+ <summary>
+ Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
+ </summary>
+ <returns>Nom du fichier généré ou ""</returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.Commande.ValiderExportQuadra">
+ <summary>
+ Valider l'export quadra : Changement d'état de la sousCommande
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.Commande.getCodeCommande">
+ <summary>
+ Rend le code de la commande (Par defaut le code)
+ Surchargé dans Sous commande pour renvoyer codecommande
+ Surcharge utilisé dans l'exportQuadra
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:vini_DB.CommandeClient.RaisonSocialeLivraison">
  <summary>
  Raison Sociale de Livraison (#702)
@@ -125,6 +147,13 @@ vini_DB
  <summary>
  Controle du stock disponible pour chaque ligne de commande
  met à jour l'indicateur bStockDispo sur la ligne de commande
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:vini_DB.CommandeClient.ValiderExportQuadra">
+ <summary>
+ Valider l'export quadra : Changement d'état de la sousCommande
  </summary>
  <returns></returns>
  <remarks></remarks>
@@ -346,6 +375,17 @@ vini_DB
  </summary>
  <returns>FTPDirectory list</returns>
  <remarks></remarks>
+</member>
+<member name="M:vini_DB.ExportQuadra.ExportBaf">
+ <summary>
+ Export des Commandes dans un fichier CSV pour Quadra
+ </summary>
+</member>
+<member name="M:vini_DB.ExportQuadra.loadListCmd">
+ <summary>
+ Rend la liste des commandes à exporter
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:vini_DB.FactHBV.createandloadFromCmd(System.Int64)">
  <summary>
@@ -2259,6 +2299,24 @@ Represents the connection and commands used to retrieve and save data.
  <returns>Objet Produit ou null</returns>
  <remarks></remarks>
 </member>
+<member name="M:vini_DB.SousCommande.getListeAExporter(vini_DB.vncEnums.vncTypeExportScmd,vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Rend une liste de sous commande à Exporter 
+ </summary>
+ <param name="pTypeExport">Type d'export (1=ExportInternet, 2 = ExportQuadra)</param>
+ <param name="pOrigine">Origine de la Commande</param>
+ <param name="pddeb">Date De Debut</param>
+ <param name="pdfin">Date de fin </param>
+ <param name="pStrCodeFourn">Code Fournisseur (Facultatif)</param>
+ <returns></returns>
+</member>
+<member name="M:vini_DB.SousCommande.ValiderExportQuadra">
+ <summary>
+ Valider l'export quadra : Changement d'état de la sousCommande
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
 <member name="M:vini_DB.SousCommande.getListeAExporterQuadra(vini_DB.vncEnums.vncTypeExportQuadra,System.DateTime,System.DateTime,System.String)">
  <summary>
  Rend la liste ds élements à Exporter sous Quadra en fonction du type d'export
@@ -2272,20 +2330,6 @@ Represents the connection and commands used to retrieve and save data.
 <member name="M:vini_DB.SousCommande.toCSV">
  <summary>
  Export d'une Sous commande au format CSV pour être exportée vers le site internet
- </summary>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:vini_DB.SousCommande.toCSVQuadraFact(System.String,vini_DB.vncEnums.vncTypeExportQuadra)">
- <summary>
- Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
- </summary>
- <returns>Nom du fichier généré ou ""</returns>
- <remarks></remarks>
-</member>
-<member name="M:vini_DB.SousCommande.ValiderExportQuadra">
- <summary>
- Valider l'export quadra : Chagement d'état de la sousCommande
  </summary>
  <returns></returns>
  <remarks></remarks>

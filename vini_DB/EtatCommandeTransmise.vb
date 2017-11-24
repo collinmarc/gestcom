@@ -1,15 +1,15 @@
-Public Class EtatCommandeTransmise
+Public Class EtatCommandeTransmiseQuadra
     Inherits EtatCommande
 
     Public Sub New(Optional ByVal pactionMvtStock As vncGenererSupprimer = vncEnums.vncGenererSupprimer.vncRien, Optional ByVal pactionSousCommande As vncGenererSupprimer = vncEnums.vncGenererSupprimer.vncRien)
         MyBase.New(pactionMvtStock, pactionSousCommande)
-        codeEtat = vncEnums.vncEtatCommande.vncTransmise
+        codeEtat = vncEnums.vncEtatCommande.vncTransmiseQuadra
         m_libelle = ETAT_TRANSMISE
     End Sub
 
     Protected Overrides Function action(ByVal vncAction As vncActionEtatCommande) As vncEtatCommande
         Dim nReturn As vncActionEtatCommande
-        nReturn = vncEnums.vncEtatCommande.vncTransmise
+        nReturn = vncEnums.vncEtatCommande.vncTransmiseQuadra
         Return nReturn
     End Function
 

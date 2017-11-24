@@ -1565,4 +1565,164 @@ Public MustInherit Class Commande
         End Try
         Return oReturn
     End Function
+
+
+    ''' <summary>
+    ''' Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
+    ''' </summary>
+    ''' <returns>Nom du fichier généré ou ""</returns>
+    ''' <remarks></remarks>
+    Public Function toCSVQuadraFact(pstrFile As String, pTypeExport As vncTypeExportQuadra) As String
+        Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
+        Dim objLgCommande As LgCommande
+        Dim objProduit As Produit
+        Dim bReturn As Boolean
+        Dim oTA As vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter
+        Dim oDT As vini_DB.dsVinicom.EXPORTPARAMDataTable
+        Dim oRow As vini_DB.dsVinicom.EXPORTPARAMRow
+        Dim nbChamps As Integer
+        Dim nChamps As Integer
+        Dim strLine As String
+        Dim strValeur As String
+        Dim strCodeExport As String = "QFACT"
+
+        bReturn = False
+        Try
+
+
+            oTA = New vini_DB.dsVinicomTableAdapters.EXPORTPARAMTableAdapter()
+            oTA.Connection = Persist.oleDBConnection
+
+            'Lecture des champs de la ligne 1
+            oDT = oTA.GetDataBy_TYPE_NLIGNE(strCodeExport, 1)
+            'Recupéation du nombre de champs
+            nbChamps = oTA.getNbChamps(strCodeExport, 1)
+
+            'Création de l'entête du fichier si nécessaire
+            If Not System.IO.File.Exists(pstrFile) Then
+                strLine = ""
+                For nChamps = 1 To nbChamps
+                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
+                    If oRow IsNot Nothing Then
+                        If oRow.EXP_LONGUEUR = 0 Then
+                            strLine = strLine + Trim(oRow.EXP_VALEUR)
+                        Else
+                            strLine = strLine + Left(oRow.EXP_VALEUR + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                        End If
+                    End If
+
+                Next
+
+                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
+            End If
+
+            'Ajout d'une ligne par Ligne de produit
+            For Each objLgCommande In colLignes
+                strLine = ""
+                objProduit = Produit.createandload(objLgCommande.oProduit.id) 'Chargement du produit
+
+                For nChamps = 1 To nbChamps
+                    'Pour chaque Champs
+                    oRow = oDT.FindByEXP_TYPEEXP_NLIGNEEXP_NCHAMPS(strCodeExport, 1, nChamps)
+                    If oRow IsNot Nothing Then
+                        strValeur = ""
+                        If Trim(oRow.EXP_TYPECHAMPS).Equals("C") Then
+                            'Exportation d'une Constante
+                            strValeur = oRow.EXP_VALEUR
+                        End If
+                        If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
+                            'Exportation d'une Valeur
+                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande, pTypeExport)
+                        End If
+
+                        'Si la longueur est égale à 0 => Trim
+                        If oRow.EXP_LONGUEUR = 0 Then
+                            strLine = strLine + Trim(strValeur)
+                        Else
+                            strLine = strLine + Left(strValeur + Space(oRow.EXP_LONGUEUR), oRow.EXP_LONGUEUR)
+                        End If
+                    End If
+                Next 'champs
+                'Remplacement des caractères spéciaux
+                strLine = Replace(strLine, vbCrLf, "--")
+                strLine = Replace(strLine, vbCr, "-")
+                strLine = Replace(strLine, vbLf, "-")
+                strLine = Replace(strLine, vbNullChar, "-")
+                strLine = Replace(strLine, vbTab, "-")
+                strLine = Replace(strLine, vbBack, "-")
+
+
+                'Ajout de la ligne dans le fichier
+                System.IO.File.AppendAllText(pstrFile, strLine & vbCrLf)
+
+            Next objLgCommande
+            bReturn = True
+
+        Catch ex As Exception
+            Trace.WriteLine("SousCommande.toCSVQuadra ERR" & ex.Message)
+            bReturn = False
+        End Try
+        Return bReturn
+    End Function 'ToCSVQuadra
+
+    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande, pTypeExport As vncTypeExportQuadra) As String
+        Dim strReturn As String
+        strReturn = String.Empty
+
+        Try
+
+            Select Case pstrAttributeName.ToUpper()
+                Case "IDENTIFIANT"
+                    strReturn = Trim(Me.getCodeTiers())
+                Case "REFERENCE1"
+                    strReturn = Trim(Me.getCodeCommande())
+                Case "DATEPIECE"
+                    strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
+                Case "PIECEREGROUP"
+                    strReturn = Trim(Me.getCodeCommande())
+                Case "DATEPEIECE"
+                    strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
+                Case "CODEARTICLE"
+                    strReturn = Trim(pLgCommande.oProduit.code)
+                Case "QUANTITE"
+                    strReturn = Trim(pLgCommande.qteLiv)
+                Case "PRIXHT"
+                    If pLgCommande.qteLiv <> 0 Then
+                        strReturn = Trim(pLgCommande.prixHT / pLgCommande.qteLiv)
+                    Else
+                        strReturn = "0"
+                    End If
+
+            End Select
+        Catch ex As Exception
+            setError(System.Environment.StackTrace, ex.Message)
+            strReturn = ""
+        End Try
+
+        Return strReturn
+    End Function
+
+    ''' <summary>
+    ''' Valider l'export quadra : Changement d'état de la sousCommande
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overridable Function ValiderExportQuadra() As Boolean
+        Return False
+    End Function
+    ''' <summary>
+    ''' Rend le code de la commande (Par defaut le code)
+    ''' Surchargé dans Sous commande pour renvoyer codecommande
+    ''' Surcharge utilisé dans l'exportQuadra
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable Function getCodeCommande() As String
+        Return code
+    End Function
+    Public Overridable Function getCodeTiers() As String
+        Return oTiers.code
+
+    End Function
+
+
 End Class ' Commande

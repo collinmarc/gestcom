@@ -459,17 +459,18 @@ Public Class frmExportQuadra
 
     Private Function exporter() As Boolean
 
-        Dim objExport As New ExportQuadra
-        Dim nTypeExport As vncTypeExportQuadra
+        Dim objExport As ExportQuadra
+        If rbBonAFactClient.Checked Then
+            objExport = New ExportQuadra(dtDatedeb.Value, dtdateFin.Value, vncTypeExportQuadra.vncExportBafClient, tbExportQuadraFolder.Text, ckSaveScmd.Checked)
+        Else
+            objExport = New ExportQuadra(dtDatedeb.Value, dtdateFin.Value, vncTypeExportQuadra.vncExportBaFournisseur, tbExportQuadraFolder.Text, ckSaveScmd.Checked)
+        End If
+
         'je m'ajoute commme obervateur de l'évenement
         objExport.AjouteObservateur(Me)
-        If rbBonAFactClient.Checked Then
-            nTypeExport = vncTypeExportQuadra.vncExportBafClient
-        Else
-            nTypeExport = vncTypeExportQuadra.vncExportBaFournisseur
-        End If
+
         'J'execute le traitement
-        objExport.ExportBaf(m_colCommandes, tbExportQuadraFolder.Text, nTypeExport, ckSaveScmd.Checked)
+        objExport.ExportBaf()
 
     End Function 'exporter
 

@@ -53,7 +53,7 @@ Public Module vncEnums
         vncEnCoursSaisie = 1
         vncValidee = 2
         vncEclatee = 3
-        vncTransmise = 4
+        vncTransmiseQuadra = 4
         vncRapprochee = 5
         vncLivree = 6
 
@@ -261,6 +261,12 @@ Public Module vncEnums
     Public Enum vncOrigineCmd As Integer
         vncVinicom
         vncHOBIVIN
+    End Enum
+
+    Public Enum vncTypeExportScmd As Integer
+        vncPasExport = 0
+        vncExportInternet = 1
+        vncExportQuadra = 2
     End Enum
 
 

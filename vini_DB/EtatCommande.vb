@@ -77,8 +77,8 @@ Public MustInherit Class EtatCommande
                 Return New EtatCommandeValidee(pActionMvtStock, pActionSousCommande)
             Case vncEnums.vncEtatCommande.vncEclatee
                 Return New EtatCommandeEclatee(pActionMvtStock, pActionSousCommande)
-            Case vncEnums.vncEtatCommande.vncTransmise
-                Return New EtatCommandeTransmise(pActionMvtStock, pActionSousCommande)
+            Case vncEnums.vncEtatCommande.vncTransmiseQuadra
+                Return New EtatCommandeTransmiseQuadra(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
             Case vncEnums.vncEtatCommande.vncRapprochee
                 Return New EtatCommandeRapprochee(pActionMvtStock, pActionSousCommande)
             Case vncEnums.vncEtatCommande.vncLivree

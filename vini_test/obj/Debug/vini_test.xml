@@ -101,18 +101,6 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:vini_test.T1110_sscommande.T101_ExportQuadra">
- <summary>
- Test de l'export d'une souscommande vers QuadraFacturation
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:vini_test.T1110_sscommande.T102_ExportQuadracomplet">
- <summary>
- Test de l'export d'une souscommande vers QuadraFacturation
- </summary>
- <remarks></remarks>
-</member>
 <member name="M:vini_test.T1130_FactCommission.T20_EXPORT">
  <summary>
  Test l'export d'une facture de comm
@@ -366,6 +354,18 @@ Test pour Constructeur FicheTechniqueFourn
 <member name="M:vini_test.test_V500.T02_COPY_TIERS_TO_CMD">
  <summary>
  Teste la recopie des infos du tiers sur la commande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestExportQuadra.T101_ExportQuadra">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestExportQuadra.T102_ExportQuadraSCommande">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
  </summary>
  <remarks></remarks>
 </member>
