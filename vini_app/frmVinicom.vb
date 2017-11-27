@@ -1,5 +1,7 @@
 ﻿Imports vini_DB
 Imports System.Windows.Forms.Cursors
+Imports CrystalDecisions.Windows.Forms
+Imports CrystalDecisions.CrystalReports.Engine
 
 Public Class FrmVinicom
     Inherits System.Windows.Forms.Form
@@ -21,6 +23,18 @@ Public Class FrmVinicom
     Public Event evt_ToolBarUpdated()
     Public Event evt_DisplayError()
     Public Event evt_DisplayStatus()
+
+
+    Protected Sub DisposeCr(pcrw As CrystalReportViewer)
+        If pcrw.ReportSource IsNot Nothing Then
+            Dim oReport As ReportDocument
+            oReport = pcrw.ReportSource
+            oReport.Dispose()
+            pcrw.ReportSource = Nothing
+
+        End If
+        pcrw.Dispose()
+    End Sub
 
     Protected Sub debAffiche()
         m_AffichageEnCours = m_AffichageEnCours + 1

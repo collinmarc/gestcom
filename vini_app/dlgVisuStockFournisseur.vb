@@ -28,6 +28,15 @@ Public Class dlgVisuStockFournisseur
                 components.Dispose()
             End If
         End If
+        If crwPrecommande.ReportSource IsNot Nothing Then
+            Dim oReport As ReportDocument
+            oReport = crwPrecommande.ReportSource
+            oReport.Dispose()
+            crwPrecommande.ReportSource = Nothing
+
+        End If
+        crwPrecommande.Dispose()
+
         MyBase.Dispose(disposing)
     End Sub
 

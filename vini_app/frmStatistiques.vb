@@ -21,6 +21,8 @@ Public Class frmStatistiques
                 components.Dispose()
             End If
         End If
+
+        DisposeCr(CrystalReportViewer1)
         MyBase.Dispose(disposing)
     End Sub
     Friend WithEvents CrystalReportViewer1 As CrystalDecisions.Windows.Forms.CrystalReportViewer

@@ -38,6 +38,8 @@ Public Class frmGestFactCom
                 components.Dispose()
             End If
         End If
+
+        DisposeCr(CrystalReportViewer1)
         MyBase.Dispose(disposing)
     End Sub
 

@@ -4,6 +4,7 @@ Date : 27/11/2017
 #798 : Liste ds sous commandes
 #793 : Export des Bons D'achat vers quadra Fact
 #797 : Amélioration de la fenêtre de génération des factures de commission
+#799 : plantage répétitifs apres visu PDFs
 
 Version : 5.9.004b
 date : 23/10/2017

@@ -1,4 +1,6 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Imports CrystalDecisions.CrystalReports.Engine
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmEditfactures
     Inherits FrmVinicom
 
@@ -8,6 +10,15 @@ Partial Class frmEditfactures
         If disposing AndAlso components IsNot Nothing Then
             components.Dispose()
         End If
+        If CrystalReportViewer1.ReportSource IsNot Nothing Then
+            Dim oReport As ReportDocument
+            oReport = CrystalReportViewer1.ReportSource
+            oReport.Dispose()
+            CrystalReportViewer1.ReportSource = Nothing
+
+        End If
+        CrystalReportViewer1.Dispose()
+
         MyBase.Dispose(disposing)
     End Sub
 

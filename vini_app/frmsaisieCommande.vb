@@ -3,9 +3,10 @@ Imports CrystalDecisions.Shared
 Imports CrystalDecisions.CrystalReports.Engine
 'Imports FAXCOMLib
 Imports System.Windows.Forms.Cursors
+Imports CrystalDecisions.Windows.Forms
 
 Public Class frmSaisieCommande
-    Inherits frmDonBase
+    Inherits FrmDonBase
     Private Enum vncColLigneCommande
         COL_NUM = 0
         COL_CODEPRODUIT = 1
@@ -46,6 +47,11 @@ Public Class frmSaisieCommande
             If Not (components Is Nothing) Then
                 components.Dispose()
             End If
+
+            DisposeCr(crwDetailCommandeClient)
+            DisposeCr(crwBL)
+            DisposeCr(crwFact)
+
         End If
         MyBase.Dispose(disposing)
     End Sub
@@ -5111,4 +5117,5 @@ Public Class frmSaisieCommande
 
         'End If
     End Sub
+
 End Class

@@ -37,6 +37,15 @@ Public Class frmGestFactColisage
                 components.Dispose()
             End If
         End If
+        If CrystalReportViewer1.ReportSource IsNot Nothing Then
+            Dim oReport As ReportDocument
+            oReport = CrystalReportViewer1.ReportSource
+            oReport.Dispose()
+            CrystalReportViewer1.ReportSource = Nothing
+
+        End If
+        CrystalReportViewer1.Dispose()
+
         MyBase.Dispose(disposing)
     End Sub
 
