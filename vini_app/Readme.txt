@@ -1,6 +1,14 @@
-﻿Version : 5.9.004b
+﻿Version 5.9.1
+Date : 27/11/2017
+#797 : Entete Releve de commission
+#798 : Liste ds sous commandes
+#793 : Export des Bons D'achat vers quadra Fact
+#797 : Amélioration de la fenêtre de génération des factures de commission
+
+Version : 5.9.004b
 date : 23/10/2017
 #787 : Export des modes de reglements (VersionQuadra) Regeneration de exportParam pour com, col TRP
+
 
 Version : 5.9.003
 date : 26/09/2017

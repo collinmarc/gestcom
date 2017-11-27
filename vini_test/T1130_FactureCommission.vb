@@ -2,6 +2,8 @@ Imports System
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports vini_DB
 Imports System.IO
+Imports CrystalDecisions.Shared
+Imports CrystalDecisions.CrystalReports.Engine
 
 
 
@@ -897,6 +899,98 @@ Imports System.IO
         Assert.AreEqual("CH", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
         Assert.AreEqual("CHQ", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
 
+    End Sub
+
+
+    <TestMethod()>
+    Public Sub TestReleveSurPlusieursPage()
+
+        Dim objCMD As CommandeClient
+        Dim lstCmd As List(Of CommandeClient)
+        Dim nIdCmd As Integer
+        Dim objFrn As Fournisseur
+        Dim objPrd As Produit
+        Dim oFact As FactCom
+
+
+        objFrn = New Fournisseur("FRNTEST", "FRN TEST")
+        objFrn.bExportInternet = vncTypeExportScmd.vncExportInternet
+            objfrn.Save()
+        objPrd = New Produit("PRDTEST", objFrn, 0)
+        objPrd.save()
+
+
+
+        'CREATION D'UNE COMMANDE CLIENT
+        'Ajout de 40 lignes de Commandes
+        For i As Integer = 0 To 60
+            objCMD = New CommandeClient(m_oClient)
+            objCMD.dateCommande = CDate("06/02/1964")
+            objCMD.AjouteLigne(objCMD.getNextNumLg, objPrd, 12, 20)
+            ''Sauvegarde de la commande
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            objCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            'Génération des Sous-Commandes
+            objCMD.generationSousCommande()
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            For Each objSCMD In objCMD.colSousCommandes
+                objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+                objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
+                objSCMD.refFactFournisseur = "FACTFRN" + Now()
+                objSCMD.totalHTFacture = objSCMD.totalHT
+                objSCMD.totalTTCFacture = objSCMD.totalTTC
+                objSCMD.dateFactFournisseur = CDate("06/02/1968") ' Date facture fournisseur <> date de commande
+                Assert.IsTrue(objSCMD.Save(), "Sauvegarde de la sous Commande")
+
+            Next objSCMD
+        Next
+        Dim lst As New List(Of SousCommande)
+        lst = SousCommande.getListeAFacturer(,, objFrn.code)
+        'Generation de la facture de commission
+        Dim colFact As ColEvent
+        colFact = FactCom.createFactComs(lst)
+        For Each oFact In colFact
+            oFact.Save()
+        Next
+
+        Dim strReport As String = ""
+        Dim objReport As ReportDocument
+        Dim tabIds As ArrayList
+        strReport = "V:\V5\vini_app/crFactCom_Releve.rpt"
+
+        If strReport = "" Then
+            Exit Sub
+        End If
+        objReport = New ReportDocument
+        objReport.Load(strReport)
+
+        tabIds = New ArrayList()
+
+        oFact = colFact(1)
+        oFact.load()
+            'oFact.loadcolLignes()
+            tabIds.Add(oFact.id)
+            objReport.SetParameterValue("IdFactures", tabIds.ToArray())
+            objReport.SetParameterValue("bEntete", True)
+            If (File.Exists("releveFact2.pdf")) Then
+                File.Delete("releveFact2.pdf")
+            End If
+            Persist.setReportConnection(objReport)
+            objReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, "releveFact2.pdf")
+            Assert.IsTrue(File.Exists("releveFact2.pdf"))
+            System.Diagnostics.Process.Start("releveFact2.pdf")
+
+        objReport.Dispose()
+
+        For Each oFact In colFact
+            oFact.bDeleted = True
+            oFact.Save()
+
+        Next
+
+        objCMD.bDeleted = True
+        objCMD.save()
     End Sub
 End Class
 
