@@ -474,7 +474,6 @@ V:\V5\vini_app\obj\Release\vini_app.frmGestFactTRP.resources
 V:\V5\vini_app\obj\Release\vini_app.frmGestParamModeReglement.resources
 V:\V5\vini_app\obj\Release\vini_app.frmGestTarif.resources
 V:\V5\vini_app\obj\Release\vini_app.frmHistoriqueArticles.resources
-V:\V5\vini_app\obj\Release\vini_app.frmImportcommandeClient.resources
 V:\V5\vini_app\obj\Release\vini_app.frmJournalAnnonces.resources
 V:\V5\vini_app\obj\Release\vini_app.frmLibere.resources
 V:\V5\vini_app\obj\Release\vini_app.frmListeCommandes.resources

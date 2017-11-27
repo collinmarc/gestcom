@@ -107,9 +107,15 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:vini_test.T1130_FactCommission.T21_EXPORTaVOIR">
+<member name="M:vini_test.T1130_FactCommission.T21_EXPORTAVOIR">
  <summary>
  Test l'export d'un AVOIR de comm
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T22_EXPORTModeReglement">
+ <summary>
+ Test l'export d'une facture de comm
  </summary>
  <remarks></remarks>
 </member>
@@ -118,6 +124,11 @@ Test pour Constructeur FicheTechniqueFourn
  Test la génération de facture de comm, Cette génération se fait sur la date de commande
  </summary>
  <remarks></remarks>
+</member>
+<member name="M:vini_test.T1130_FactCommission.T90_GenerationFactureCommissionsSelected">
+ <summary>
+ Test l'attribut Selected des sousCommandes dans la génération des Fact de comm
+ </summary>
 </member>
 <member name="M:vini_test.T1130_FactCommission.T100_getAttributeValue">
  <summary>
@@ -225,7 +236,12 @@ Test pour Constructeur FicheTechniqueFourn
  <summary>
  Test l'export vers Quadra
  </summary>
- <remarks></remarks>
+ <remarks>on ne travaille plus avec les reglement en gestcom</remarks>
+</member>
+<member name="T:vini_test.TestImap">
+ <summary>
+ Classe de test à reactiver 
+ </summary>
 </member>
 <member name="M:vini_test.TestImap.TestCkeckMailVinicom">
  <summary>
@@ -319,14 +335,6 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:vini_test.test_V560.T01_ExportQuadra">
- <summary>
- Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
- commandes et Bon Appo
- 
- </summary>
- <remarks></remarks>
-</member>
 <member name="M:vini_test.test_V550.T01_NOMRSLIVRAISON_CMDCLT">
  <summary>
  Nom et Raison Sociale du client/ Fournisseur duppliqué dans les tables 
@@ -346,6 +354,18 @@ Test pour Constructeur FicheTechniqueFourn
 <member name="M:vini_test.test_V500.T02_COPY_TIERS_TO_CMD">
  <summary>
  Teste la recopie des infos du tiers sur la commande
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestExportQuadra.T101_ExportQuadra">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestExportQuadra.T102_ExportQuadraSCommande">
+ <summary>
+ Test de l'export d'une souscommande vers QuadraFacturation
  </summary>
  <remarks></remarks>
 </member>

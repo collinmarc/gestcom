@@ -93,6 +93,20 @@ vini_app
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="M:vini_app.frmExportQuadra.ExportertVersQuadra">
+ <summary>
+ Export vers quadra
+     Appel la Methode ExportBafQuadra au travers D'un backGroundWorker
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_app.frmExportQuadra.Actualiser(vini_DB.Observable)">
+ <summary>
+ Actualisation du travail
+ </summary>
+ <param name="pObj"></param>
+ <remarks></remarks>
+</member>
 <member name="M:vini_app.FrmDonBase.setElementCourant2(vini_DB.Persist)">
  <summary>
  Renseigne l'élément courant en véfifiant s'il est libre d'utilisation

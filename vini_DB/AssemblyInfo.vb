@@ -29,7 +29,7 @@ Imports System.Runtime.InteropServices
 ' Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut 
 ' en utilisant '*', comme indiqué ci-dessous :
 
-<Assembly: AssemblyVersion("5.0.*")> 
+<Assembly: AssemblyVersion("5.0.*")>
 
-<Assembly: AssemblyFileVersionAttribute("5.9.0.3")> 
+<Assembly: AssemblyFileVersionAttribute("5.9.0.1")>
 <Assembly: System.Runtime.CompilerServices.InternalsVisibleTo("vini_test")>
