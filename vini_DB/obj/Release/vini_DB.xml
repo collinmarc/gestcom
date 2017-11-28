@@ -1973,6 +1973,13 @@ Represents the connection and commands used to retrieve and save data.
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="M:vini_DB.EtatCommandeTransmiseQuadra.action(vini_DB.vncEnums.vncActionEtatCommande)">
+ <summary>
+ Si annluEclatement => Livrée , sinon on reste dans l'état présent
+ </summary>
+ <param name="vncAction"></param>
+ <returns></returns>
+</member>
 <member name="M:vini_DB.FactCom.toCSV">
  <summary>
  Renvoie une chaine de caractère au format CSV pour export internet

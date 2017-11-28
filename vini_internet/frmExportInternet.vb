@@ -49,48 +49,48 @@ Public Class frmExportInternet
     Friend WithEvents m_bsrcStatus As System.Windows.Forms.BindingSource
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tbNbScmd As System.Windows.Forms.TextBox
-    Friend WithEvents CodeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FournisseurCodeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents TiersRS As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents totalHT As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dateCommande As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents StatusDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents StatusMessageDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents tbNbreTheorique As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents CodeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FournisseurCodeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TiersRS As DataGridViewTextBoxColumn
+    Friend WithEvents totalHT As DataGridViewTextBoxColumn
+    Friend WithEvents dateCommande As DataGridViewTextBoxColumn
     Friend WithEvents dgvStatus As System.Windows.Forms.DataGridView
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Dim configurationAppSettings As System.Configuration.AppSettingsReader = New System.Configuration.AppSettingsReader
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.dtdateFin = New System.Windows.Forms.DateTimePicker
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.cbExporter = New System.Windows.Forms.Button
-        Me.ckPDFs = New System.Windows.Forms.CheckBox
-        Me.ckFTP = New System.Windows.Forms.CheckBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
-        Me.dgvSCmd = New System.Windows.Forms.DataGridView
-        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.FournisseurCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.dateCommande = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.components = New System.ComponentModel.Container()
+        Dim configurationAppSettings As System.Configuration.AppSettingsReader = New System.Configuration.AppSettingsReader()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.dtdateFin = New System.Windows.Forms.DateTimePicker()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.cbExporter = New System.Windows.Forms.Button()
+        Me.ckPDFs = New System.Windows.Forms.CheckBox()
+        Me.ckFTP = New System.Windows.Forms.CheckBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.dgvSCmd = New System.Windows.Forms.DataGridView()
+        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FournisseurCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dateCommande = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcSCMD = New System.Windows.Forms.BindingSource(Me.components)
         Me.m_bsrcStatus = New System.Windows.Forms.BindingSource(Me.components)
-        Me.dgvStatus = New System.Windows.Forms.DataGridView
-        Me.StatusDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.StatusMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.tbNbScmd = New System.Windows.Forms.TextBox
-        Me.tbNbreTheorique = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.dgvStatus = New System.Windows.Forms.DataGridView()
+        Me.StatusDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.StatusMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.tbNbScmd = New System.Windows.Forms.TextBox()
+        Me.tbNbreTheorique = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.dgvSCmd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcSCMD, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcStatus, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -132,7 +132,7 @@ Public Class frmExportInternet
         'cbAfficher
         '
         Me.cbAfficher.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbAfficher.BackColor = System.Drawing.SystemColors.Control
         Me.cbAfficher.Cursor = System.Windows.Forms.Cursors.Default
         Me.cbAfficher.ForeColor = System.Drawing.SystemColors.ControlText
@@ -202,10 +202,10 @@ Public Class frmExportInternet
         Me.dgvSCmd.AllowUserToAddRows = False
         Me.dgvSCmd.AllowUserToDeleteRows = False
         Me.dgvSCmd.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvSCmd.AutoGenerateColumns = False
-        Me.dgvSCmd.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgvSCmd.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvSCmd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvSCmd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodeDataGridViewTextBoxColumn, Me.FournisseurCodeDataGridViewTextBoxColumn, Me.TiersRS, Me.totalHT, Me.dateCommande})
         Me.dgvSCmd.DataSource = Me.m_bsrcSCMD
@@ -221,7 +221,6 @@ Public Class frmExportInternet
         Me.CodeDataGridViewTextBoxColumn.HeaderText = "code"
         Me.CodeDataGridViewTextBoxColumn.Name = "CodeDataGridViewTextBoxColumn"
         Me.CodeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CodeDataGridViewTextBoxColumn.Width = 56
         '
         'FournisseurCodeDataGridViewTextBoxColumn
         '
@@ -229,15 +228,13 @@ Public Class frmExportInternet
         Me.FournisseurCodeDataGridViewTextBoxColumn.HeaderText = "Producteur"
         Me.FournisseurCodeDataGridViewTextBoxColumn.Name = "FournisseurCodeDataGridViewTextBoxColumn"
         Me.FournisseurCodeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FournisseurCodeDataGridViewTextBoxColumn.Width = 84
         '
         'TiersRS
         '
-        Me.TiersRS.DataPropertyName = "TiersRS"
+        Me.TiersRS.DataPropertyName = "ClientRS"
         Me.TiersRS.HeaderText = "Client"
         Me.TiersRS.Name = "TiersRS"
         Me.TiersRS.ReadOnly = True
-        Me.TiersRS.Width = 58
         '
         'totalHT
         '
@@ -248,7 +245,6 @@ Public Class frmExportInternet
         Me.totalHT.HeaderText = "totalHT"
         Me.totalHT.Name = "totalHT"
         Me.totalHT.ReadOnly = True
-        Me.totalHT.Width = 67
         '
         'dateCommande
         '
@@ -259,7 +255,6 @@ Public Class frmExportInternet
         Me.dateCommande.HeaderText = "dateCommande"
         Me.dateCommande.Name = "dateCommande"
         Me.dateCommande.ReadOnly = True
-        Me.dateCommande.Width = 106
         '
         'm_bsrcSCMD
         '
@@ -274,7 +269,7 @@ Public Class frmExportInternet
         Me.dgvStatus.AllowUserToAddRows = False
         Me.dgvStatus.AllowUserToDeleteRows = False
         Me.dgvStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvStatus.AutoGenerateColumns = False
         Me.dgvStatus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvStatus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize

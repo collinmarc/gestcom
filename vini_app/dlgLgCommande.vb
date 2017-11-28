@@ -845,4 +845,12 @@ Public Class dlgLgCommande
     Private Sub tbQteFact_Validated(ByVal sender As Object, ByVal e As System.EventArgs) Handles tbQteFact.Validated
         CalculPrix()
     End Sub
+
+    Private Sub tbCodeProduit_Disposed(sender As Object, e As EventArgs) Handles tbCodeProduit.Disposed
+
+    End Sub
+
+    Private Sub tbCodeProduit_CursorChanged(sender As Object, e As EventArgs) Handles tbCodeProduit.CursorChanged
+
+    End Sub
 End Class

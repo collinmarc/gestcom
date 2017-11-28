@@ -55,7 +55,8 @@ Public Class frmExportQuadra
     Friend WithEvents m_bsrcListCMD As BindingSource
     Friend WithEvents Selected As DataGridViewCheckBoxColumn
     Friend WithEvents CodeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TiersRS As DataGridViewTextBoxColumn
+    Friend WithEvents TiersRSColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FournisseurRSColumn As DataGridViewTextBoxColumn
     Friend WithEvents totalHT As DataGridViewTextBoxColumn
     Friend WithEvents dateCommande As DataGridViewTextBoxColumn
     Friend WithEvents Origine As DataGridViewTextBoxColumn
@@ -76,7 +77,8 @@ Public Class frmExportQuadra
         Me.dgvSCmd = New System.Windows.Forms.DataGridView()
         Me.Selected = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TiersRSColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FournisseurRSColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dateCommande = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Origine = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -175,7 +177,7 @@ Public Class frmExportQuadra
         Me.dgvSCmd.AutoGenerateColumns = False
         Me.dgvSCmd.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvSCmd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvSCmd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Selected, Me.CodeDataGridViewTextBoxColumn, Me.TiersRS, Me.totalHT, Me.dateCommande, Me.Origine, Me.typeDonnee})
+        Me.dgvSCmd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Selected, Me.CodeDataGridViewTextBoxColumn, Me.TiersRSColumn, Me.FournisseurRSColumn, Me.totalHT, Me.dateCommande, Me.Origine, Me.typeDonnee})
         Me.dgvSCmd.DataSource = Me.m_bsrcListCMD
         Me.dgvSCmd.Location = New System.Drawing.Point(8, 125)
         Me.dgvSCmd.Name = "dgvSCmd"
@@ -196,12 +198,20 @@ Public Class frmExportQuadra
         Me.CodeDataGridViewTextBoxColumn.HeaderText = "code"
         Me.CodeDataGridViewTextBoxColumn.Name = "CodeDataGridViewTextBoxColumn"
         '
-        'TiersRS
+        'TiersRSColumn
         '
-        Me.TiersRS.DataPropertyName = "TiersRS"
-        Me.TiersRS.FillWeight = 96.50592!
-        Me.TiersRS.HeaderText = "Tiers"
-        Me.TiersRS.Name = "TiersRS"
+        Me.TiersRSColumn.DataPropertyName = "TiersRS"
+        Me.TiersRSColumn.FillWeight = 96.50592!
+        Me.TiersRSColumn.HeaderText = "Client"
+        Me.TiersRSColumn.Name = "TiersRSColumn"
+        Me.TiersRSColumn.ReadOnly = True
+        '
+        'FournisseurRSColumn
+        '
+        Me.FournisseurRSColumn.DataPropertyName = "FournisseurRS"
+        Me.FournisseurRSColumn.HeaderText = "Producteur"
+        Me.FournisseurRSColumn.Name = "FournisseurRSColumn"
+        Me.FournisseurRSColumn.ReadOnly = True
         '
         'totalHT
         '
@@ -238,6 +248,7 @@ Public Class frmExportQuadra
         Me.typeDonnee.FillWeight = 96.50592!
         Me.typeDonnee.HeaderText = "typeDonnee"
         Me.typeDonnee.Name = "typeDonnee"
+        Me.typeDonnee.ReadOnly = True
         Me.typeDonnee.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         '
         'm_bsrcListCMD
@@ -283,7 +294,7 @@ Public Class frmExportQuadra
         '
         Me.rbBonAFactClient.AutoSize = True
         Me.rbBonAFactClient.Checked = True
-        Me.rbBonAFactClient.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcExportQuadra, "isExportBafClient", True))
+        Me.rbBonAFactClient.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcExportQuadra, "isExportBafClient", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.rbBonAFactClient.Location = New System.Drawing.Point(398, 30)
         Me.rbBonAFactClient.Name = "rbBonAFactClient"
         Me.rbBonAFactClient.Size = New System.Drawing.Size(124, 17)
@@ -295,7 +306,7 @@ Public Class frmExportQuadra
         'rbBonAchatFourn
         '
         Me.rbBonAchatFourn.AutoSize = True
-        Me.rbBonAchatFourn.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcExportQuadra, "isExportBaFournisseur", True))
+        Me.rbBonAchatFourn.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcExportQuadra, "isExportBaFournisseur", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.rbBonAchatFourn.Location = New System.Drawing.Point(533, 32)
         Me.rbBonAchatFourn.Name = "rbBonAchatFourn"
         Me.rbBonAchatFourn.Size = New System.Drawing.Size(132, 17)
@@ -345,6 +356,7 @@ Public Class frmExportQuadra
         MyBase.EnableControls(bEnabled)
         dtDatedeb.Enabled = True
         dtdateFin.Enabled = True
+        ckSaveScmd.Enabled = True
         cbAfficher.Enabled = True
         tbExportQuadraFolder.Enabled = True
         rbBonAchatFourn.Enabled = True
@@ -373,23 +385,23 @@ Public Class frmExportQuadra
 
 
         m_oExportQuadra = New ExportQuadra(dDeb, dernierMoisCourant, vncTypeExportQuadra.vncExportBafClient, Param.getConstante("CST_EXPORT_COMPTA_PATH"), True)
+        m_bsrcExportQuadra.ResetBindings(False)
+        FournisseurRSColumn.Visible = False
         cbExporter.Enabled = False
 
         m_bsrcExportQuadra.Clear()
         m_bsrcExportQuadra.Add(m_oExportQuadra)
 
+        ckSaveScmd.Checked = True
+#If DEBUG Then
+        ckSaveScmd.Visible = True
+#Else
+        ckSaveScmd.visible = false
+#End If
+
 
     End Sub
 
-    Private Sub afficheListeScmd()
-
-        setcursorWait()
-        debAffiche()
-
-        finAffiche()
-        restoreCursor()
-
-    End Sub 'AfficheListeFactTRP
     ''' <summary>
     ''' Récupération de la liste des Bons à facturer à exporter vers Quadra
     ''' </summary>
@@ -502,16 +514,30 @@ Public Class frmExportQuadra
         restoreCursor()
     End Sub
 
-    Private Sub rbBonAFactClient_Click(sender As Object, e As EventArgs) Handles rbBonAFactClient.Click
+
+    Private Sub rbBonAFactClient_CheckedChanged(sender As Object, e As EventArgs) Handles rbBonAFactClient.CheckedChanged
         If rbBonAFactClient.Checked Then
-            Me.TiersRS.HeaderText = "Client"
+            Me.TiersRSColumn.Visible = True
+            Me.FournisseurRSColumn.Visible = False
+            If getListeScmd() Then
+                m_bsrcExportQuadra.ResetBindings(False)
+            End If
+
         End If
+
     End Sub
 
-    Private Sub rbBonAchatFourn_Click(sender As Object, e As EventArgs) Handles rbBonAchatFourn.Click
+    Private Sub rbBonAchatFourn_CheckedChanged(sender As Object, e As EventArgs) Handles rbBonAchatFourn.CheckedChanged
         If rbBonAchatFourn.Checked Then
-            Me.TiersRS.HeaderText = "Producteur"
+            Me.TiersRSColumn.Visible = False
+            Me.FournisseurRSColumn.Visible = True
+            If getListeScmd() Then
+                m_bsrcExportQuadra.ResetBindings(False)
+            End If
+
+
         End If
+
 
     End Sub
 End Class

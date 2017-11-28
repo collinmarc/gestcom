@@ -1,4 +1,13 @@
-﻿Version 5.9.1
+﻿Version 5.9.1.1
+Date : 27/11/2017
+#800 : Entete Etat du stock
+#801 : Affichage de sous Commandes si Transmises + annulation de commande
+#804 : Eclatement de commande : Client = Client Final pour les Frn internet
+#802 : ExportQuadra : Envoi du comde Sous-Commande
+#805 : Envoi Comde à la plateforme : Affichage du nom et RS de livraison
+#806 : ExportInternet : Affiche le nom du client
+
+Version 5.9.1
 Date : 27/11/2017
 #797 : Entete Releve de commission
 #798 : Liste ds sous commandes

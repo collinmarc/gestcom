@@ -341,7 +341,7 @@ Public Class SousCommande
 
         End Set
     End Property
-    Public ReadOnly Property FournisseurRS() As String
+    Public Overrides ReadOnly Property FournisseurRS() As String
         Get
             If m_oFournisseur IsNot Nothing Then
                 Return m_oFournisseur.rs
@@ -1092,32 +1092,12 @@ Public Class SousCommande
     Public Overrides Function getCodeCommande() As String
         Return codeCommandeClient
     End Function
-
-    Public Overrides ReadOnly Property TiersCode() As String
+    Public ReadOnly Property ClientRS() As String
         Get
-            If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
-                'c'est un produit HOBIVIN
-                Return MyBase.TiersCode()
-            Else
-                'C'est un produit VINICOM
-                Return oFournisseur.code
-            End If
-
+            Return oClient.rs
         End Get
     End Property
 
-    Public Overrides ReadOnly Property TiersRS() As String
-        Get
-            If oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
-                'c'est un produit HOBIVIN
-                Return MyBase.TiersRS
-            Else
-                'C'est un produit VINICOM
-                Return oFournisseur.rs
-            End If
-
-        End Get
-    End Property
 #End Region
 
 End Class

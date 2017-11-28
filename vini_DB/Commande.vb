@@ -315,6 +315,12 @@ Public MustInherit Class Commande
             End If
         End Get
     End Property 'TiersRS
+
+    Public Overridable ReadOnly Property FournisseurRS() As String
+        Get
+            Return ""
+        End Get
+    End Property
     Public ReadOnly Property colLignes() As ColEvent
         Get
             Debug.Assert(Not m_bResume, "Objet de type resumé")
