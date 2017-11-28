@@ -269,6 +269,7 @@ Public MustInherit Class Commande
         End Set
     End Property ' oTiers
     Public Sub setTiers(Value As Tiers)
+        '    If m_oTiers Is Nothing Or (m_oTiers IsNot Nothing And m_oTiers.id = 0) Then
         If m_oTiers Is Nothing Then
             If Not Value Is Nothing Then
                 m_oTiers = Value

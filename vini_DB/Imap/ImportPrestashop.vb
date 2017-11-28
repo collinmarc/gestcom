@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Generic
+Imports System.Net.Mail
 Imports vini_DB.ImapVB
 ''' <summary>
 ''' Classe d'import des commandes depuis le Message Mail de prestashop
@@ -194,6 +195,7 @@ Public Class ImportPrestashop
                     setError("  Commande N° " & oCmd.id & "(" & oCmd.name & ") importée")
                 Else
                     setError("==Commande N° " & oCmd.id & "(" & oCmd.name & ") refusée : Motif " & oCmd.motif)
+                    Dim oSmtp As New SmtpClient()
                 End If
             End If
         Catch ex As Exception

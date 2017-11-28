@@ -4977,8 +4977,8 @@ Public MustInherit Class Persist
             objCMDCLT.refFactTRP = GetString(objRS, "CMD_REFFACT_TRP")
             'Nom et raison Solciale de livraison
             objCMDCLT.NomLivraison = GetString(objRS, "CMD_CLT_NOMLIVRAISON")
-            'Ref Facture Transporteur
             objCMDCLT.RaisonSocialeLivraison = GetString(objRS, "CMD_CLT_RSLIVRAISON")
+            'Prestashop
             objCMDCLT.IDPrestashop = getLong(objRS, "CMD_IDPRESTASHOP")
             objCMDCLT.NamePrestashop = GetString(objRS, "CMD_NAMEPRESTASHOP")
             objCMDCLT.Origine = Trim(GetString(objRS, "CMD_ORIGINE"))
