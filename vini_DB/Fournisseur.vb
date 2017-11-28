@@ -278,14 +278,14 @@ Public Class Fournisseur
         m_typedonnee = vncEnums.vncTypeDonnee.FOURNISSEUR
         m_idRegion = Param.regiondefaut.id
         m_libRegion = Param.regiondefaut.valeur
-        m_bExportInternet = 0
+        m_bExportInternet = 1
     End Sub
     Public Sub New()
         MyBase.New("", "")
         m_typedonnee = vncEnums.vncTypeDonnee.FOURNISSEUR
         m_idRegion = Param.regiondefaut.id
         m_libRegion = Param.regiondefaut.valeur
-        m_bExportInternet = 0
+        m_bExportInternet = 1
     End Sub
 
     '=======================================================================

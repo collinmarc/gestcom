@@ -640,13 +640,18 @@ Public Class CommandeClient
                         ' et on crée la sous-commande avec ce fournisseur
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
-                        If pIntermediaire IsNot Nothing Then
-                            oSCMD.setTiers(pIntermediaire)
+                        'Si le Producteur est un Productteur Vinicom
+                        'Si on fournit un intermédaire (Cas HOBIVIN)
+                        'Alors on remplace le client par l'intermédaire
+                        If oFRN.bExportInternet = vncTypeExportScmd.vncExportInternet Then
+                            If pIntermediaire IsNot Nothing Then
+                                oSCMD.setTiers(pIntermediaire)
+                            End If
                         End If
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)
-                    End If
-                    If objLGCMD.oProduit.idFournisseur = idFRN Then
+                        End If
+                        If objLGCMD.oProduit.idFournisseur = idFRN Then
                         'La Ligne correspond au fournisseur courant
                         ' On l'ajoute à la sous-commande courante 
                         oSCMD.AjouteLigne(objLGCMD, True)

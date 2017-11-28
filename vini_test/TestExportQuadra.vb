@@ -189,7 +189,7 @@ Imports System.IO
         Assert.AreEqual(tab(0), m_oClient.code)
         Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
+        Assert.AreEqual(tab(3), oSCMD.code)
         Assert.AreEqual(tab(4), m_oProduit2.code)
         Assert.AreEqual(tab(5), "25")
         Assert.AreEqual(tab(6), "25.5")
@@ -218,7 +218,7 @@ Imports System.IO
         Assert.AreEqual(tab(0), oSCMD.oFournisseur.code) 'Cette fois c'est le code fournisseur
         Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
+        Assert.AreEqual(tab(3), oSCMD.code)
         Assert.AreEqual(tab(4), m_oProduit.code)
         Assert.AreEqual(tab(5), "15")
         Assert.AreEqual(tab(6), "15.5")

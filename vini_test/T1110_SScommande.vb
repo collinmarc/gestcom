@@ -1309,7 +1309,7 @@ Imports System.IO
         Assert.IsTrue(objSCMD.Save(), "OSCMD.delete" & objSCMD.getErreur())
 
     End Sub 'T71 LoadFromCode
-    'Test l'incrémenation des codes
+    'Test de la ganaration de sousCommande avec un intermédiaire
     <TestMethod()> Public Sub T80_EclatementAvecIntermedaire()
 
         Dim objLG As LgCommande
@@ -1319,10 +1319,9 @@ Imports System.IO
         Dim objLgCMD2 As LgCommande
         Dim oFRN2 As Fournisseur
         Dim oPRD2 As Produit
+        Dim oFRN3 As Fournisseur
+        Dim oPRD3 As Produit
         Dim oCMD As CommandeClient
-        Dim nIDCmd As Long
-        Dim nidSCMD1 As Long
-        Dim nidSCMD2 As Long
 
         Dim oCltIntermediaire As Client
         oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
@@ -1331,23 +1330,34 @@ Imports System.IO
 
 
         oFRN2 = New Fournisseur("FRNT20" & Now(), "Fournisseur2")
+        oFRN2.bExportInternet = vncTypeExportScmd.vncExportInternet
         Assert.IsTrue(oFRN2.Save(), "FRN2.save" & oFRN2.getErreur())
         oPRD2 = New Produit("PRDT20" & Now(), oFRN2, 1990)
         Assert.IsTrue(oPRD2.save(), "OPRD2.Save" & oPRD2.getErreur())
 
-        'Création d'une commande client origine Sans intermédiaire
+        oFRN3 = New Fournisseur("FRNT30" & Now(), "Fournisseur3")
+        oFRN3.bExportInternet = vncTypeExportScmd.vncExportQuadra
+        Assert.IsTrue(oFRN3.Save(), "FRN2.save" & oFRN2.getErreur())
+        oPRD3 = New Produit("PRDT30" & Now(), oFRN3, 1990)
+        Assert.IsTrue(oPRD3.save(), "OPRD2.Save" & oPRD3.getErreur())
+
+
+        'Création d'une commande client origine "VINICOM" 
         oCMD = New CommandeClient(m_oClient)
-        oCMD.Origine = "VINICOM"
+        oCMD.Origine = "Vinicom"
         oCMD.save()
-        objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
-        objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
+        oCMD.AjouteLigne("10", m_oProduit, 10, 12)
+        oCMD.AjouteLigne("20", oPRD2, 20, 22)
+        oCMD.AjouteLigne("30", oPRD3, 30, 32)
+
         Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
-        'Génération des sous-commandes
+        'Génération des sous-commandes (Sans intermédiaire)
         Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
 
-        Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
-        'Vérification de la première sous-commande
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 3, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+        'Vérification de la première sous-commande (Fournisseur Sans Export)
+
         objSCMD = oCMD.colSousCommandes.Item(1)
         'Test du passage d'info entre la commande et la souscommande
         'Producteur
@@ -1360,6 +1370,14 @@ Imports System.IO
         Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         'Client = Client initial
         Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le Client initial" & objSCMD.oTiers.toString())
+
+        'Vérification de la Troisième sous-commande
+        objSCMD = oCMD.colSousCommandes.Item(3)
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN3.id, "Fournisseur3" & objSCMD.oFournisseur.toString())
+        'Client = Client initial
+        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le Client initial" & objSCMD.oTiers.toString())
+
+        'Suppression de la Commande
         oCMD.bDeleted = True
         oCMD.save()
 
@@ -1369,27 +1387,43 @@ Imports System.IO
         oCMD.save()
         objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
         objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
+        objLgCMD2 = oCMD.AjouteLigne("30", oPRD3, 30, 32)
         Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
-        'Génération des sous-commandes
+        'Génération des sous-commandes avec un intermédiaire
         Assert.IsTrue(oCMD.generationSousCommande(oCltIntermediaire), "OCMD.EclatementCommande()" & racine.getErreur())
 
-        Assert.AreEqual(oCMD.colSousCommandes.Count, 2, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
-        'Vérification de la première sous-commande
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 3, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la première sous-commande (Fournisseur = Pas D'export)
         objSCMD = oCMD.colSousCommandes.Item(1)
         'Test du passage d'info entre la commande et la souscommande
         'Producteur
         Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
-        'Client = Intermédiaire
-        Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande est l'intermédiaire" & objSCMD.oTiers.toString())
+        'Client = Client Originel
+        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande doit être le client Originel" & objSCMD.oTiers.toString())
 
-        'Vérification de la seconde sous-commande
+        'Vérification de la seconde sous-commande (Fournisseur = Export Internet)
         objSCMD = oCMD.colSousCommandes.Item(2)
         Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         'Client = Intermédiaire
         Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande devrait être l'intermédiaire" & objSCMD.oTiers.toString())
+
+        'Vérification de la seconde sous-commande (Fournisseur = Export Quadra)
+        objSCMD = oCMD.colSousCommandes.Item(3)
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN3.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        'Client = Intermédiaire
+        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le client d'origine" & objSCMD.oTiers.toString())
+
+
         oCMD.bDeleted = True
         oCMD.save()
+
+        oPRD3.bDeleted = True
+        oFRN3.Save()
+
+        oFRN3.bDeleted = True
+        oFRN3.Save()
 
         oPRD2.bDeleted = True
         oFRN2.Save()

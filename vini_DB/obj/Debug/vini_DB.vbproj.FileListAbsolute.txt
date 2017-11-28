@@ -38,6 +38,7 @@ V:\V5\vini_DB\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 V:\V5\vini_DB\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
 V:\V5\vini_DB\bin\stdole.dll
 V:\V5\vini_DB\bin\Csv.xml
+V:\V5\vini_DB\obj\Debug\vini_DB.vbprojResolveAssemblyReference.cache
 V:\V5\vini_DB\obj\Debug\vini_DB.vbproj.CoreCompileInputs.cache
 V:\V5\vini_DB\obj\Debug\vini_DB.dll
 V:\V5\vini_DB\obj\Debug\vini_DB.xml
