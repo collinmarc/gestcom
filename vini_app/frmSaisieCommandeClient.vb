@@ -875,7 +875,7 @@ Public Class frmCommandeClient
                 cbxIntermédiaires.Visible = False
                 laIntermediaires.Visible = False
             End If
-            If getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Then
+            If getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Or getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncTransmiseQuadra Then
                 getCommandeCourante.LoadColSousCommande()
                 afficheListeSousCommande()
             Else
@@ -973,8 +973,8 @@ Public Class frmCommandeClient
         Dim bSousFacturee As Boolean
 
         setcursorWait()
-        If getCommandeCourante.etat.codeEtat <> vncEtatCommande.vncEclatee Then
-            MsgBox("La Commande n'est pas dans l'état requis : Eclatée")
+        If getCommandeCourante.etat.codeEtat <> vncEtatCommande.vncEclatee And getCommandeCourante.etat.codeEtat <> vncEtatCommande.vncTransmiseQuadra Then
+            MsgBox("La Commande n'est pas dans l'état requis : Eclatée ou transmise")
             bReturn = False
         Else
 
@@ -990,25 +990,26 @@ Public Class frmCommandeClient
             'vncSCMDProvisionnee = 13
             'vncSCMDFacturee = 14
 
-            For Each objSCMD In getCommandeCourante.colSousCommandes
-                If objSCMD.etat.codeEtat <> vncEnums.vncEtatCommande.vncSCMDGeneree Then
-                    bSousFacturee = True
-                    Exit For
+            If getCommandeCourante.etat.codeEtat <> vncEtatCommande.vncEclatee Then
+                For Each objSCMD In getCommandeCourante.colSousCommandes
+                    If objSCMD.etat.codeEtat <> vncEnums.vncEtatCommande.vncSCMDGeneree Then
+                        bSousFacturee = True
+                        Exit For
+                    End If
+                Next
+                If bSousFacturee Then
+                    MsgBox("Au moins une sous-commande a été transmise, rapprochée ou facturée , il n'est plus possible d'annuler l'éclatement")
+                    Me.Cursor = Cursors.Default
+                    Return False
                 End If
-            Next
-            If bSousFacturee Then
-                MsgBox("Au moins une sous-commande a été transmise, rapprochée ou facturée , il n'est plus possible d'annuler l'éclatement")
-                restoreCursor()
-                Return False
             End If
-
             getCommandeCourante.colSousCommandes.clear()
             getCommandeCourante.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
             AfficheEtat()
             afficheListeSousCommande()
             bReturn = True
         End If
-        restoreCursor()
+        Me.Cursor = Cursors.Default
         Return bReturn
     End Function 'annulationEclatementCommande
     '========================================================================

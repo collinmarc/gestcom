@@ -6,10 +6,20 @@ Public Class EtatCommandeTransmiseQuadra
         codeEtat = vncEnums.vncEtatCommande.vncTransmiseQuadra
         m_libelle = ETAT_TRANSMISE
     End Sub
-
+    ''' <summary>
+    ''' Si annluEclatement => Livrée , sinon on reste dans l'état présent
+    ''' </summary>
+    ''' <param name="vncAction"></param>
+    ''' <returns></returns>
     Protected Overrides Function action(ByVal vncAction As vncActionEtatCommande) As vncEtatCommande
         Dim nReturn As vncActionEtatCommande
-        nReturn = vncEnums.vncEtatCommande.vncTransmiseQuadra
+        Select Case vncAction
+            Case vncEnums.vncActionEtatCommande.vncActionAnnEclater
+                m_actionSousCommande = vncEnums.vncGenererSupprimer.vncSupprimer
+                nReturn = vncEnums.vncEtatCommande.vncLivree
+            Case Else
+                nReturn = vncEnums.vncEtatCommande.vncTransmiseQuadra
+        End Select
         Return nReturn
     End Function
 
