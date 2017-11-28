@@ -226,7 +226,70 @@ Imports System.IO
         objCMD.delete()
     End Sub
 
-    <TestMethod()> Public Sub T110_ExportQuadra()
+    ''' <summary>
+    ''' Test de l'export d'une commande HOBIVIN vers QuadraFacturation
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T101_ExportQuadraCmdHBV()
+        Dim objCMD As CommandeClient
+        Dim oSCMD As SousCommande
+        Dim oLg As LgCommande
+        Dim strFile As String
+        Dim oCltInter As Client
+        Dim strLine As String
+        Dim TAB As String()
+
+        m_oFourn2.bExportInternet = vncTypeExportScmd.vncExportQuadra 'Fournisseur HOBIVIN
+        m_oFourn2.Save()
+
+        m_oProduit2.idFournisseur = m_oFourn2.id
+        m_oProduit2.save()
+
+        oCltInter = New Client("CLTINTER", "Client intermédiare")
+        oCltInter.idTypeClient = Param.getTypeClientIntermediaire().id
+        oCltInter.Origine = "HOBIVIN"
+        oCltInter.save()
+
+        'Creation d'une Commande
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.Origine = "HOBIVIN"
+        oLg = objCMD.AjouteLigne("10", m_oProduit2, 15, 15.5)
+        oLg.qteLiv = oLg.qteCommande
+        objCMD.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMD.save()
+
+        Assert.IsTrue(objCMD.generationSousCommande(oCltInter))
+
+        strFile = "./adel.csv"
+        If System.IO.File.Exists(strFile) Then
+            System.IO.File.Delete(strFile)
+        End If
+
+        objCMD.toCSVQuadraFact(strFile)
+
+        Assert.IsTrue(System.IO.File.Exists(strFile))
+        'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
+        Assert.AreEqual(2, System.IO.File.ReadAllLines(strFile).Count)
+        Debug.WriteLine(File.ReadAllText(strFile))
+
+        strLine = File.ReadAllLines(strFile)(1)
+        TAB = strLine.Split(";")
+        Assert.AreEqual(TAB(0), m_oClient.code) 'Cette fois c'est le code Client
+        Assert.AreEqual(TAB(1), objCMD.code)
+        Assert.AreEqual(TAB(2), Format(objCMD.dateCommande, "yyMMdd"))
+        Assert.AreEqual(TAB(3), objCMD.code)
+        Assert.AreEqual(TAB(4), m_oProduit2.code)
+        Assert.AreEqual(TAB(5), "15")
+        Assert.AreEqual(TAB(6), "15.5")
+
+
+        objCMD.delete()
+    End Sub
+
+    ''' <summary>
+    ''' Test de la Fonction LoadCmd de ExportQuadra
+    ''' </summary>
+    <TestMethod()> Public Sub T110_ExportQuadraLoadCmd()
         Dim objCMDV As CommandeClient
         Dim objCMDH As CommandeClient
         Dim oSCMD As SousCommande
@@ -287,9 +350,12 @@ Imports System.IO
 
         'Export de type Baf Client
         oExport.typeExport = vncTypeExportQuadra.vncExportBafClient
+        '==============
+        'Chagement de la liste des sousCommandes à Exporter
+        '=============
         oExport.loadListCmd()
-        Assert.IsNotNull(oExport.ListCmd)
 
+        Assert.IsNotNull(oExport.ListCmd)
         Assert.AreEqual(2, oExport.ListCmd.Count)
 
         'Premier Element à Exporter

@@ -369,5 +369,16 @@ Test pour Constructeur FicheTechniqueFourn
  </summary>
  <remarks></remarks>
 </member>
+<member name="M:vini_test.TestExportQuadra.T101_ExportQuadraCmdHBV">
+ <summary>
+ Test de l'export d'une commande HOBIVIN vers QuadraFacturation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:vini_test.TestExportQuadra.T110_ExportQuadraLoadCmd">
+ <summary>
+ Test de la Fonction LoadCmd de ExportQuadra
+ </summary>
+</member>
 </members>
 </doc>
