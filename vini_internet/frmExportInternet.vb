@@ -58,6 +58,8 @@ Public Class frmExportInternet
     Friend WithEvents TiersRS As DataGridViewTextBoxColumn
     Friend WithEvents totalHT As DataGridViewTextBoxColumn
     Friend WithEvents dateCommande As DataGridViewTextBoxColumn
+    Friend WithEvents lnkFTP As LinkLabel
+    Friend WithEvents Label4 As Label
     Friend WithEvents dgvStatus As System.Windows.Forms.DataGridView
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -91,6 +93,8 @@ Public Class frmExportInternet
         Me.tbNbScmd = New System.Windows.Forms.TextBox()
         Me.tbNbreTheorique = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.lnkFTP = New System.Windows.Forms.LinkLabel()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.dgvSCmd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcSCMD, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcStatus, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -338,10 +342,31 @@ Public Class frmExportInternet
         Me.Label3.TabIndex = 138
         Me.Label3.Text = "Théorique"
         '
+        'lnkFTP
+        '
+        Me.lnkFTP.AutoSize = True
+        Me.lnkFTP.Location = New System.Drawing.Point(511, 39)
+        Me.lnkFTP.Name = "lnkFTP"
+        Me.lnkFTP.Size = New System.Drawing.Size(59, 13)
+        Me.lnkFTP.TabIndex = 139
+        Me.lnkFTP.TabStop = True
+        Me.lnkFTP.Text = "LinkLabel1"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(438, 39)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(68, 13)
+        Me.Label4.TabIndex = 140
+        Me.Label4.Text = "Site distant : "
+        '
         'frmExportInternet
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(863, 428)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.lnkFTP)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.tbNbreTheorique)
         Me.Controls.Add(Me.tbNbScmd)
@@ -402,6 +427,7 @@ Public Class frmExportInternet
         ckPDFs.Enabled = True
         ckPDFs.Checked = True
         cbExporter.Enabled = False
+        lnkFTP.Text = Param.getConstante("FTP_HOSTNAME")
 
     End Sub
 

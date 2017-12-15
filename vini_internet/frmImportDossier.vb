@@ -218,7 +218,6 @@ Public Class frmImportDossier
         Dim nId As Integer
         Dim oSCMD As SousCommande
         Dim strImportFileName As String
-        Dim oColSMD As New Collection
 
         Dim nSousCommandes As Integer
         setcursorWait()
@@ -256,32 +255,34 @@ Public Class frmImportDossier
                         nId = tabCSV(IMPORT_IDSCMD)
                         oSCMD = SousCommande.createandload(nId)
                         If (Not oSCMD.bNew) Then
-                            oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN)
-                            oSCMD.dateFactFournisseur = Mid(tabCSV(IMPORT_DATEFACTFOURN), 1, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 3, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 5, 4)
-                            oSCMD.totalHTFacture = tabCSV(IMPORT_TOTALHTFACTURE)
-                            oSCMD.totalTTCFacture = tabCSV(IMPORT_TOTALTTCFACTURE)
-                            'importation du taux de commission
-                            'oSCMD.tauxCommission = tabCSV(IMPORT_TAUXCOMMISSION)
-                            'Calcul du montant de la commission ave le montant facturé
-                            oSCMD.calcCommisionstandard(CalculCommScmd.CALCUL_COMMISSION_HT_FACTURE)
-                            oSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
-                            'Controle de l'état
-                            If (oSCMD.etat.codeEtat <> vncEnums.vncEtatCommande.vncSCMDRapprocheeInt) Then
-                                DisplayStatus(oSCMD.code + "Erreur en changement d'état" + oSCMD.etat.codeEtat.ToString())
-                                bReturn = False
+                            Dim bSCMDATraiter As Boolean = True
+                            'Controle des sousCommandes déjà facturées (import déjà effectué mais non validé)
+                            If oSCMD.etat.codeEtat = vncEtatCommande.vncSCMDFacturee Or oSCMD.etat.codeEtat = vncEtatCommande.vncSCMDRapprocheeInt Then
+                                If oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN) Then
+                                    bSCMDATraiter = False
+                                End If
                             End If
-                            If bReturn Then
+                            If bSCMDATraiter Then
+                                oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN)
+                                oSCMD.dateFactFournisseur = Mid(tabCSV(IMPORT_DATEFACTFOURN), 1, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 3, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 5, 4)
+                                tabCSV(IMPORT_TOTALHTFACTURE) = tabCSV(IMPORT_TOTALHTFACTURE).Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                                tabCSV(IMPORT_TOTALHTFACTURE) = tabCSV(IMPORT_TOTALHTFACTURE).Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                                tabCSV(IMPORT_TOTALTTCFACTURE) = tabCSV(IMPORT_TOTALTTCFACTURE).Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                                tabCSV(IMPORT_TOTALTTCFACTURE) = tabCSV(IMPORT_TOTALTTCFACTURE).Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                                oSCMD.totalHTFacture = tabCSV(IMPORT_TOTALHTFACTURE)
+                                oSCMD.totalTTCFacture = Convert.ToDecimal(tabCSV(IMPORT_TOTALTTCFACTURE))
+                                'importation du taux de commission
+                                'oSCMD.tauxCommission = tabCSV(IMPORT_TAUXCOMMISSION)
+                                'Calcul du montant de la commission ave le montant facturé
+                                oSCMD.calcCommisionstandard(CalculCommScmd.CALCUL_COMMISSION_HT_FACTURE)
+                                oSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
                                 bReturn = oSCMD.Save()
                                 If (bReturn) Then
                                     Log(oSCMD.code + "Etat" + oSCMD.etat.codeEtat.ToString() + "(" + oSCMD.oFournisseur.rs + ") =" + oSCMD.refFactFournisseur + "," + oSCMD.dateFactFournisseur.ToString("d") + ":" + oSCMD.totalHT.ToString("c") + "->" + oSCMD.totalHTFacture.ToString("c"))
                                     'Ajout dans la collection pour traitement ultérieur
-                                    oColSMD.Add(oSCMD)
-
                                     lbErreurs.Items.Add(oSCMD.code + "(" + oSCMD.oFournisseur.rs + ") =" + oSCMD.refFactFournisseur + "," + oSCMD.dateFactFournisseur.ToString("d") + ":" + oSCMD.totalHT.ToString("c") + "->" + oSCMD.totalHTFacture.ToString("c"))
                                     lbErreurs.Refresh()
                                     nSousCommandes = nSousCommandes + 1
-                                    'Ajout dans la collection pour traitement ultérieur
-                                    oColSMD.Add(oSCMD)
                                     tbNbreLignesTraitees.Text = nLineNumber
                                 End If
                             End If

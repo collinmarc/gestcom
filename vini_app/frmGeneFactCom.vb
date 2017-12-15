@@ -67,6 +67,7 @@ Public Class frmGeneFactCom
     Friend WithEvents dateFactFournisseur As DataGridViewTextBoxColumn
     Friend WithEvents totalHTFacture As DataGridViewTextBoxColumn
     Friend WithEvents refFactFournisseur As DataGridViewTextBoxColumn
+    Friend WithEvents DateCommandeDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Protected m_colFact As ColEvent
     'Protected getElementCourant() As FactCom
 
@@ -226,6 +227,7 @@ Public Class frmGeneFactCom
         Me.dateFactFournisseur = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.totalHTFacture = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.refFactFournisseur = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateCommandeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpFact.SuspendLayout()
         CType(Me.m_bsrcFactCom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvFactCom, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -315,7 +317,7 @@ Public Class frmGeneFactCom
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbAnnGenerer.Location = New System.Drawing.Point(3, 212)
         Me.cbAnnGenerer.Name = "cbAnnGenerer"
-        Me.cbAnnGenerer.Size = New System.Drawing.Size(522, 24)
+        Me.cbAnnGenerer.Size = New System.Drawing.Size(516, 24)
         Me.cbAnnGenerer.TabIndex = 16
         Me.cbAnnGenerer.Text = "<- Annule -<"
         '
@@ -385,7 +387,7 @@ Public Class frmGeneFactCom
         Me.grpFact.Controls.Add(Me.liFactCom)
         Me.grpFact.Location = New System.Drawing.Point(3, 276)
         Me.grpFact.Name = "grpFact"
-        Me.grpFact.Size = New System.Drawing.Size(906, 235)
+        Me.grpFact.Size = New System.Drawing.Size(900, 235)
         Me.grpFact.TabIndex = 15
         Me.grpFact.TabStop = False
         '
@@ -414,7 +416,7 @@ Public Class frmGeneFactCom
         'cbAppliquer
         '
         Me.cbAppliquer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbAppliquer.Location = New System.Drawing.Point(1192, 199)
+        Me.cbAppliquer.Location = New System.Drawing.Point(1186, 199)
         Me.cbAppliquer.Name = "cbAppliquer"
         Me.cbAppliquer.Size = New System.Drawing.Size(104, 24)
         Me.cbAppliquer.TabIndex = 7
@@ -520,7 +522,7 @@ Public Class frmGeneFactCom
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbSauvegarder.Location = New System.Drawing.Point(3, 242)
         Me.cbSauvegarder.Name = "cbSauvegarder"
-        Me.cbSauvegarder.Size = New System.Drawing.Size(522, 28)
+        Me.cbSauvegarder.Size = New System.Drawing.Size(516, 28)
         Me.cbSauvegarder.TabIndex = 126
         Me.cbSauvegarder.Text = "Sauvegarder"
         '
@@ -537,7 +539,7 @@ Public Class frmGeneFactCom
         Me.dgvFactCom.Location = New System.Drawing.Point(3, 3)
         Me.dgvFactCom.Name = "dgvFactCom"
         Me.dgvFactCom.RowHeadersVisible = False
-        Me.dgvFactCom.Size = New System.Drawing.Size(522, 203)
+        Me.dgvFactCom.Size = New System.Drawing.Size(516, 203)
         Me.dgvFactCom.TabIndex = 127
         '
         'code
@@ -934,7 +936,7 @@ Public Class frmGeneFactCom
         Me.dgvSousCommandes.AutoGenerateColumns = False
         Me.dgvSousCommandes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvSousCommandes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvSousCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SelectedColum, Me.FournisseurCode, Me.FournisseurRS, Me.dateFactFournisseur, Me.totalHTFacture, Me.refFactFournisseur})
+        Me.dgvSousCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SelectedColum, Me.FournisseurCode, Me.FournisseurRS, Me.dateFactFournisseur, Me.totalHTFacture, Me.refFactFournisseur, Me.DateCommandeDataGridViewTextBoxColumn1})
         Me.dgvSousCommandes.DataSource = Me.m_bsrcSousCommande
         Me.dgvSousCommandes.Location = New System.Drawing.Point(4, 29)
         Me.dgvSousCommandes.Name = "dgvSousCommandes"
@@ -997,10 +999,11 @@ Public Class frmGeneFactCom
         '
         'FournisseurRS
         '
-        Me.FournisseurRS.DataPropertyName = "FournisseurRS"
-        Me.FournisseurRS.HeaderText = "Nom Producteur"
+        Me.FournisseurRS.DataPropertyName = "ClientRS"
+        Me.FournisseurRS.HeaderText = "Nom Client"
         Me.FournisseurRS.Name = "FournisseurRS"
         Me.FournisseurRS.ReadOnly = True
+        Me.FournisseurRS.Width = 83
         '
         'dateFactFournisseur
         '
@@ -1008,7 +1011,7 @@ Public Class frmGeneFactCom
         Me.dateFactFournisseur.HeaderText = "date Fact "
         Me.dateFactFournisseur.Name = "dateFactFournisseur"
         Me.dateFactFournisseur.ReadOnly = True
-        Me.dateFactFournisseur.Width = 74
+        Me.dateFactFournisseur.Width = 80
         '
         'totalHTFacture
         '
@@ -1016,7 +1019,7 @@ Public Class frmGeneFactCom
         Me.totalHTFacture.HeaderText = "HT Facturé"
         Me.totalHTFacture.Name = "totalHTFacture"
         Me.totalHTFacture.ReadOnly = True
-        Me.totalHTFacture.Width = 79
+        Me.totalHTFacture.Width = 86
         '
         'refFactFournisseur
         '
@@ -1024,7 +1027,14 @@ Public Class frmGeneFactCom
         Me.refFactFournisseur.HeaderText = "ref Fact "
         Me.refFactFournisseur.Name = "refFactFournisseur"
         Me.refFactFournisseur.ReadOnly = True
-        Me.refFactFournisseur.Width = 66
+        Me.refFactFournisseur.Width = 71
+        '
+        'DateCommandeDataGridViewTextBoxColumn1
+        '
+        Me.DateCommandeDataGridViewTextBoxColumn1.DataPropertyName = "dateCommande"
+        Me.DateCommandeDataGridViewTextBoxColumn1.HeaderText = "date CMD"
+        Me.DateCommandeDataGridViewTextBoxColumn1.Name = "DateCommandeDataGridViewTextBoxColumn1"
+        Me.DateCommandeDataGridViewTextBoxColumn1.Width = 80
         '
         'frmGeneFactCom
         '

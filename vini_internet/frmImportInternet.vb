@@ -39,19 +39,23 @@ Public Class frmImportInternet
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tbNbLignesATraiter As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents lnkHostName As LinkLabel
     Friend WithEvents lbErreurs As System.Windows.Forms.ListBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim configurationAppSettings As System.Configuration.AppSettingsReader = New System.Configuration.AppSettingsReader
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.cbImport = New System.Windows.Forms.Button
-        Me.pbProgressBar = New System.Windows.Forms.ProgressBar
-        Me.laTraitement = New System.Windows.Forms.Label
-        Me.ckFTP = New System.Windows.Forms.CheckBox
-        Me.lbErreurs = New System.Windows.Forms.ListBox
-        Me.tbNbreLignesTraitees = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.tbNbLignesATraiter = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Dim configurationAppSettings As System.Configuration.AppSettingsReader = New System.Configuration.AppSettingsReader()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cbImport = New System.Windows.Forms.Button()
+        Me.pbProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.laTraitement = New System.Windows.Forms.Label()
+        Me.ckFTP = New System.Windows.Forms.CheckBox()
+        Me.lbErreurs = New System.Windows.Forms.ListBox()
+        Me.tbNbreLignesTraitees = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.tbNbLignesATraiter = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lnkHostName = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'Label1
@@ -61,13 +65,13 @@ Public Class frmImportInternet
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(568, 24)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Cette fenêtre permet de récupérer les rapprochements de factures des fournisseurs" & _
-            " établis par le site internet"
+        Me.Label1.Text = "Cette fenêtre permet de récupérer les rapprochements de factures des fournisseurs" &
+    " établis par le site internet"
         '
         'cbImport
         '
         Me.cbImport.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbImport.Location = New System.Drawing.Point(8, 96)
         Me.cbImport.Name = "cbImport"
         Me.cbImport.Size = New System.Drawing.Size(576, 32)
@@ -77,7 +81,7 @@ Public Class frmImportInternet
         'pbProgressBar
         '
         Me.pbProgressBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pbProgressBar.Location = New System.Drawing.Point(8, 193)
         Me.pbProgressBar.Name = "pbProgressBar"
         Me.pbProgressBar.Size = New System.Drawing.Size(576, 24)
@@ -103,8 +107,8 @@ Public Class frmImportInternet
         'lbErreurs
         '
         Me.lbErreurs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbErreurs.Location = New System.Drawing.Point(8, 223)
         Me.lbErreurs.Name = "lbErreurs"
         Me.lbErreurs.Size = New System.Drawing.Size(576, 251)
@@ -146,10 +150,31 @@ Public Class frmImportInternet
         Me.Label3.TabIndex = 15
         Me.Label3.Text = "Nbre de lignes à traiter :"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(8, 52)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(63, 13)
+        Me.Label2.TabIndex = 19
+        Me.Label2.Text = "site distant :"
+        '
+        'lnkHostName
+        '
+        Me.lnkHostName.AutoSize = True
+        Me.lnkHostName.Location = New System.Drawing.Point(78, 51)
+        Me.lnkHostName.Name = "lnkHostName"
+        Me.lnkHostName.Size = New System.Drawing.Size(59, 13)
+        Me.lnkHostName.TabIndex = 20
+        Me.lnkHostName.TabStop = True
+        Me.lnkHostName.Text = "LinkLabel1"
+        '
         'frmImportInternet
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(592, 486)
+        Me.Controls.Add(Me.lnkHostName)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tbNbreLignesTraitees)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tbNbLignesATraiter)
@@ -187,6 +212,7 @@ Public Class frmImportInternet
 
         ckFTP.Checked = True
         Me.Text = "Import des sous commandes depuis le site internet"
+        lnkHostName.Text = Param.getConstante("FTP_HOSTNAME")
     End Sub
     Private Function import() As Boolean
         Dim oFTP As clsFTPVinicom = Nothing
@@ -259,7 +285,6 @@ Public Class frmImportInternet
         Dim tabCSV As String()
         Dim nId As Integer
         Dim oSCMD As SousCommande
-        Dim oColSMD As New Collection
         Dim nSousCommandeTraitees As Integer ' Nbre de sousCommandes traitées
 
         nFile = FreeFile()
@@ -289,36 +314,39 @@ Public Class frmImportInternet
                 nId = tabCSV(IMPORT_IDSCMD)
                 oSCMD = SousCommande.createandload(nId)
                 If (Not oSCMD.bNew) Then
-                    oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN)
-                    oSCMD.dateFactFournisseur = Mid(tabCSV(IMPORT_DATEFACTFOURN), 1, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 3, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 5, 4)
-                    oSCMD.totalHTFacture = tabCSV(IMPORT_TOTALHTFACTURE)
-                    oSCMD.totalTTCFacture = tabCSV(IMPORT_TOTALTTCFACTURE)
-                    'importation du taux de commission
-                    'oSCMD.tauxCommission = tabCSV(IMPORT_TAUXCOMMISSION)
-                    'Calcul du montant de la commission ave le montant facturé
-                    oSCMD.calcCommisionstandard(CalculCommScmd.CALCUL_COMMISSION_HT_FACTURE)
-                    oSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
-                    'Controle de l'état
-                    If (oSCMD.etat.codeEtat <> vncEnums.vncEtatCommande.vncSCMDRapprocheeInt) Then
-                        DisplayStatus(oSCMD.code + "Erreur en changement d'état" + oSCMD.etat.codeEtat.ToString())
-                        bReturn = False
+                    Dim bSCMDATraiter As Boolean = True
+                    'Controle des sousCommandes déjà facturées (import déjà effectué mais non validé)
+                    If oSCMD.etat.codeEtat = vncEtatCommande.vncSCMDFacturee Or oSCMD.etat.codeEtat = vncEnums.vncEtatCommande.vncSCMDRapprocheeInt Then
+                        If oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN) Then
+                            bSCMDATraiter = False
+                        End If
                     End If
-                    If bReturn Then
+                    If bSCMDATraiter Then
+                        tabCSV(IMPORT_TOTALHTFACTURE) = tabCSV(IMPORT_TOTALHTFACTURE).Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                        tabCSV(IMPORT_TOTALHTFACTURE) = tabCSV(IMPORT_TOTALHTFACTURE).Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                        tabCSV(IMPORT_TOTALTTCFACTURE) = tabCSV(IMPORT_TOTALTTCFACTURE).Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                        tabCSV(IMPORT_TOTALTTCFACTURE) = tabCSV(IMPORT_TOTALTTCFACTURE).Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator)
+                        oSCMD.refFactFournisseur = tabCSV(IMPORT_REFFACTFOURN)
+                        oSCMD.dateFactFournisseur = Mid(tabCSV(IMPORT_DATEFACTFOURN), 1, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 3, 2) & "/" & Mid(tabCSV(IMPORT_DATEFACTFOURN), 5, 4)
+                        oSCMD.totalHTFacture = tabCSV(IMPORT_TOTALHTFACTURE)
+                        oSCMD.totalTTCFacture = tabCSV(IMPORT_TOTALTTCFACTURE)
+                        'importation du taux de commission
+                        'oSCMD.tauxCommission = tabCSV(IMPORT_TAUXCOMMISSION)
+                        'Calcul du montant de la commission ave le montant facturé
+                        oSCMD.calcCommisionstandard(CalculCommScmd.CALCUL_COMMISSION_HT_FACTURE)
+                        oSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
                         bReturn = oSCMD.Save()
                         If (bReturn) Then
                             Log(oSCMD.code + "Etat" + oSCMD.etat.codeEtat.ToString() + "(" + oSCMD.oFournisseur.rs + ") =" + oSCMD.refFactFournisseur + "," + oSCMD.dateFactFournisseur.ToString("d") + ":" + oSCMD.totalHT.ToString("c") + "->" + oSCMD.totalHTFacture.ToString("c"))
                             nSousCommandeTraitees = nSousCommandeTraitees + 1
-                            'Ajout dans la collection pour traitement ultérieur
-                            oColSMD.Add(oSCMD)
                             tbNbreLignesTraitees.Text = nSousCommandeTraitees
                         Else
                             DisplayStatus("Erreur en Sauvegarde de sous commande " + oSCMD.getErreur())
-                            bReturn = False
                         End If
                     End If
 
                 Else
-                    DisplayStatus(strResult + "Sous commande inconnue")
+                        DisplayStatus(strResult + "Sous commande inconnue")
                 End If
             Catch Ex As Exception
                 DisplayStatus(strResult + Ex.Message)
@@ -326,6 +354,7 @@ Public Class frmImportInternet
             nLineNumber = nLineNumber + 1
             Me.Refresh()
         End While
+
         FileClose(nFile)
         DisplayStatus("Nbre d'éléments traités :" & nSousCommandeTraitees)
         bReturn = True
