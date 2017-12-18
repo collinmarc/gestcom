@@ -118,7 +118,7 @@ Imports System.IO
             System.IO.File.Delete(strFile)
         End If
 
-        oSCMD.toCSVQuadraFact(strFile)
+        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -176,7 +176,7 @@ Imports System.IO
         If System.IO.File.Exists(strFile) Then
             System.IO.File.Delete(strFile)
         End If
-        oSCMD.toCSVQuadraFact(strFile)
+        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -189,7 +189,7 @@ Imports System.IO
         Assert.AreEqual(tab(0), m_oClient.code)
         Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        Assert.AreEqual(tab(3), oSCMD.code)
+        Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(4), m_oProduit2.code)
         Assert.AreEqual(tab(5), "25")
         Assert.AreEqual(tab(6), "25.5")
@@ -206,7 +206,7 @@ Imports System.IO
         If System.IO.File.Exists(strFile) Then
             System.IO.File.Delete(strFile)
         End If
-        oSCMD.toCSVQuadraFact(strFile)
+        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBaFournisseur)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -218,7 +218,7 @@ Imports System.IO
         Assert.AreEqual(tab(0), oSCMD.oFournisseur.code) 'Cette fois c'est le code fournisseur
         Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        Assert.AreEqual(tab(3), oSCMD.code)
+        Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
         Assert.AreEqual(tab(4), m_oProduit.code)
         Assert.AreEqual(tab(5), "15")
         Assert.AreEqual(tab(6), "15.5")
@@ -265,7 +265,7 @@ Imports System.IO
             System.IO.File.Delete(strFile)
         End If
 
-        objCMD.toCSVQuadraFact(strFile)
+        objCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBafClient)
 
         Assert.IsTrue(System.IO.File.Exists(strFile))
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
@@ -564,11 +564,24 @@ Imports System.IO
                 Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
             End If
             If (TypeOf (oCmd) Is SousCommande) Then
+                Assert.AreEqual(vncEtatCommande.vncSCMDGeneree, oCmd.EtatCode)
+
+            End If
+
+        Next
+
+        oExport.ValiderExportBaf()
+        For Each oCmd As Commande In oExport.ListCmd
+            If (TypeOf (oCmd) Is CommandeClient) Then
+                Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
+            End If
+            If (TypeOf (oCmd) Is SousCommande) Then
                 Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oCmd.EtatCode)
 
             End If
 
         Next
+
 
         objCMDV.bDeleted = True
         objCMDV.save()

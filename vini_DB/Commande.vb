@@ -321,6 +321,11 @@ Public MustInherit Class Commande
             Return ""
         End Get
     End Property
+    Public Overridable ReadOnly Property FournisseurCode() As String
+        Get
+            Return ""
+        End Get
+    End Property
     Public ReadOnly Property colLignes() As ColEvent
         Get
             Debug.Assert(Not m_bResume, "Objet de type resumé")
@@ -1066,7 +1071,7 @@ Public MustInherit Class Commande
     ''' </summary>
     ''' <returns>Nom du fichier généré ou ""</returns>
     ''' <remarks></remarks>
-    Public Function toCSVQuadraFact(pstrFile As String) As String
+    Public Function toCSVQuadraFact(pstrFile As String, pType As vncTypeExportQuadra) As String
         Debug.Assert(bcolLignesLoaded, "Les Lignes doivent être chargées au préalable")
         Dim objLgCommande As LgCommande
         Dim objProduit As Produit
@@ -1126,7 +1131,7 @@ Public MustInherit Class Commande
                         End If
                         If Trim(oRow.EXP_TYPECHAMPS).Equals("V") Then
                             'Exportation d'une Valeur
-                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande)
+                            strValeur = getAttributeValue(oRow.EXP_VALEUR, objLgCommande, pType)
                         End If
 
                         'Si la longueur est égale à 0 => Trim
@@ -1159,7 +1164,7 @@ Public MustInherit Class Commande
         Return bReturn
     End Function 'ToCSVQuadra
 
-    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande) As String
+    Public Function getAttributeValue(ByVal pstrAttributeName As String, pLgCommande As LgCommande, pType As vncTypeExportQuadra) As String
         Dim strReturn As String
         strReturn = String.Empty
 
@@ -1167,7 +1172,12 @@ Public MustInherit Class Commande
 
             Select Case pstrAttributeName.ToUpper()
                 Case "IDENTIFIANT"
-                    strReturn = Trim(Me.TiersCode)
+                    If pType = vncTypeExportQuadra.vncExportBafClient Then
+                        strReturn = Trim(Me.TiersCode)
+                    Else
+                        strReturn = Trim(Me.FournisseurCode)
+                    End If
+
                 Case "REFERENCE1"
                     strReturn = Trim(Me.getCodeCommande())
                 Case "DATEPIECE"

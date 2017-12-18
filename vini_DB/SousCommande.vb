@@ -350,7 +350,7 @@ Public Class SousCommande
             End If
         End Get
     End Property
-    Public ReadOnly Property FournisseurCode() As String
+    Public Overrides ReadOnly Property FournisseurCode() As String
         Get
             If m_oFournisseur IsNot Nothing Then
                 Return m_oFournisseur.code

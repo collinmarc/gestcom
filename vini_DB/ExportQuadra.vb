@@ -149,7 +149,7 @@ Public Class ExportQuadra
                     objCMD.load()
                     objCMD.loadcolLignes()
                     If objCMD.colLignes.Count > 0 Then
-                        objCMD.toCSVQuadraFact(strFile)
+                        objCMD.toCSVQuadraFact(strFile, typeExport)
                     End If
                 End If
                 Notifier()

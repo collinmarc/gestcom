@@ -98,7 +98,7 @@ vini_DB
  <returns></returns>
  <remarks>le calcul de la commssion n'est effectuté que pour les commande</remarks>
 </member>
-<member name="M:vini_DB.Commande.toCSVQuadraFact(System.String)">
+<member name="M:vini_DB.Commande.toCSVQuadraFact(System.String,vini_DB.vncEnums.vncTypeExportQuadra)">
  <summary>
  Export d'une Sous commande au format CSV pour être importée Par le Logiciel QuadraFact
  </summary>

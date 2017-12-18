@@ -466,7 +466,7 @@ Public Class frmExportQuadra
         Dim bReturn As Boolean = m_oExportQuadra.ExportBaf()
         If bReturn Then
             Dim oResult As DialogResult = vbYes
-            oResult = MessageBox.Show("Export réalisé dans " + m_oExportQuadra.folder + ". \n Voulez-vous valider l'export ?", "Validation de l'export", MessageBoxButtons.YesNo)
+            oResult = MessageBox.Show("Export réalisé dans " & m_oExportQuadra.folder & vbNewLine & " Voulez-vous valider l'export ?", "Validation de l'export", MessageBoxButtons.YesNo)
             If oResult = DialogResult.Yes Then
                 bReturn = m_oExportQuadra.ValiderExportBaf()
             End If
