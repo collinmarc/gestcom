@@ -1,4 +1,9 @@
-﻿Version 5.9.1.1
+﻿Version 5.9.1.2
+Date : 27/11/2017
+#808 : Generation Facture DE commission : Modif Colonnes
+#809 : Error en rapprochement de facture Fournisseur
+
+Version 5.9.1.1
 Date : 27/11/2017
 #800 : Entete Etat du stock
 #801 : Affichage de sous Commandes si Transmises + annulation de commande

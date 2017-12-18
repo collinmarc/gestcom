@@ -150,14 +150,44 @@ Public Class ExportQuadra
                     objCMD.loadcolLignes()
                     If objCMD.colLignes.Count > 0 Then
                         objCMD.toCSVQuadraFact(strFile)
+                    End If
+                End If
+                Notifier()
+            Next
+            bReturn = True
+        Catch ex As Exception
+            setError(Environment.StackTrace, ex.Message)
+            bReturn = False
+        End Try
+        Return bReturn
+
+    End Function
+    ''' <summary>
+    ''' Valider l'export 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function ValiderExportBaf() As Boolean
+        Debug.Assert(Not ListCmd Is Nothing)
+
+        Dim objCMD As Commande
+        Dim bReturn As Boolean
+
+        Try
+            Call Notifier()
+
+            'Parcours de la liste des souscommandes et génération du fichier CSV
+            For Each objCMD In ListCmd
+                If objCMD.Selected Then
+                    objCMD.load()
+                    objCMD.loadcolLignes()
+                    If objCMD.colLignes.Count > 0 Then
                         objCMD.ValiderExportQuadra()
-                        'Il faut sauvegarder les sous commandes car l'export a été réalisé
                         If Me.bSaveCmd Then
                             objCMD.Save()
                         End If
                     End If
                 End If
-                Notifier()
+                Call Notifier()
             Next
             bReturn = True
         Catch ex As Exception

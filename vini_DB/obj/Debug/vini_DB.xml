@@ -381,6 +381,12 @@ vini_DB
  Export des Commandes dans un fichier CSV pour Quadra
  </summary>
 </member>
+<member name="M:vini_DB.ExportQuadra.ValiderExportBaf">
+ <summary>
+ Valider l'export 
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:vini_DB.ExportQuadra.loadListCmd">
  <summary>
  Rend la liste des commandes à exporter

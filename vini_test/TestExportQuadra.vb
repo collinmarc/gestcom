@@ -386,7 +386,7 @@ Imports System.IO
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportInternet), oSCMD.oFournisseur.bExportInternet)
         Assert.AreEqual("HOBIVIN", CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
-        Assert.AreEqual(m_oFourn.code, oSCMD.TiersCode)
+        Assert.AreEqual(oInter.code, oSCMD.TiersCode)
 
 
         objCMDV.bDeleted = True
@@ -461,6 +461,17 @@ Imports System.IO
         oExport.typeExport = vncTypeExportQuadra.vncExportBafClient
         oExport.loadListCmd()
         oExport.ExportBaf()
+        For Each oCmd As Commande In oExport.ListCmd
+            If (TypeOf (oCmd) Is CommandeClient) Then
+                Assert.AreEqual(vncEtatCommande.vncEclatee, oCmd.EtatCode)
+            End If
+            If (TypeOf (oCmd) Is SousCommande) Then
+                Assert.AreEqual(vncEtatCommande.vncSCMDGeneree, oCmd.EtatCode)
+
+            End If
+
+        Next
+        oExport.ValiderExportBaf()
         'Test de la validation
 
         For Each oCmd As Commande In oExport.ListCmd

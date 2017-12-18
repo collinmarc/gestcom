@@ -1173,7 +1173,7 @@ Public MustInherit Class Commande
                 Case "DATEPIECE"
                     strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
                 Case "PIECEREGROUP"
-                    strReturn = Trim(Me.code)
+                    strReturn = Trim(Me.getCodeCommande())
                 Case "DATEPEIECE"
                     strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
                 Case "CODEARTICLE"

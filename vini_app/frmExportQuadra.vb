@@ -4,6 +4,7 @@ Public Class frmExportQuadra
     Implements IObservateur
 
     Protected m_oExportQuadra As ExportQuadra
+    Private m_bLoad As Boolean = True
 
 
 
@@ -434,7 +435,7 @@ Public Class frmExportQuadra
     ''' <remarks></remarks>
     Private Sub ExportertVersQuadra()
         Me.ProgressBar1.Minimum = 0
-        Me.ProgressBar1.Maximum = m_oExportQuadra.ListCmd.Count + 5
+        Me.ProgressBar1.Maximum = (m_oExportQuadra.ListCmd.Count * 2) + 10
         Me.ProgressBar1.Value = Me.ProgressBar1.Minimum
 
         setcursorWait()
@@ -448,7 +449,11 @@ Public Class frmExportQuadra
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        ProgressBar1.Value = ProgressBar1.Value + 1
+        Try
+            ProgressBar1.Value = ProgressBar1.Value + 1
+        Catch ex As Exception
+
+        End Try
     End Sub
 #End Region
 
@@ -458,8 +463,15 @@ Public Class frmExportQuadra
         m_oExportQuadra.AjouteObservateur(Me)
 
         'J'execute le traitement
-        m_oExportQuadra.ExportBaf()
-
+        Dim bReturn As Boolean = m_oExportQuadra.ExportBaf()
+        If bReturn Then
+            Dim oResult As DialogResult = vbYes
+            oResult = MessageBox.Show("Export réalisé dans " + m_oExportQuadra.folder + ". \n Voulez-vous valider l'export ?", "Validation de l'export", MessageBoxButtons.YesNo)
+            If oResult = DialogResult.Yes Then
+                bReturn = m_oExportQuadra.ValiderExportBaf()
+            End If
+        End If
+        Return bReturn
     End Function 'exporter
 
     ''' <summary>
@@ -481,6 +493,7 @@ Public Class frmExportQuadra
 #Region "Gestion des Evenements"
     Private Sub frmGestionSCMD_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
         initFenetre()
+        m_bLoad = False '' fin du load
     End Sub
 
     Private Sub cbAfficher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbAfficher.Click
@@ -516,26 +529,29 @@ Public Class frmExportQuadra
 
 
     Private Sub rbBonAFactClient_CheckedChanged(sender As Object, e As EventArgs) Handles rbBonAFactClient.CheckedChanged
-        If rbBonAFactClient.Checked Then
-            Me.TiersRSColumn.Visible = True
-            Me.FournisseurRSColumn.Visible = False
-            If getListeScmd() Then
-                m_bsrcExportQuadra.ResetBindings(False)
-            End If
+        If Not m_bLoad Then
+            If rbBonAFactClient.Checked Then
+                Me.TiersRSColumn.Visible = True
+                Me.FournisseurRSColumn.Visible = False
+                If getListeScmd() Then
+                    m_bsrcExportQuadra.ResetBindings(False)
+                End If
 
+            End If
         End If
 
     End Sub
 
     Private Sub rbBonAchatFourn_CheckedChanged(sender As Object, e As EventArgs) Handles rbBonAchatFourn.CheckedChanged
-        If rbBonAchatFourn.Checked Then
-            Me.TiersRSColumn.Visible = False
-            Me.FournisseurRSColumn.Visible = True
-            If getListeScmd() Then
-                m_bsrcExportQuadra.ResetBindings(False)
+        If Not m_bLoad Then
+            If rbBonAchatFourn.Checked Then
+                Me.TiersRSColumn.Visible = False
+                Me.FournisseurRSColumn.Visible = True
+                If getListeScmd() Then
+                    m_bsrcExportQuadra.ResetBindings(False)
+                End If
+
             End If
-
-
         End If
 
 
