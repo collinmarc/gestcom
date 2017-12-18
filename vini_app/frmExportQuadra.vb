@@ -533,9 +533,7 @@ Public Class frmExportQuadra
             If rbBonAFactClient.Checked Then
                 Me.TiersRSColumn.Visible = True
                 Me.FournisseurRSColumn.Visible = False
-                If getListeScmd() Then
-                    m_bsrcExportQuadra.ResetBindings(False)
-                End If
+                m_bsrcListCMD.Clear()
 
             End If
         End If
@@ -547,9 +545,7 @@ Public Class frmExportQuadra
             If rbBonAchatFourn.Checked Then
                 Me.TiersRSColumn.Visible = False
                 Me.FournisseurRSColumn.Visible = True
-                If getListeScmd() Then
-                    m_bsrcExportQuadra.ResetBindings(False)
-                End If
+                m_bsrcListCMD.Clear()
 
             End If
         End If
