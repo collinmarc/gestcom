@@ -31,3 +31,4 @@ V:\V5\vini_DB\bin\Csv.xml
 V:\V5\vini_DB\obj\Release\vini_DB.vbproj.CoreCompileInputs.cache
 V:\V5\vini_DB\obj\Release\vini_DB.dll
 V:\V5\vini_DB\obj\Release\vini_DB.xml
+V:\V5\vini_DB\obj\Release\vini_DB.vbprojResolveAssemblyReference.cache

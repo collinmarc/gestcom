@@ -269,7 +269,7 @@ Public MustInherit Class Commande
         End Set
     End Property ' oTiers
     Public Sub setTiers(Value As Tiers)
-        If m_oTiers Is Nothing Or (m_oTiers IsNot Nothing And m_oTiers.id = 0) Then
+        If m_oTiers Is Nothing Then
             If Not Value Is Nothing Then
                 m_oTiers = Value
                 'on ne dupplique les informations de tiers que si l'original était vide
@@ -277,9 +277,18 @@ Public MustInherit Class Commande
                 RaiseUpdated()
             End If
         Else
-            If Not oTiers.Equals(Value) Then
-                m_oTiers = Value
-                RaiseUpdated()
+            If (m_oTiers.id = 0) Then
+                If Not Value Is Nothing Then
+                    m_oTiers = Value
+                    'on ne dupplique les informations de tiers que si l'original était vide
+                    DuppliqueCaracteristiqueTiers()
+                    RaiseUpdated()
+                End If
+            Else
+                If Not oTiers.Equals(Value) Then
+                    m_oTiers = Value
+                    RaiseUpdated()
+                End If
             End If
         End If
 

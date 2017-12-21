@@ -1,5 +1,5 @@
 ﻿Version 5.9.1.2
-Date : 
+Date : 21/12/2017
 #808 : Generation Facture DE commission : Modif Colonnes
 #809 : Error en rapprochement de facture Fournisseur
 #810,#811 : ExportQuadra : Export Code Commande , Export Codecliet/Fournisseur

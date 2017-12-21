@@ -21,7 +21,7 @@ Imports vini_DB
     <TestMethod()> Public Sub T10_Object()
         Dim objFRN As Fournisseur
 
-        Assert.IsTrue(m_obj.bExportInternet = 0, "Par defaut l'exportinternet est à false")
+        Assert.IsTrue(m_obj.bExportInternet = 1, "Par defaut l'exportinternet est à exportVincom par defaut")
 
         m_obj.code = "CODE"
         m_obj.nom = "MonFournisseur"
@@ -65,7 +65,6 @@ Imports vini_DB
         Assert.IsFalse(m_obj.bDeleted)
 
         Assert.IsTrue(m_obj.Equals(m_obj), "Egal à Lui même")
-        m_obj.bExportInternet = 0
         objFRN = New Fournisseur("CODE", "MonFournisseur")
         objFRN.rs = "RS"
         objFRN.banque = "BANQUE"
@@ -86,9 +85,9 @@ Imports vini_DB
         objFRN.AdresseLivraison.Email = "contact@marccollin.com"
         objFRN.CommCommande.comment = "Essai"
         Assert.IsTrue(m_obj.Equals(objFRN), "Egal à un semblable")
-        objFRN.bExportInternet = 1
-        Assert.IsFalse(m_obj.Equals(objFRN), "Egal à un Différent")
         objFRN.bExportInternet = 0
+        Assert.IsFalse(m_obj.Equals(objFRN), "Egal à un Différent")
+        objFRN.bExportInternet = 1
         objFRN.CommFacturation.comment = "Essai"
         Assert.IsFalse(m_obj.Equals(objFRN), "Egal à un Différent")
         Dim obj As Object

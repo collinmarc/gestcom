@@ -1312,7 +1312,6 @@ Imports System.IO
     'Test de la ganaration de sousCommande avec un intermédiaire
     <TestMethod()> Public Sub T80_EclatementAvecIntermedaire()
 
-        Dim objLG As LgCommande
 
         Dim objSCMD As SousCommande
         Dim objLgCMD1 As LgCommande
@@ -1400,8 +1399,8 @@ Imports System.IO
         'Test du passage d'info entre la commande et la souscommande
         'Producteur
         Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
-        'Client = Client Originel
-        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande doit être le client Originel" & objSCMD.oTiers.toString())
+        'Client = Client intermédiaire
+        Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande doit être le client intremédiaire" & objSCMD.oTiers.toString())
 
         'Vérification de la seconde sous-commande (Fournisseur = Export Internet)
         objSCMD = oCMD.colSousCommandes.Item(2)
