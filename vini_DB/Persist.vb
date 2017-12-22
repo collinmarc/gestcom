@@ -6488,8 +6488,7 @@ Public MustInherit Class Persist
         End If
 
         'On ne prend que les sous commande Générée
-        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
-        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
+        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDGeneree
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then

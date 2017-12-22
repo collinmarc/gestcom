@@ -380,5 +380,10 @@ Test pour Constructeur FicheTechniqueFourn
  Test de la Fonction LoadCmd de ExportQuadra
  </summary>
 </member>
+<member name="M:vini_test.TestExportQuadra.TestOrdreDesSousCommandesHBV">
+ <summary>
+ Test que les sousCommandes sont bien Ordonnées dans la liste
+ </summary>
+</member>
 </members>
 </doc>

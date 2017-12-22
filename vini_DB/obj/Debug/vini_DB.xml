@@ -393,6 +393,11 @@ vini_DB
  </summary>
  <returns></returns>
 </member>
+<member name="T:vini_DB.ExportQuadra.CodeCommandeSorter">
+ <summary>
+ Comparateur de codeCommande
+ </summary>
+</member>
 <member name="M:vini_DB.FactHBV.createandloadFromCmd(System.Int64)">
  <summary>
  Creation et chargement d'une factute HBV à partir d'un id de commande

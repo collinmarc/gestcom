@@ -589,4 +589,78 @@ Imports System.IO
         oInter.bDeleted = True
         oInter.save()
     End Sub
+
+    ''' <summary>
+    ''' Test que les sousCommandes sont bien Ordonnées dans la liste
+    ''' </summary>
+    <TestMethod()>
+    Public Sub TestOrdreDesSousCommandesHBV()
+        Dim objCMD1 As CommandeClient
+        Dim objCMD2 As CommandeClient
+        Dim oLg As LgCommande
+
+        'Founisseur Hobivin
+        m_oFourn.bExportInternet = vncTypeExportScmd.vncExportQuadra   'Fournisseur Hobivin
+        m_oFourn.Save()
+        m_oProduit.idFournisseur = m_oFourn.id
+        m_oProduit.save()
+
+        'Fournisseur HOBIVIN
+        m_oFourn2.bExportInternet = vncTypeExportScmd.vncExportQuadra 'Fournisseur HOBIVIN
+        m_oFourn2.Save()
+        m_oProduit2.idFournisseur = m_oFourn2.id
+        m_oProduit2.save()
+
+        'Client intermédiaire
+        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        oInter.idTypeClient = Param.getTypeClientIntermediaire().id
+        oInter.save()
+
+
+        'Creation d'une Commande "HOBIVIN" avec Deux un produit de fournisseurs différents
+        objCMD1 = New CommandeClient(m_oClient)
+        objCMD1.dateCommande = New Date(1964, 2, 6)
+        objCMD1.Origine = "VINICOM"
+        oLg = objCMD1.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit1 
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMD1.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit2
+        oLg.qteLiv = oLg.qteCommande
+        objCMD1.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMD1.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMD1.save()
+
+        Assert.IsTrue(objCMD1.generationSousCommande(oInter))
+        objCMD1.save()
+        Assert.AreEqual(2, objCMD1.colSousCommandes.Count)
+
+
+        'Creation d'une Commande "HOBIVIN" avec Deux un produit de fournisseurs différents
+        objCMD2 = New CommandeClient(m_oClient)
+        objCMD2.dateCommande = New Date(1964, 2, 7)
+        objCMD2.Origine = "VINICOM"
+        oLg = objCMD2.AjouteLigne("10", m_oProduit2, 15, 15.5) 'Produit2
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMD2.AjouteLigne("20", m_oProduit, 25, 25.5) 'Produit1
+        oLg.qteLiv = oLg.qteCommande
+        objCMD2.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMD2.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        objCMD2.save()
+        'Commande HOBIVIN Donc un intermédiaire
+        Assert.IsTrue(objCMD2.generationSousCommande(oInter))
+        objCMD2.save()
+        Assert.AreEqual(2, objCMD2.colSousCommandes.Count)
+
+        Dim oExportQuadra = New ExportQuadra(CDate("6/2/1964"), CDate("7/2/1964"), vncTypeExportQuadra.vncExportBafClient, "")
+        oExportQuadra.loadListCmd()
+        Assert.AreEqual(4, oExportQuadra.ListCmd.Count)
+        Assert.AreEqual(objCMD1.code, oExportQuadra.ListCmd(0).getCodeCommande()) 'Sous Commande de la Première Commande
+        Assert.AreEqual(objCMD1.code, oExportQuadra.ListCmd(1).getCodeCommande()) 'Sous Commande de la Première Commande
+        Assert.AreEqual(objCMD2.code, oExportQuadra.ListCmd(2).getCodeCommande()) 'Sous Commande de la Deuxième Commande
+        Assert.AreEqual(objCMD2.code, oExportQuadra.ListCmd(3).getCodeCommande()) 'Sous Commande de la Dexième Commande
+
+
+
+    End Sub
+
+
 End Class

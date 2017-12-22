@@ -708,8 +708,8 @@ Public Class SousCommande
         bReturn = False
 
         Try
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
-            Me.bExportInternet = True
+            'Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+            'Me.bExportInternet = True
             'Quantité Facturée = Quantité Livrée
             For Each objLgCommande In colLignes
                 objLgCommande.qteFact = objLgCommande.qteLiv
@@ -717,8 +717,8 @@ Public Class SousCommande
 
             'changement d'état de la sous Commandes
             'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
-            Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
+            'Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
+            'Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
 
             bReturn = True
         Catch ex As Exception

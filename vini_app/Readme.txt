@@ -1,4 +1,8 @@
-﻿Version 5.9.1.2
+﻿Version 5.9.1.2a
+Date : 21/12/2017
+#    : ExportQuadra, BAFClient tri sur le code Commande 
+
+Version 5.9.1.2
 Date : 21/12/2017
 #808 : Generation Facture DE commission : Modif Colonnes
 #809 : Error en rapprochement de facture Fournisseur

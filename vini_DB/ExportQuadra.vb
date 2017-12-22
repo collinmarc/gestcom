@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Generic
+Imports vini_DB
 
 Public Class ExportQuadra
     Inherits Observable
@@ -205,14 +206,17 @@ Public Class ExportQuadra
     Public Function loadListCmd() As Boolean
 
         Dim bReturn As Boolean = False
-
+        Dim oLst As New List(Of SousCommande)
         Try
             Me.ListCmd.Clear()
 
             Select Case typeExport
                 Case vncTypeExportQuadra.vncExportBafClient
                     'Liste des SOUSCOMMANDES "VINICOM" avec des produits "HOBIVIN" (Fournisseur.Export = 2)
-                    Me.ListCmd.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncExportQuadra, vncOrigineCmd.vncVinicom, dateDeb, dateFin))
+                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportQuadra, vncOrigineCmd.vncVinicom, dateDeb, dateFin)
+                    For Each oScmd As SousCommande In oLst
+                        Me.ListCmd.Add(oScmd)
+                    Next
                     'Liste des COMMMANDES "HOBIVIN" qqsoit le type D'export
                     Dim oCol As Collection
                     Dim strOrigine As String
@@ -223,17 +227,26 @@ Public Class ExportQuadra
                     Next
                 Case vncTypeExportQuadra.vncExportBaFournisseur
                     'Liste des SousCommandes"HOBIVIN" avec des produits VINICOM (Fournisseur.Export <>2)
-                    Me.ListCmd.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin))
-                    Me.ListCmd.AddRange(SousCommande.getListeAExporter(vncTypeExportScmd.vncPasExport, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin))
+
+                    'Ces Sous Commandes peuvent avoir été exportées vers le producteur (avec le client intermédiaire)
+                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
+                    ListCmd.AddRange(oLst)
+                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncPasExport, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
+                    ListCmd.AddRange(oLst)
+
             End Select
 
-            For Each ocmd As Commande In ListCmd
-                If TypeOf (ocmd) Is SousCommande Then
-                    Dim oScmd As SousCommande
-                    oScmd = ocmd
-                    oScmd.oFournisseur.load()
-                End If
-            Next
+            'For Each ocmd As Commande In ListCmd
+            'If TypeOf (ocmd) Is SousCommande Then
+            'Dim oScmd As SousCommande
+            'oScmd = ocmd
+            'oScmd.oFournisseur.load()
+            'End If
+            'Next
+
+            'Tri de la Liste par Ordre de Numéro de Commande
+            'Obligatoire pour Quadra
+            ListCmd.Sort(New CodeCommandeSorter())
             bReturn = True
         Catch ex As Exception
             setError(Environment.StackTrace, ex.Message)
@@ -241,6 +254,14 @@ Public Class ExportQuadra
         End Try
         Return bReturn
     End Function
+    ''' <summary>
+    ''' Comparateur de codeCommande
+    ''' </summary>
+    Public Class CodeCommandeSorter
+        Implements IComparer(Of Commande)
 
-
+        Private Function IComparer_Compare(x As Commande, y As Commande) As Integer Implements IComparer(Of Commande).Compare
+            Return x.getCodeCommande().CompareTo(y.getCodeCommande())
+        End Function
+    End Class
 End Class
