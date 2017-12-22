@@ -1430,6 +1430,66 @@ Imports System.IO
         oFRN2.bDeleted = True
         oFRN2.Save()
     End Sub
+
+    <TestMethod()> Public Sub T5952a_ExportQuadra()
+        Dim objSCMD As SousCommande
+        Dim objSCMD2 As SousCommande
+        Dim nid As Long
+
+        'I - Création d'une Sous-commande 
+
+        objSCMD = New SousCommande(m_oCmd, m_oFourn)
+        Assert.IsFalse(objSCMD.bExportQuadra)
+
+        objSCMD.code = ""
+        objSCMD.dateCommande = CDate("06/02/1964")
+        objSCMD.dateLivraison = CDate("06/02/1964")
+        objSCMD.refLivraison = "BL0003"
+        objSCMD.oTransporteur.AdresseLivraison.nom = "TRANSPORT RAULT"
+        objSCMD.idCommandeClient = m_oCmd.id
+
+        'Save
+        Assert.IsTrue(objSCMD.Save(), "Insert" & objSCMD.getErreur)
+
+        nid = objSCMD.id
+        'II - Rechargement d'une Sous - Commande
+        '========================================
+        objSCMD2 = New SousCommande(m_oCmd, m_oFourn)
+        Assert.IsTrue(objSCMD2.load(nid), "Load de la Sous- commande Client " & nid & ":" & objSCMD2.getErreur())
+        Assert.IsTrue(objSCMD.Equals(objSCMD2), "Les instances devraient être égales")
+
+        'III - Modification d'une Sous- commande
+        '=================================
+        ' Modification de la commande
+        objSCMD2.bExportQuadra = True
+
+        'Save
+        Assert.IsTrue(objSCMD2.Save(), "Update" & objSCMD2.getErreur)
+
+        'Rechargement de l'objet
+        nid = objSCMD2.id
+        objSCMD = SousCommande.createandload(nid)
+        Assert.IsTrue(objSCMD.bExportQuadra)
+        Assert.IsTrue(objSCMD.Equals(objSCMD2), "Les instances devraient être égales Apres Update , Equals")
+
+
+        'Remodification de l'objet
+        objSCMD.bExportQuadra = False
+        objSCMD.Save()
+
+        objSCMD2 = SousCommande.createandload(objSCMD.id)
+        Assert.IsFalse(objSCMD2.bExportQuadra)
+
+        'V - Suppression de la Sous commande
+        '=================================
+        ' Modification de la commande
+        objSCMD.bDeleted = True
+        Assert.IsTrue(objSCMD.Save(), "Delete" & objSCMD.getErreur())
+        'Rechargement dans un autre objet
+        objSCMD2 = New SousCommande(m_oCmd, m_oFourn)
+        Assert.IsFalse(objSCMD2.load(nid), "Load")
+    End Sub
+
     Private Sub GenereSousCommande(pcmd As CommandeClient)
         pcmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
         pcmd.save()

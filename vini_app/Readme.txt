@@ -1,6 +1,7 @@
 ﻿Version 5.9.1.2a
 Date : 21/12/2017
 #    : ExportQuadra, BAFClient tri sur le code Commande 
+#    : ExportQuadra, Ajout d'un Boolean bExportQuadra
 
 Version 5.9.1.2
 Date : 21/12/2017

@@ -413,7 +413,7 @@ Public Class frmExportQuadra
         debAffiche()
         setcursorWait()
         Try
-            m_oExportQuadra.loadListCmd()
+            m_oExportQuadra.LoadListCmd()
             bReturn = True
         Catch ex As Exception
             bReturn = False

@@ -42,4 +42,3 @@ V:\V5\vini_DB\obj\Debug\vini_DB.vbproj.CoreCompileInputs.cache
 V:\V5\vini_DB\obj\Debug\vini_DB.dll
 V:\V5\vini_DB\obj\Debug\vini_DB.xml
 V:\V5\vini_DB\obj\Debug\vini_DB.pdb
-V:\V5\vini_DB\obj\Debug\vini_DB.vbprojResolveAssemblyReference.cache

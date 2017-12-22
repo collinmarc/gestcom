@@ -1441,3 +1441,5 @@ V:\V5\vini_app\obj\Debug\vini_app.vbproj.CoreCompileInputs.cache
 V:\V5\vini_app\obj\Debug\vini_app.exe
 V:\V5\vini_app\obj\Debug\vini_app.xml
 V:\V5\vini_app\obj\Debug\vini_app.pdb
+V:\V5\vini_app\bin\Debug\Requetes\ToV5.9.2.sql
+V:\V5\vini_app\obj\Debug\vini_app.frmGestionSCMD.resources

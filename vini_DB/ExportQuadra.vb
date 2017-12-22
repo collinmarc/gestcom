@@ -200,10 +200,10 @@ Public Class ExportQuadra
     End Function
 
     ''' <summary>
-    ''' Rend la liste des commandes à exporter
+    ''' Charge  la liste des commandes à exporter
     ''' </summary>
     ''' <returns></returns>
-    Public Function loadListCmd() As Boolean
+    Public Function LoadListCmd() As Boolean
 
         Dim bReturn As Boolean = False
         Dim oLst As New List(Of SousCommande)
@@ -213,7 +213,7 @@ Public Class ExportQuadra
             Select Case typeExport
                 Case vncTypeExportQuadra.vncExportBafClient
                     'Liste des SOUSCOMMANDES "VINICOM" avec des produits "HOBIVIN" (Fournisseur.Export = 2)
-                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportQuadra, vncOrigineCmd.vncVinicom, dateDeb, dateFin)
+                    oLst = SousCommande.getListeAExporterQuadra(vncTypeExportScmd.vncExportQuadra, vncOrigineCmd.vncVinicom, dateDeb, dateFin)
                     For Each oScmd As SousCommande In oLst
                         Me.ListCmd.Add(oScmd)
                     Next
@@ -229,9 +229,9 @@ Public Class ExportQuadra
                     'Liste des SousCommandes"HOBIVIN" avec des produits VINICOM (Fournisseur.Export <>2)
 
                     'Ces Sous Commandes peuvent avoir été exportées vers le producteur (avec le client intermédiaire)
-                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
+                    oLst = SousCommande.getListeAExporterQuadra(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
                     ListCmd.AddRange(oLst)
-                    oLst = SousCommande.getListeAExporter(vncTypeExportScmd.vncPasExport, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
+                    oLst = SousCommande.getListeAExporterQuadra(vncTypeExportScmd.vncPasExport, vncOrigineCmd.vncHOBIVIN, dateDeb, dateFin)
                     ListCmd.AddRange(oLst)
 
             End Select

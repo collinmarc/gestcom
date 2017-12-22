@@ -47,6 +47,7 @@ Public Class SousCommande
     Protected m_idFactCom As Integer
     Protected m_codeCommande As String
     Protected m_bExportInternet As Boolean
+    Protected m_bExportQuadra As Boolean
 #End Region
 
 #Region "Accesseurs"
@@ -79,6 +80,7 @@ Public Class SousCommande
         m_idFactCom = 0
         m_codeCommande = poCommandeClient.code
         m_bExportInternet = False
+        m_bExportQuadra = False
         majBooleenAlaFinDuNew()
 
         Origine = poCommandeClient.Origine
@@ -341,6 +343,19 @@ Public Class SousCommande
 
         End Set
     End Property
+    Public Property bExportQuadra() As Boolean
+        Get
+            Return m_bExportQuadra
+        End Get
+        Set(ByVal Value As Boolean)
+            If Not m_bExportQuadra.Equals(Value) Then
+                m_bExportQuadra = Value
+                RaiseUpdated()
+            End If
+
+        End Set
+    End Property
+
     Public Overrides ReadOnly Property FournisseurRS() As String
         Get
             If m_oFournisseur IsNot Nothing Then
@@ -404,6 +419,7 @@ Public Class SousCommande
             bReturn = bReturn And (m_tauxCommission.Equals(objCommande.tauxCommission))
             bReturn = bReturn And (m_montantCommission.Equals(objCommande.MontantCommission))
             bReturn = bReturn And (m_bExportInternet.Equals(objCommande.bExportInternet))
+            bReturn = bReturn And (m_bExportQuadra.Equals(objCommande.bExportQuadra))
 
         Catch ex As Exception
             bReturn = False
@@ -679,25 +695,43 @@ Public Class SousCommande
     '/// <returns>une collection</returns>
     '========================================================================
     ''' <summary>
-    ''' Rend une liste de sous commande à Exporter 
+    ''' Rend une liste de sous commande à Exporter par internet 
     ''' </summary>
-    ''' <param name="pTypeExport">Type d'export (1=ExportInternet, 2 = ExportQuadra)</param>
+    ''' <param name="pTypeExport">Type d'export Fournisseur (1=ExportInternet, 2 = ExportQuadra)</param>
     ''' <param name="pOrigine">Origine de la Commande</param>
     ''' <param name="pddeb">Date De Debut</param>
     ''' <param name="pdfin">Date de fin </param>
     ''' <param name="pStrCodeFourn">Code Fournisseur (Facultatif)</param>
     ''' <returns></returns>
-    Public Shared Function getListeAExporter(pTypeExport As vncTypeExportScmd, pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
+    Public Shared Function getListeAExporterInternet(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
         Dim colReturn As List(Of SousCommande)
         shared_connect()
-        colReturn = ListeSCMDAExporterInternet(pOrigine, pddeb, pdfin, pStrCodeFourn, pTypeExport)
+        colReturn = ListeSCMDAExporter(pOrigine, pddeb, pdfin, pStrCodeFourn, vncTypeExportScmd.vncExportInternet, vncTypeExportScmd.vncExportInternet)
         Debug.Assert(Not colReturn Is Nothing, getErreur())
         shared_disconnect()
         Return colReturn
-    End Function 'getListeExportee
+    End Function 'getListeAExporterInternet
+    ''' <summary>
+    ''' Rend une liste de sous commande à Exporter QUADRA 
+    ''' </summary>
+    ''' <param name="pTypeExportFRN">Type d'export Fournisseur (1=ExportInternet, 2 = ExportQuadra)</param>
+    ''' <param name="pOrigine">Origine de la Commande</param>
+    ''' <param name="pddeb">Date De Debut</param>
+    ''' <param name="pdfin">Date de fin </param>
+    ''' <param name="pStrCodeFourn">Code Fournisseur (Facultatif)</param>
+    ''' <returns></returns>
+    Public Shared Function getListeAExporterQuadra(pTypeExportFRN As vncTypeExportScmd, pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pStrCodeFourn As String = "") As List(Of SousCommande)
+        Dim colReturn As List(Of SousCommande)
+        shared_connect()
+        colReturn = ListeSCMDAExporter(pOrigine, pddeb, pdfin, pStrCodeFourn, pTypeExportFRN, vncTypeExportScmd.vncExportQuadra)
+        Debug.Assert(Not colReturn Is Nothing, getErreur())
+        shared_disconnect()
+        Return colReturn
+    End Function 'getListeAExporterQuadra
 
     ''' <summary>
-    ''' Valider l'export quadra : Changement d'état de la sousCommande
+    ''' Valider l'export quadra : L'état de la sousCommande ne change pas,
+    ''' le Boolean bExportquadra est mis à jour
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
@@ -714,12 +748,23 @@ Public Class SousCommande
             For Each objLgCommande In colLignes
                 objLgCommande.qteFact = objLgCommande.qteLiv
             Next objLgCommande
+            If Me.Origine = "HOBIVIN" Then
+                If Me.oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                    'C'est un Founisseur 'Hobivin' sur une commande Hobivin
+                    'changement d'état de la sous Commandes
+                    'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
+                    Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+                    Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
+                    Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
+                    Me.refFactFournisseur = "QUADRAFACT"
 
+                End If
+            End If
             'changement d'état de la sous Commandes
             'Les commandes exportées vers Quadra sont déclarer facturée car Quadra ne fait pas de rapprochement
             'Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
             'Me.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
-
+            Me.bExportQuadra = True
             bReturn = True
         Catch ex As Exception
             setError("SousCommande.ValiderExportQuadra ERR" & ex.Message)

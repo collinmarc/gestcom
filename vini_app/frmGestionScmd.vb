@@ -92,6 +92,7 @@ Public Class frmGestionSCMD
     Friend WithEvents rbIDScmd As System.Windows.Forms.RadioButton
     Friend WithEvents tbCodeScmd As System.Windows.Forms.TextBox
     Friend WithEvents tbIDScmd As System.Windows.Forms.TextBox
+    Friend WithEvents ckExportQuadra As CheckBox
     Friend WithEvents tbCommentaire As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -165,6 +166,7 @@ Public Class frmGestionSCMD
         Me.rbIDScmd = New System.Windows.Forms.RadioButton()
         Me.tbCodeScmd = New System.Windows.Forms.TextBox()
         Me.tbIDScmd = New System.Windows.Forms.TextBox()
+        Me.ckExportQuadra = New System.Windows.Forms.CheckBox()
         Me.grpDetailSousCommande.SuspendLayout()
         CType(Me.m_bsrcSousCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -175,6 +177,7 @@ Public Class frmGestionSCMD
         'grpDetailSousCommande
         '
         Me.grpDetailSousCommande.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grpDetailSousCommande.Controls.Add(Me.ckExportQuadra)
         Me.grpDetailSousCommande.Controls.Add(Me.Label6)
         Me.grpDetailSousCommande.Controls.Add(Me.tbCommentaire)
         Me.grpDetailSousCommande.Controls.Add(Me.GroupBox1)
@@ -333,7 +336,7 @@ Public Class frmGestionSCMD
         'ckImporteeInternet
         '
         Me.ckImporteeInternet.AutoSize = True
-        Me.ckImporteeInternet.Location = New System.Drawing.Point(179, 236)
+        Me.ckImporteeInternet.Location = New System.Drawing.Point(179, 258)
         Me.ckImporteeInternet.Name = "ckImporteeInternet"
         Me.ckImporteeInternet.Size = New System.Drawing.Size(106, 17)
         Me.ckImporteeInternet.TabIndex = 113
@@ -410,7 +413,7 @@ Public Class frmGestionSCMD
         '
         'ckRapprochee
         '
-        Me.ckRapprochee.Location = New System.Drawing.Point(6, 237)
+        Me.ckRapprochee.Location = New System.Drawing.Point(6, 259)
         Me.ckRapprochee.Name = "ckRapprochee"
         Me.ckRapprochee.Size = New System.Drawing.Size(169, 16)
         Me.ckRapprochee.TabIndex = 5
@@ -864,6 +867,17 @@ Public Class frmGestionSCMD
         Me.tbIDScmd.Name = "tbIDScmd"
         Me.tbIDScmd.Size = New System.Drawing.Size(167, 20)
         Me.tbIDScmd.TabIndex = 108
+        '
+        'ckExportQuadra
+        '
+        Me.ckExportQuadra.AutoSize = True
+        Me.ckExportQuadra.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcSousCommandes, "bExportQuadra", True))
+        Me.ckExportQuadra.Location = New System.Drawing.Point(6, 212)
+        Me.ckExportQuadra.Name = "ckExportQuadra"
+        Me.ckExportQuadra.Size = New System.Drawing.Size(94, 17)
+        Me.ckExportQuadra.TabIndex = 117
+        Me.ckExportQuadra.Text = "Export Quadra"
+        Me.ckExportQuadra.UseVisualStyleBackColor = True
         '
         'frmGestionSCMD
         '

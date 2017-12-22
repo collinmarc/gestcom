@@ -237,7 +237,7 @@ Imports vini_DB
         m_objFRN2.bExportInternet = 0
         m_objFRN2.Save()
         'Lecture des sous commandes Non exportées => 1 elements caril  n'y a qu'un fournisseur internet
-        col = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
+        col = SousCommande.getListeAExporterInternet(vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
         Assert.AreEqual(1, col.Count, "2 Elements dans la Liste")
 
         'Test du bollean ExportIternet du Fournisseur
@@ -246,7 +246,7 @@ Imports vini_DB
         m_objFRN2.bExportInternet = 0
         m_objFRN2.Save()
         'Lecture des sous commandes Non exportées => 0 elements caril  n'y a qu'un fournisseur internet
-        col = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
+        col = SousCommande.getListeAExporterInternet(vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
         Assert.AreEqual(0, col.Count, "0 Elements dans la Liste")
 
         'Test du bollean ExportIternet du Fournisseur
@@ -255,7 +255,7 @@ Imports vini_DB
         m_objFRN2.bExportInternet = 1
         m_objFRN2.Save()
         'Lecture des sous commandes Non exportées => 2 elements 
-        col = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
+        col = SousCommande.getListeAExporterInternet(vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
         Assert.AreEqual(2, col.Count, "2 Elements dans la Liste")
         For Each oSCmd In col
             Assert.IsFalse(oSCmd.bExportInternet, "L'export internet doit être à false")
@@ -267,7 +267,7 @@ Imports vini_DB
         Next
 
         'Lecture des sous commandes non exportée => 0 elements
-        col = SousCommande.getListeAExporter(vncTypeExportScmd.vncExportInternet, vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
+        col = SousCommande.getListeAExporterInternet(vncOrigineCmd.vncVinicom, CDate("06/02/1964"), CDate("06/02/1964"))
         Assert.AreEqual(0, col.Count, "0 Elements dans la Liste")
 
         'Lecture des sous commandes exportées => 2 elements

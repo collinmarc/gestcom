@@ -5502,41 +5502,42 @@ Public MustInherit Class Persist
 
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
 
-        Dim sqlString As String = "SELECT " & _
-                                    "SCMD_ID," & _
-                                    "SCMD_CODE," & _
-                                    "SCMD_ETAT," & _
-                                    "SCMD_CMD_ID," & _
-                                    "SCMD_FACT_ID," & _
-                                    "SCMD_FRN_ID," & _
-                                    "SCMD_DATE," & _
-                                    "SCMD_TOTAL_HT," & _
-                                    "SCMD_TOTAL_TTC," & _
-                                    "SCMD_DATE_LIV," & _
-                                    "SCMD_TRP_NOM," & _
-                                    "SCMD_TRP_RUE1," & _
-                                    "SCMD_TRP_RUE2," & _
-                                    "SCMD_TRP_CP," & _
-                                    "SCMD_TRP_VILLE," & _
-                                    "SCMD_TRP_TEL," & _
-                                    "SCMD_TRP_FAX," & _
-                                    "sCMD_TRP_PORT," & _
-                                    "sCMD_TRP_EMAIL," & _
-                                    "SCMD_COM_COM," & _
-                                    "SCMD_COM_LIV," & _
-                                    "SCMD_COM_FACT," & _
-                                    "sCMD_COM_LIBRE," & _
-                                    "sCMD_REF_LIV," & _
-                                    "SCMD_FACT_REF," & _
-                                    "SCMD_FACT_DATE," & _
-                                    "SCMD_FACT_TOTAL_HT," & _
-                                    "SCMD_FACT_TOTAL_TTC," & _
-                                    "SCMD_COM_BASE," & _
-                                    "SCMD_COM_TAUX," & _
-                                    "SCMD_COM_MONTANT," & _
-                                    "SCMD_CLT_ID, " & _
-                                    "SCMD_BEXPORT, " & _
-                                    "CMD_CODE " & _
+        Dim sqlString As String = "SELECT " &
+                                    "SCMD_ID," &
+                                    "SCMD_CODE," &
+                                    "SCMD_ETAT," &
+                                    "SCMD_CMD_ID," &
+                                    "SCMD_FACT_ID," &
+                                    "SCMD_FRN_ID," &
+                                    "SCMD_DATE," &
+                                    "SCMD_TOTAL_HT," &
+                                    "SCMD_TOTAL_TTC," &
+                                    "SCMD_DATE_LIV," &
+                                    "SCMD_TRP_NOM," &
+                                    "SCMD_TRP_RUE1," &
+                                    "SCMD_TRP_RUE2," &
+                                    "SCMD_TRP_CP," &
+                                    "SCMD_TRP_VILLE," &
+                                    "SCMD_TRP_TEL," &
+                                    "SCMD_TRP_FAX," &
+                                    "sCMD_TRP_PORT," &
+                                    "sCMD_TRP_EMAIL," &
+                                    "SCMD_COM_COM," &
+                                    "SCMD_COM_LIV," &
+                                    "SCMD_COM_FACT," &
+                                    "sCMD_COM_LIBRE," &
+                                    "sCMD_REF_LIV," &
+                                    "SCMD_FACT_REF," &
+                                    "SCMD_FACT_DATE," &
+                                    "SCMD_FACT_TOTAL_HT," &
+                                    "SCMD_FACT_TOTAL_TTC," &
+                                    "SCMD_COM_BASE," &
+                                    "SCMD_COM_TAUX," &
+                                    "SCMD_COM_MONTANT," &
+                                    "SCMD_CLT_ID, " &
+                                    "SCMD_BEXPORT, " &
+                                    "SCMD_BEXPORTQUADRA, " &
+                                    "CMD_CODE " &
                                     " FROM SOUSCOMMANDE , COMMANDE "
         Dim strWhere As String = ""
         Dim objCommand As OleDbCommand
@@ -5602,6 +5603,9 @@ Public MustInherit Class Persist
             objSCMD.MontantCommission = GetString(objRS, "SCMD_COM_MONTANT")
             objSCMD.codeCommandeClient = GetString(objRS, "CMD_CODE")
             objSCMD.bExportInternet = GetValue(objRS, "SCMD_BEXPORT")
+            If Not objRS.IsDBNull(objRS.GetOrdinal("SCMD_BEXPORTQUADRA")) Then
+                objSCMD.bExportQuadra = GetValue(objRS, "SCMD_BEXPORTQUADRA")
+            End If
             cleanErreur()
             bReturn = True
         Catch ex As Exception
@@ -5790,72 +5794,74 @@ Public MustInherit Class Persist
         Debug.Assert(m_id = 0, "ID=0")
         objCMDCLT = CType(Me, SousCommande)
 
-        Dim sqlString As String = "INSERT INTO SOUSCOMMANDE( " & _
-                                    "SCMD_CODE," & _
-                                    "SCMD_ETAT," & _
-                                    "SCMD_CMD_ID," & _
-                                    "SCMD_FACT_ID," & _
-                                    "SCMD_FRN_ID," & _
-                                    "SCMD_DATE," & _
-                                    "SCMD_TOTAL_HT," & _
-                                    "SCMD_TOTAL_TTC," & _
-                                    "SCMD_DATE_LIV," & _
-                                    "SCMD_COM_COM," & _
-                                    "SCMD_COM_LIV," & _
-                                    "SCMD_COM_FACT," & _
-                                    "SCMD_COM_LIBRE," & _
-                                    "SCMD_TRP_NOM," & _
-                                    "SCMD_TRP_RUE1," & _
-                                    "SCMD_TRP_RUE2," & _
-                                    "SCMD_TRP_CP," & _
-                                    "SCMD_TRP_VILLE," & _
-                                    "SCMD_TRP_TEL," & _
-                                    "SCMD_TRP_FAX," & _
-                                    "sCMD_TRP_PORT," & _
-                                    "sCMD_TRP_EMAIL," & _
-                                    "sCMD_REF_LIV," & _
-                                    "SCMD_FACT_REF," & _
-                                    "SCMD_FACT_DATE," & _
-                                    "SCMD_FACT_TOTAL_HT," & _
-                                    "SCMD_FACT_TOTAL_TTC," & _
-                                    "SCMD_COM_BASE," & _
-                                    "SCMD_COM_TAUX," & _
-                                    "SCMD_COM_MONTANT," & _
-                                    "SCMD_CLT_ID," & _
-                                    "SCMD_BEXPORT" & _
-                                  " ) VALUES ( " & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "?" & _
+        Dim sqlString As String = "INSERT INTO SOUSCOMMANDE( " &
+                                    "SCMD_CODE," &
+                                    "SCMD_ETAT," &
+                                    "SCMD_CMD_ID," &
+                                    "SCMD_FACT_ID," &
+                                    "SCMD_FRN_ID," &
+                                    "SCMD_DATE," &
+                                    "SCMD_TOTAL_HT," &
+                                    "SCMD_TOTAL_TTC," &
+                                    "SCMD_DATE_LIV," &
+                                    "SCMD_COM_COM," &
+                                    "SCMD_COM_LIV," &
+                                    "SCMD_COM_FACT," &
+                                    "SCMD_COM_LIBRE," &
+                                    "SCMD_TRP_NOM," &
+                                    "SCMD_TRP_RUE1," &
+                                    "SCMD_TRP_RUE2," &
+                                    "SCMD_TRP_CP," &
+                                    "SCMD_TRP_VILLE," &
+                                    "SCMD_TRP_TEL," &
+                                    "SCMD_TRP_FAX," &
+                                    "sCMD_TRP_PORT," &
+                                    "sCMD_TRP_EMAIL," &
+                                    "sCMD_REF_LIV," &
+                                    "SCMD_FACT_REF," &
+                                    "SCMD_FACT_DATE," &
+                                    "SCMD_FACT_TOTAL_HT," &
+                                    "SCMD_FACT_TOTAL_TTC," &
+                                    "SCMD_COM_BASE," &
+                                    "SCMD_COM_TAUX," &
+                                    "SCMD_COM_MONTANT," &
+                                    "SCMD_CLT_ID," &
+                                    "SCMD_BEXPORT," &
+                                    "SCMD_BEXPORTQUADRA" &
+                                  " ) VALUES ( " &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "? ," &
+                                    "?" &
                                     " )"
         Dim objCommand As OleDbCommand
         Dim objCommand2 As OleDbCommand
@@ -5900,6 +5906,7 @@ Public MustInherit Class Persist
         CreateParameterP_SCMD_COM_MONTANT(objCommand)
         CreateParameterP_SCMD_CLT_ID(objCommand)
         CreateParameterP_SCMD_BEXPORT(objCommand)
+        CreateParameterP_SCMD_BEXPORTQUADRA(objCommand)
         Try
             objCommand.ExecuteNonQuery()
             objCommand2 = New OleDbCommand("SELECT MAX(SCMD_ID) FROM SOUSCOMMANDE", m_dbconn.Connection)
@@ -5944,39 +5951,40 @@ Public MustInherit Class Persist
         Debug.Assert(m_id <> 0, "ID<>0")
         objSCMD = CType(Me, SousCommande)
 
-        Dim sqlString As String = "UPDATE SOUSCOMMANDE SET " & _
-                                    "SCMD_CODE = ? ," & _
-                                    "SCMD_ETAT = ? ," & _
-                                    "SCMD_CMD_ID = ? ," & _
-                                    "SCMD_FRN_ID = ? ," & _
-                                    "SCMD_FACT_ID = ? ," & _
-                                    "SCMD_DATE = ? ," & _
-                                    "SCMD_TOTAL_HT = ? ," & _
-                                    "SCMD_TOTAL_TTC= ? ," & _
-                                    "SCMD_DATE_LIV= ? ," & _
-                                    "SCMD_COM_COM = ? ," & _
-                                    "SCMD_COM_LIV = ? ," & _
-                                    "SCMD_COM_FACT = ? ," & _
-                                    "SCMD_COM_LIBRE = ? ," & _
-                                    "SCMD_TRP_NOM = ? ," & _
-                                    "SCMD_TRP_RUE1 = ? ," & _
-                                    "SCMD_TRP_RUE2 = ? ," & _
-                                    "SCMD_TRP_CP = ? ," & _
-                                    "SCMD_TRP_VILLE = ? ," & _
-                                    "SCMD_TRP_TEL = ? ," & _
-                                    "SCMD_TRP_FAX = ? ," & _
-                                    "sCMD_TRP_PORT = ? ," & _
-                                    "sCMD_TRP_EMAIL = ? ," & _
-                                    "sCMD_REF_LIV = ? ," & _
-                                    "SCMD_FACT_REF = ? ," & _
-                                    "SCMD_FACT_DATE = ? ," & _
-                                    "SCMD_FACT_TOTAL_HT = ? ," & _
-                                    "SCMD_FACT_TOTAL_TTC = ? ," & _
-                                    "SCMD_COM_BASE = ? ," & _
-                                    "SCMD_COM_TAUX = ? ," & _
-                                    "SCMD_COM_MONTANT = ? ," & _
-                                    "SCMD_CLT_ID= ? , " & _
-                                    "SCMD_BEXPORT= ? " & _
+        Dim sqlString As String = "UPDATE SOUSCOMMANDE SET " &
+                                    "SCMD_CODE = ? ," &
+                                    "SCMD_ETAT = ? ," &
+                                    "SCMD_CMD_ID = ? ," &
+                                    "SCMD_FRN_ID = ? ," &
+                                    "SCMD_FACT_ID = ? ," &
+                                    "SCMD_DATE = ? ," &
+                                    "SCMD_TOTAL_HT = ? ," &
+                                    "SCMD_TOTAL_TTC= ? ," &
+                                    "SCMD_DATE_LIV= ? ," &
+                                    "SCMD_COM_COM = ? ," &
+                                    "SCMD_COM_LIV = ? ," &
+                                    "SCMD_COM_FACT = ? ," &
+                                    "SCMD_COM_LIBRE = ? ," &
+                                    "SCMD_TRP_NOM = ? ," &
+                                    "SCMD_TRP_RUE1 = ? ," &
+                                    "SCMD_TRP_RUE2 = ? ," &
+                                    "SCMD_TRP_CP = ? ," &
+                                    "SCMD_TRP_VILLE = ? ," &
+                                    "SCMD_TRP_TEL = ? ," &
+                                    "SCMD_TRP_FAX = ? ," &
+                                    "sCMD_TRP_PORT = ? ," &
+                                    "sCMD_TRP_EMAIL = ? ," &
+                                    "sCMD_REF_LIV = ? ," &
+                                    "SCMD_FACT_REF = ? ," &
+                                    "SCMD_FACT_DATE = ? ," &
+                                    "SCMD_FACT_TOTAL_HT = ? ," &
+                                    "SCMD_FACT_TOTAL_TTC = ? ," &
+                                    "SCMD_COM_BASE = ? ," &
+                                    "SCMD_COM_TAUX = ? ," &
+                                    "SCMD_COM_MONTANT = ? ," &
+                                    "SCMD_CLT_ID= ? , " &
+                                    "SCMD_BEXPORT= ? ," &
+                                    "SCMD_BEXPORTQUADRA= ? " &
                                     " WHERE SCMD_ID = ?"
 
         Dim objCommand As OleDbCommand
@@ -6024,6 +6032,7 @@ Public MustInherit Class Persist
         CreateParameterP_SCMD_COM_MONTANT(objCommand)
         CreateParameterP_SCMD_CLT_ID(objCommand)
         CreateParameterP_SCMD_BEXPORT(objCommand)
+        CreateParameterP_SCMD_BEXPORTQUADRA(objCommand)
         CreateParameterP_ID(objCommand)
         Try
             objCommand.ExecuteNonQuery()
@@ -6077,32 +6086,33 @@ Public MustInherit Class Persist
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Dim colReturn As New List(Of SousCommande)
         '        Dim objParam As OleDbParameter
-        Dim sqlString As String = "SELECT " & _
-                                "SOUSCOMMANDE.SCMD_ID, " & _
-                                "SOUSCOMMANDE.SCMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_DATE, " & _
-                                "COMMANDE.CMD_ID, " & _
-                                "COMMANDE.CMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
-                                "SOUSCOMMANDE.SCMD_ETAT, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
-                                "FOURNISSEUR.FRN_ID, " & _
-                                "FOURNISSEUR.FRN_CODE, " & _
-                                "FOURNISSEUR.FRN_RS, " & _
-                                "CLIENT.CLT_ID, " & _
-                                "CLIENT.CLT_CODE, " & _
-                                "CLIENT.CLT_RS, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
-                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
-                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
-                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
-                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
-                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
-                                "FROM " & _
-                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
-                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
+        Dim sqlString As String = "SELECT " &
+                                "SOUSCOMMANDE.SCMD_ID, " &
+                                "SOUSCOMMANDE.SCMD_CODE, " &
+                                "SOUSCOMMANDE.SCMD_DATE, " &
+                                "COMMANDE.CMD_ID, " &
+                                "COMMANDE.CMD_CODE, " &
+                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " &
+                                "SOUSCOMMANDE.SCMD_ETAT, " &
+                                "SOUSCOMMANDE.SCMD_FACT_REF, " &
+                                "FOURNISSEUR.FRN_ID, " &
+                                "FOURNISSEUR.FRN_CODE, " &
+                                "FOURNISSEUR.FRN_RS, " &
+                                "CLIENT.CLT_ID, " &
+                                "CLIENT.CLT_CODE, " &
+                                "CLIENT.CLT_RS, " &
+                                "SOUSCOMMANDE.SCMD_FACT_DATE, " &
+                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " &
+                                "SOUSCOMMANDE.SCMD_COM_TAUX, " &
+                                "SOUSCOMMANDE.SCMD_COM_BASE, " &
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," &
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," &
+                                "SOUSCOMMANDE.SCMD_FACT_ID, " &
+                                "SOUSCOMMANDE.SCMD_BEXPORT, " &
+                                "SOUSCOMMANDE.SCMD_BEXPORTQUADRA " &
+                                "FROM " &
+                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " &
+                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " &
                                 " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
 
 
@@ -6188,32 +6198,33 @@ Public MustInherit Class Persist
         '============================================================================
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Dim colReturn As New List(Of SousCommande)
-        Dim sqlString As String = "SELECT " & _
-                                "SOUSCOMMANDE.SCMD_ID, " & _
-                                "SOUSCOMMANDE.SCMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_DATE, " & _
-                                "COMMANDE.CMD_ID, " & _
-                                "COMMANDE.CMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
-                                "SOUSCOMMANDE.SCMD_ETAT, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
-                                "FOURNISSEUR.FRN_ID, " & _
-                                "FOURNISSEUR.FRN_CODE, " & _
-                                "FOURNISSEUR.FRN_RS, " & _
-                                "CLIENT.CLT_ID, " & _
-                                "CLIENT.CLT_CODE, " & _
-                                "CLIENT.CLT_RS, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
-                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
-                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
-                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
-                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
-                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
-                                "FROM " & _
-                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
-                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
+        Dim sqlString As String = "SELECT " &
+                                "SOUSCOMMANDE.SCMD_ID, " &
+                                "SOUSCOMMANDE.SCMD_CODE, " &
+                                "SOUSCOMMANDE.SCMD_DATE, " &
+                                "COMMANDE.CMD_ID, " &
+                                "COMMANDE.CMD_CODE, " &
+                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " &
+                                "SOUSCOMMANDE.SCMD_ETAT, " &
+                                "SOUSCOMMANDE.SCMD_FACT_REF, " &
+                                "FOURNISSEUR.FRN_ID, " &
+                                "FOURNISSEUR.FRN_CODE, " &
+                                "FOURNISSEUR.FRN_RS, " &
+                                "CLIENT.CLT_ID, " &
+                                "CLIENT.CLT_CODE, " &
+                                "CLIENT.CLT_RS, " &
+                                "SOUSCOMMANDE.SCMD_FACT_DATE, " &
+                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " &
+                                "SOUSCOMMANDE.SCMD_COM_TAUX, " &
+                                "SOUSCOMMANDE.SCMD_COM_BASE, " &
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," &
+                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," &
+                                "SOUSCOMMANDE.SCMD_FACT_ID, " &
+                                "SOUSCOMMANDE.SCMD_BEXPORT, " &
+                                "SOUSCOMMANDE.SCMD_BEXPORTQUADRA " &
+                                "FROM " &
+                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " &
+                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " &
                                 " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
 
 
@@ -6396,6 +6407,11 @@ Public MustInherit Class Persist
                     Catch ex As InvalidCastException
                         objSCMD.bExportInternet = False
                     End Try
+                    Try
+                        objSCMD.bExportQuadra = GetValue(objRS, "SCMD_BEXPORTQUADRA")
+                    Catch ex As InvalidCastException
+                        objSCMD.bExportQuadra = False
+                    End Try
                     objSCMD.m_bResume = True
                     objSCMD.resetBooleans()
                     colReturn.Add(objSCMD)
@@ -6414,11 +6430,25 @@ Public MustInherit Class Persist
         Return colReturn
 
     End Function ' selectSCMD
-    Protected Shared Function ListeSCMDAExporterInternet(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, ByVal pCodeFourn As String, pTypeExport As vncTypeExportScmd) As List(Of SousCommande)
-        '============================================================================
-        'Function : listeSCMD
-        'Description : Rend une liste de sous commandes
-        '============================================================================
+    ''' <summary>
+    ''' Rend une liste de Sous Commandes a exporter
+    ''' Si pTypeExportDemande = Quadra => filtre sur le bExportQuadra
+    ''' Si pTypeExportDemande = Internet => filtre sur le Etat = generée
+    ''' </summary>
+    ''' <param name="pOrigine">Origine de la commande</param>
+    ''' <param name="pddeb">date de debut</param>
+    ''' <param name="pdfin">date de fin </param>
+    ''' <param name="pCodeFourn">Code fournisseur </param>
+    ''' <param name="pFRNTypeExport">Type d'export pour le fournisseur</param>
+    ''' <param name="pTypeExportDemande">Type d'export Demandé</param>
+    ''' <returns></returns>
+    Protected Shared Function ListeSCMDAExporter(pOrigine As vncOrigineCmd,
+                                                         ByVal pddeb As Date,
+                                                         ByVal pdfin As Date,
+                                                         ByVal pCodeFourn As String,
+                                                         pFRNTypeExport As vncTypeExportScmd,
+                                                         pTypeExportDemande As vncTypeExportScmd) _
+                                                         As List(Of SousCommande)
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Dim colReturn As New List(Of SousCommande)
         '        Dim objParam As OleDbParameter
@@ -6444,7 +6474,8 @@ Public MustInherit Class Persist
                                 "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," &
                                 "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," &
                                 "SOUSCOMMANDE.SCMD_FACT_ID, " &
-                                "SOUSCOMMANDE.SCMD_BEXPORT " &
+                                "SOUSCOMMANDE.SCMD_BEXPORT, " &
+                                "SOUSCOMMANDE.SCMD_BEXPORTQUADRA " &
                                 "FROM " &
                                 "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " &
                                 " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " &
@@ -6487,8 +6518,14 @@ Public MustInherit Class Persist
 
         End If
 
-        'On ne prend que les sous commande Générée
-        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDGeneree
+        'pour l'export internet On ne prend que les sous commande Générée
+        If pTypeExportDemande = vncTypeExportScmd.vncExportInternet Then
+            strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDGeneree
+        End If
+        'pour l'export QUADRA On ne prend que les sous commande non Exportée (qqsoit l'état)
+        If pTypeExportDemande = vncTypeExportScmd.vncExportQuadra Then
+            strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_BEXPORTQUADRA = 'false'"
+        End If
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then
@@ -6499,8 +6536,8 @@ Public MustInherit Class Persist
         End If
 
 
-        'Filtre sur le Type d'export (Internet ou Quadra)
-        strWhere = strWhere & " AND FOURNISSEUR.FRN_BEXP_INTERNET = " & pTypeExport
+        'Filtre sur le Type d'export du Fournisseur (Internet ou Quadra)
+        strWhere = strWhere & " AND FOURNISSEUR.FRN_BEXP_INTERNET = " & pFRNTypeExport
 
         If strWhere <> "" Then
             sqlString = sqlString & " WHERE " & strWhere
@@ -6512,330 +6549,7 @@ Public MustInherit Class Persist
 
         Return colReturn
     End Function 'ListeSCMDAExporterInternet
-    ''' <summary>
-    ''' Liste des sous-commandes a Export vers Quadra
-    ''' </summary>
-    ''' <param name="pOrigine">Origine de la commmande "HOBIVIN" ou "VINICOM"</param>
-    ''' <param name="pddeb"></param>
-    ''' <param name="pdfin"></param>
-    ''' <param name="pCodeFourn"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Protected Shared Function ListeSCMDFournisseurExportQuadra(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
-        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New List(Of SousCommande)
-        '        Dim objParam As OleDbParameter
-        Dim sqlString As String = "SELECT " & _
-                                "SOUSCOMMANDE.SCMD_ID, " & _
-                                "SOUSCOMMANDE.SCMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_DATE, " & _
-                                "COMMANDE.CMD_ID, " & _
-                                "COMMANDE.CMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
-                                "SOUSCOMMANDE.SCMD_ETAT, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
-                                "FOURNISSEUR.FRN_ID, " & _
-                                "FOURNISSEUR.FRN_CODE, " & _
-                                "FOURNISSEUR.FRN_RS, " & _
-                                "CLIENT.CLT_ID, " & _
-                                "CLIENT.CLT_CODE, " & _
-                                "CLIENT.CLT_RS, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
-                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
-                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
-                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
-                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
-                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
-                                "FROM " & _
-                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
-                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
-                                " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
 
-
-        Dim strWhere As String = ""
-        Dim objCommand As OleDbCommand
-        Dim strChampDate As String
-        Dim objParam As OleDbParameter
-
-
-
-        objCommand = New OleDbCommand
-        objCommand.Connection = m_dbconn.Connection
-
-        'Détermination du champ date
-        strChampDate = "SCMD_DATE"
-
-        'Préparation du critere 
-
-        If pddeb <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " >=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
-
-        End If
-        If pdfin <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " <=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
-
-        End If
-        If pCodeFourn <> "" Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pCodeFourn)
-
-        End If
-
-        'On ne prend que les sous commande Générée
-        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
-        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
-
-        'On choisi l'origine des commandes
-        If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
-        End If
-        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
-        End If
-
-
-
-        'On ne pred que les sous commande des fournisseurs  marqués  comme export Quadra
-        strWhere = strWhere + " AND FOURNISSEUR.FRN_BEXP_INTERNET = 2 "
-
-        If strWhere <> "" Then
-            sqlString = sqlString & " WHERE " & strWhere
-        End If
-        sqlString = sqlString & " ORDER BY  SOUSCOMMANDE.SCMD_CODE ASC"
-        objCommand.CommandText = sqlString
-
-        colReturn = selectSCMD(objCommand)
-
-        Return colReturn
-    End Function 'ListeSCMDFournisseurExportQuadra
-    ''' <summary>
-    ''' Liste des SousCommandes Genérées 
-    ''' </summary>
-    ''' <param name="pOrigine"></param>
-    ''' <param name="pddeb"></param>
-    ''' <param name="pdfin"></param>
-    ''' <param name="pCodeFourn"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Protected Shared Function ListeSCMDGeneree(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
-        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New List(Of SousCommande)
-        '        Dim objParam As OleDbParameter
-        Dim sqlString As String = "SELECT " & _
-                                "SOUSCOMMANDE.SCMD_ID, " & _
-                                "SOUSCOMMANDE.SCMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_DATE, " & _
-                                "COMMANDE.CMD_ID, " & _
-                                "COMMANDE.CMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
-                                "SOUSCOMMANDE.SCMD_ETAT, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
-                                "FOURNISSEUR.FRN_ID, " & _
-                                "FOURNISSEUR.FRN_CODE, " & _
-                                "FOURNISSEUR.FRN_RS, " & _
-                                "CLIENT.CLT_ID, " & _
-                                "CLIENT.CLT_CODE, " & _
-                                "CLIENT.CLT_RS, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
-                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
-                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
-                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
-                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
-                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
-                                "FROM " & _
-                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
-                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
-                                " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
-
-
-        Dim strWhere As String = ""
-        Dim objCommand As OleDbCommand
-        Dim strChampDate As String
-        Dim objParam As OleDbParameter
-
-
-
-        objCommand = New OleDbCommand
-        objCommand.Connection = m_dbconn.Connection
-
-        'Détermination du champ date
-        strChampDate = "SCMD_DATE"
-
-        'Préparation du critere 
-
-        If pddeb <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " >=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
-
-        End If
-        If pdfin <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " <=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
-
-        End If
-        If pCodeFourn <> "" Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pCodeFourn)
-
-        End If
-
-        'On ne prend que les sous commande Générée
-        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
-        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
-
-        'On choisi l'origine des commandes
-        If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
-        End If
-        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
-        End If
-
-
-        If strWhere <> "" Then
-            sqlString = sqlString & " WHERE " & strWhere
-        End If
-        sqlString = sqlString & " ORDER BY  SOUSCOMMANDE.SCMD_CODE ASC"
-        objCommand.CommandText = sqlString
-
-        colReturn = selectSCMD(objCommand)
-
-        Return colReturn
-    End Function 'ListeSCMDFournisseurNONExportQuadra
-
-    ''' <summary>
-    ''' Liste des SousCommandes Genérées dont le fournisseur n'est pas marqué comme 'ExportQuadra'
-    ''' </summary>
-    ''' <param name="pOrigine"></param>
-    ''' <param name="pddeb"></param>
-    ''' <param name="pdfin"></param>
-    ''' <param name="pCodeFourn"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Protected Shared Function ListeSCMDFournisseurNONExportQuadra(pOrigine As vncOrigineCmd, ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pCodeFourn As String = "") As List(Of SousCommande)
-        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Dim colReturn As New List(Of SousCommande)
-        '        Dim objParam As OleDbParameter
-        Dim sqlString As String = "SELECT " & _
-                                "SOUSCOMMANDE.SCMD_ID, " & _
-                                "SOUSCOMMANDE.SCMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_DATE, " & _
-                                "COMMANDE.CMD_ID, " & _
-                                "COMMANDE.CMD_CODE, " & _
-                                "SOUSCOMMANDE.SCMD_TOTAL_HT, " & _
-                                "SOUSCOMMANDE.SCMD_ETAT, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_REF, " & _
-                                "FOURNISSEUR.FRN_ID, " & _
-                                "FOURNISSEUR.FRN_CODE, " & _
-                                "FOURNISSEUR.FRN_RS, " & _
-                                "CLIENT.CLT_ID, " & _
-                                "CLIENT.CLT_CODE, " & _
-                                "CLIENT.CLT_RS, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_DATE, " & _
-                                "SOUSCOMMANDE.SCMD_COM_MONTANT, " & _
-                                "SOUSCOMMANDE.SCMD_COM_TAUX, " & _
-                                "SOUSCOMMANDE.SCMD_COM_BASE, " & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_TTC," & _
-                                "SOUSCOMMANDE.SCMD_FACT_TOTAL_HT," & _
-                                "SOUSCOMMANDE.SCMD_FACT_ID, " & _
-                                "SOUSCOMMANDE.SCMD_BEXPORT " & _
-                                "FROM " & _
-                                "((SOUSCOMMANDE INNER JOIN CLIENT ON SOUSCOMMANDE.SCMD_CLT_ID = CLIENT.CLT_ID) " & _
-                                " INNER JOIN COMMANDE ON SOUSCOMMANDE.SCMD_CMD_ID = COMMANDE.CMD_ID) " & _
-                                " INNER JOIN FOURNISSEUR ON SOUSCOMMANDE.SCMD_FRN_ID = FOURNISSEUR.FRN_ID "
-
-
-        Dim strWhere As String = ""
-        Dim objCommand As OleDbCommand
-        Dim strChampDate As String
-        Dim objParam As OleDbParameter
-
-
-
-        objCommand = New OleDbCommand
-        objCommand.Connection = m_dbconn.Connection
-
-        'Détermination du champ date
-        strChampDate = "SCMD_DATE"
-
-        'Préparation du critere 
-
-        If pddeb <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " >=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
-
-        End If
-        If pdfin <> DATE_DEFAUT Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & " " & strChampDate & " <=  ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
-
-        End If
-        If pCodeFourn <> "" Then
-            If strWhere <> "" Then
-                strWhere = strWhere & " AND "
-            End If
-            strWhere = strWhere & "FOURNISSEUR.FRN_CODE LIKE ?"
-            objParam = objCommand.Parameters.AddWithValue("?", pCodeFourn)
-
-        End If
-
-        'On ne prend que les sous commande Générée
-        strWhere = strWhere & " AND SOUSCOMMANDE.SCMD_ETAT = ?"
-        objParam = objCommand.Parameters.AddWithValue("?", vncEnums.vncEtatCommande.vncSCMDGeneree)
-
-        'On choisi l'origine des commandes
-        If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
-        End If
-        If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
-        End If
-
-
-
-        'On ne pred que les sous commande des fournisseurs  marqués  comme export Quadra
-        strWhere = strWhere + " AND FOURNISSEUR.FRN_BEXP_INTERNET <> 2 "
-
-        If strWhere <> "" Then
-            sqlString = sqlString & " WHERE " & strWhere
-        End If
-        sqlString = sqlString & " ORDER BY  SOUSCOMMANDE.SCMD_CODE ASC"
-        objCommand.CommandText = sqlString
-
-        colReturn = selectSCMD(objCommand)
-
-        Return colReturn
-    End Function 'ListeSCMDFournisseurNONExportQuadra
 
     Protected Shared Function ListeFACTCOMEtat(Optional ByVal pddeb As Date = DATE_DEFAUT, Optional ByVal pdfin As Date = DATE_DEFAUT, Optional ByVal pCodeFourn As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection
         '============================================================================
@@ -8028,6 +7742,11 @@ Public MustInherit Class Persist
         Dim objCMD As SousCommande
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
+    End Sub
+    Private Sub CreateParameterP_SCMD_BEXPORTQUADRA(ByVal objCommand As OleDbCommand)
+        Dim objCMD As SousCommande
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", objCMD.bExportQuadra)
     End Sub
 #End Region
 #End Region

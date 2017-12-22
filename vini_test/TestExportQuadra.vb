@@ -124,8 +124,8 @@ Imports System.IO
         'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
         Assert.AreEqual(2, System.IO.File.ReadAllLines(strFile).Count)
         Assert.IsTrue(oSCMD.ValiderExportQuadra())
-        Assert.AreEqual(vncEnums.vncEtatCommande.vncSCMDFacturee, oSCMD.EtatCode)
-        Assert.IsTrue(oSCMD.bExportInternet)
+        Assert.IsTrue(oSCMD.bExportQuadra)
+        '        Assert.AreEqual(vncEnums.vncEtatCommande.vncSCMDFacturee, oSCMD.EtatCode)
         '        oSCMD.delete()
         objCMD.delete()
     End Sub
@@ -353,7 +353,7 @@ Imports System.IO
         '==============
         'Chagement de la liste des sousCommandes à Exporter
         '=============
-        oExport.loadListCmd()
+        oExport.LoadListCmd()
 
         Assert.IsNotNull(oExport.ListCmd)
         Assert.AreEqual(2, oExport.ListCmd.Count)
@@ -377,7 +377,7 @@ Imports System.IO
 
         'Export de type Ba Fournisseur
         oExport.typeExport = vncTypeExportQuadra.vncExportBaFournisseur
-        oExport.loadListCmd()
+        oExport.LoadListCmd()
         Assert.IsNotNull(oExport.ListCmd)
 
         Assert.AreEqual(1, oExport.ListCmd.Count)
@@ -459,31 +459,62 @@ Imports System.IO
 
         'Export de type Baf Client
         oExport.typeExport = vncTypeExportQuadra.vncExportBafClient
-        oExport.loadListCmd()
+        oExport.LoadListCmd()
         oExport.ExportBaf()
+
+        'Vérification des etats avant la validation
+        Dim oCmdClient As CommandeClient
         For Each oCmd As Commande In oExport.ListCmd
             If (TypeOf (oCmd) Is CommandeClient) Then
+                'La Commande est Eclatées
                 Assert.AreEqual(vncEtatCommande.vncEclatee, oCmd.EtatCode)
+                oCmdClient = oCmd
+                For Each oSCMD In oCmdClient.colSousCommandes
+                    If oSCMD.oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                        'Les sousCommandes 'HOBOVIN' sont générée
+                        Assert.AreEqual(vncEtatCommande.vncSCMDGeneree, oSCMD.EtatCode)
+                        Assert.IsFalse(oSCMD.bExportQuadra)
+                    End If
+                Next
             End If
             If (TypeOf (oCmd) Is SousCommande) Then
-                Assert.AreEqual(vncEtatCommande.vncSCMDGeneree, oCmd.EtatCode)
-
+                oSCMD = oCmd
+                Assert.IsFalse(oSCMD.bExportQuadra)
             End If
 
         Next
+        '======= VALIDATION ===============
         oExport.ValiderExportBaf()
         'Test de la validation
 
+        'Vérification des etats après la validation
         For Each oCmd As Commande In oExport.ListCmd
             If (TypeOf (oCmd) Is CommandeClient) Then
+                'La Commande est Transmise 
                 Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
+                oCmdClient = oCmd
+                For Each oSCMD In oCmdClient.colSousCommandes
+                    If oSCMD.oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                        'Les SousCommandes 'HOBIVIN' sont Facturée
+                        Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oSCMD.EtatCode)
+                        Assert.AreEqual("QUADRAFACT", oSCMD.refFactFournisseur)
+                        Assert.IsTrue(oSCMD.bExportQuadra)
+                    End If
+                Next
+
             End If
             If (TypeOf (oCmd) Is SousCommande) Then
-                Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oCmd.EtatCode)
+                oSCMD = oCmd
+                Assert.IsTrue(oSCMD.bExportQuadra)
 
             End If
 
         Next
+
+        'Vérification du Filtre sur LoadListCmd
+        oExport.LoadListCmd()
+        Assert.AreEqual(0, oExport.ListCmd.Count)
+
 
         objCMDV.bDeleted = True
         objCMDV.save()
@@ -555,7 +586,7 @@ Imports System.IO
 
         'Export de type Baf Client
         oExport.typeExport = vncTypeExportQuadra.vncExportBaFournisseur
-        oExport.loadListCmd()
+        oExport.LoadListCmd()
         oExport.ExportBaf()
         'Test de la validation
 
@@ -564,7 +595,8 @@ Imports System.IO
                 Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
             End If
             If (TypeOf (oCmd) Is SousCommande) Then
-                Assert.AreEqual(vncEtatCommande.vncSCMDGeneree, oCmd.EtatCode)
+                oSCMD = oCmd
+                Assert.IsFalse(oSCMD.bExportQuadra)
 
             End If
 
@@ -576,11 +608,17 @@ Imports System.IO
                 Assert.AreEqual(vncEtatCommande.vncTransmiseQuadra, oCmd.EtatCode)
             End If
             If (TypeOf (oCmd) Is SousCommande) Then
-                Assert.AreEqual(vncEtatCommande.vncSCMDFacturee, oCmd.EtatCode)
+                oSCMD = oCmd
+                Assert.IsTrue(oSCMD.bExportQuadra)
 
             End If
 
         Next
+
+
+        'Vérification du Filtre sur LoadListCmd
+        oExport.LoadListCmd()
+        Assert.AreEqual(0, oExport.ListCmd.Count)
 
 
         objCMDV.bDeleted = True
@@ -651,7 +689,7 @@ Imports System.IO
         Assert.AreEqual(2, objCMD2.colSousCommandes.Count)
 
         Dim oExportQuadra = New ExportQuadra(CDate("6/2/1964"), CDate("7/2/1964"), vncTypeExportQuadra.vncExportBafClient, "")
-        oExportQuadra.loadListCmd()
+        oExportQuadra.LoadListCmd()
         Assert.AreEqual(4, oExportQuadra.ListCmd.Count)
         Assert.AreEqual(objCMD1.code, oExportQuadra.ListCmd(0).getCodeCommande()) 'Sous Commande de la Première Commande
         Assert.AreEqual(objCMD1.code, oExportQuadra.ListCmd(1).getCodeCommande()) 'Sous Commande de la Première Commande

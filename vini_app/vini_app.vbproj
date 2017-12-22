@@ -1435,6 +1435,9 @@
     <EmbeddedResource Include="frmGestFactCom.resx">
       <DependentUpon>frmGestFactCom.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGestionScmd.resx">
+      <DependentUpon>frmGestionScmd.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmImportCommandeClientPrestashop.resx">
       <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
     </EmbeddedResource>

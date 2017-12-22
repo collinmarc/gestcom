@@ -1207,7 +1207,8 @@ Public Class CommandeClient
     End Function 'controleStockDispo
 
     ''' <summary>
-    ''' Valider l'export quadra : Changement d'état de la sousCommande
+    ''' Valider l'export quadra : Changement d'état de la Commande
+    ''' Forcement une commande 'HOBIVIN'
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
@@ -1223,6 +1224,20 @@ Public Class CommandeClient
             For Each objLgCommande In colLignes
                 objLgCommande.qteFact = objLgCommande.qteLiv
             Next objLgCommande
+            'Changement d'atat des SousCommandes pour les producteurs HOBIVIN
+            If Me.colSousCommandes.Count = 0 Then
+                Me.LoadColSCMD()
+            End If
+            For Each oScmd As SousCommande In Me.colSousCommandes
+                oScmd.oFournisseur.load()
+                If oScmd.oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
+                    oScmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+                    oScmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDRapprocher)
+                    oScmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDFacturer)
+                    oScmd.refFactFournisseur = "QUADRAFACT"
+                    oScmd.bExportQuadra = True
+                End If
+            Next
 
             bReturn = True
         Catch ex As Exception
