@@ -153,7 +153,8 @@ vini_DB
 </member>
 <member name="M:vini_DB.CommandeClient.ValiderExportQuadra">
  <summary>
- Valider l'export quadra : Changement d'état de la sousCommande
+ Valider l'export quadra : Changement d'état de la Commande
+ Forcement une commande 'HOBIVIN'
  </summary>
  <returns></returns>
  <remarks></remarks>
@@ -387,11 +388,16 @@ vini_DB
  </summary>
  <returns></returns>
 </member>
-<member name="M:vini_DB.ExportQuadra.loadListCmd">
+<member name="M:vini_DB.ExportQuadra.LoadListCmd">
  <summary>
- Rend la liste des commandes à exporter
+ Charge  la liste des commandes à exporter
  </summary>
  <returns></returns>
+</member>
+<member name="T:vini_DB.ExportQuadra.CodeCommandeSorter">
+ <summary>
+ Comparateur de codeCommande
+ </summary>
 </member>
 <member name="M:vini_DB.FactHBV.createandloadFromCmd(System.Int64)">
  <summary>
@@ -2107,38 +2113,19 @@ Represents the connection and commands used to retrieve and save data.
  <returns>une Collection de sous commandes</returns>
  <remarks></remarks>
 </member>
-<member name="M:vini_DB.Persist.ListeSCMDFournisseurExportQuadra(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+<member name="M:vini_DB.Persist.ListeSCMDAExporter(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String,vini_DB.vncEnums.vncTypeExportScmd,vini_DB.vncEnums.vncTypeExportScmd)">
  <summary>
- Liste des sous-commandes a Export vers Quadra
+ Rend une liste de Sous Commandes a exporter
+ Si pTypeExportDemande = Quadra => filtre sur le bExportQuadra
+ Si pTypeExportDemande = Internet => filtre sur le Etat = generée
  </summary>
- <param name="pOrigine">Origine de la commmande "HOBIVIN" ou "VINICOM"</param>
- <param name="pddeb"></param>
- <param name="pdfin"></param>
- <param name="pCodeFourn"></param>
+ <param name="pOrigine">Origine de la commande</param>
+ <param name="pddeb">date de debut</param>
+ <param name="pdfin">date de fin </param>
+ <param name="pCodeFourn">Code fournisseur </param>
+ <param name="pFRNTypeExport">Type d'export pour le fournisseur</param>
+ <param name="pTypeExportDemande">Type d'export Demandé</param>
  <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:vini_DB.Persist.ListeSCMDGeneree(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
- <summary>
- Liste des SousCommandes Genérées 
- </summary>
- <param name="pOrigine"></param>
- <param name="pddeb"></param>
- <param name="pdfin"></param>
- <param name="pCodeFourn"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:vini_DB.Persist.ListeSCMDFournisseurNONExportQuadra(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
- <summary>
- Liste des SousCommandes Genérées dont le fournisseur n'est pas marqué comme 'ExportQuadra'
- </summary>
- <param name="pOrigine"></param>
- <param name="pddeb"></param>
- <param name="pdfin"></param>
- <param name="pCodeFourn"></param>
- <returns></returns>
- <remarks></remarks>
 </member>
 <member name="M:vini_DB.Persist.ListeFACTCOMNonReglee(System.String,System.String)">
  <summary>
@@ -2312,11 +2299,22 @@ Represents the connection and commands used to retrieve and save data.
  <returns>Objet Produit ou null</returns>
  <remarks></remarks>
 </member>
-<member name="M:vini_DB.SousCommande.getListeAExporter(vini_DB.vncEnums.vncTypeExportScmd,vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+<member name="M:vini_DB.SousCommande.getListeAExporterInternet(vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
  <summary>
- Rend une liste de sous commande à Exporter 
+ Rend une liste de sous commande à Exporter par internet 
  </summary>
- <param name="pTypeExport">Type d'export (1=ExportInternet, 2 = ExportQuadra)</param>
+ <param name="pTypeExport">Type d'export Fournisseur (1=ExportInternet, 2 = ExportQuadra)</param>
+ <param name="pOrigine">Origine de la Commande</param>
+ <param name="pddeb">Date De Debut</param>
+ <param name="pdfin">Date de fin </param>
+ <param name="pStrCodeFourn">Code Fournisseur (Facultatif)</param>
+ <returns></returns>
+</member>
+<member name="M:vini_DB.SousCommande.getListeAExporterQuadra(vini_DB.vncEnums.vncTypeExportScmd,vini_DB.vncEnums.vncOrigineCmd,System.DateTime,System.DateTime,System.String)">
+ <summary>
+ Rend une liste de sous commande à Exporter QUADRA 
+ </summary>
+ <param name="pTypeExportFRN">Type d'export Fournisseur (1=ExportInternet, 2 = ExportQuadra)</param>
  <param name="pOrigine">Origine de la Commande</param>
  <param name="pddeb">Date De Debut</param>
  <param name="pdfin">Date de fin </param>
@@ -2325,7 +2323,8 @@ Represents the connection and commands used to retrieve and save data.
 </member>
 <member name="M:vini_DB.SousCommande.ValiderExportQuadra">
  <summary>
- Valider l'export quadra : Changement d'état de la sousCommande
+ Valider l'export quadra : L'état de la sousCommande ne change pas,
+ le Boolean bExportquadra est mis à jour
  </summary>
  <returns></returns>
  <remarks></remarks>

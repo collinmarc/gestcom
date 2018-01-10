@@ -380,5 +380,15 @@ Test pour Constructeur FicheTechniqueFourn
  Test de la Fonction LoadCmd de ExportQuadra
  </summary>
 </member>
+<member name="M:vini_test.TestExportQuadra.TestOrdreDesSousCommandesHBV">
+ <summary>
+ Test que les sousCommandes sont bien Ordonnées dans la liste
+ </summary>
+</member>
+<member name="M:vini_test.TestExportQuadra.T_ReferenceSouscommandesup12carac">
+ <summary>
+ Test de l'export d'une SCMD vinicom ave cune reference de plus de 12 car
+ </summary>
+</member>
 </members>
 </doc>

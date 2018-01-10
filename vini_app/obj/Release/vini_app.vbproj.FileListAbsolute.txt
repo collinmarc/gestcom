@@ -525,3 +525,5 @@ V:\V5\vini_app\obj\Release\vini_app.exe
 V:\V5\vini_app\obj\Release\vini_app.xml
 V:\V5\vini_app\obj\Release\vini_app.pdb
 V:\V5\vini_app\bin\Release\Requetes\ToV5.9.1.sql
+V:\V5\vini_app\bin\Release\Requetes\ToV5.9.2.sql
+V:\V5\vini_app\obj\Release\vini_app.frmGestionSCMD.resources

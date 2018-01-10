@@ -219,6 +219,11 @@ Public MustInherit Class Commande
             End If
         End Set
     End Property
+    Public Sub FTO_setCode(pCode As String)
+        m_code = pCode
+        RaiseUpdated()
+    End Sub
+
 
     Public Property dateCommande() As Date
         Get
@@ -1188,11 +1193,25 @@ Public MustInherit Class Commande
                     End If
 
                 Case "REFERENCE1"
-                    strReturn = Trim(Me.getCodeCommande())
+                    If pType = vncTypeExportQuadra.vncExportBafClient Then
+                        strReturn = Trim(Me.getCodeCommande())
+                    Else
+                        strReturn = Trim(Me.code) '' code de la sous Commande
+                    End If
                 Case "DATEPIECE"
                     strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
                 Case "PIECEREGROUP"
-                    strReturn = Trim(Me.getCodeCommande())
+                    If pType = vncTypeExportQuadra.vncExportBafClient Then
+                        strReturn = Trim(Me.getCodeCommande())
+                    Else
+                        strReturn = Trim(Me.code) '' code de la sous Commande
+                    End If
+
+                    strReturn = strReturn.Replace("-", "")
+                    If strReturn.Length > 12 Then
+                        'Troncation à 12 car à gauche
+                        strReturn = Right(strReturn, 12)
+                    End If
                 Case "DATEPEIECE"
                     strReturn = Trim(Format(Me.dateCommande, "yyMMdd"))
                 Case "CODEARTICLE"

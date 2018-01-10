@@ -1,4 +1,12 @@
-﻿Version 5.9.1.2a
+﻿Version 5.9.1.2c
+Date : 10/01/2018
+#812    : 	Err en Export Quadra (Bon Fournisseur)
+
+Version 5.9.1.2b
+Date : 08/01/2018
+#    : ExportQuadra, BAFournisseur Export Code Souscommande
+
+Version 5.9.1.2a
 Date : 21/12/2017
 #    : ExportQuadra, BAFClient tri sur le code Commande 
 #    : ExportQuadra, Ajout d'un Boolean bExportQuadra

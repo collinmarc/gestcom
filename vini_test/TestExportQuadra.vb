@@ -216,9 +216,9 @@ Imports System.IO
         strLine = File.ReadAllLines(strFile)(1)
         tab = strLine.Split(";")
         Assert.AreEqual(tab(0), oSCMD.oFournisseur.code) 'Cette fois c'est le code fournisseur
-        Assert.AreEqual(tab(1), oSCMD.codeCommandeClient)
+        Assert.AreEqual(tab(1), oSCMD.code)
         Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
-        Assert.AreEqual(tab(3), oSCMD.codeCommandeClient)
+        Assert.AreEqual(tab(3), oSCMD.code.Replace("-", ""))
         Assert.AreEqual(tab(4), m_oProduit.code)
         Assert.AreEqual(tab(5), "15")
         Assert.AreEqual(tab(6), "15.5")
@@ -698,6 +698,76 @@ Imports System.IO
 
 
 
+    End Sub
+    ''' <summary>
+    ''' Test de l'export d'une SCMD vinicom ave cune reference de plus de 12 car
+    ''' </summary>
+    <TestMethod()> Public Sub T_ReferenceSouscommandesup12carac()
+        Dim objCMD As CommandeClient
+        Dim oSCMD As SousCommande
+        Dim oLg As LgCommande
+        Dim strFile As String
+
+        m_oFourn.bExportInternet = vncTypeExportScmd.vncExportInternet 'Fournisseur Vinicom
+        m_oFourn.Save()
+        m_oProduit.idFournisseur = m_oFourn.id
+        m_oProduit.save()
+
+        m_oFourn2.bExportInternet = vncTypeExportScmd.vncExportQuadra 'Fournisseur HOBIVIN
+        m_oFourn2.Save()
+        m_oProduit2.idFournisseur = m_oFourn2.id
+        m_oProduit2.save()
+
+        'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.Origine = "VINICOM"
+        oLg = objCMD.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
+        oLg.qteLiv = oLg.qteCommande
+        oLg = objCMD.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
+        oLg.qteLiv = oLg.qteCommande
+        objCMD.changeEtat(vncActionEtatCommande.vncActionValider)
+        objCMD.changeEtat(vncActionEtatCommande.vncActionLivrer)
+
+        objCMD.save()
+
+        'Commande Vinicom Donc pas d'intermédiaire
+        Assert.IsTrue(objCMD.generationSousCommande())
+        Assert.AreEqual(2, objCMD.colSousCommandes.Count)  '2 sous Commandes générées
+
+
+        'Export de la Première SousCommande (CMD VINICOM, PROD VINICOM)
+        'Normalement cette Souscommande n'est pas Exportée sous Quadra
+        'même traitement qu'une commande "HOBIVIN" avec un produit VINICOM
+        'Export de type BAFFournisseur (Mise à jour des stocks dans QuadraFact)
+        m_oCmd.Origine = "HOBIVIN"
+
+        oSCMD = objCMD.colSousCommandes(1)
+        'Modification du code pour lui affecter plus de 13 carac
+        oSCMD.FTO_setCode(oSCMD.code + "99")
+
+        strFile = "./adel.csv"
+        If System.IO.File.Exists(strFile) Then
+            System.IO.File.Delete(strFile)
+        End If
+        oSCMD.toCSVQuadraFact(strFile, vncTypeExportQuadra.vncExportBaFournisseur)
+
+        Assert.IsTrue(System.IO.File.Exists(strFile))
+        'Il y a Bien 2 lignes dans le fichier( 1 entête et une ligne)
+        Assert.AreEqual(2, System.IO.File.ReadAllLines(strFile).Count)
+        Debug.WriteLine(File.ReadAllText(strFile))
+        Dim strLine As String
+        Dim tab As String()
+        strLine = File.ReadAllLines(strFile)(1)
+        tab = strLine.Split(";")
+        Assert.AreEqual(tab(0), oSCMD.oFournisseur.code) 'Cette fois c'est le code fournisseur
+        Assert.AreEqual(tab(1), oSCMD.code)
+        Assert.AreEqual(tab(2), Format(oSCMD.dateCommande, "yyMMdd"))
+        Assert.AreEqual(tab(3), Right(oSCMD.code.Replace("-", ""), 12))
+        Assert.AreEqual(tab(4), m_oProduit.code)
+        Assert.AreEqual(tab(5), "15")
+        Assert.AreEqual(tab(6), "15.5")
+
+        objCMD.delete()
     End Sub
 
 
