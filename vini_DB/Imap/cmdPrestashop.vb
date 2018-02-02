@@ -25,7 +25,7 @@ Public Class cmdprestashop
     Public Sub New()
         id = ""
         name = ""
-        origine = "VINICOM"
+        origine = Dossier.VINICOM
         customer_id = ""
         company = ""
         livraison_company = ""

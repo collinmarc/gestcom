@@ -423,6 +423,36 @@ Imports vini_DB
         obj.Save()
 
     End Sub
+
+    ''' <summary>
+    ''' Test du champs dOssier
+    ''' </summary>
+    <TestMethod()> Public Sub T70_ChampsDossier()
+
+        Dim obj As Produit
+        Dim nid As Integer
+
+        obj = New Produit("T60", m_oFRN, 1990)
+        Assert.AreEqual("", obj.Dossier)
+        obj.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(obj.save())
+        nid = obj.id
+        obj = Produit.createandload(nid)
+
+        Assert.AreEqual(Dossier.HOBIVIN, obj.Dossier)
+
+        obj.Dossier = Dossier.VINICOM
+        Assert.IsTrue(obj.save())
+        obj = Produit.createandload(nid)
+
+        Assert.AreEqual(Dossier.VINICOM, obj.Dossier)
+
+
+        obj.bDeleted = True
+        obj.save()
+
+    End Sub
+
 End Class
 
 

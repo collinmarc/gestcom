@@ -147,12 +147,12 @@ Public Class frmCAProducteurClient
         'cbxOrigine
         '
         Me.cbxOrigine.FormattingEnabled = True
-        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Items.AddRange(New Object() {Dossier.VINICOM, Dossier.HOBIVIN})
         Me.cbxOrigine.Location = New System.Drawing.Point(99, 35)
         Me.cbxOrigine.Name = "cbxOrigine"
         Me.cbxOrigine.Size = New System.Drawing.Size(96, 21)
         Me.cbxOrigine.TabIndex = 11
-        Me.cbxOrigine.Text = "VINICOM"
+        Me.cbxOrigine.Text = Dossier.VINICOM
         '
         'frmCAProducteurClient
         '

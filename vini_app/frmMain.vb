@@ -1173,7 +1173,7 @@ Friend Class frmMain
         Me.Menu = Me.MainMenu1
         Me.Name = "frmMain"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Text = "Vinicom"
+        Me.Text = Dossier.VINICOM
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2059,14 +2059,6 @@ Friend Class frmMain
 
     End Sub
 
-    Private Sub MenuItem10_Click_1(sender As System.Object, e As System.EventArgs) Handles mnuDB_Appelation.Click
-        Dim ofrm As frmAppelation
-        ofrm = New frmAppelation
-        ofrm.MdiParent = Me
-        'ofrm.WindowState = FormWindowState.Maximized
-        ofrm.Show()
-
-    End Sub
 
     Private Sub mnuEclatementCommandes_Click(sender As Object, e As EventArgs) Handles mnuEclatementCommandes.Click
         Dim ofrm As frmEclatementCommande

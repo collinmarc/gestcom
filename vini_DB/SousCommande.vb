@@ -748,7 +748,7 @@ Public Class SousCommande
             For Each objLgCommande In colLignes
                 objLgCommande.qteFact = objLgCommande.qteLiv
             Next objLgCommande
-            If Me.Origine = "HOBIVIN" Then
+            If Me.Origine = Dossier.HOBIVIN Then
                 If Me.oFournisseur.bExportInternet = vncTypeExportScmd.vncExportQuadra Then
                     'C'est un Founisseur 'Hobivin' sur une commande Hobivin
                     'changement d'état de la sous Commandes

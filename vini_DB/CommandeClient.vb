@@ -59,7 +59,7 @@ Public Class CommandeClient
         m_RaisonSocialeLivraison = ""
         m_bUpdatePrecommande = True
         m_NamePrestashop = ""
-        Origine = "VINICOM"
+        Origine = Dossier.VINICOM
         Debug.Assert(Not m_oTransporteur Is Nothing)
         Debug.Assert(Not etat Is Nothing)
         majBooleenAlaFinDuNew()

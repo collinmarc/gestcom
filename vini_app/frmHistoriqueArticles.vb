@@ -112,12 +112,12 @@ Public Class frmHistoriqueArticles
         'cbxOrigine
         '
         Me.cbxOrigine.FormattingEnabled = True
-        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Items.AddRange(New Object() {dOSSIER.VINICOM, DOSSIER.HOBIVIN})
         Me.cbxOrigine.Location = New System.Drawing.Point(128, 36)
         Me.cbxOrigine.Name = "cbxOrigine"
         Me.cbxOrigine.Size = New System.Drawing.Size(136, 21)
         Me.cbxOrigine.TabIndex = 7
-        Me.cbxOrigine.Text = "VINICOM"
+        Me.cbxOrigine.Text = dossier.VINICOM
         '
         'Label4
         '

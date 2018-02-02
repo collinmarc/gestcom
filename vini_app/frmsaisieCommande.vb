@@ -735,7 +735,7 @@ Public Class frmSaisieCommande
         'cbxOrigine
         '
         Me.cbxOrigine.FormattingEnabled = True
-        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Items.AddRange(New Object() {dOSSIER.VINICOM, DOSSIER.HOBIVIN})
         Me.cbxOrigine.Location = New System.Drawing.Point(6, 16)
         Me.cbxOrigine.Name = "cbxOrigine"
         Me.cbxOrigine.Size = New System.Drawing.Size(124, 21)

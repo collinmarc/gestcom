@@ -915,11 +915,11 @@ Imports System.IO
         Dim oIntermediaire As Client
 
         oIntermediaire = New Client("INTER", "Intermediaire")
-        oIntermediaire.setTypeIntermediaire("HOBIVIN")
+        oIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
         oIntermediaire.save()
 
         'Ajout de 2 Lignes à la commande
-        m_oCmd.Origine = "HOBIVIN"
+        m_oCmd.Origine = Dossier.HOBIVIN
         oLgCmd = m_oCmd.AjouteLigne("10", m_oProduit, 10, 15.55)
         oLgCmd.qteLiv = 9
         Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
@@ -1324,7 +1324,7 @@ Imports System.IO
 
         Dim oCltIntermediaire As Client
         oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
-        oCltIntermediaire.setTypeIntermediaire("HOBIVIN")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
         oCltIntermediaire.save()
 
 
@@ -1343,7 +1343,7 @@ Imports System.IO
 
         'Création d'une commande client origine "VINICOM" 
         oCMD = New CommandeClient(m_oClient)
-        oCMD.Origine = "Vinicom"
+        oCMD.Origine = Dossier.VINICOM
         oCMD.save()
         oCMD.AjouteLigne("10", m_oProduit, 10, 12)
         oCMD.AjouteLigne("20", oPRD2, 20, 22)
@@ -1382,7 +1382,7 @@ Imports System.IO
 
         'Création d'une commande client origine AVEC intermédiaire
         oCMD = New CommandeClient(m_oClient)
-        oCMD.Origine = "HOBIVIN"
+        oCMD.Origine = Dossier.HOBIVIN
         oCMD.save()
         objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
         objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)

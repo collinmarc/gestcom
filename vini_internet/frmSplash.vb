@@ -139,7 +139,7 @@ Friend Class frmSplash
         Me.lblCompanyProduct.Size = New System.Drawing.Size(45, 16)
         Me.lblCompanyProduct.TabIndex = 8
         Me.lblCompanyProduct.Tag = "1053"
-        Me.lblCompanyProduct.Text = "Vinicom"
+        Me.lblCompanyProduct.Text = vini_DB.Dossier.VINICOM
         '
         'lblPlatform
         '

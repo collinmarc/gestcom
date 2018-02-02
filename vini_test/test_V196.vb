@@ -77,24 +77,26 @@ Imports vini_DB
         Dim objBA As BonAppro
         Dim objLg As LgCommande
 
-        'Creation d'un commande
+        'Creation d'un Bon Appro
         objBA = New BonAppro(m_objFRN)
         objBA.AjouteLigne("10", m_objPRD, 10, 0)
         objBA.save()
         nidBA = objBA.id
-        Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
+        Assert.IsTrue(objBA.colLignes.Count = 1, "Il Doit y avoir 1 lignes dans le BA")
 
-        objBA.createandload(nidBA)
+        'Rechargement du bon
+        objBA = BonAppro.createandload(nidBA)
         objBA.loadcolLignes()
-        Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
+        Assert.IsTrue(objBA.colLignes.Count = 1, "Il Doit y avoir 1 lignes dans le BA")
         'Livraison de la commande
         For Each objLg In objBA.colLignes
             objLg.qteLiv = objLg.qteCommande
         Next objLg
         objBA.changeEtat(vncEnums.vncActionEtatCommande.vncActionBALivrer)
         objBA.save()
+
         Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
-        objBA.createandload(nidBA)
+        objBA = BonAppro.createandload(nidBA)
         objBA.loadcolLignes()
         Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
 
@@ -105,7 +107,7 @@ Imports vini_DB
         objBA.changeEtat(vncEnums.vncActionEtatCommande.vncActionBAAnnLivrer)
         objBA.save()
         Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
-        objBA.createandload(nidBA)
+        objBA = BonAppro.createandload(nidBA)
         objBA.loadcolLignes()
         Assert.IsTrue(objBA.colLignes.Count = 1, "Il n'y a plus de lignes dans la commandes")
 

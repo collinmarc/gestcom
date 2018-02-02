@@ -583,7 +583,7 @@ Imports vini_DB
 
         Dim obj As New Client("TEST", "TEST")
         Dim idTypeIntermediaire As Integer
-        obj.setTypeIntermediaire("HOBIVIN")
+        obj.setTypeIntermediaire(Dossier.HOBIVIN)
 
         For Each oParam As Param In Param.colTypeClient
             If oParam.valeur = "Intermediaire" Or oParam.valeur = "Intermédiaire" Then
@@ -592,16 +592,16 @@ Imports vini_DB
         Next
 
         Assert.AreEqual(idTypeIntermediaire, obj.idTypeClient)
-        Assert.AreEqual("HOBIVIN", obj.Origine)
+        Assert.AreEqual(Dossier.HOBIVIN, obj.Origine)
 
         Assert.IsTrue(obj.save())
 
         Dim oClt2 As Client
         Dim oLst As List(Of Client)
-        oLst = Client.getIntermediairesPourUneOrigine("HOBIVIN")
+        oLst = Client.getIntermediairesPourUneOrigine(Dossier.HOBIVIN)
         Assert.AreEqual(1, oLst.Count)
 
-        oLst = Client.getIntermediairesPourUneOrigine("VINICOM")
+        oLst = Client.getIntermediairesPourUneOrigine(Dossier.VINICOM)
         Assert.AreEqual(0, oLst.Count)
 
 

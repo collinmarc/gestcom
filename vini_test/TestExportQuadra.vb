@@ -152,7 +152,7 @@ Imports System.IO
 
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
         objCMD = New CommandeClient(m_oClient)
-        objCMD.Origine = "VINICOM"
+        objCMD.Origine = Dossier.VINICOM
         oLg = objCMD.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMD.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -199,7 +199,7 @@ Imports System.IO
         'Normalement cette Souscommande n'est pas Exportée sous Quadra
         'même traitement qu'une commande "HOBIVIN" avec un produit VINICOM
         'Export de type BAFFournisseur (Mise à jour des stocks dans QuadraFact)
-        m_oCmd.Origine = "HOBIVIN"
+        m_oCmd.Origine = Dossier.HOBIVIN
 
         oSCMD = objCMD.colSousCommandes(1)
         strFile = "./adel.csv"
@@ -247,12 +247,12 @@ Imports System.IO
 
         oCltInter = New Client("CLTINTER", "Client intermédiare")
         oCltInter.idTypeClient = Param.getTypeClientIntermediaire().id
-        oCltInter.Origine = "HOBIVIN"
+        oCltInter.Origine = Dossier.HOBIVIN
         oCltInter.save()
 
         'Creation d'une Commande
         objCMD = New CommandeClient(m_oClient)
-        objCMD.Origine = "HOBIVIN"
+        objCMD.Origine = Dossier.HOBIVIN
         oLg = objCMD.AjouteLigne("10", m_oProduit2, 15, 15.5)
         oLg.qteLiv = oLg.qteCommande
         objCMD.changeEtat(vncActionEtatCommande.vncActionValider)
@@ -308,7 +308,7 @@ Imports System.IO
         m_oProduit2.save()
 
         'Client intermédiaire
-        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        Dim oInter As New Client("CLTINTER", Dossier.HOBIVIN)
         oInter.idTypeClient = Param.getTypeClientIntermediaire().id
         oInter.save()
 
@@ -316,7 +316,7 @@ Imports System.IO
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
         objCMDV = New CommandeClient(m_oClient)
         objCMDV.dateCommande = New Date(1964, 2, 6)
-        objCMDV.Origine = "VINICOM"
+        objCMDV.Origine = Dossier.VINICOM
         oLg = objCMDV.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDV.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -333,7 +333,7 @@ Imports System.IO
         'Creation d'une Commande "HOBIVIN" avec un produit Vinicom et un produit HOBIVIN
         objCMDH = New CommandeClient(m_oClient)
         objCMDH.dateCommande = New Date(1964, 2, 7)
-        objCMDH.Origine = "HOBIVIN"
+        objCMDH.Origine = Dossier.HOBIVIN
         oLg = objCMDH.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDH.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -364,14 +364,14 @@ Imports System.IO
         oSCMD = oExport.ListCmd(0)
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportQuadra), oSCMD.oFournisseur.bExportInternet)
-        Assert.AreEqual("VINICOM", CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
+        Assert.AreEqual(Dossier.VINICOM, CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
         Assert.AreEqual(m_oClient.code, oSCMD.TiersCode)
 
         'Second Element à Exporter
         'une commande HOBIVIN avec les 2 produits
         Assert.IsInstanceOfType(oExport.ListCmd(1), objCMDH.GetType())
         objCMDH = oExport.ListCmd(1)
-        Assert.AreEqual("HOBIVIN", objCMDH.Origine)
+        Assert.AreEqual(Dossier.HOBIVIN, objCMDH.Origine)
         Assert.AreEqual(2, objCMDH.colLignes.Count)
         Assert.AreEqual(m_oClient.code, oSCMD.TiersCode)
 
@@ -385,7 +385,7 @@ Imports System.IO
         oSCMD = oExport.ListCmd(0)
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportInternet), oSCMD.oFournisseur.bExportInternet)
-        Assert.AreEqual("HOBIVIN", CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
+        Assert.AreEqual(Dossier.HOBIVIN, CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
         Assert.AreEqual(oInter.code, oSCMD.TiersCode)
 
 
@@ -417,7 +417,7 @@ Imports System.IO
         m_oProduit2.save()
 
         'Client intermédiaire
-        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        Dim oInter As New Client("CLTINTER", Dossier.HOBIVIN)
         oInter.idTypeClient = Param.getTypeClientIntermediaire().id
         oInter.save()
 
@@ -425,7 +425,7 @@ Imports System.IO
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
         objCMDV = New CommandeClient(m_oClient)
         objCMDV.dateCommande = New Date(1964, 2, 6)
-        objCMDV.Origine = "VINICOM"
+        objCMDV.Origine = Dossier.VINICOM
         oLg = objCMDV.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDV.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -442,7 +442,7 @@ Imports System.IO
         'Creation d'une Commande "HOBIVIN" avec un produit Vinicom et un produit HOBIVIN
         objCMDH = New CommandeClient(m_oClient)
         objCMDH.dateCommande = New Date(1964, 2, 7)
-        objCMDH.Origine = "HOBIVIN"
+        objCMDH.Origine = Dossier.HOBIVIN
         oLg = objCMDH.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDH.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -544,7 +544,7 @@ Imports System.IO
         m_oProduit2.save()
 
         'Client intermédiaire
-        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        Dim oInter As New Client("CLTINTER", Dossier.HOBIVIN)
         oInter.idTypeClient = Param.getTypeClientIntermediaire().id
         oInter.save()
 
@@ -552,7 +552,7 @@ Imports System.IO
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
         objCMDV = New CommandeClient(m_oClient)
         objCMDV.dateCommande = New Date(1964, 2, 6)
-        objCMDV.Origine = "VINICOM"
+        objCMDV.Origine = Dossier.VINICOM
         oLg = objCMDV.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDV.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -569,7 +569,7 @@ Imports System.IO
         'Creation d'une Commande "HOBIVIN" avec un produit Vinicom et un produit HOBIVIN
         objCMDH = New CommandeClient(m_oClient)
         objCMDH.dateCommande = New Date(1964, 2, 7)
-        objCMDH.Origine = "HOBIVIN"
+        objCMDH.Origine = Dossier.HOBIVIN
         oLg = objCMDH.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMDH.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -650,7 +650,7 @@ Imports System.IO
         m_oProduit2.save()
 
         'Client intermédiaire
-        Dim oInter As New Client("CLTINTER", "HOBIVIN")
+        Dim oInter As New Client("CLTINTER", Dossier.HOBIVIN)
         oInter.idTypeClient = Param.getTypeClientIntermediaire().id
         oInter.save()
 
@@ -658,7 +658,7 @@ Imports System.IO
         'Creation d'une Commande "HOBIVIN" avec Deux un produit de fournisseurs différents
         objCMD1 = New CommandeClient(m_oClient)
         objCMD1.dateCommande = New Date(1964, 2, 6)
-        objCMD1.Origine = "VINICOM"
+        objCMD1.Origine = Dossier.VINICOM
         oLg = objCMD1.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit1 
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMD1.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit2
@@ -675,7 +675,7 @@ Imports System.IO
         'Creation d'une Commande "HOBIVIN" avec Deux un produit de fournisseurs différents
         objCMD2 = New CommandeClient(m_oClient)
         objCMD2.dateCommande = New Date(1964, 2, 7)
-        objCMD2.Origine = "VINICOM"
+        objCMD2.Origine = Dossier.VINICOM
         oLg = objCMD2.AjouteLigne("10", m_oProduit2, 15, 15.5) 'Produit2
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMD2.AjouteLigne("20", m_oProduit, 25, 25.5) 'Produit1
@@ -720,7 +720,7 @@ Imports System.IO
 
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
         objCMD = New CommandeClient(m_oClient)
-        objCMD.Origine = "VINICOM"
+        objCMD.Origine = Dossier.VINICOM
         oLg = objCMD.AjouteLigne("10", m_oProduit, 15, 15.5) 'Produit Vinicom
         oLg.qteLiv = oLg.qteCommande
         oLg = objCMD.AjouteLigne("20", m_oProduit2, 25, 25.5) 'Produit HOBIVIN
@@ -739,7 +739,7 @@ Imports System.IO
         'Normalement cette Souscommande n'est pas Exportée sous Quadra
         'même traitement qu'une commande "HOBIVIN" avec un produit VINICOM
         'Export de type BAFFournisseur (Mise à jour des stocks dans QuadraFact)
-        m_oCmd.Origine = "HOBIVIN"
+        m_oCmd.Origine = Dossier.HOBIVIN
 
         oSCMD = objCMD.colSousCommandes(1)
         'Modification du code pour lui affecter plus de 13 carac

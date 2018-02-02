@@ -1,4 +1,9 @@
-﻿Version 5.9.1.2c
+﻿Version 5.9.3.0
+Date : 
+#815   : Lenteur en saisie de commande (PreCommande)
+#816 : notion de dossier dans la fiche produit
+
+Version 5.9.1.2c
 Date : 10/01/2018
 #812    : 	Err en Export Quadra (Bon Fournisseur)
 

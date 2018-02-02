@@ -55,6 +55,8 @@ Public Class Produit
     Private WithEvents m_colMvtStock As ColEventSorted       'Collection des Mouvements de Stocks
     Private m_bcolMvtStockLoaded As Boolean
     Private m_bcolMvtStockUpdated As Boolean
+    Private m_Dossier As String
+
     '=======================================================================
     '                           METHODE DE CLASSE                          |  
     'Fonction : getListe 
@@ -107,6 +109,11 @@ Public Class Produit
 
 #Region "Accesseurs"
     Friend Sub New()
+        init()
+        m_bcolMvtStockUpdated = False
+        Debug.Assert(m_bNew, "bNew")
+    End Sub 'New
+    Private Sub init()
         m_typedonnee = vncEnums.vncTypeDonnee.PRODUIT
         m_code = ""
         m_nom = ""
@@ -124,13 +131,13 @@ Public Class Produit
         m_TarifA = 0
         m_TarifB = 0
         m_TarifC = 0
+        m_Dossier = vini_DB.Dossier.VINICOM
         'Pour un nouveau produit on considère que la collection est chargée,
         'elle sera considérée comme non-chargée lors du load du produit
         m_bcolMvtStockLoaded = True
-
         m_bcolMvtStockUpdated = False
-        Debug.Assert(m_bNew, "bNew")
-    End Sub 'New
+        setQteCommande(0)
+    End Sub
     Public Sub New(ByVal strCode As String, ByVal oFRN As Fournisseur, ByVal pMil As Integer)
         Debug.Assert(Param.couleurdefaut.defaut, "Pas de Couleur par defaut")
         Debug.Assert(contenant.contenantDefaut.defaut, "Pas de contenant par defaut")
@@ -157,6 +164,7 @@ Public Class Produit
         m_TarifA = 0
         m_TarifB = 0
         m_TarifC = 0
+        m_Dossier = ""
         If oFRN Is Nothing Then
             m_idFournisseur = 0
             m_nomFournisseur = ""
@@ -169,6 +177,7 @@ Public Class Produit
         'elle sera considérée comme non-chargée lors du load du produit
         m_bcolMvtStockLoaded = True
         Debug.Assert(m_bNew, "bNew")
+
     End Sub 'New
     Public Shared Function createandload(ByVal pid As Integer) As Produit
         '=======================================================================
@@ -533,7 +542,6 @@ Public Class Produit
     End Property
     Public ReadOnly Property qteCommande() As Decimal
         Get
-            Debug.Assert(Not m_bResume, "Objet de type resumé")
             Return m_qteCommande
         End Get
     End Property 'qteCommande
@@ -584,8 +592,8 @@ Public Class Produit
                     Return CDec(nColis)
 
                 Else
-                Debug.Assert(False, "Conditionnement non trouvé")
-                Return 0
+                    Debug.Assert(False, "Conditionnement non trouvé")
+                    Return 0
                 End If
             Catch ex As Exception
                 Debug.Assert(False, "Conditionnement non trouvé")
@@ -593,6 +601,15 @@ Public Class Produit
             End Try
 
         End Get
+    End Property
+    Public Property Dossier() As String
+        Get
+            Return m_Dossier
+        End Get
+        Set(ByVal value As String)
+            RaiseUpdated()
+            m_Dossier = value
+        End Set
     End Property
     Public ReadOnly Property colmvtStock() As ColEventSorted
         Get
@@ -671,6 +688,7 @@ Public Class Produit
     '=======================================================================
     Protected Overrides Function DBLoad(Optional ByVal pid As Integer = 0) As Boolean
         Dim bReturn As Boolean
+        init()
         shared_connect()
         If pid <> 0 Then
             m_id = pid
@@ -695,6 +713,7 @@ Public Class Produit
     '=======================================================================
     Public Function DBLoadLight(Optional ByVal pid As Integer = 0) As Boolean
         Dim bReturn As Boolean
+        init()
         shared_connect()
         If pid <> 0 Then
             m_id = pid
@@ -1173,4 +1192,72 @@ Public Class Produit
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
     End Sub
+
+    Public Function Fill(objRS As OleDb.OleDbDataReader) As Boolean
+        Dim bReturn As Boolean = True
+        For n As Integer = 0 To objRS.FieldCount - 1
+            If Not objRS.IsDBNull(n) Then
+                bReturn = bReturn And Fill(objRS.GetName(n), objRS.GetValue(n))
+            End If
+        Next
+        m_bResume = True
+        Return bReturn
+    End Function
+    Public Function Fill(pColName As String, pColValue As Object) As Boolean
+        Dim bReturn As Boolean = True
+        Try
+
+            Select Case pColName.ToUpper.Trim
+                Case "PRD_ID"
+                    Me.setid(Convert.ToInt32(pColValue))
+                Case "PRD_CODE"
+                    Me.code = pColValue.ToString()
+                Case "PRD_DISPO"
+                    Me.bDisponible = Convert.ToBoolean(pColValue)
+                Case "PRD_STOCK"
+                    Me.bStock = Convert.ToBoolean(pColValue)
+                Case "PRD_CODE_STAT"
+                    Me.codeStat = Convert.ToString(pColValue)
+                Case "PRD_DATE_DERN_INVENT"
+                    Me.DateDernInventaire = Convert.ToString(pColValue)
+                Case "PRD_COND_ID"
+                    Me.idConditionnement = Convert.ToInt32(pColValue)
+                Case "PRD_CONT_ID"
+                    Me.idContenant = Convert.ToInt32(pColValue)
+                Case "PRD_COUL_ID"
+                    Me.idCouleur = Convert.ToInt32(pColValue)
+                Case "PRD_FRN_ID"
+                    Me.idFournisseur = Convert.ToInt32(pColValue)
+                Case "PRD_RGN_ID"
+                    Me.idRegion = Convert.ToInt32(pColValue)
+                Case "PRD_TVA_ID"
+                    Me.idTVA = Convert.ToInt32(pColValue)
+                Case "PRD_LIBELLE"
+                    Me.nom = Convert.ToString(pColValue)
+                Case "PRD_MIL"
+                    Me.millesime = Convert.ToString(pColValue)
+                Case "PRD_MOT_CLE"
+                    Me.motcle = Convert.ToString(pColValue)
+                Case "PRD_QTE_STK"
+                    Me.QteStock = Convert.ToString(pColValue)
+                Case "PRD_QTE_STOCK_DERN_INVENT"
+                    Me.QteStockDernInventaire = Convert.ToString(pColValue)
+                Case "PRD_TARIFA"
+                    Me.TarifA = Convert.ToString(pColValue)
+                Case "PRD_TARIFB"
+                    Me.TarifB = Convert.ToString(pColValue)
+                Case "PRD_TARIFC"
+                    Me.TarifC = Convert.ToString(pColValue)
+                Case "PRD_DOSSIER"
+                    Me.Dossier = Convert.ToString(pColValue)
+                Case "PRD_QTE_COMMANDE"
+                    Me.setQteCommande(Convert.ToInt32(pColValue))
+            End Select
+        Catch ex As Exception
+            setError("Produit.Fill(" & pColName & "," & pColValue.ToString() & ") ERR :" & ex.Message)
+            bReturn = False
+        End Try
+
+        Return bReturn
+    End Function
 End Class

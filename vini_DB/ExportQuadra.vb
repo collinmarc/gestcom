@@ -220,7 +220,7 @@ Public Class ExportQuadra
                     'Liste des COMMMANDES "HOBIVIN" qqsoit le type D'export
                     Dim oCol As Collection
                     Dim strOrigine As String
-                    strOrigine = "HOBIVIN"
+                    strOrigine = Dossier.HOBIVIN
                     oCol = CommandeClient.getListe(dateDeb, dateFin, "", vncEtatCommande.vncEclatee, strOrigine)
                     For Each oCmd As CommandeClient In oCol
                         Me.ListCmd.Add(oCmd)

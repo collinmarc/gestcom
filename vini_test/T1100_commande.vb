@@ -889,7 +889,7 @@ Imports vini_DB
 
         objCMD = New CommandeClient(m_oClient)
 
-        Assert.AreEqual("VINICOM", objCMD.Origine)
+        Assert.AreEqual(Dossier.VINICOM, objCMD.Origine)
 
         objCMD.dateCommande = CDate("06/02/1964")
         objCMD.caracteristiqueTiers.banque = "BANQUE"
@@ -930,20 +930,20 @@ Imports vini_DB
         objCMD.IDPrestashop = 4125
         objCMD.NamePrestashop = "AQWZSX"
 
-        objCMD.Origine = "HOBIVIN"
+        objCMD.Origine = Dossier.HOBIVIN
 
 
         Assert.IsTrue(objCMD.save())
 
         objCMD2 = CommandeClient.createandload(objCMD.id)
-        Assert.AreEqual("HOBIVIN", objCMD2.Origine)
+        Assert.AreEqual(Dossier.HOBIVIN, objCMD2.Origine)
 
-        objCMD2.Origine = "VINICOM"
+        objCMD2.Origine = Dossier.VINICOM
 
         Assert.IsTrue(objCMD2.save())
 
         objCMD = CommandeClient.createandload(objCMD2.id)
-        Assert.AreEqual("VINICOM", objCMD2.Origine)
+        Assert.AreEqual(Dossier.VINICOM, objCMD2.Origine)
 
     End Sub
     ''' <summary>
@@ -959,20 +959,20 @@ Imports vini_DB
         objCMD = New CommandeClient(m_oClient)
         'objCMD.code = "CMDTEST"
         objCMD.dateCommande = CDate("06/02/1964")
-        objCMD.Origine = "HOBIVIN"
+        objCMD.Origine = Dossier.HOBIVIN
         Assert.IsTrue(objCMD.save())
 
         nId = objCMD.id
         cmdCode = objCMD.code
 
         'Vérification avec la bonne origine
-        oCol = CommandeClient.getListe(cmdCode, , , "HOBIVIN")
+        oCol = CommandeClient.getListe(cmdCode, , , Dossier.HOBIVIN)
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec la Mauvaise origine
-        oCol = CommandeClient.getListe(cmdCode, , , "VINICOM")
+        oCol = CommandeClient.getListe(cmdCode, , , Dossier.VINICOM)
         Assert.AreEqual(0, oCol.Count)
 
         'Vérification sans origine
@@ -982,13 +982,13 @@ Imports vini_DB
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec les dates et la bonne origine
-        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "HOBIVIN")
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , Dossier.HOBIVIN)
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec les dates et sans la bonne origine
-        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "VINICOM")
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , Dossier.VINICOM)
         Assert.AreEqual(0, oCol.Count)
 
         'Vérification avec les dates et Sans l'origine

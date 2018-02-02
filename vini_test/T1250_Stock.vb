@@ -172,8 +172,11 @@ Imports vini_DB
 
         'Création de 2 Commandes
         objCMD1 = New CommandeClient(objClient)
-
         objCMD2 = New CommandeClient(objClient)
+        Persist.executeSQLNonQuery("DELETE * FROM LIGNE_COMMANDE WHERE LGCM_PRD_ID = " & objP1.id)
+        Persist.executeSQLNonQuery("DELETE * FROM LIGNE_COMMANDE WHERE LGCM_PRD_ID = " & objP2.id)
+        Persist.executeSQLNonQuery("DELETE * FROM LIGNE_COMMANDE WHERE LGCM_PRD_ID = " & objP3.id)
+        Persist.executeSQLNonQuery("DELETE * FROM LIGNE_COMMANDE WHERE LGCM_PRD_ID = " & objP4.id)
         '1ere Commande avec P1 et P2
         objCMD1.AjouteLigne("10", objP1, 10, 150)
         objCMD1.AjouteLigne("20", objP2, 15, 150)
@@ -854,7 +857,7 @@ Imports vini_DB
 
     End Sub
 
-    <TestMethod()> Public Sub T10_ContoleUniciteMvtStk()
+    <TestMethod(), Ignore()> Public Sub T10_ContoleUniciteMvtStk()
         Dim oCMD As CommandeClient
 
         oCMD = New CommandeClient(objClient)

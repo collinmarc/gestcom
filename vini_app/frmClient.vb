@@ -123,7 +123,7 @@ Public Class frmClient
         '
         Me.cbxOrigine.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbxOrigine.FormattingEnabled = True
-        Me.cbxOrigine.Items.AddRange(New Object() {"HOBIVIN", "VINICOM"})
+        Me.cbxOrigine.Items.AddRange(New Object() {Dossier.VINICOM, Dossier.HOBIVIN})
         Me.cbxOrigine.Location = New System.Drawing.Point(839, 30)
         Me.cbxOrigine.Name = "cbxOrigine"
         Me.cbxOrigine.Size = New System.Drawing.Size(121, 21)

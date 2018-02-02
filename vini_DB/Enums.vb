@@ -269,5 +269,9 @@ Public Module vncEnums
         vncExportQuadra = 2
     End Enum
 
+    Public Class Dossier
+        Public Shared VINICOM As String = "VINICOM"
+        Public Shared HOBIVIN As String = "HOBIVIN"
+    End Class
 
 End Module

@@ -1731,28 +1731,29 @@ Public MustInherit Class Persist
         Debug.Assert(m_id = 0, "ID=0")
         objPRD = CType(Me, Produit)
 
-        Dim sqlString As String = "INSERT INTO PRODUIT( " & _
-                                    "PRD_CODE," & _
-                                    "PRD_LIBELLE," & _
-                                    "PRD_MOT_CLE, " & _
-                                    "PRD_FRN_ID, " & _
-                                    "PRD_CONT_ID, " & _
-                                    "PRD_COND_ID, " & _
-                                    "PRD_COUL_ID, " & _
-                                    "PRD_MIL, " & _
-                                    "PRD_RGN_ID, " & _
-                                    "PRD_TVA_ID, " & _
-                                    "PRD_DATE_DERN_INVENT , " & _
-                                    "PRD_QTE_STK, " & _
-                                    "PRD_QTE_STOCK_DERN_INVENT, " & _
-                                    "PRD_DISPO , " & _
-                                    "PRD_STOCK, " & _
-                                    "PRD_CODE_STAT," & _
-                                    "PRD_TARIFA," & _
-                                    "PRD_TARIFB," & _
-                                    "PRD_TARIFC " & _
-                                    " ) VALUES (" & _
-                                    "? , ? ,?,? , ? ,?,?,?,?,?,?,?,?,?,?,?,?,?,? " & _
+        Dim sqlString As String = "INSERT INTO PRODUIT( " &
+                                    "PRD_CODE," &
+                                    "PRD_LIBELLE," &
+                                    "PRD_MOT_CLE, " &
+                                    "PRD_FRN_ID, " &
+                                    "PRD_CONT_ID, " &
+                                    "PRD_COND_ID, " &
+                                    "PRD_COUL_ID, " &
+                                    "PRD_MIL, " &
+                                    "PRD_RGN_ID, " &
+                                    "PRD_TVA_ID, " &
+                                    "PRD_DATE_DERN_INVENT , " &
+                                    "PRD_QTE_STK, " &
+                                    "PRD_QTE_STOCK_DERN_INVENT, " &
+                                    "PRD_DISPO , " &
+                                    "PRD_STOCK, " &
+                                    "PRD_CODE_STAT," &
+                                    "PRD_TARIFA," &
+                                    "PRD_TARIFB," &
+                                    "PRD_TARIFC, " &
+                                    "PRD_DOSSIER " &
+                                    " ) VALUES (" &
+                                    "? , ? ,?,? , ? ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? " &
                                     " )"
         Dim objOLeDBCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
@@ -1785,6 +1786,7 @@ Public MustInherit Class Persist
         CreateParamP_PRD_TARIFA(objOLeDBCommand)
         CreateParamP_PRD_TARIFB(objOLeDBCommand)
         CreateParamP_PRD_TARIFC(objOLeDBCommand)
+        CreateParamP_PRD_DOSSIER(objOLeDBCommand)
         Try
             objOLeDBCommand.ExecuteNonQuery()
             objOLeDBCommand = New OleDbCommand("SELECT MAX(PRD_ID) FROM PRODUIT", m_dbconn.Connection)
@@ -1831,26 +1833,27 @@ Public MustInherit Class Persist
         Debug.Assert(m_id <> 0, "ID<>0")
         objPRD = CType(Me, Produit)
 
-        Dim sqlString As String = "UPDATE PRODUIT  SET " & _
-                                    "PRD_CODE= ? , " & _
-                                    "PRD_LIBELLE = ? , " & _
-                                    "PRD_MOT_CLE = ? , " & _
-                                    "PRD_FRN_ID = ? , " & _
-                                    "PRD_CONT_ID = ? , " & _
-                                    "PRD_COND_ID = ? , " & _
-                                    "PRD_COUL_ID = ? , " & _
-                                    "PRD_MIL = ? , " & _
-                                    "PRD_RGN_ID = ? , " & _
-                                    "PRD_TVA_ID = ? , " & _
-                                    "PRD_DATE_DERN_INVENT = ? , " & _
-                                    "PRD_QTE_STOCK_DERN_INVENT = ? , " & _
-                                    "PRD_DISPO = ? , " & _
-                                    "PRD_STOCK = ? , " & _
-                                    "PRD_QTE_STK = ? ," & _
-                                    "PRD_CODE_STAT = ? ,  " & _
-                                    "PRD_TARIFA = ? ,  " & _
-                                    "PRD_TARIFB = ? ,  " & _
-                                    "PRD_TARIFC = ?  " & _
+        Dim sqlString As String = "UPDATE PRODUIT  SET " &
+                                    "PRD_CODE= ? , " &
+                                    "PRD_LIBELLE = ? , " &
+                                    "PRD_MOT_CLE = ? , " &
+                                    "PRD_FRN_ID = ? , " &
+                                    "PRD_CONT_ID = ? , " &
+                                    "PRD_COND_ID = ? , " &
+                                    "PRD_COUL_ID = ? , " &
+                                    "PRD_MIL = ? , " &
+                                    "PRD_RGN_ID = ? , " &
+                                    "PRD_TVA_ID = ? , " &
+                                    "PRD_DATE_DERN_INVENT = ? , " &
+                                    "PRD_QTE_STOCK_DERN_INVENT = ? , " &
+                                    "PRD_DISPO = ? , " &
+                                    "PRD_STOCK = ? , " &
+                                    "PRD_QTE_STK = ? ," &
+                                    "PRD_CODE_STAT = ? ,  " &
+                                    "PRD_TARIFA = ? ,  " &
+                                    "PRD_TARIFB = ? ,  " &
+                                    "PRD_TARIFC = ? , " &
+                                    "PRD_DOSSIER = ?  " &
                                   " WHERE PRD_ID = ?"
         Dim objOLeDBCommand As OleDbCommand
 
@@ -1881,6 +1884,7 @@ Public MustInherit Class Persist
         CreateParamP_PRD_TARIFA(objOLeDBCommand)
         CreateParamP_PRD_TARIFB(objOLeDBCommand)
         CreateParamP_PRD_TARIFC(objOLeDBCommand)
+        CreateParamP_PRD_DOSSIER(objOLeDBCommand)
         CreateParameterP_ID(objOLeDBCommand)
 
 
@@ -1908,10 +1912,37 @@ Public MustInherit Class Persist
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "L'id doit être renseigné")
 
-        Dim sqlString As String = " SELECT " & _
-                                                  " PRODUIT.PRD_ID, PRODUIT.PRD_CODE, PRODUIT.PRD_LIBELLE, PRODUIT.PRD_MOT_CLE, PRODUIT.PRD_FRN_ID, PRODUIT.PRD_CONT_ID, PRODUIT.PRD_COND_ID, PRODUIT.PRD_COUL_ID, PRODUIT.PRD_MIL, PRODUIT.PRD_RGN_ID, PRODUIT.PRD_TVA_ID, PRODUIT.PRD_DATE_DERN_INVENT, PRODUIT.PRD_QTE_STK, PRODUIT.PRD_QTE_STOCK_DERN_INVENT, PRODUIT.PRD_DISPO, PRODUIT.PRD_CODE_STAT, RQ_Couleur.PAR_VALUE AS COULEUR, RQ_CONDITIONNEMENT.PAR_CODE AS CONDITIONNEMENT, CONTENANT.CONT_LIBELLE AS CONTENANT, RQ_Region.PAR_VALUE AS REGION, FOURNISSEUR.FRN_NOM , RQ_Tva.PAR_VALUE AS TVA, PRODUIT.PRD_STOCK, RQ_QTECMD_PRD.PRD_QTE_COMMANDE, PRD_TARIFA, PRD_TARIFB, PRD_TARIFC" & _
-                                                " FROM ((FOURNISSEUR INNER JOIN (((CONTENANT INNER JOIN (PRODUIT INNER JOIN RQ_Couleur ON PRODUIT.PRD_COUL_ID = RQ_Couleur.PAR_ID) ON CONTENANT.CONT_ID = PRODUIT.PRD_CONT_ID) INNER JOIN RQ_Region ON PRODUIT.PRD_RGN_ID = RQ_Region.PAR_ID) INNER JOIN RQ_Tva ON PRODUIT.PRD_TVA_ID = RQ_Tva.PAR_ID) ON FOURNISSEUR.FRN_ID = PRODUIT.PRD_FRN_ID) INNER JOIN RQ_CONDITIONNEMENT ON PRODUIT.PRD_COND_ID = RQ_CONDITIONNEMENT.PAR_ID) LEFT JOIN RQ_QTECMD_PRD ON PRODUIT.PRD_ID = RQ_QTECMD_PRD.LGCM_PRD_ID " & _
-                                " WHERE " & _
+        Dim sqlString As String = " SELECT " &
+                                                  " PRODUIT.PRD_ID," _
+                                                  & " PRODUIT.PRD_CODE," _
+                                                  & " PRODUIT.PRD_LIBELLE, " _
+                                                  & "PRODUIT.PRD_MOT_CLE, " _
+                                                  & "PRODUIT.PRD_FRN_ID, " _
+                                                  & "PRODUIT.PRD_CONT_ID, " _
+                                                  & "PRODUIT.PRD_COND_ID, " _
+                                                  & "PRODUIT.PRD_COUL_ID, " _
+                                                  & "PRODUIT.PRD_MIL, " _
+                                                  & "PRODUIT.PRD_RGN_ID, " _
+                                                  & "PRODUIT.PRD_TVA_ID, " _
+                                                  & "PRODUIT.PRD_DATE_DERN_INVENT, " _
+                                                  & "PRODUIT.PRD_QTE_STK, " _
+                                                  & "PRODUIT.PRD_QTE_STOCK_DERN_INVENT, " _
+                                                  & "PRODUIT.PRD_DISPO, " _
+                                                  & "PRODUIT.PRD_CODE_STAT, " _
+                                                  & "RQ_Couleur.PAR_VALUE AS COULEUR, " _
+                                                  & "RQ_CONDITIONNEMENT.PAR_CODE AS CONDITIONNEMENT, " _
+                                                  & "CONTENANT.CONT_LIBELLE AS CONTENANT, " _
+                                                  & "RQ_Region.PAR_VALUE AS REGION, " _
+                                                  & "FOURNISSEUR.FRN_NOM , " _
+                                                  & "RQ_Tva.PAR_VALUE AS TVA, " _
+                                                  & "PRODUIT.PRD_STOCK, " _
+                                                  & "RQ_QTECMD_PRD.PRD_QTE_COMMANDE, " _
+                                                  & "PRD_TARIFA, " _
+                                                  & "PRD_TARIFB, " _
+                                                  & "PRD_TARIFC, " _
+                                                  & "PRD_DOSSIER" &
+                                                " FROM ((FOURNISSEUR INNER JOIN (((CONTENANT INNER JOIN (PRODUIT INNER JOIN RQ_Couleur ON PRODUIT.PRD_COUL_ID = RQ_Couleur.PAR_ID) ON CONTENANT.CONT_ID = PRODUIT.PRD_CONT_ID) INNER JOIN RQ_Region ON PRODUIT.PRD_RGN_ID = RQ_Region.PAR_ID) INNER JOIN RQ_Tva ON PRODUIT.PRD_TVA_ID = RQ_Tva.PAR_ID) ON FOURNISSEUR.FRN_ID = PRODUIT.PRD_FRN_ID) INNER JOIN RQ_CONDITIONNEMENT ON PRODUIT.PRD_COND_ID = RQ_CONDITIONNEMENT.PAR_ID) LEFT JOIN RQ_QTECMD_PRD ON PRODUIT.PRD_ID = RQ_QTECMD_PRD.LGCM_PRD_ID " &
+                                " WHERE " &
                                 " PRD_ID = ?"
 
         Dim objOLeDBCommand As OleDbCommand
@@ -1940,32 +1971,13 @@ Public MustInherit Class Persist
             End If
             objRS.Read()
             objPRD = CType(Me, Produit)
-            objPRD.code = GetString(objRS, "PRD_CODE")
-            objPRD.bDisponible = GetBoolean(objRS, "PRD_DISPO")
-            objPRD.bStock = GetBoolean(objRS, "PRD_STOCK")
-            objPRD.codeStat = GetString(objRS, "PRD_CODE_STAT")
-            objPRD.DateDernInventaire = GetString(objRS, "PRD_DATE_DERN_INVENT")
-            objPRD.idConditionnement = getInteger(objRS, "PRD_COND_ID")
-            objPRD.idContenant = getInteger(objRS, "PRD_CONT_ID")
-            objPRD.idCouleur = getInteger(objRS, "PRD_COUL_ID")
-            objPRD.idFournisseur = getInteger(objRS, "PRD_FRN_ID")
-            objPRD.idRegion = getInteger(objRS, "PRD_RGN_ID")
-            objPRD.idTVA = getInteger(objRS, "PRD_TVA_ID")
+            objPRD.Fill(objRS)
             objPRD.libConditionnement = GetString(objRS, "CONDITIONNEMENT")
             objPRD.libContenant = GetString(objRS, "CONTENANT")
             objPRD.libCouleur = GetString(objRS, "COULEUR")
-            objPRD.nom = GetString(objRS, "PRD_LIBELLE")
             objPRD.libRegion = GetString(objRS, "REGION")
             objPRD.libTVA = CStr(GetString(objRS, "TVA"))
-            objPRD.millesime = getInteger(objRS, "PRD_MIL")
-            objPRD.motcle = GetString(objRS, "PRD_MOT_CLE")
             objPRD.nomFournisseur = GetString(objRS, "FRN_NOM")
-            objPRD.QteStock = GetString(objRS, "PRD_QTE_STK")
-            objPRD.QteStockDernInventaire = GetString(objRS, "PRD_QTE_STOCK_DERN_INVENT")
-            objPRD.setQteCommande(GetValue(objRS, "PRD_QTE_COMMANDE"))
-            objPRD.TarifA = GetString(objRS, "PRD_TARIFA")
-            objPRD.TarifB = GetString(objRS, "PRD_TARIFB")
-            objPRD.TarifC = GetString(objRS, "PRD_TARIFC")
 
             cleanErreur()
             bReturn = True
@@ -2060,25 +2072,7 @@ Public MustInherit Class Persist
             End If
             objRS.Read()
             objPRD = CType(Me, Produit)
-            objPRD.code = GetString(objRS, "PRD_CODE")
-            objPRD.bDisponible = GetBoolean(objRS, "PRD_DISPO")
-            objPRD.bStock = GetBoolean(objRS, "PRD_STOCK")
-            objPRD.codeStat = GetString(objRS, "PRD_CODE_STAT")
-            objPRD.DateDernInventaire = GetString(objRS, "PRD_DATE_DERN_INVENT")
-            objPRD.idConditionnement = getInteger(objRS, "PRD_COND_ID")
-            objPRD.idContenant = getInteger(objRS, "PRD_CONT_ID")
-            objPRD.idCouleur = getInteger(objRS, "PRD_COUL_ID")
-            objPRD.idFournisseur = getInteger(objRS, "PRD_FRN_ID")
-            objPRD.idRegion = getInteger(objRS, "PRD_RGN_ID")
-            objPRD.idTVA = getInteger(objRS, "PRD_TVA_ID")
-            objPRD.nom = GetString(objRS, "PRD_LIBELLE")
-            objPRD.millesime = GetString(objRS, "PRD_MIL")
-            objPRD.motcle = GetString(objRS, "PRD_MOT_CLE")
-            objPRD.QteStock = GetString(objRS, "PRD_QTE_STK")
-            objPRD.QteStockDernInventaire = GetString(objRS, "PRD_QTE_STOCK_DERN_INVENT")
-            objPRD.TarifA = GetString(objRS, "PRD_TARIFA")
-            objPRD.TarifB = GetString(objRS, "PRD_TARIFB")
-            objPRD.TarifC = GetString(objRS, "PRD_TARIFC")
+            objPRD.Fill(objRS)
             m_bResume = True
             cleanErreur()
             bReturn = True
@@ -2197,11 +2191,31 @@ Public MustInherit Class Persist
 
         If idClient <> 0 Then
             sqlString = "SELECT PRD_ID, PRD_CODE, PRD_LIBELLE , PCMD_ID, CONT_ID, CONT_LIBELLE,PRD_MIL,RQ_Couleur.PAR_VALUE FROM PRODUIT, PRECOMMANDE, CONTENANT, RQ_COULEUR "
+            sqlString = "SELECT PRODUIT.PRD_ID, " &
+                                " PRODUIT.PRD_CODE, " &
+                                        " PRODUIT.PRD_LIBELLE, " &
+                                        " PRODUIT.PRD_MOT_CLE, " &
+                                        " PRODUIT.PRD_FRN_ID, " &
+                                        " PRODUIT.PRD_CONT_ID, " &
+                                        " PRODUIT.PRD_COND_ID, " &
+                                        " PRODUIT.PRD_COUL_ID, " &
+                                        " PRODUIT.PRD_MIL, " &
+                                        " PRODUIT.PRD_RGN_ID, " &
+                                        " PRODUIT.PRD_TVA_ID, " &
+                                        " PRODUIT.PRD_DATE_DERN_INVENT, " &
+                                        " PRODUIT.PRD_QTE_STK, " &
+                                        " PRODUIT.PRD_QTE_STOCK_DERN_INVENT, " &
+                                        " PRODUIT.PRD_DISPO, " &
+                                        " PRODUIT.PRD_CODE_STAT, " &
+                                        " PRODUIT.PRD_STOCK, " &
+                                        " PRD_TARIFA, PRD_TARIFB, PRD_TARIFC"
+
+            sqlString = sqlString & " FROM CLIENT INNER JOIN PRECOMMANDE ON CLIENT.CLT_ID = PRECOMMANDE.PCMD_CLT_ID INNER JOIN PRODUIT ON PRECOMMANDE.PCMD_PRD_ID = PRODUIT.PRD_ID"
             If strWhere <> "" Then
-                strWhere = strWhere & " AND "
+                strWhere = strWhere & " And "
             End If
-            strWhere = strWhere & "PRODUIT.PRD_ID =  PRECOMMANDE.PCMD_PRD_ID AND PRECOMMANDE.PCMD_CLT_ID = ? AND PRD_CONT_ID = CONTENANT.CONT_ID AND PRODUIT.PRD_COUL_ID = RQ_Couleur.PAR_ID"
-            objOLeDBCommand.Parameters.AddWithValue("?" , idClient)
+            strWhere = strWhere & " PRECOMMANDE.PCMD_CLT_ID = ? "
+            objOLeDBCommand.Parameters.AddWithValue("?", idClient)
 
         End If
 
@@ -2216,15 +2230,21 @@ Public MustInherit Class Persist
 
 
         Try
+            Dim Temp As Date = DateTime.Now
             objRS = objOLeDBCommand.ExecuteReader()
+            Dim oTimeSpan As TimeSpan = DateTime.Now - Temp
+            Debug.WriteLine("ListPrd Time = " & oTimeSpan.TotalMilliseconds())
             While (objRS.Read())
                 nId = getInteger(objRS, "PRD_ID")
                 objPRD = New Produit()
-                objPRD.DBLoadLight(nId)
+                objPRD.Fill(objRS)
+                ''objPRD.DBLoadLight(nId)
                 colReturn.Add(objPRD, objPRD.code)
             End While
             objRS.Close()
             objRS = Nothing
+            oTimeSpan = DateTime.Now - Temp
+            Debug.WriteLine("ListPrd Time = " & oTimeSpan.TotalMilliseconds())
             Return colReturn
         Catch ex As Exception
             setError("ListPRD", ex.ToString())
@@ -3869,6 +3889,12 @@ Public MustInherit Class Persist
         Dim objPRD As Produit
         objPRD = Me
         objCommand.Parameters.AddWithValue("?", truncate(objPRD.codeStat, 50))
+    End Sub
+    Private Sub CreateParamP_PRD_DOSSIER(ByVal objCommand As OleDbCommand)
+        '        Dim objParam As OleDbParameter
+        Dim objPRD As Produit
+        objPRD = Me
+        objCommand.Parameters.AddWithValue("?", truncate(objPRD.Dossier, 50))
     End Sub
     Private Sub CreateParamP_PRD_TARIFA(ByVal objCommand As OleDbCommand)
         Dim objPRD As Produit
@@ -6529,10 +6555,10 @@ Public MustInherit Class Persist
 
         'On choisi l'origine des commandes
         If pOrigine = vncOrigineCmd.vncVinicom Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'VINICOM'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = '" & Dossier.VINICOM & "'"
         End If
         If pOrigine = vncOrigineCmd.vncHOBIVIN Then
-            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = 'HOBIVIN'"
+            strWhere = strWhere & " AND COMMANDE.CMD_ORIGINE = '" & Dossier.HOBIVIN & "'"
         End If
 
 

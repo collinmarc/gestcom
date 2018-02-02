@@ -760,7 +760,7 @@ Partial Class frmConstantes
         Me.tabVinicom.Padding = New System.Windows.Forms.Padding(3)
         Me.tabVinicom.Size = New System.Drawing.Size(768, 388)
         Me.tabVinicom.TabIndex = 0
-        Me.tabVinicom.Text = "Vinicom"
+        Me.tabVinicom.Text = vini_DB.Dossier.VINICOM
         Me.tabVinicom.UseVisualStyleBackColor = True
         '
         'tbCompteBanque

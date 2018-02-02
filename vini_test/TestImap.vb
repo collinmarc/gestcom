@@ -595,7 +595,7 @@ Imports System.Text.RegularExpressions
         Assert.IsTrue(oProduit.save())
 
 
-        EnvoiMailCmd("HOBIVIN")
+        EnvoiMailCmd(Dossier.VINICOM)
         Dim olst As List(Of CommandeClient)
         Dim oCmdCLT As CommandeClient
         Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3..", Convert.ToUInt16(993), True)
@@ -605,16 +605,16 @@ Imports System.Text.RegularExpressions
 
         oCmdCLT = olst(0)
 
-        Assert.AreEqual("HOBIVIN", oCmdCLT.Origine)
+        Assert.AreEqual(Dossier.HOBIVIN, oCmdCLT.Origine)
 
         'Envoi de 2 Commandes
-        EnvoiMailCmd("VINICOM")
+        EnvoiMailCmd(Dossier.VINICOM)
         EnvoiMailCmd()
 
         olst = oImportPrestashop.Import()
         Assert.AreEqual(2, olst.Count)
         For Each oCmd As CommandeClient In olst
-            Assert.AreEqual("VINICOM", oCmd.Origine)
+            Assert.AreEqual(Dossier.VINICOM, oCmd.Origine)
         Next
 
 
@@ -622,7 +622,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub testReadWriteXMLFile()
         Dim ocmd As New cmdprestashop()
         ocmd.id = 2
-        ocmd.origine = "VINICOM"
+        ocmd.origine = Dossier.VINICOM
         ocmd.name = "aqwzsx"
         ocmd.livraison_company = "MCII"
         ocmd.livraison_name = "Collin"
@@ -644,7 +644,7 @@ Imports System.Text.RegularExpressions
         ocmd = cmdprestashop.readXML(strIn)
         Assert.AreEqual(ocmd.id, "2")
         Assert.AreEqual(ocmd.name, "aqwzsx")
-        Assert.AreEqual(ocmd.origine, "VINICOM")
+        Assert.AreEqual(ocmd.origine, Dossier.VINICOM)
         Assert.AreEqual(ocmd.livraison_company, "MCII")
         Assert.AreEqual(ocmd.livraison_name, "Collin")
         Assert.AreEqual(ocmd.livraison_firstname, "MCII")
