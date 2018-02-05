@@ -28,11 +28,11 @@ Imports vini_DB
         m_oClient = New Client("CLTT1100", "MonClient")
         Debug.Assert(m_oClient.save(), "Creation du client")
         '            m_oClient()
-        objProduit1 = New Produit("PRD1T20", m_oFourn, 1994)
+        objProduit1 = New Produit("PRD1T1100", m_oFourn, 1994)
         Assert.IsTrue(objProduit1.save())
-        objProduit2 = New Produit("PRD2T20", m_oFourn, 1994)
+        objProduit2 = New Produit("PRD2T1100", m_oFourn, 1994)
         Assert.IsTrue(objProduit2.save())
-        objProduit3 = New Produit("PRD3T20", m_oFourn, 1994)
+        objProduit3 = New Produit("PRD3T1100", m_oFourn, 1994)
         Assert.IsTrue(objProduit3.save())
 
     End Sub
@@ -811,7 +811,7 @@ Imports vini_DB
         'Ajout d'une ligne 
         objLg = objCMD.AjouteLigne("10", objProduit1, 21, 22)
         'Mise à jour des informations de commission
-        objLg.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+        objLg.CalculCommission(objCMD.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
         Assert.AreEqual(CDec(12.8), objLg.TxComm, "Taux de la commission")
         Assert.AreEqual(Math.Round(CDec((21 * 22 * 12.8) / 100), 2), objLg.MtComm, "Montant de la commission")
 
@@ -996,6 +996,150 @@ Imports vini_DB
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
+    End Sub
+
+    ''' <summary>
+    ''' Test la récupération du Tx de commission dur une ligne de commande
+    ''' </summary>
+    <TestMethod()> Public Sub T593_GETTXCOMM()
+        Dim objCMD As CommandeClient
+        Dim objLg As LgCommande
+
+        Dim oParam As Param
+        oParam = Param.colTypeClient(1)
+        m_oClient.idTypeClient = oParam.id
+
+        Assert.IsTrue(m_oClient.save())
+        'Ajout du Tx de commission 
+        Dim oTx As New TauxComm(m_oFourn, oParam.code, 15.0)
+        Assert.IsTrue(oTx.save)
+
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+
+
+        objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
+
+        Assert.AreEqual(15D, objLg.TxComm)
+
+
+
+    End Sub
+    ''' <summary>
+    ''' Verification du Recalcul du Tax de comm uniquement si RAZ
+    ''' </summary>
+    <TestMethod()> Public Sub T593_GETTXCOMM2()
+        Dim objCMD As CommandeClient
+        Dim objLg As LgCommande
+
+        Dim oParam As Param
+        oParam = Param.colTypeClient(1)
+        m_oClient.idTypeClient = oParam.id
+
+        Assert.IsTrue(m_oClient.save())
+        'Ajout du Tx de commission 
+        Dim oTx As New TauxComm(m_oFourn, oParam.code, 15.0)
+        Assert.IsTrue(oTx.save)
+
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+        objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
+        Assert.AreEqual(15D, objLg.TxComm)
+
+        oTx.TauxComm = 11
+        Assert.IsTrue(oTx.save)
+
+        objLg.CalculCommission(objCMD.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+        'Le Tx de comm n'ayant pas été remis à 0 , il n'est pas recalculé
+        Assert.AreEqual(15D, objLg.TxComm)
+
+        objLg.TxComm = 0
+        objLg.CalculCommission(objCMD.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+        'Le Tx ayant été remis à 0 => Relecture du taux
+        Assert.AreEqual(11D, objLg.TxComm)
+
+
+
+    End Sub
+
+    <TestMethod()> Public Sub T593_GETTXCOMMHBV()
+        Dim objCMD As CommandeClient
+        Dim objLg As LgCommande
+
+        Dim oParam As Param
+        oParam = Param.colTypeClient(1)
+        m_oClient.idTypeClient = oParam.id
+        Assert.IsTrue(m_oClient.save())
+
+        m_oProduit.Dossier = Dossier.VINICOM
+        Assert.IsTrue(m_oProduit.save())
+
+        'Ajout du Tx de commission 
+        Dim oTx As New TauxComm(m_oFourn, oParam.code, 15.0)
+        Assert.IsTrue(oTx.save)
+        oTx = New TauxComm(m_oFourn, "INT", 10.0)
+        Assert.IsTrue(oTx.save)
+
+
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+
+        'Command HOBIVIN Produit VINCOM
+        objCMD.Origine = Dossier.HOBIVIN
+        m_oProduit.Dossier = Dossier.VINICOM
+        Assert.IsTrue(m_oProduit.save())
+        objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
+        'Le Tx Est Celui du client intermédiaire
+        Assert.AreEqual(10D, objLg.TxComm)
+
+        'Command HOBIVIN Produit HOBIVIN
+        m_oProduit.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(m_oProduit.save())
+        objLg = objCMD.AjouteLigne("20", m_oProduit, 10, 15.5)
+        'Produit HOBIVIN ur Comomande HOBIVIN => 0
+        Assert.AreEqual(0D, objLg.TxComm)
+
+
+    End Sub
+
+    <TestMethod()> Public Sub T593_GETTXCOMMVNC()
+        Dim objCMD As CommandeClient
+        Dim objLg As LgCommande
+
+        Dim oParam As Param
+        oParam = Param.colTypeClient(1)
+        m_oClient.idTypeClient = oParam.id
+        Assert.IsTrue(m_oClient.save())
+
+        m_oProduit.Dossier = Dossier.VINICOM
+        Assert.IsTrue(m_oProduit.save())
+
+        'Ajout du Tx de commission 
+        Dim oTx As New TauxComm(m_oFourn, oParam.code, 15.0)
+        Assert.IsTrue(oTx.save)
+        oTx = New TauxComm(m_oFourn, "INT", 10.0)
+        Assert.IsTrue(oTx.save)
+
+
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+
+        'Command Vinicom Produit VINCOM
+        objCMD.Origine = Dossier.VINICOM
+        m_oProduit.Dossier = Dossier.VINICOM
+        Assert.IsTrue(m_oProduit.save())
+        objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
+        'Commande VINICOM, Produit VINICOM => Tx = Client
+        Assert.AreEqual(15D, objLg.TxComm)
+
+        'Command VINICOM Produit HOBIVIN
+        m_oProduit.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(m_oProduit.save())
+        objLg = objCMD.AjouteLigne("20", m_oProduit, 10, 15.5)
+        'Produit HOBIVIN ur Comomande VINICOM=> 0
+        Assert.AreEqual(0D, objLg.TxComm)
+
+
     End Sub
 End Class
 

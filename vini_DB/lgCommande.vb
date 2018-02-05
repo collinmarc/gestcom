@@ -24,6 +24,7 @@
 '17/10/05 : Ajout du poids
 '
 '===================================================================================================================================
+Imports System.Collections.Generic
 Public Class LgCommande
     Inherits Persist
 
@@ -652,10 +653,13 @@ Public Class LgCommande
     ''' </summary>
     ''' <param name="pQteCalcul">Calculer la commsion en fonction de la qte Commandée ou Livrée</param>
     ''' <remarks></remarks>
-    Public Sub CalculCommission(Optional ByVal pQteCalcul As vncEnums.CalculCommQte = CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+    Public Sub CalculCommission(pstrOrigine As String, ByVal pQteCalcul As vncEnums.CalculCommQte)
         Dim nBaseCalul As Decimal
 
-        m_TxComm = getTxComm()
+        'Récupération du Tx de comm s'il n'a pas déjà été calculé
+        If m_TxComm = 0 Then
+            m_TxComm = getTxComm(pstrOrigine)
+        End If
 
         If pQteCalcul = CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE Then
             nBaseCalul = qteLiv * prixU
@@ -666,15 +670,11 @@ Public Class LgCommande
         m_MtComm = Math.Round(nBaseCalul * (m_TxComm / 100), 2)
     End Sub
 
-    Private Function getTxComm() As Decimal
-        Dim colTx As Collection
+    Private Function getTxComm(pstrOrigine As String) As Decimal
+        Dim oTauxCommm As TauxComm
         Dim nReturn As Decimal
         Dim nIdFRn As Integer
         Dim strTypeClt As String
-        Dim objCMD As CommandeClient
-        Dim objCLT As Client
-        Dim objParam As Param
-        Dim oTaux As TauxComm
 
         Try
 
@@ -686,39 +686,86 @@ Public Class LgCommande
             If m_oProduit IsNot Nothing Then
                 nIdFRn = m_oProduit.idFournisseur
             End If
-
             'Get TypeClient
             '==============
-            If idTiers = 0 Then
-                'Load CMD
-                objCMD = CommandeClient.createandload(m_idCmd)
-                If objCMD IsNot Nothing Then
-                    'Load CMD.CLT
-                    objCLT = Client.createandload(objCMD.oTiers.id)
-                End If
-            Else
-                objCLT = Client.createandload(idTiers)
-            End If
-
-            ' load CMD.CLT.Param
-            objParam = New Param()
-            objParam.load(objCLT.idTypeClient)
-            strTypeClt = objParam.code
-
-            'Chargement de la liste des Taux (Normalement 1)
+            strTypeClt = getTypeClient(pstrOrigine)            'Récupératino du taux de commision
             '================================================
-            colTx = TauxComm.getListe(nIdFRn, strTypeClt)
-            If colTx.Count > 0 Then
-                oTaux = colTx(1)
-                nReturn = oTaux.TauxComm
+            nReturn = 0
+            If Not String.IsNullOrEmpty(strTypeClt) Then
+                oTauxCommm = TauxComm.getTauxComm(nIdFRn, strTypeClt)
+                If oTauxCommm IsNot Nothing Then
+                    nReturn = oTauxCommm.TauxComm
+                End If
             End If
-
         Catch ex As Exception
             nReturn = 0
         End Try
 
         Return nReturn
     End Function
+    ''' <summary>
+    ''' Récupération du taux de commission en fonction de l'origine de la commande et du dossier du Produit
+    ''' </summary>
+    ''' <param name="pstrOrigine"></param>
+    ''' <returns></returns>
+    Private Function getTypeClient(pstrOrigine As String) As String
+        Dim objCMD As CommandeClient
+        Dim objCLT As Client
+        Dim objParam As Param
+        Dim strTypeClt As String = ""
+
+        Select Case pstrOrigine
+            Case Dossier.VINICOM
+                'COMMANDE VINICOM
+                Select Case m_oProduit.Dossier
+                    Case Dossier.VINICOM
+                        'un Produit Vinicom sur une Commande Vinicom
+                        'On prend le type du client Final
+                        If idTiers = 0 Then
+                            'Load CMD
+                            objCMD = CommandeClient.createandload(m_idCmd)
+                            If objCMD IsNot Nothing Then
+                                'Load CMD.CLT
+                                objCLT = Client.createandload(objCMD.oTiers.id)
+                            End If
+                        Else
+                            objCLT = Client.createandload(idTiers)
+                        End If
+
+                    Case Else
+                        'pas de calcul de commission
+                        objCLT = Nothing
+                End Select
+            Case Else
+                'Commande HOBIVIN
+                Select Case m_oProduit.Dossier
+                    Case Dossier.VINICOM
+                        'un Produit Vinicom sur une Commande HOBIVIN
+                        'On prend le type du client Intermédiare
+                        Dim olst As List(Of Client) = Client.getIntermediairesPourUneOrigine(pstrOrigine)
+                        If olst.Count > 0 Then
+                            objCLT = olst(0)
+                        Else
+                            objCLT = Nothing
+                        End If
+                    Case Else
+                        'un produit HOBIVIN sur une commande HOBIVIN
+                        objCLT = Nothing
+                End Select
+        End Select
+        If objCLT IsNot Nothing Then
+            ' Récupération du type du client
+            objParam = New Param()
+            objParam.load(objCLT.idTypeClient)
+            strTypeClt = objParam.code
+        Else
+            'pas de calcul de commission
+            strTypeClt = ""
+        End If
+
+        Return strTypeClt
+    End Function
+
     ''' <summary>
     ''' Controle du stock disponible pour chaque ligne de commande
     ''' met à jour l'indicateur bStockDispo sur la ligne de commande

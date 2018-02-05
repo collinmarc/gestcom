@@ -14656,38 +14656,34 @@ Public MustInherit Class Persist
         Return colReturn
     End Function
     ''' <summary>
-    ''' Rend la Liste des taux de commissons pour un Fournisseur et un type de client 
+    ''' Rend le taux de commissons pour un Fournisseur et un type de client 
     ''' </summary>
     ''' <param name="pidFRN">id Fournisseur</param>
     ''' <param name="pTypeClt">Code Type de client</param>
-    ''' <returns>collection</returns>
-    ''' <remarks>Normalement ne rend qu'un élement</remarks>
-    Protected Shared Function getListeTauxComm(ByVal pidFRN As Integer, ByVal pTypeClt As String) As Collection
-        Dim colReturn As Collection
+    ''' <returns>Un Taux de commission</returns>
+    ''' <remarks>Si Pas de Taux Rend Nothing</remarks>
+    Protected Shared Function getTauxComm(ByVal pidFRN As Integer, ByVal pTypeClt As String) As TauxComm
+        Dim oReturn As TauxComm
         Dim oTA As dsVinicomTableAdapters.FRN_COMMTableAdapter
         Dim oDT As dsVinicom.FRN_COMMDataTable
-        Dim oRow As dsVinicom.FRN_COMMRow
-        Dim obj As TauxComm
 
 
         Try
-            colReturn = New Collection()
+            oReturn = Nothing
             oTA = New dsVinicomTableAdapters.FRN_COMMTableAdapter()
             oTA.Connection = m_dbconn.Connection
             oDT = oTA.GetDataByFRNID_TYPECLT(pidFRN, pTypeClt)
-
-            For Each oRow In oDT
-                obj = New TauxComm(oRow)
-                colReturn.Add(obj)
-            Next
+            If oDT.Rows.Count > 0 Then
+                oReturn = New TauxComm(oDT.Rows(0))
+            End If
 
 
         Catch ex As Exception
             setError(System.Environment.StackTrace, ex.Message)
-            colReturn = New Collection()
+            oReturn = Nothing
         End Try
 
-        Return colReturn
+        Return oReturn
     End Function
 #End Region
 

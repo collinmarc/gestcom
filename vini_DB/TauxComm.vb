@@ -23,6 +23,7 @@
 '============
 '===================================================================================================================================
 Imports System.IO
+Imports System.Collections.Generic
 Public Class TauxComm
     Inherits Persist
 
@@ -196,7 +197,7 @@ Public Class TauxComm
     '=======================================================================
     Friend Overrides Function update() As Boolean
         Debug.Assert(m_idFRN <> 0, "L'Id Fournisseur doit être Renseigné")
-        Debug.Assert(String.IsNullOrEmpty(m_TypeClient), "Le type de client doit être Renseigné")
+        Debug.Assert(Not String.IsNullOrEmpty(m_TypeClient), "Le type de client doit être Renseigné")
         Debug.Assert(id <> 0, "id <> 0")
         Dim bReturn As Boolean
         bReturn = updateTauxComm()
@@ -214,21 +215,6 @@ Public Class TauxComm
         Dim colReturn As Collection
         shared_connect()
         colReturn = getListeTauxComm(pIdFRN)
-        shared_disconnect()
-        Return colReturn
-    End Function
-    ''' <summary>
-    ''' Rend la Liste des Taux de Commission associé à un fournisseur et un type de Client
-    ''' </summary>
-    ''' <param name="pIdFRN">id Fournisseur</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Shared Function getListe(ByVal pIdFRN As Integer, ByVal pTypeclient As String) As Collection
-        Dim colReturn As Collection
-        shared_connect()
-        colReturn = getListeTauxComm(pIdFRN, pTypeclient)
-        Debug.Assert(colReturn.Count <= 1, "Plus d'un Element retourné dans Tauxcomm.getListe")
-
         shared_disconnect()
         Return colReturn
     End Function

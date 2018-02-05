@@ -1172,7 +1172,7 @@ Public Class frmCommandeClient
             End If
             oLgCom.qteLiv = oLgCom.qteCommande
             'Calcul de la commssion sur la Qte Livrée
-            oLgCom.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+            oLgCom.CalculCommission(getCommandeCourante().Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
         Next oLgCom
         If getCommandeCourante.estPartiellementLivree() Then
             ActionLivrer()
@@ -1193,7 +1193,7 @@ Public Class frmCommandeClient
             For Each oLgCom In getCommandeCourante.colLignes
                 oLgCom.qteLiv = 0
                 'Calcul de la commission sur la Quantité Commandée
-                oLgCom.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+                oLgCom.CalculCommission(getCommandeCourante.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
             Next oLgCom
             ActionAnnLivrer()
             AfficheEtat()

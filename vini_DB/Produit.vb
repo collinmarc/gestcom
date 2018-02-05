@@ -144,7 +144,7 @@ Public Class Produit
         Debug.Assert(Param.conditionnementdefaut.defaut, "Pas de Conditionnement par defaut")
         Debug.Assert(Param.regiondefaut.defaut, "Pas de Region par defaut")
         Debug.Assert(Param.TVAdefaut.defaut, "Pas de TVA par defaut")
-        m_typedonnee = vncEnums.vncTypeDonnee.PRODUIT
+        init()
         m_code = strCode
         m_nom = ""
         m_motcle = ""
@@ -158,13 +158,6 @@ Public Class Produit
         m_bStock = True
         m_idTVA = Param.TVAdefaut.id
         m_codeStat = strCode
-        m_QteStock = 0
-        m_DateDernInventaire = DATE_DEFAUT
-        m_QteStockDernInventaire = 0
-        m_TarifA = 0
-        m_TarifB = 0
-        m_TarifC = 0
-        m_Dossier = ""
         If oFRN Is Nothing Then
             m_idFournisseur = 0
             m_nomFournisseur = ""

@@ -831,6 +831,10 @@ Public MustInherit Class Commande
         Dim oReturn As LgCommande
 
         Try
+
+            'Ajout du tiers dans la Ligne de commmande (utile pour touver le Tx de commission)
+            pobjLgCMD.idTiers = m_oTiers.id
+
             If p_bCalculPrix Then
                 pobjLgCMD.calculPrixTotal()
             End If
@@ -879,19 +883,6 @@ Public MustInherit Class Commande
         oLgCmd = AjouteLigne(oLgCmd, p_bCalculPrix)
         Return oLgCmd
     End Function 'AjouteLigne
-    Protected Overloads Function AjouteLigne() As LgCommande
-        Dim oLgCmd As LgCommande
-
-        If m_typedonnee = vncTypeDonnee.BA Then
-            oLgCmd = New LgCommande(0, , m_id)
-        Else
-            oLgCmd = New LgCommande(m_id)
-        End If
-        oLgCmd.num = getNextNumLg()
-        oLgCmd = AjouteLigne(oLgCmd, False)
-        Return oLgCmd
-
-    End Function
 
     '=======================================================================
     'Fonction : supprimeLigne()
@@ -955,14 +946,6 @@ Public MustInherit Class Commande
                 nTTC = nTTC + oLg.prixTTC
             End If
 
-            'Calcul de la commssion s'il y a lieu
-            If m_typedonnee = vncTypeDonnee.COMMANDECLIENT Then
-                If (Me.etat.codeEtat = vncEtatCommande.vncEnCoursSaisie Or Me.etat.codeEtat = vncEtatCommande.vncValidee) Then
-                    oLg.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
-                Else
-                    oLg.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
-                End If
-            End If
         Next oLg
 
         'On passe par les accesseurs pour lever l'event Updated s'il y a lieu

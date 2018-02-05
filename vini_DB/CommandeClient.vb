@@ -904,9 +904,18 @@ Public Class CommandeClient
         Dim bReturn As Boolean
         Try
             bReturn = MyBase.calculPrixTotal()
-            If bReturn Then
-                bReturn = CalcPoidsColis()
-            End If
+            For Each oLg As LgCommande In m_colLignes
+
+                'Calcul de la commssion pour Chaque Ligne
+                If (Me.etat.codeEtat = vncEtatCommande.vncEnCoursSaisie Or Me.etat.codeEtat = vncEtatCommande.vncValidee) Then
+                    oLg.CalculCommission(Origine,CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+                Else
+                    oLg.CalculCommission(Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+                End If
+            Next oLg
+
+
+            bReturn = CalcPoidsColis()
         Catch ex As Exception
             setError("CommandeClient.CalculPrixTotal", ex.ToString)
             bReturn = False
@@ -1247,4 +1256,6 @@ Public Class CommandeClient
         Return bReturn
 
     End Function
+
+
 End Class ' CommandeClient

@@ -775,7 +775,7 @@ Public Class frmEclatementCommande
                 If oCmd.EtatCode = vncEtatCommande.vncValidee Then
                     For Each olg As LgCommande In oCmd.colLignes
                         olg.qteLiv = olg.qteCommande
-                        olg.CalculCommission(CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+                        olg.CalculCommission(oCmd.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
                     Next
                     oCmd.refLivraison = oCmd.code
                     oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
