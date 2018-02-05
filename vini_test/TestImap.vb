@@ -595,7 +595,7 @@ Imports System.Text.RegularExpressions
         Assert.IsTrue(oProduit.save())
 
 
-        EnvoiMailCmd(Dossier.VINICOM)
+        EnvoiMailCmd(Dossier.HOBIVIN)
         Dim olst As List(Of CommandeClient)
         Dim oCmdCLT As CommandeClient
         Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3..", Convert.ToUInt16(993), True)

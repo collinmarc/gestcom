@@ -1080,6 +1080,16 @@ Imports vini_DB
         oTx = New TauxComm(m_oFourn, "INT", 10.0)
         Assert.IsTrue(oTx.save)
 
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = Client.getIntermediairePourUneOrigine(Dossier.HOBIVIN)
+        If oCltIntermediaire Is Nothing Then
+            oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+            oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+            oCltIntermediaire.save()
+        End If
+
+
+
 
         objCMD = New CommandeClient(m_oClient)
         objCMD.dateCommande = CDate("06/02/1964")

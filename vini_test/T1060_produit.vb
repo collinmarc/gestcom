@@ -433,7 +433,7 @@ Imports vini_DB
         Dim nid As Integer
 
         obj = New Produit("T60", m_oFRN, 1990)
-        Assert.AreEqual("", obj.Dossier)
+        Assert.AreEqual(Dossier.VINICOM, obj.Dossier)
         obj.Dossier = Dossier.HOBIVIN
         Assert.IsTrue(obj.save())
         nid = obj.id

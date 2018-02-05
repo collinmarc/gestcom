@@ -114,6 +114,7 @@ Imports vini_App
         objSCMD.dateFactFournisseur = #6/2/1964#
         objSCMD.totalHTFacture = objSCMD.totalHT
         objSCMD.baseCommission = objSCMD.totalHT
+        objSCMD.tauxCommission = 0.08
         objSCMD.MontantCommission = objSCMD.baseCommission * 0.08
         Assert.IsTrue(objSCMD.Save(), objSCMD.getErreur())
 
@@ -124,6 +125,7 @@ Imports vini_App
         objSCMD.dateFactFournisseur = #6/2/1964#
         objSCMD.totalHTFacture = objSCMD.totalHT
         objSCMD.baseCommission = objSCMD.totalHT
+        objSCMD.tauxCommission = 0.08
         objSCMD.MontantCommission = objSCMD.baseCommission * 0.08
         Assert.IsTrue(objSCMD.Save(), objSCMD.getErreur())
 
