@@ -926,7 +926,7 @@ Imports System.IO
 
         m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
         m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionEclater)
-        Assert.IsTrue(m_oCmd.generationSousCommande(oIntermediaire), "Génération des sous-commandes")
+        Assert.IsTrue(m_oCmd.generationSousCommande(), "Génération des sous-commandes")
         Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
 
 
@@ -1180,7 +1180,7 @@ Imports System.IO
             If System.IO.File.Exists("./TEMP/" & oSCmd.code & ".PDF") Then
                 System.IO.File.Delete("./TEMP/" & oSCmd.code & ".PDF")
             End If
-            oSCmd.genererPDF("../../../vini_app/bin/debug/", "./TEMP/" & oSCmd.code & ".PDF")
+            oSCmd.genererPDF("V:\V5\vini_app/", "./TEMP/" & oSCmd.code & ".PDF")
             Assert.IsTrue(System.IO.File.Exists("./TEMP/" & oSCmd.code & ".PDF"), "Fichier PDF existant")
         Next oSCmd
         m_oCmd.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnEclater)
@@ -1309,70 +1309,82 @@ Imports System.IO
         Assert.IsTrue(objSCMD.Save(), "OSCMD.delete" & objSCMD.getErreur())
 
     End Sub 'T71 LoadFromCode
-    'Test de la ganaration de sousCommande avec un intermédiaire
+    'Test de la génération de sousCommande avec un intermédiaire
     <TestMethod()> Public Sub T80_EclatementAvecIntermedaire()
 
 
         Dim objSCMD As SousCommande
         Dim objLgCMD1 As LgCommande
         Dim objLgCMD2 As LgCommande
-        Dim oFRN2 As Fournisseur
-        Dim oPRD2 As Produit
-        Dim oFRN3 As Fournisseur
-        Dim oPRD3 As Produit
+        Dim oFRNVnc As Fournisseur
+        Dim oPRDVNC As Produit
+        Dim oFRNHBV As Fournisseur
+        Dim oPRDHBV As Produit
         Dim oCMD As CommandeClient
 
         Dim oCltIntermediaire As Client
-        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
-        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
-        oCltIntermediaire.save()
+        oCltIntermediaire = Client.getIntermediairePourUneOrigine(Dossier.HOBIVIN)
+        If oCltIntermediaire Is Nothing Then
+            oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+            oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+            oCltIntermediaire.save()
+        End If
+
+        m_oFourn.bExportInternet = vncTypeExportScmd.vncExportInternet
+        m_oFourn.Save()
+
+        oFRNVnc = New Fournisseur("FRNVNC20" & Now(), "Fournisseur2")
+        oFRNVnc.bExportInternet = vncTypeExportScmd.vncExportInternet
+        Assert.IsTrue(oFRNVnc.Save(), "FRN2.save")
+
+        oPRDVNC = New Produit("PRDVNC20" & Now(), oFRNVnc, 1990)
+        oPRDVNC.Dossier = Dossier.VINICOM
+        Assert.IsTrue(oPRDVNC.save(), "OPRD2.Save")
+
+        oFRNHBV = New Fournisseur("FRNHBV30" & Now(), "Fournisseur3")
+        oFRNHBV.bExportInternet = vncTypeExportScmd.vncExportQuadra
+        Assert.IsTrue(oFRNHBV.Save(), "FRN2.save")
 
 
-        oFRN2 = New Fournisseur("FRNT20" & Now(), "Fournisseur2")
-        oFRN2.bExportInternet = vncTypeExportScmd.vncExportInternet
-        Assert.IsTrue(oFRN2.Save(), "FRN2.save" & oFRN2.getErreur())
-        oPRD2 = New Produit("PRDT20" & Now(), oFRN2, 1990)
-        Assert.IsTrue(oPRD2.save(), "OPRD2.Save" & oPRD2.getErreur())
-
-        oFRN3 = New Fournisseur("FRNT30" & Now(), "Fournisseur3")
-        oFRN3.bExportInternet = vncTypeExportScmd.vncExportQuadra
-        Assert.IsTrue(oFRN3.Save(), "FRN2.save" & oFRN2.getErreur())
-        oPRD3 = New Produit("PRDT30" & Now(), oFRN3, 1990)
-        Assert.IsTrue(oPRD3.save(), "OPRD2.Save" & oPRD3.getErreur())
+        oPRDHBV = New Produit("PRDT30" & Now(), oFRNHBV, 1990)
+        oPRDHBV.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(oPRDHBV.save(), "OPRD3.Save")
 
 
-        'Création d'une commande client origine "VINICOM" 
+        'Création d'une commande client origine "HOBIVIN" 
         oCMD = New CommandeClient(m_oClient)
-        oCMD.Origine = Dossier.VINICOM
+        oCMD.Origine = Dossier.HOBIVIN
         oCMD.save()
         oCMD.AjouteLigne("10", m_oProduit, 10, 12)
-        oCMD.AjouteLigne("20", oPRD2, 20, 22)
-        oCMD.AjouteLigne("30", oPRD3, 30, 32)
+        oCMD.AjouteLigne("20", oPRDVNC, 20, 22)
+        oCMD.AjouteLigne("30", oPRDHBV, 30, 32)
 
         Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
         'Génération des sous-commandes (Sans intermédiaire)
         Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
 
-        Assert.AreEqual(oCMD.colSousCommandes.Count, 3, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+        'Assert.AreEqual(oCMD.colSousCommandes.Count, 3, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
         'Vérification de la première sous-commande (Fournisseur Sans Export)
 
-        objSCMD = oCMD.colSousCommandes.Item(1)
         'Test du passage d'info entre la commande et la souscommande
+        'Première Sous Commande = VNC 
+        objSCMD = oCMD.colSousCommandes.Item(1)
         'Producteur
         Assert.AreEqual(objSCMD.oFournisseur.id, m_oFourn.id, "Test Fournisseur1" & objSCMD.oFournisseur.toString())
-        'Client = Client Originel
-        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande est le client initial" & objSCMD.oTiers.toString())
+        Assert.AreEqual(CInt(vncTypeExportScmd.vncExportInternet), m_oFourn.bExportInternet)
+        'Client = Client intermédiaire
+        Assert.AreEqual(oCltIntermediaire.id, objSCMD.oTiers.id, "Le Tiers de la Sous Commande doit être le client intermédiaire")
 
-        'Vérification de la seconde sous-commande
+        'Vérification de la seconde sous-commande Produit VINICOM
         objSCMD = oCMD.colSousCommandes.Item(2)
-        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRNVnc.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         'Client = Client initial
-        Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le Client initial" & objSCMD.oTiers.toString())
+        Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande devrait être le Client intermédiaire" & objSCMD.oTiers.toString())
 
-        'Vérification de la Troisième sous-commande
+        'Vérification de la Troisième sous-commande Produit HBV
         objSCMD = oCMD.colSousCommandes.Item(3)
-        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN3.id, "Fournisseur3" & objSCMD.oFournisseur.toString())
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRNHBV.id, "Fournisseur3" & objSCMD.oFournisseur.toString())
         'Client = Client initial
         Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le Client initial" & objSCMD.oTiers.toString())
 
@@ -1385,12 +1397,12 @@ Imports System.IO
         oCMD.Origine = Dossier.HOBIVIN
         oCMD.save()
         objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
-        objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
-        objLgCMD2 = oCMD.AjouteLigne("30", oPRD3, 30, 32)
+        objLgCMD2 = oCMD.AjouteLigne("20", oPRDVNC, 20, 12)
+        objLgCMD2 = oCMD.AjouteLigne("30", oPRDHBV, 30, 32)
         Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
 
         'Génération des sous-commandes avec un intermédiaire
-        Assert.IsTrue(oCMD.generationSousCommande(oCltIntermediaire), "OCMD.EclatementCommande()" & racine.getErreur())
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
 
         Assert.AreEqual(oCMD.colSousCommandes.Count, 3, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
 
@@ -1404,13 +1416,13 @@ Imports System.IO
 
         'Vérification de la seconde sous-commande (Fournisseur = Export Internet)
         objSCMD = oCMD.colSousCommandes.Item(2)
-        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN2.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRNVnc.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         'Client = Intermédiaire
         Assert.AreEqual(objSCMD.oTiers.id, oCltIntermediaire.id, "Le Tiers de la Sous Commande devrait être l'intermédiaire" & objSCMD.oTiers.toString())
 
         'Vérification de la seconde sous-commande (Fournisseur = Export Quadra)
         objSCMD = oCMD.colSousCommandes.Item(3)
-        Assert.AreEqual(objSCMD.oFournisseur.id, oFRN3.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
+        Assert.AreEqual(objSCMD.oFournisseur.id, oFRNHBV.id, "Test Fournisseur2" & objSCMD.oFournisseur.toString())
         'Client = Intermédiaire
         Assert.AreEqual(objSCMD.oTiers.id, m_oClient.id, "Le Tiers de la Sous Commande devrait être le client d'origine" & objSCMD.oTiers.toString())
 
@@ -1418,17 +1430,17 @@ Imports System.IO
         oCMD.bDeleted = True
         oCMD.save()
 
-        oPRD3.bDeleted = True
-        oFRN3.Save()
+        oPRDHBV.bDeleted = True
+        oFRNHBV.Save()
 
-        oFRN3.bDeleted = True
-        oFRN3.Save()
+        oFRNHBV.bDeleted = True
+        oFRNHBV.Save()
 
-        oPRD2.bDeleted = True
-        oFRN2.Save()
+        oPRDVNC.bDeleted = True
+        oFRNVnc.Save()
 
-        oFRN2.bDeleted = True
-        oFRN2.Save()
+        oFRNVnc.bDeleted = True
+        oFRNVnc.Save()
     End Sub
 
     <TestMethod()> Public Sub T5952a_ExportQuadra()
@@ -1496,8 +1508,241 @@ Imports System.IO
         pcmd.generationSousCommande()
         pcmd.save()
     End Sub
+    ''' <summary>
+    ''' Test du caclul du Tx de commsion si intermédiaire (Commande HBV, Produit VNC)
+    ''' </summary>
+    <TestMethod()> Public Sub T593_CalcTxComCmdHBVPRDVNC()
+        Dim objSCMD As SousCommande
+        Dim oFRNVNC As Fournisseur
+        Dim oPRDVNC As Produit
+        Dim oCMD As CommandeClient
+
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+        oCltIntermediaire.save()
 
 
+        oFRNVNC = New Fournisseur("FRNVNC" & Now(), "Fournisseur Vinicom")
+        oFRNVNC.bExportInternet = vncTypeExportScmd.vncExportInternet
+        Assert.IsTrue(oFRNVNC.Save())
+
+        Dim oTx As New TauxComm(oFRNVNC, m_oClient.codeTypeClient, 12.0)
+        Assert.IsTrue(oTx.save())
+        oTx = New TauxComm(oFRNVNC, oCltIntermediaire.codeTypeClient, 25.0)
+        Assert.IsTrue(oTx.save())
+
+        oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
+        oPRDVNC.Dossier = Dossier.VINICOM
+        Assert.IsTrue(oPRDVNC.save())
+
+        'Création d'une commande client origine "HOBIVIN" 
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = Dossier.HOBIVIN
+        oCMD.save()
+        oCMD.AjouteLigne("20", oPRDVNC, 20, 22)
+
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes avec un intermédiaire
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 1, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la première sous-commande 
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        Assert.AreEqual(25D, objSCMD.tauxCommission)
+
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+
+
+        oPRDVNC.bDeleted = True
+        oFRNVNC.Save()
+
+        oFRNVNC.bDeleted = True
+        oFRNVNC.Save()
+
+    End Sub
+
+    ''' <summary>
+    ''' Test du caclul du Tx de commsion si intermédiaire (Commande HBV, Produit HBV)
+    ''' </summary>
+    <TestMethod()> Public Sub T593_CalcTxComCmdHBVPRDHBV()
+        Dim objSCMD As SousCommande
+        Dim oFRNHBV As Fournisseur
+        Dim oPRDHBV As Produit
+        Dim oCMD As CommandeClient
+
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+        oCltIntermediaire.save()
+
+
+        oFRNHBV = New Fournisseur("FRNHBV" & Now(), "Fournisseur Hobivin")
+        oFRNHBV.bExportInternet = vncTypeExportScmd.vncExportQuadra
+        Assert.IsTrue(oFRNHBV.Save())
+
+        Dim oTx As New TauxComm(oFRNHBV, m_oClient.codeTypeClient, 12.0)
+        Assert.IsTrue(oTx.save())
+        oTx = New TauxComm(oFRNHBV, oCltIntermediaire.codeTypeClient, 25.0)
+        Assert.IsTrue(oTx.save())
+
+        oPRDHBV = New Produit("PRDHBV" & Now(), oFRNHBV, 1990)
+        oPRDHBV.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(oPRDHBV.save())
+
+        'Création d'une commande client origine "HOBIVIN" 
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = Dossier.HOBIVIN
+        oCMD.save()
+        oCMD.AjouteLigne("20", oPRDHBV, 20, 22)
+
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes avec un intermédiaire
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 1, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la première sous-commande 
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        Assert.AreEqual(0D, objSCMD.tauxCommission)
+
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+
+
+        oPRDHBV.bDeleted = True
+        oFRNHBV.Save()
+
+        oFRNHBV.bDeleted = True
+        oFRNHBV.Save()
+
+    End Sub
+
+    ''' <summary>
+    ''' Test du caclul du Tx de commsion sans intermédiaire (Commande VNC, Produit HBV)
+    ''' </summary>
+    <TestMethod()> Public Sub T593_CalcTxComCmdVNCPRDHBV()
+        Dim objSCMD As SousCommande
+        Dim oFRNHBV As Fournisseur
+        Dim oPRDHBV As Produit
+        Dim oCMD As CommandeClient
+
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+        oCltIntermediaire.save()
+
+
+        oFRNHBV = New Fournisseur("FRNHBV" & Now(), "Fournisseur Hobivin")
+        oFRNHBV.bExportInternet = vncTypeExportScmd.vncExportQuadra
+        Assert.IsTrue(oFRNHBV.Save())
+
+        Dim oTx As New TauxComm(oFRNHBV, m_oClient.codeTypeClient, 12.0)
+        Assert.IsTrue(oTx.save())
+        oTx = New TauxComm(oFRNHBV, oCltIntermediaire.codeTypeClient, 25.0)
+        Assert.IsTrue(oTx.save())
+
+        oPRDHBV = New Produit("PRDHBV" & Now(), oFRNHBV, 1990)
+        oPRDHBV.Dossier = Dossier.HOBIVIN
+        Assert.IsTrue(oPRDHBV.save())
+
+        'Création d'une commande client origine "VINICOM" 
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = Dossier.VINICOM
+        oCMD.save()
+        oCMD.AjouteLigne("20", oPRDHBV, 20, 22)
+
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes sans un intermédiaire
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 1, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la première sous-commande 
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        Assert.AreEqual(0D, objSCMD.tauxCommission)
+
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+
+
+        oPRDHBV.bDeleted = True
+        oFRNHBV.Save()
+
+        oFRNHBV.bDeleted = True
+        oFRNHBV.Save()
+
+    End Sub
+
+    ''' <summary>
+    ''' Test du caclul du Tx de commsion sans intermédiaire (Commande VNC, Produit HBV)
+    ''' </summary>
+    <TestMethod()> Public Sub T593_CalcTxComCmdVNCPRDVNC()
+        Dim objSCMD As SousCommande
+        Dim oFRNVNC As Fournisseur
+        Dim oPRDVNC As Produit
+        Dim oCMD As CommandeClient
+
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+        oCltIntermediaire.save()
+
+
+        oFRNVNC = New Fournisseur("FRNVNC" & Now(), "Fournisseur Vinicom")
+        oFRNVNC.bExportInternet = vncTypeExportScmd.vncExportInternet
+        Assert.IsTrue(oFRNVNC.Save())
+
+        Dim oTx As New TauxComm(oFRNVNC, m_oClient.codeTypeClient, 12.0)
+        Assert.IsTrue(oTx.save())
+        oTx = New TauxComm(oFRNVNC, oCltIntermediaire.codeTypeClient, 25.0)
+        Assert.IsTrue(oTx.save())
+
+        oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
+        oPRDVNC.Dossier = Dossier.VINICOM
+        Assert.IsTrue(oPRDVNC.save())
+
+        'Création d'une commande client origine "VINICOM" 
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = Dossier.VINICOM
+        oCMD.save()
+        oCMD.AjouteLigne("20", oPRDVNC, 20, 22)
+
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes sans un intermédiaire
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 1, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la première sous-commande 
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        Assert.AreEqual(12D, objSCMD.tauxCommission)
+
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+
+
+        oPRDVNC.bDeleted = True
+        oFRNVNC.Save()
+
+        oFRNVNC.bDeleted = True
+        oFRNVNC.Save()
+
+    End Sub
 End Class
 
 

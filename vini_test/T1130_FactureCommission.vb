@@ -47,7 +47,9 @@ Imports CrystalDecisions.CrystalReports.Engine
         objProduit3 = New Produit("ZZ1004", m_oFourn, 1994)
         Assert.IsTrue(objProduit3.save())
 
-
+        'Création des Taux de commissions
+        m_oFourn.createTxCommStandard(m_oClient.codeTypeClient)
+        m_oFourn2.createTxCommStandard(m_oClient.codeTypeClient)
 
     End Sub
     <TestCleanup()> Public Overrides Sub TestCleanup()
@@ -906,8 +908,6 @@ Imports CrystalDecisions.CrystalReports.Engine
     Public Sub TestReleveSurPlusieursPage()
 
         Dim objCMD As CommandeClient
-        Dim lstCmd As List(Of CommandeClient)
-        Dim nIdCmd As Integer
         Dim objFrn As Fournisseur
         Dim objPrd As Produit
         Dim oFact As FactCom
@@ -915,10 +915,11 @@ Imports CrystalDecisions.CrystalReports.Engine
 
         objFrn = New Fournisseur("FRNTEST", "FRN TEST")
         objFrn.bExportInternet = vncTypeExportScmd.vncExportInternet
-            objfrn.Save()
+        objFrn.Save()
+        objFrn.createTxCommStandard(m_oClient.codeTypeClient)
+
         objPrd = New Produit("PRDTEST", objFrn, 0)
         objPrd.save()
-
 
 
         'CREATION D'UNE COMMANDE CLIENT
@@ -992,6 +993,63 @@ Imports CrystalDecisions.CrystalReports.Engine
         objCMD.bDeleted = True
         objCMD.save()
     End Sub
+
+    ''' <summary>
+    ''' Si le Tx de comm est à Zero => pas de génération de factures de comm
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T110_PasDeGenerationSiTxComZero()
+
+        Dim objCMD As CommandeClient
+        Dim objSCMD As SousCommande
+        Dim colSCMD As List(Of SousCommande)
+        Dim nIDCmd As String
+
+
+
+        'CREATION D'UNE COMMANDE CLIENT
+        objCMD = New CommandeClient(m_oClient)
+        objCMD.dateCommande = CDate("06/02/1964")
+        'Ajout de 2 lignes de Commandes
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit, 12, 20, True, 120, (120 * 1.196))
+        objCMD.AjouteLigne(objCMD.getNextNumLg, m_oProduit2, 12, 20, True, 125, (125 * 1.196))
+
+        ''Sauvegarde de la commande
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+        nIDCmd = objCMD.id
+        objCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+
+        'Génération des Sous-Commandes
+        objCMD.generationSousCommande()
+        Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+
+        For Each objSCMD In objCMD.colSousCommandes
+            objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+            objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
+            objSCMD.refFactFournisseur = "FACTFRN" + Now()
+            objSCMD.totalHTFacture = objSCMD.totalHT
+            objSCMD.totalTTCFacture = objSCMD.totalTTC
+            objSCMD.dateFactFournisseur = CDate("06/02/1968") ' Date facture fournisseur <> date de commande
+            Assert.IsTrue(objSCMD.Save(), "Sauvegarde de la sous Commande")
+        Next objSCMD
+
+        'Mise à 0 du Tx de comm de la Premère Scmd
+        objSCMD = objCMD.colSousCommandes(1)
+        Dim nTx As Decimal = objSCMD.tauxCommission
+        objSCMD.tauxCommission = 0
+        Assert.IsTrue(objSCMD.Save())
+        colSCMD = SousCommande.getListeAFacturer(CDate("01/02/1968"), CDate("28/02/1968"))
+        Assert.AreEqual(1, colSCMD.Count())
+
+        objSCMD.tauxCommission = nTx
+        Assert.IsTrue(objSCMD.Save())
+        colSCMD = SousCommande.getListeAFacturer(CDate("01/02/1968"), CDate("28/02/1968"))
+        Assert.AreEqual(2, colSCMD.Count())
+
+    End Sub
+
+
 End Class
 
 

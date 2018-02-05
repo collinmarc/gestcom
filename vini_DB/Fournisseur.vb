@@ -297,5 +297,14 @@ Public Class Fournisseur
         Return "FRN : [" & MyBase.toString() & "]" & idRegion & "," & libregion
     End Function
 
+    Public Sub createTxCommStandard(pTypeClient As String)
+        Try
+
+            Dim oTx As New TauxComm(Me.id, pTypeClient, Param.getConstante("CST_TX_COMMISSION"))
+            oTx.save()
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
 End Class

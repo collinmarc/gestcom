@@ -631,17 +631,17 @@ Public Class Client
         Return bReturn
     End Function
     ''' <summary>
-    ''' Renvoie la liste des clients qui ont été identifiés comme intermédiaires pour une origine
+    ''' Renvoie le client qui a été identifié comme intermédiaire pour une origine
     ''' </summary>
     ''' <param name="pOrigine"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function getIntermediairesPourUneOrigine(pOrigine As String) As List(Of Client)
-        Dim oReturn As New List(Of Client)
+    Public Shared Function getIntermediairePourUneOrigine(pOrigine As String) As Client
+        Dim oReturn As Client = Nothing
         Try
             Dim idTypeClient As Integer
             For Each oParam As Param In Param.colTypeClient
-                If oParam.valeur.ToUpper() = "Intermediaire".ToUpper() Or oParam.valeur.ToUpper = "Intermédiaire".ToUpper Then
+                If oParam.code.ToUpper() = "INT" Then
                     idTypeClient = oParam.id
                 End If
             Next
@@ -651,7 +651,7 @@ Public Class Client
             Dim strResultat As String = Persist.executeSQLQuery(strSQL)
 
             If Not String.IsNullOrEmpty(strResultat) Then
-                oReturn.Add(Client.createandload(CLng(strResultat)))
+                oReturn = Client.createandload(CLng(strResultat))
             End If
 
         Catch ex As Exception

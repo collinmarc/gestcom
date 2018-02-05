@@ -742,12 +742,7 @@ Public Class LgCommande
                     Case Dossier.VINICOM
                         'un Produit Vinicom sur une Commande HOBIVIN
                         'On prend le type du client Intermédiare
-                        Dim olst As List(Of Client) = Client.getIntermediairesPourUneOrigine(pstrOrigine)
-                        If olst.Count > 0 Then
-                            objCLT = olst(0)
-                        Else
-                            objCLT = Nothing
-                        End If
+                        objCLT = Client.getIntermediairePourUneOrigine(pstrOrigine)
                     Case Else
                         'un produit HOBIVIN sur une commande HOBIVIN
                         objCLT = Nothing

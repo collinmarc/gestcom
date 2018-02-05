@@ -6265,8 +6265,11 @@ Public MustInherit Class Persist
         objCommand = New OleDbCommand
         objCommand.Connection = m_dbconn.Connection
 
-        'Pour les Souscommandes à Facture on recherche les Etat Rapproché et RapprochéInternet
-        strWhere = "(SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDRapprochee & " or SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDRapprocheeInt & ")"
+        'Pour les Souscommandes à Facture on recherche 
+        ' LEs souscommandes avec un Tx de commissions
+        ' Les sous commandes Rapprochées et RapprochéInternet
+        strWhere = "SCMD_COM_TAUX <> 0 AND "
+        strWhere = strWhere & "(SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDRapprochee & " or SOUSCOMMANDE.SCMD_ETAT = " & vncEnums.vncEtatCommande.vncSCMDRapprocheeInt & ")"
 
         'Détermination du champ date
         '23/01/09 : Filtre sur la date de facture Fournisseur

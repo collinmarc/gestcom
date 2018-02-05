@@ -890,6 +890,9 @@ Public Class SousCommande
 
         Dim oReturn As LgCommande
         pobjLgCmd.idSCmd = id()
+        'Ajout du tiers dans la Ligne de commmande (utile pour touver le Tx de commission)
+        pobjLgCmd.idTiers = oTiers.id
+
         Try
             If p_bCalculPrix Then
                 pobjLgCmd.calculPrixTotal()
@@ -1057,11 +1060,31 @@ Public Class SousCommande
 
     End Function 'toCSVForTestFromInternet
 
-    '/// <summary>Calculates the standard Commission
-    '/// Base Commision = Total HT Facturé
-    '/// Taux de commision = Tx Standrad
-    '///</summary>
-    '/// <value>True/False</value>
+    Public Overrides Function calculPrixTotal() As Boolean
+        '========================================================================
+        ' CalculPrixTotal : Calcul du prix de lacommande, du poids et des qte de colis
+        '       Utilise le fonction CalculPtixTotal de la classe Commande pour calculer les prixs
+        '========================================================================
+        Dim bReturn As Boolean
+        Try
+            bReturn = MyBase.calculPrixTotal()
+            For Each oLg As LgCommande In m_colLignes
+
+                'Calcul de la commssion pour Chaque Ligne
+                If (Me.etat.codeEtat = vncEtatCommande.vncEnCoursSaisie Or Me.etat.codeEtat = vncEtatCommande.vncValidee) Then
+                    oLg.CalculCommission(Origine, CalculCommQte.CALCUL_COMMISSION_QTE_CMDE)
+                Else
+                    oLg.CalculCommission(Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+                End If
+            Next oLg
+        Catch ex As Exception
+            setError("CommandeClient.CalculPrixTotal", ex.ToString)
+            bReturn = False
+        End Try
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function 'calculPrixTotal
+
 
     ''' <summary>
     ''' Calcul de la commission pour la sousCommande

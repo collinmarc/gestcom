@@ -258,7 +258,7 @@ Imports System.IO
         objCMD.changeEtat(vncActionEtatCommande.vncActionValider)
         objCMD.save()
 
-        Assert.IsTrue(objCMD.generationSousCommande(oCltInter))
+        Assert.IsTrue(objCMD.generationSousCommande())
 
         strFile = "./adel.csv"
         If System.IO.File.Exists(strFile) Then
@@ -308,9 +308,13 @@ Imports System.IO
         m_oProduit2.save()
 
         'Client intermédiaire
-        Dim oInter As New Client("CLTINTER", Dossier.HOBIVIN)
-        oInter.idTypeClient = Param.getTypeClientIntermediaire().id
-        oInter.save()
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = Client.getIntermediairePourUneOrigine(Dossier.HOBIVIN)
+        If oCltIntermediaire Is Nothing Then
+            oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+            oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+            oCltIntermediaire.save()
+        End If
 
 
         'Creation d'une Commande "VINICOM" avec un produit Vinicom et un produit HOBIVIN
@@ -342,7 +346,7 @@ Imports System.IO
         objCMDH.changeEtat(vncActionEtatCommande.vncActionLivrer)
         objCMDH.save()
         'Commande HOBIVIN Donc un intermédiaire
-        Assert.IsTrue(objCMDH.generationSousCommande(oInter))
+        Assert.IsTrue(objCMDH.generationSousCommande())
         objCMDH.save()
         Assert.AreEqual(2, objCMDH.colSousCommandes.Count)  '2 sous Commandes générées
 
@@ -386,14 +390,14 @@ Imports System.IO
         oSCMD.oFournisseur.load()
         Assert.AreEqual(CInt(vncEnums.vncTypeExportScmd.vncExportInternet), oSCMD.oFournisseur.bExportInternet)
         Assert.AreEqual(Dossier.HOBIVIN, CommandeClient.createandload(oSCMD.idCommandeClient).Origine)
-        Assert.AreEqual(oInter.code, oSCMD.TiersCode)
+        Assert.AreEqual(oCltIntermediaire.code, oSCMD.TiersCode)
 
 
         objCMDV.bDeleted = True
         objCMDV.save()
 
-        oInter.bDeleted = True
-        oInter.save()
+        oCltIntermediaire.bDeleted = True
+        oCltIntermediaire.save()
     End Sub
 
     <TestMethod()>
@@ -451,7 +455,7 @@ Imports System.IO
         objCMDH.changeEtat(vncActionEtatCommande.vncActionLivrer)
         objCMDH.save()
         'Commande HOBIVIN Donc un intermédiaire
-        Assert.IsTrue(objCMDH.generationSousCommande(oInter))
+        Assert.IsTrue(objCMDH.generationSousCommande())
         objCMDH.save()
         Assert.AreEqual(2, objCMDH.colSousCommandes.Count)  '2 sous Commandes générées
 
@@ -578,7 +582,7 @@ Imports System.IO
         objCMDH.changeEtat(vncActionEtatCommande.vncActionLivrer)
         objCMDH.save()
         'Commande HOBIVIN Donc un intermédiaire
-        Assert.IsTrue(objCMDH.generationSousCommande(oInter))
+        Assert.IsTrue(objCMDH.generationSousCommande())
         objCMDH.save()
         Assert.AreEqual(2, objCMDH.colSousCommandes.Count)  '2 sous Commandes générées
 
@@ -667,7 +671,7 @@ Imports System.IO
         objCMD1.changeEtat(vncActionEtatCommande.vncActionLivrer)
         objCMD1.save()
 
-        Assert.IsTrue(objCMD1.generationSousCommande(oInter))
+        Assert.IsTrue(objCMD1.generationSousCommande())
         objCMD1.save()
         Assert.AreEqual(2, objCMD1.colSousCommandes.Count)
 
@@ -684,7 +688,7 @@ Imports System.IO
         objCMD2.changeEtat(vncActionEtatCommande.vncActionLivrer)
         objCMD2.save()
         'Commande HOBIVIN Donc un intermédiaire
-        Assert.IsTrue(objCMD2.generationSousCommande(oInter))
+        Assert.IsTrue(objCMD2.generationSousCommande())
         objCMD2.save()
         Assert.AreEqual(2, objCMD2.colSousCommandes.Count)
 

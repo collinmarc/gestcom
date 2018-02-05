@@ -598,11 +598,11 @@ Imports vini_DB
 
         Dim oClt2 As Client
         Dim oLst As List(Of Client)
-        oLst = Client.getIntermediairesPourUneOrigine(Dossier.HOBIVIN)
-        Assert.AreEqual(1, oLst.Count)
+        oClt2 = Client.getIntermediairePourUneOrigine(Dossier.HOBIVIN)
+        Assert.IsNotNull(oClt2)
 
-        oLst = Client.getIntermediairesPourUneOrigine(Dossier.VINICOM)
-        Assert.AreEqual(0, oLst.Count)
+        oClt2 = Client.getIntermediairePourUneOrigine(Dossier.VINICOM)
+        Assert.IsNull(oClt2)
 
 
     End Sub

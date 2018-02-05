@@ -599,7 +599,7 @@ Public Class CommandeClient
     '    Return oLgCmd
     'End Function 'AjouteLigne
 
-    Public Function generationSousCommande(Optional pIntermediaire As Client = Nothing) As Boolean
+    Public Function generationSousCommande() As Boolean
         '=======================================================================
         'Fonction : generationSousCommande
         'Description : Création des sousCommandes : 1 Souscommande = 1 Fournisseur 
@@ -614,6 +614,10 @@ Public Class CommandeClient
         Dim idFRN As Integer
         Dim oFRN As Fournisseur
         Dim oSCMD As SousCommande
+        Dim pIntermediaire As Client
+        Dim strDossierProduit As String
+
+        pIntermediaire = Client.getIntermediairePourUneOrigine(Me.Origine)
 
         'On vide la collection des sousCommande par securité
         m_colSousCommande.clear()
@@ -629,30 +633,31 @@ Public Class CommandeClient
         While Not bFini
             bFini = True
             idFRN = 0 'on reinitialise le fournisseur courrant avant de commencer la boucle
+            strDossierProduit = ""
             For Each objLGCMD In m_colLignes
-                'on ne traitre que les lignes qui ne sont pas éclatées
+                'on ne traitre que les lignes qui ne sont pas déjà éclatées
                 If Not objLGCMD.bLigneEclatee Then
                     bFini = False
                     If idFRN = 0 Then
-                        'S'il n'y a pas de fournisseur courant on prend celui là
+                        'S'il n'y a pas de fournisseur courant on prend celui là et le Dossier concerné
                         idFRN = objLGCMD.oProduit.idFournisseur
                         oFRN = Fournisseur.createandload(idFRN)
+                        strDossierProduit = objLGCMD.oProduit.Dossier
                         ' et on crée la sous-commande avec ce fournisseur
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
-                        'Si le Producteur est un Productteur Vinicom
-                        'Si on fournit un intermédaire (Cas HOBIVIN)
+                        'Si le Produit est un Produit Vinicom et la Commande est HOBIVIN
                         'Alors on remplace le client par l'intermédaire
-                        If oFRN.bExportInternet = vncTypeExportScmd.vncExportInternet Then
+                        If Me.Origine = Dossier.HOBIVIN And objLGCMD.oProduit.Dossier = Dossier.VINICOM Then
                             If pIntermediaire IsNot Nothing Then
                                 oSCMD.setTiers(pIntermediaire)
                             End If
                         End If
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)
-                        End If
-                        If objLGCMD.oProduit.idFournisseur = idFRN Then
-                        'La Ligne correspond au fournisseur courant
+                    End If
+                    If objLGCMD.oProduit.idFournisseur = idFRN And objLGCMD.oProduit.Dossier = strDossierProduit Then
+                        'La Ligne correspond au fournisseur courant et au dossier courant
                         ' On l'ajoute à la sous-commande courante 
                         oSCMD.AjouteLigne(objLGCMD, True)
                         'On la marque comme traitée

@@ -860,21 +860,13 @@ Public Class frmCommandeClient
         Dim bReturn As Boolean
         setcursorWait()
         Try
-            Dim oLst As List(Of Client) = Client.getIntermediairesPourUneOrigine(getCommandeCourante().Origine)
+            Dim oClt As Client = Client.getIntermediairePourUneOrigine(getCommandeCourante().Origine)
             m_bsrcIntermédiaires.Clear()
-            If oLst.Count > 0 Then
-                For Each oClt As Client In oLst
-                    m_bsrcIntermédiaires.Add(oClt)
-                Next
-                cbxIntermédiaires.Enabled = True
-                cbxIntermédiaires.Visible = True
-                laIntermediaires.Visible = True
+            m_bsrcIntermédiaires.Add(oClt)
+            cbxIntermédiaires.Enabled = True
+            cbxIntermédiaires.Visible = True
+            laIntermediaires.Visible = True
 
-            Else
-                cbxIntermédiaires.Enabled = False
-                cbxIntermédiaires.Visible = False
-                laIntermediaires.Visible = False
-            End If
             If getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Or getCommandeCourante.etat.codeEtat = vncEnums.vncEtatCommande.vncTransmiseQuadra Then
                 getCommandeCourante.LoadColSousCommande()
                 afficheListeSousCommande()
@@ -951,11 +943,8 @@ Public Class frmCommandeClient
             bReturn = False
         Else
             getCommandeCourante.LoadColSousCommande()
-            If cbxIntermédiaires.Enabled And cbxIntermédiaires.Text <> "" Then
-                oIntermediaire = m_bsrcIntermédiaires.Current
-            End If
             'Eclatement de commande
-            bReturn = getCommandeCourante.generationSousCommande(oIntermediaire)
+            bReturn = getCommandeCourante.generationSousCommande()
             AfficheEtat()
             afficheListeSousCommande()
         End If
