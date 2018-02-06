@@ -37,12 +37,16 @@ Public Class frmEtatStock
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
+    Friend WithEvents Label4 As Label
+    Friend WithEvents cbxOrigine As ComboBox
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.tbCodeFourn = New System.Windows.Forms.TextBox
-        Me.cbRecherche = New System.Windows.Forms.Button
-        Me.cbAfficher = New System.Windows.Forms.Button
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.tbCodeFourn = New System.Windows.Forms.TextBox()
+        Me.cbRecherche = New System.Windows.Forms.Button()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbxOrigine = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -76,21 +80,43 @@ Public Class frmEtatStock
         Me.cbAfficher.TabIndex = 4
         Me.cbAfficher.Text = "Afficher"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 41)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(48, 13)
+        Me.Label4.TabIndex = 10
+        Me.Label4.Text = "Dossier :"
+        '
+        'cbxOrigine
+        '
+        Me.cbxOrigine.FormattingEnabled = True
+        Me.cbxOrigine.Items.AddRange(New Object() {"VINICOM", "HOBIVIN"})
+        Me.cbxOrigine.Location = New System.Drawing.Point(112, 38)
+        Me.cbxOrigine.Name = "cbxOrigine"
+        Me.cbxOrigine.Size = New System.Drawing.Size(104, 21)
+        Me.cbxOrigine.TabIndex = 9
+        Me.cbxOrigine.Text = "VINICOM"
+        '
         'frmEtatStock
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(952, 646)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.cbxOrigine)
         Me.Controls.Add(Me.cbAfficher)
         Me.Controls.Add(Me.cbRecherche)
         Me.Controls.Add(Me.tbCodeFourn)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmEtatStock"
         Me.Text = "Etat du stock"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.tbCodeFourn, 0)
         Me.Controls.SetChildIndex(Me.cbRecherche, 0)
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
+        Me.Controls.SetChildIndex(Me.cbxOrigine, 0)
+        Me.Controls.SetChildIndex(Me.Label4, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -109,6 +135,7 @@ Public Class frmEtatStock
         str = tbCodeFourn.Text
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("CodeFourn", Trim(str))
+        objReport.SetParameterValue("Dossier", cbxOrigine.Text)
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
         restoreCursor()

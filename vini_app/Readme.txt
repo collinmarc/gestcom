@@ -3,6 +3,7 @@ Date :
 #815   : Lenteur en saisie de commande (PreCommande)
 #816 : notion de dossier dans la fiche produit
 #817 : Calcul du taux de commission
+#818 : Etat des stocks
 
 Version 5.9.1.2c
 Date : 10/01/2018
