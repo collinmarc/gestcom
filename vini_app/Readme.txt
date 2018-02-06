@@ -4,6 +4,7 @@ Date :
 #816 : notion de dossier dans la fiche produit
 #817 : Calcul du taux de commission
 #818 : Etat des stocks
+#819 : Liste des palettes transportées
 
 Version 5.9.1.2c
 Date : 10/01/2018

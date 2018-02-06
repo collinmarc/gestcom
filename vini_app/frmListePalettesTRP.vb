@@ -146,7 +146,7 @@ Public Class frmListePalettesTRP
 #End Region
 
     Public Overrides Function getResume() As String
-        Return "Liste des Palettes transportées"
+        Return "Liste des palettes transportées"
     End Function
 
     Private Sub cbAfficher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbAfficher.Click
