@@ -553,14 +553,19 @@ Public Class FactTRP
             ocolReturn = New ColEvent
             'Parcours de toutes les Commandes de la collection
             For Each objCMD In pcolCMD
+                Dim oClient As Tiers
+                oClient = objCMD.oTiers
+                If objCMD.Origine = Dossier.HOBIVIN Then
+                    oClient = Client.getIntermediairePourUneOrigine(objCMD.Origine)
+                End If
                 'A-t-on déjà crée une facture de Transport pour ce Client
-                If ocolReturn.keyExists(objCMD.oTiers.code) Then
+                If ocolReturn.keyExists(oClient.code) Then
                     'Une Facture à déjà été créée pour ce Client
-                    objFactTRP = ocolReturn(objCMD.oTiers.code)
+                    objFactTRP = ocolReturn(oClient.code)
                 Else
                     'Il n'y a pas de facture pour ce client
                     'Création de la facture de transport
-                    objFactTRP = New FactTRP(objCMD.oTiers)
+                    objFactTRP = New FactTRP(oClient)
                     objFactTRP.dateFacture = pdateFact
                     objFactTRP.dateStatistique = pdateStat
                     objFactTRP.periode = pPeriode
@@ -620,12 +625,7 @@ Public Class FactTRP
         Debug.Assert(Not m_colLignes Is Nothing)
         Debug.Assert(Not p_oCMD Is Nothing)
         Debug.Assert(p_oCMD.id <> 0, "La commande doit être enregistrée")
-        Debug.Assert(p_oCMD.oTiers.id = Me.oTiers.id, "Les identifiants de Clients doivent être égaux")
         Debug.Assert(p_oCMD.bFactTransport = True, "La commande doit accepter les factures de transports")
-        Debug.Assert(p_oCMD.etat.codeEtat = vncEnums.vncEtatCommande.vncLivree Or _
-                    p_oCMD.etat.codeEtat = vncEnums.vncEtatCommande.vncEclatee Or _
-                    p_oCMD.etat.codeEtat = vncEnums.vncEtatCommande.vncRapprochee _
-                    , "La commande doit être livrée")
 
         Dim oLg As LgFactTRP
         'Dim strNum As String

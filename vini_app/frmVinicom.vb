@@ -26,14 +26,21 @@ Public Class FrmVinicom
 
 
     Protected Sub DisposeCr(pcrw As CrystalReportViewer)
-        If pcrw.ReportSource IsNot Nothing Then
-            Dim oReport As ReportDocument
-            oReport = pcrw.ReportSource
-            oReport.Dispose()
-            pcrw.ReportSource = Nothing
+        Try
 
-        End If
-        pcrw.Dispose()
+            If pcrw.ReportSource IsNot Nothing Then
+                Dim oReport As ReportDocument
+                oReport = pcrw.ReportSource
+                If oReport IsNot Nothing Then
+                    oReport.Dispose()
+                End If
+                pcrw.ReportSource = Nothing
+
+            End If
+            pcrw.Dispose()
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Protected Sub debAffiche()

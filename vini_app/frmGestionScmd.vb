@@ -53,8 +53,6 @@ Public Class frmGestionSCMD
     Friend WithEvents label18 As System.Windows.Forms.Label
     Friend WithEvents liFactCom As System.Windows.Forms.LinkLabel
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
-    Friend WithEvents cbTransmettreFax As System.Windows.Forms.Button
-    Friend WithEvents ckTransmiseFax As System.Windows.Forms.CheckBox
     Friend WithEvents ckExporteeInternet As System.Windows.Forms.CheckBox
     Friend WithEvents cbExportInternet As System.Windows.Forms.Button
     Friend WithEvents ckImporteeInternet As System.Windows.Forms.CheckBox
@@ -93,6 +91,7 @@ Public Class frmGestionSCMD
     Friend WithEvents tbCodeScmd As System.Windows.Forms.TextBox
     Friend WithEvents tbIDScmd As System.Windows.Forms.TextBox
     Friend WithEvents ckExportQuadra As CheckBox
+    Friend WithEvents Label8 As Label
     Friend WithEvents tbCommentaire As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -101,9 +100,11 @@ Public Class frmGestionSCMD
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.grpDetailSousCommande = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.ckExportQuadra = New System.Windows.Forms.CheckBox()
+        Me.m_bsrcSousCommandes = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label6 = New System.Windows.Forms.Label()
         Me.tbCommentaire = New System.Windows.Forms.TextBox()
-        Me.m_bsrcSousCommandes = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.tbBaseComm = New vini_app.textBoxCurrency()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -113,8 +114,6 @@ Public Class frmGestionSCMD
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ckImporteeInternet = New System.Windows.Forms.CheckBox()
-        Me.cbTransmettreFax = New System.Windows.Forms.Button()
-        Me.ckTransmiseFax = New System.Windows.Forms.CheckBox()
         Me.ckExporteeInternet = New System.Windows.Forms.CheckBox()
         Me.cbExportInternet = New System.Windows.Forms.Button()
         Me.liFactCom = New System.Windows.Forms.LinkLabel()
@@ -166,7 +165,6 @@ Public Class frmGestionSCMD
         Me.rbIDScmd = New System.Windows.Forms.RadioButton()
         Me.tbCodeScmd = New System.Windows.Forms.TextBox()
         Me.tbIDScmd = New System.Windows.Forms.TextBox()
-        Me.ckExportQuadra = New System.Windows.Forms.CheckBox()
         Me.grpDetailSousCommande.SuspendLayout()
         CType(Me.m_bsrcSousCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -177,13 +175,12 @@ Public Class frmGestionSCMD
         'grpDetailSousCommande
         '
         Me.grpDetailSousCommande.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grpDetailSousCommande.Controls.Add(Me.Label8)
         Me.grpDetailSousCommande.Controls.Add(Me.ckExportQuadra)
         Me.grpDetailSousCommande.Controls.Add(Me.Label6)
         Me.grpDetailSousCommande.Controls.Add(Me.tbCommentaire)
         Me.grpDetailSousCommande.Controls.Add(Me.GroupBox1)
         Me.grpDetailSousCommande.Controls.Add(Me.ckImporteeInternet)
-        Me.grpDetailSousCommande.Controls.Add(Me.cbTransmettreFax)
-        Me.grpDetailSousCommande.Controls.Add(Me.ckTransmiseFax)
         Me.grpDetailSousCommande.Controls.Add(Me.ckExporteeInternet)
         Me.grpDetailSousCommande.Controls.Add(Me.cbExportInternet)
         Me.grpDetailSousCommande.Controls.Add(Me.liFactCom)
@@ -216,6 +213,30 @@ Public Class frmGestionSCMD
         Me.grpDetailSousCommande.TabIndex = 7
         Me.grpDetailSousCommande.TabStop = False
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(5, 397)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(81, 13)
+        Me.Label8.TabIndex = 118
+        Me.Label8.Text = "Export Quadra :"
+        '
+        'ckExportQuadra
+        '
+        Me.ckExportQuadra.AutoSize = True
+        Me.ckExportQuadra.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ckExportQuadra.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcSousCommandes, "bExportQuadra", True))
+        Me.ckExportQuadra.Location = New System.Drawing.Point(149, 397)
+        Me.ckExportQuadra.Name = "ckExportQuadra"
+        Me.ckExportQuadra.Size = New System.Drawing.Size(15, 14)
+        Me.ckExportQuadra.TabIndex = 117
+        Me.ckExportQuadra.UseVisualStyleBackColor = True
+        '
+        'm_bsrcSousCommandes
+        '
+        Me.m_bsrcSousCommandes.DataSource = GetType(vini_DB.SousCommande)
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -233,10 +254,6 @@ Public Class frmGestionSCMD
         Me.tbCommentaire.Name = "tbCommentaire"
         Me.tbCommentaire.Size = New System.Drawing.Size(377, 89)
         Me.tbCommentaire.TabIndex = 115
-        '
-        'm_bsrcSousCommandes
-        '
-        Me.m_bsrcSousCommandes.DataSource = GetType(vini_DB.SousCommande)
         '
         'GroupBox1
         '
@@ -343,25 +360,6 @@ Public Class frmGestionSCMD
         Me.ckImporteeInternet.Text = "Importée Internet"
         Me.ckImporteeInternet.UseVisualStyleBackColor = True
         '
-        'cbTransmettreFax
-        '
-        Me.cbTransmettreFax.Location = New System.Drawing.Point(150, 155)
-        Me.cbTransmettreFax.Name = "cbTransmettreFax"
-        Me.cbTransmettreFax.Size = New System.Drawing.Size(121, 23)
-        Me.cbTransmettreFax.TabIndex = 111
-        Me.cbTransmettreFax.Text = "Transmettre"
-        Me.cbTransmettreFax.UseVisualStyleBackColor = True
-        '
-        'ckTransmiseFax
-        '
-        Me.ckTransmiseFax.AutoSize = True
-        Me.ckTransmiseFax.Location = New System.Drawing.Point(6, 158)
-        Me.ckTransmiseFax.Name = "ckTransmiseFax"
-        Me.ckTransmiseFax.Size = New System.Drawing.Size(94, 17)
-        Me.ckTransmiseFax.TabIndex = 110
-        Me.ckTransmiseFax.Text = "Transmise Fax"
-        Me.ckTransmiseFax.UseVisualStyleBackColor = True
-        '
         'ckExporteeInternet
         '
         Me.ckExporteeInternet.AutoSize = True
@@ -394,7 +392,7 @@ Public Class frmGestionSCMD
         Me.label18.Name = "label18"
         Me.label18.Size = New System.Drawing.Size(129, 16)
         Me.label18.TabIndex = 16
-        Me.label18.Text = "Facturée : "
+        Me.label18.Text = "Facturée Comm: "
         '
         'ckFacturee
         '
@@ -868,17 +866,6 @@ Public Class frmGestionSCMD
         Me.tbIDScmd.Size = New System.Drawing.Size(167, 20)
         Me.tbIDScmd.TabIndex = 108
         '
-        'ckExportQuadra
-        '
-        Me.ckExportQuadra.AutoSize = True
-        Me.ckExportQuadra.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcSousCommandes, "bExportQuadra", True))
-        Me.ckExportQuadra.Location = New System.Drawing.Point(6, 212)
-        Me.ckExportQuadra.Name = "ckExportQuadra"
-        Me.ckExportQuadra.Size = New System.Drawing.Size(94, 17)
-        Me.ckExportQuadra.TabIndex = 117
-        Me.ckExportQuadra.Text = "Export Quadra"
-        Me.ckExportQuadra.UseVisualStyleBackColor = True
-        '
         'frmGestionSCMD
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -1076,9 +1063,7 @@ Public Class frmGestionSCMD
             If rbCodeScmd.Checked Then
                 strCode = Me.tbCodeScmd.Text
                 oSCMD = SousCommande.createandload(strCode)
-                If oSCMD.code.Equals(strCode) Then
-                    col.Add(oSCMD)
-                End If
+                col.Add(oSCMD)
             End If
             m_colSousCommandes = col
             bReturn = True
@@ -1167,7 +1152,6 @@ Public Class frmGestionSCMD
     Private Sub afficheEtatSCMD()
         debAffiche()
         liFactCom.Visible = False
-        ckTransmiseFax.Checked = False
         ckExporteeInternet.Checked = False
         ckRapprochee.Checked = False
         ckImporteeInternet.Checked = False
@@ -1175,26 +1159,21 @@ Public Class frmGestionSCMD
         Select Case getElementCourant().etat.codeEtat
             Case vncEnums.vncEtatCommande.vncSCMDGeneree
             Case vncEnums.vncEtatCommande.vncSCMDtransmiseFax
-                ckTransmiseFax.Checked = True
             Case vncEnums.vncEtatCommande.vncSCMDExporteeInt
                 ckExporteeInternet.Checked = True
             Case vncEnums.vncEtatCommande.vncSCMDRapprochee
-                ckTransmiseFax.Checked = Not getElementCourant().bExportInternet
                 ckExporteeInternet.Checked = getElementCourant().bExportInternet
                 ckRapprochee.Checked = True
             Case vncEnums.vncEtatCommande.vncSCMDRapprocheeInt
-                ckTransmiseFax.Checked = Not getElementCourant().bExportInternet
                 ckExporteeInternet.Checked = getElementCourant().bExportInternet
                 ckImporteeInternet.Checked = True
             Case vncEnums.vncEtatCommande.vncSCMDFacturee
-                ckTransmiseFax.Checked = Not getElementCourant().bExportInternet
                 ckExporteeInternet.Checked = getElementCourant().bExportInternet
                 ckRapprochee.Checked = Not getElementCourant().bExportInternet
                 ckImporteeInternet.Checked = getElementCourant().bExportInternet
                 ckFacturee.Checked = True
                 liFactCom.Visible = True
             Case Else
-                ckTransmiseFax.Checked = False
                 ckExporteeInternet.Checked = False
                 ckRapprochee.Checked = False
                 ckImporteeInternet.Checked = False
@@ -1206,9 +1185,6 @@ Public Class frmGestionSCMD
         Debug.Assert(Not getElementCourant() Is Nothing, "Pas de souscommande Courante")
         ' Par defaut : Etat = Genérée
         getElementCourant().etat = New EtatSSCommandeGeneree(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
-        If ckTransmiseFax.Checked Then
-            getElementCourant().etat = New EtatSSCommandeTransmise(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
-        End If
         If ckExporteeInternet.Checked Then
             getElementCourant().etat = New EtatSSCommandeExporteeInt(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
         End If
@@ -1219,6 +1195,9 @@ Public Class frmGestionSCMD
             getElementCourant().etat = New EtatSSCommandeRapprocheeInt(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
         End If
         If ckFacturee.Checked Then
+            getElementCourant().etat = New EtatSSCommandeFacturee(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
+        End If
+        If ckExportQuadra.Checked Then
             getElementCourant().etat = New EtatSSCommandeFacturee(vncGenererSupprimer.vncRien, vncGenererSupprimer.vncRien)
         End If
 
@@ -1355,7 +1334,7 @@ Public Class frmGestionSCMD
         CalculMontantCom()
     End Sub
 
-    Private Sub cbTransmettreFax_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTransmettreFax.Click
+    Private Sub cbTransmettreFax_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         transmettreFax()
     End Sub
 

@@ -5579,11 +5579,9 @@ Public MustInherit Class Persist
 
         strWhere = "WHERE SCMD_CMD_ID = CMD_ID AND "
         If pstrCode.Equals("NULL") Then
-            strWhere = strWhere + " SCMD_ID = ?"
-            objCommand.Parameters.AddWithValue("?", m_id)
+            strWhere = strWhere + " SCMD_ID = " & m_id & " "
         Else
-            strWhere = strWhere + " SCMD_CODE = ?"
-            objCommand.Parameters.AddWithValue("?", pstrCode)
+            strWhere = strWhere + " SCMD_CODE LIKE '" & pstrCode & "' "
         End If
 
         objCommand.CommandText = sqlString + strWhere
@@ -6798,7 +6796,7 @@ Public MustInherit Class Persist
                                     "CMD_ID, CLT_ID " & _
                                   " FROM COMMANDE, CLIENT "
 
-        Dim strWhere As String = " COMMANDE.CMD_CLT_ID = CLIENT.CLT_ID AND COMMANDE.CMD_BFACTTRP=1 AND COMMANDE.CMD_IDFACTTRP=0 AND (COMMANDE.CMD_ETAT=" & vncEtatCommande.vncLivree & " OR COMMANDE.CMD_ETAT=" & vncEtatCommande.vncEclatee & " OR COMMANDE.CMD_ETAT=" & vncEtatCommande.vncRapprochee & ")"
+        Dim strWhere As String = " COMMANDE.CMD_CLT_ID = CLIENT.CLT_ID AND COMMANDE.CMD_BFACTTRP=1 AND COMMANDE.CMD_IDFACTTRP=0 AND COMMANDE.CMD_ETAT in (" & vncEtatCommande.vncLivree & "," & vncEtatCommande.vncEclatee & "," & vncEtatCommande.vncRapprochee & "," & vncEtatCommande.vncTransmiseQuadra & ") "
         Dim objCommand As OleDbCommand
         Dim objCMD As CommandeClient
         Dim objRS As OleDbDataReader = Nothing

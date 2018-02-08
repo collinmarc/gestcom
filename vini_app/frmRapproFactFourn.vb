@@ -53,8 +53,6 @@ Public Class frmRapproFactFourn
     End Function
     Protected Overrides Sub EnableControls(ByVal bEnabled As Boolean)
         MyBase.EnableControls(bEnabled)
-        ckTransmiseFax.Enabled = False
-        cbTransmettreFax.Enabled = False
         ckExporteeInternet.Enabled = False
         cbExportInternet.Enabled = False
         ckFacturee.Enabled = False
