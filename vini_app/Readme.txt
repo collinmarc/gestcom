@@ -6,6 +6,7 @@ Date :
 #818 : Etat des stocks
 #819 : Liste des palettes transportées
 #825 : MAJ base SCMD + MAJ liste des sous-commande
+#821: Adaptation HOBIVIN : Mouvement Articles 
 
 Version 5.9.1.2c
 Date : 10/01/2018

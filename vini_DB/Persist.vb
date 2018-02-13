@@ -6796,7 +6796,13 @@ Public MustInherit Class Persist
                                     "CMD_ID, CLT_ID " & _
                                   " FROM COMMANDE, CLIENT "
 
-        Dim strWhere As String = " COMMANDE.CMD_CLT_ID = CLIENT.CLT_ID AND COMMANDE.CMD_BFACTTRP=1 AND COMMANDE.CMD_IDFACTTRP=0 AND COMMANDE.CMD_ETAT in (" & vncEtatCommande.vncLivree & "," & vncEtatCommande.vncEclatee & "," & vncEtatCommande.vncRapprochee & "," & vncEtatCommande.vncTransmiseQuadra & ") "
+        Dim strWhere As String = " COMMANDE.CMD_CLT_ID = CLIENT.CLT_ID "
+        strWhere = strWhere & " And COMMANDE.CMD_BFACTTRP=1 "
+        strWhere = strWhere & " And COMMANDE.CMD_IDFACTTRP=0 "
+        strWhere = strWhere & " And COMMANDE.CMD_ETAT in (" & vncEtatCommande.vncLivree & "," _
+                                                            & vncEtatCommande.vncEclatee & "," _
+                                                            & vncEtatCommande.vncRapprochee & "," _
+                                                            & vncEtatCommande.vncTransmiseQuadra & ") "
         Dim objCommand As OleDbCommand
         Dim objCMD As CommandeClient
         Dim objRS As OleDbDataReader = Nothing
@@ -6811,7 +6817,7 @@ Public MustInherit Class Persist
 
         If pddeb <> DATE_DEFAUT Then
             If strWhere <> "" Then
-                strWhere = strWhere & " AND "
+                strWhere = strWhere & " And "
             End If
             strWhere = strWhere & " CMD_DATE_LIV >=  ?"
             objParam = objCommand.Parameters.AddWithValue("?", pddeb)
@@ -6819,7 +6825,7 @@ Public MustInherit Class Persist
         End If
         If pdfin <> DATE_DEFAUT Then
             If strWhere <> "" Then
-                strWhere = strWhere & " AND "
+                strWhere = strWhere & " And "
             End If
             strWhere = strWhere & " CMD_DATE_LIV <=  ?"
             objParam = objCommand.Parameters.AddWithValue("?", pdfin)
@@ -6827,16 +6833,16 @@ Public MustInherit Class Persist
         End If
         If pRSClient <> "" Then
             If strWhere <> "" Then
-                strWhere = strWhere & " AND "
+                strWhere = strWhere & " And "
             End If
-            strWhere = strWhere & "CLIENT.CLT_RS LIKE ?"
+            strWhere = strWhere & "CLIENT.CLT_RS Like ?"
             objParam = objCommand.Parameters.AddWithValue("?", pRSClient)
 
         End If
 
         If pCodeClient <> "" Then
             If strWhere <> "" Then
-                strWhere = strWhere & " AND "
+                strWhere = strWhere & " And "
             End If
             strWhere = strWhere & "CLIENT.CLT_CODE = ?"
             objParam = objCommand.Parameters.AddWithValue("?", pCodeClient)
@@ -14839,13 +14845,19 @@ Public MustInherit Class Persist
 
         Dim objCommand As OleDbCommand
         Dim sReturn As String
-        Dim obj As Object
+        Dim oRs As OleDb.OleDbDataReader
         Try
             shared_connect()
             objCommand = New OleDbCommand(strSQL, m_dbconn.Connection)
-            obj = objCommand.ExecuteScalar()
-            sReturn = obj.ToString()
-            shared_disconnect()
+            oRs = objCommand.ExecuteReader()
+            If oRs.HasRows Then
+                oRs.Read()
+                sReturn = oRs.GetValue(0).ToString()
+                oRs.Close()
+            Else
+                sReturn = String.Empty
+            End If
+
         Catch e As Exception
             sReturn = String.Empty
         End Try

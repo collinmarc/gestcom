@@ -808,19 +808,24 @@ Public Class CommandeClient
 
         Try
             If m_typeCommande = vncEnums.vncTypeCommande.vncCmdClientPlateforme Then
+                Dim TiersRS As String = oTiers.rs
+                Dim oInter As Client = Client.getIntermediairePourUneOrigine(Origine)
+                If oInter IsNot Nothing Then
+                    TiersRS = oInter.rs
+                End If
                 'Pour chaque ligne de commande
                 For Each objLgCom In m_colLignes
                     objProduit = objLgCom.oProduit
                     objProduit.load()
                     objProduit.loadcolmvtStock()
-                    strLib = "CMD " & code & " - " & objLgCom.num & " " & oTiers.rs
+                    strLib = "CMD " & code & " - " & objLgCom.num & " " & TiersRS
                     'Controle de la non-exitence d'une ligne de mvt de stock pour cette ligne de commande
                     If existeMvtSocklib(strLib) Then
                         Debug.Assert(False, "Il y a déja un mvt de stock pour cette ligne")
                         bReturn = False
                         setError("CommandeClient.genereMvtStock()", "Il y a déja un mvt de stock pour cette ligne")
                         Return bReturn
-                        Persist.shared_connect()
+                        Persist.shared_disconnect()
                         Exit Function
                     End If
                     'Ajout de la ligne de stock avec recalcul du stock

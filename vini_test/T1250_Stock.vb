@@ -922,6 +922,62 @@ Imports vini_DB
 
 
     End Sub
+
+
+    <TestMethod(), TestCategory("5.9.3")> Public Sub TestGenerationMvtStockHobivin()
+        Dim nidPRD As Long
+        Dim nidCMD As Long
+        Dim objPRD As Produit
+        Dim objCommande As CommandeClient
+        Dim objMVTStk As mvtStock
+        Dim strCodeCmd As String
+
+        Dim oInter As Client
+        oInter = Client.getIntermediairePourUneOrigine(Dossier.HOBIVIN)
+        If oInter Is Nothing Then
+            oInter = New Client
+            oInter.setTypeIntermediaire(Dossier.HOBIVIN)
+            oInter.rs = "INTER HOBIVIN"
+            Assert.IsTrue(oInter.save(), "Sauvegarde du client intermédiaire")
+        End If
+
+        objPRD = New Produit("PRDT60_RGMSTK", objFournisseur, 1990)
+        Assert.IsTrue(objPRD.save(), "Sauvegarde du produit")
+        nidPRD = objPRD.id
+
+        'Creation d'une commande
+        objCommande = New CommandeClient(objClient)
+        objCommande.Origine = Dossier.HOBIVIN
+        objCommande.dateCommande = "10/05/2005"
+        objCommande.AjouteLigne("10", objPRD, 10, 1.5)
+        Assert.IsTrue(objCommande.save(), "Sauvegarde de la commande")
+        nidCMD = objCommande.id
+        strCodeCmd = objCommande.code
+
+        'Livraison de la commande
+        objCommande.dateLivraison = "15/05/2005"
+        objCommande.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+        Assert.IsTrue(objCommande.save(), "Sauvegarde de la Livraison de commande")
+
+        'Lecture des mouvements de stocks
+        Assert.IsTrue(objPRD.loadcolmvtStock(), "Chrgmt des mvts de stocks")
+        Assert.IsTrue(objPRD.colmvtStock.Count = 1, "1 mouvement de stock")
+
+        'chgmt de la date de mvt de stock
+        objMVTStk = objPRD.colmvtStock(0)
+        Assert.AreEqual("CMD " & objCommande.code & " - " & "10" & " " & oInter.rs, objMVTStk.libelle)
+
+        objCommande = CommandeClient.createandload(nidCMD)
+        objCommande.bDeleted = True
+        objCommande.save()
+
+        objPRD = Produit.createandload(nidPRD)
+        objPRD.bDeleted = True
+        objPRD.save()
+
+
+    End Sub
+
 End Class
 
 
