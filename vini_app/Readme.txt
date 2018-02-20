@@ -7,6 +7,8 @@ Date :
 #819 : Liste des palettes transportées
 #825 : MAJ base SCMD + MAJ liste des sous-commande
 #821: Adaptation HOBIVIN : Mouvement Articles 
+#822: Adaptation HOBIVIN : Releve de commission
+#823: Adaptation HOBIVIN : Historique Article
 
 Version 5.9.1.2c
 Date : 10/01/2018
