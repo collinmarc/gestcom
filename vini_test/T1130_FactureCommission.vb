@@ -48,8 +48,8 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.IsTrue(objProduit3.save())
 
         'Création des Taux de commissions
-        m_oFourn.createTxCommStandard(m_oClient.codeTypeClient)
-        m_oFourn2.createTxCommStandard(m_oClient.codeTypeClient)
+        m_oFourn.FTO_createTxCommStandard(m_oClient.codeTypeClient)
+        m_oFourn2.FTO_createTxCommStandard(m_oClient.codeTypeClient)
 
     End Sub
     <TestCleanup()> Public Overrides Sub TestCleanup()
@@ -448,7 +448,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         Assert.AreEqual("C", strLine.Substring(41, 1))
         Assert.AreEqual((150.56).ToString("0000000000.00").Replace(".", ""), Trim(strLine.Substring(42, 13)))
 
- 
+
         objFACT.bDeleted = True
         objFACT.Save()
     End Sub
@@ -916,7 +916,7 @@ Imports CrystalDecisions.CrystalReports.Engine
         objFrn = New Fournisseur("FRNTEST", "FRN TEST")
         objFrn.bExportInternet = vncTypeExportScmd.vncExportInternet
         objFrn.Save()
-        objFrn.createTxCommStandard(m_oClient.codeTypeClient)
+        objFrn.FTO_createTxCommStandard(m_oClient.codeTypeClient)
 
         objPrd = New Produit("PRDTEST", objFrn, 0)
         objPrd.save()
@@ -970,17 +970,17 @@ Imports CrystalDecisions.CrystalReports.Engine
 
         oFact = colFact(1)
         oFact.load()
-            'oFact.loadcolLignes()
-            tabIds.Add(oFact.id)
-            objReport.SetParameterValue("IdFactures", tabIds.ToArray())
-            objReport.SetParameterValue("bEntete", True)
-            If (File.Exists("releveFact2.pdf")) Then
-                File.Delete("releveFact2.pdf")
-            End If
-            Persist.setReportConnection(objReport)
-            objReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, "releveFact2.pdf")
-            Assert.IsTrue(File.Exists("releveFact2.pdf"))
-            System.Diagnostics.Process.Start("releveFact2.pdf")
+        'oFact.loadcolLignes()
+        tabIds.Add(oFact.id)
+        objReport.SetParameterValue("IdFactures", tabIds.ToArray())
+        objReport.SetParameterValue("bEntete", True)
+        If (File.Exists("releveFact2.pdf")) Then
+            File.Delete("releveFact2.pdf")
+        End If
+        Persist.setReportConnection(objReport)
+        objReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, "releveFact2.pdf")
+        Assert.IsTrue(File.Exists("releveFact2.pdf"))
+        System.Diagnostics.Process.Start("releveFact2.pdf")
 
         objReport.Dispose()
 
@@ -994,6 +994,112 @@ Imports CrystalDecisions.CrystalReports.Engine
         objCMD.save()
     End Sub
 
+    <TestMethod()>
+    Public Sub TestEditionPlusieursReleleves()
+
+        Dim objCMD As CommandeClient
+        Dim objFrn As Fournisseur
+        Dim objPrd As Produit
+        Dim objFrn2 As Fournisseur
+        Dim objPrd2 As Produit
+        Dim oFact As FactCom
+        Dim tabIds As New ArrayList()
+
+
+        objFrn = New Fournisseur("FRNTEST", "FRN TEST")
+        objFrn.bExportInternet = vncTypeExportScmd.vncExportInternet
+        objFrn.Save()
+        objFrn.FTO_createTxCommStandard(m_oClient.codeTypeClient)
+
+        objPrd = New Produit("PRDTEST", objFrn, 0)
+        objPrd.save()
+
+        objFrn2 = New Fournisseur("FRNTEST2", "FRN TEST2")
+        objFrn2.bExportInternet = vncTypeExportScmd.vncExportInternet
+        objFrn2.Save()
+        objFrn2.FTO_createTxCommStandard(m_oClient.codeTypeClient)
+        objFrn2.Save()
+
+        objPrd2 = New Produit("PRDTEST2", objFrn2, 0)
+        objPrd2.save()
+
+        'CREATION D'UNE COMMANDE CLIENT
+        'Ajout de 40 lignes de Commandes
+        For i As Integer = 0 To 60
+            objCMD = New CommandeClient(m_oClient)
+            objCMD.dateCommande = CDate("06/02/1964")
+            objCMD.AjouteLigne(objCMD.getNextNumLg, objPrd, 12, 20)
+            objCMD.AjouteLigne(objCMD.getNextNumLg, objPrd2, 120, 200)
+            ''Sauvegarde de la commande
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            objCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            'Génération des Sous-Commandes
+            objCMD.generationSousCommande()
+            Assert.IsTrue(objCMD.save(), "Ocmd.Save" & objCMD.getErreur())
+            For Each objSCMD In objCMD.colSousCommandes
+                objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDExportInternet)
+                objSCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionSCMDImportInternet)
+                objSCMD.refFactFournisseur = "FACTFRN" + Now()
+                objSCMD.totalHTFacture = objSCMD.totalHT
+                objSCMD.totalTTCFacture = objSCMD.totalTTC
+                objSCMD.dateFactFournisseur = CDate("06/02/1968") ' Date facture fournisseur <> date de commande
+                Assert.IsTrue(objSCMD.Save(), "Sauvegarde de la sous Commande")
+
+            Next objSCMD
+        Next
+        Dim lst As New List(Of SousCommande)
+        lst = SousCommande.getListeAFacturer(,, objFrn.code)
+        'Generation de la facture de commission FRN
+        Dim colFact As ColEvent
+        colFact = FactCom.createFactComs(lst)
+        For Each oFact In colFact
+            oFact.Save()
+            tabIds.Add(oFact.id)
+        Next
+        lst = SousCommande.getListeAFacturer(,, objFrn2.code)
+        'Generation de la facture de commission FRN2
+        colFact = FactCom.createFactComs(lst)
+        For Each oFact In colFact
+            oFact.Save()
+            tabIds.Add(oFact.id)
+        Next
+
+
+        Dim strReport As String = ""
+        Dim objReport As ReportDocument
+        strReport = "V:\V5\vini_app/crFactCom_Releve.rpt"
+
+        If strReport = "" Then
+            Exit Sub
+        End If
+        objReport = New ReportDocument
+        objReport.Load(strReport)
+
+
+        objReport.SetParameterValue("IdFactures", tabIds.ToArray())
+        objReport.SetParameterValue("bEntete", True)
+        If (File.Exists("releveFact2.pdf")) Then
+            File.Delete("releveFact2.pdf")
+        End If
+        Persist.setReportConnection(objReport)
+        objReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, "releveFact2.pdf")
+        Assert.IsTrue(File.Exists("releveFact2.pdf"))
+        System.Diagnostics.Process.Start("releveFact2.pdf")
+
+        objReport.Dispose()
+
+        objCMD.bDeleted = True
+        objCMD.save()
+
+
+        For Each oFact In colFact
+            oFact.bDeleted = True
+            oFact.Save()
+
+        Next
+
+    End Sub
     ''' <summary>
     ''' Si le Tx de comm est à Zero => pas de génération de factures de comm
     ''' </summary>
