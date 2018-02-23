@@ -37,12 +37,16 @@ Public Class frmEtatStock
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents cbxDossier As ComboBox
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tbCodeFourn = New System.Windows.Forms.TextBox()
         Me.cbRecherche = New System.Windows.Forms.Button()
         Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbxDossier = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -76,10 +80,29 @@ Public Class frmEtatStock
         Me.cbAfficher.TabIndex = 4
         Me.cbAfficher.Text = "Afficher"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(10, 38)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(48, 13)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "Dossier :"
+        '
+        'cbxDossier
+        '
+        Me.cbxDossier.FormattingEnabled = True
+        Me.cbxDossier.Location = New System.Drawing.Point(112, 35)
+        Me.cbxDossier.Name = "cbxDossier"
+        Me.cbxDossier.Size = New System.Drawing.Size(104, 21)
+        Me.cbxDossier.TabIndex = 6
+        '
         'frmEtatStock
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(952, 646)
+        Me.Controls.Add(Me.cbxDossier)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.cbAfficher)
         Me.Controls.Add(Me.cbRecherche)
         Me.Controls.Add(Me.tbCodeFourn)
@@ -90,6 +113,8 @@ Public Class frmEtatStock
         Me.Controls.SetChildIndex(Me.tbCodeFourn, 0)
         Me.Controls.SetChildIndex(Me.cbRecherche, 0)
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
+        Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.cbxDossier, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -108,6 +133,7 @@ Public Class frmEtatStock
         str = tbCodeFourn.Text
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("CodeFourn", Trim(str))
+        objReport.SetParameterValue("Dossier", cbxDossier.Text)
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
         restoreCursor()
@@ -130,5 +156,11 @@ Public Class frmEtatStock
 
     Private Sub cbRecherche_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbRecherche.Click
         rechercheFournisseur()
+    End Sub
+
+    Private Sub frmEtatStock_Load(sender As Object, e As EventArgs) Handles Me.Load
+        cbxDossier.Items.Clear()
+        cbxDossier.Items.Add(Dossier.VINICOM)
+        cbxDossier.Items.Add(Dossier.HOBIVIN)
     End Sub
 End Class

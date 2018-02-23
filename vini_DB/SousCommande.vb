@@ -53,6 +53,12 @@ Public Class SousCommande
 #Region "Accesseurs"
     Public Sub New(ByVal poCommandeClient As CommandeClient, ByVal poFournisseur As Fournisseur)
         MyBase.New(poCommandeClient.oTiers, New EtatSSCommandeGeneree)
+        'Réaffectation du Tiers (pour HOBIVIN le client de la SousCommande, n'est pas forcement le client de la commande)
+
+        Dim oClient As Client
+        oClient = Client.createandload(poCommandeClient.oTiers.id)
+        setTiers(oClient)
+
         m_typedonnee = vncEnums.vncTypeDonnee.SSCOMMANDE
         Debug.Assert(Not poCommandeClient Is Nothing, "Commandeclient non renseignée")
         m_idCommandeClient = poCommandeClient.id

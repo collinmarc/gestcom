@@ -1310,6 +1310,7 @@ Imports System.IO
 
     End Sub 'T71 LoadFromCode
     'Test de la génération de sousCommande avec un intermédiaire
+    <TestCategory("V5.9.1")>
     <TestMethod()> Public Sub T80_EclatementAvecIntermedaire()
 
 
@@ -1443,6 +1444,7 @@ Imports System.IO
         oFRNVnc.Save()
     End Sub
 
+    <TestCategory("V5.9.2a")>
     <TestMethod()> Public Sub T5952a_ExportQuadra()
         Dim objSCMD As SousCommande
         Dim objSCMD2 As SousCommande
@@ -1511,6 +1513,8 @@ Imports System.IO
     ''' <summary>
     ''' Test du caclul du Tx de commsion si intermédiaire (Commande HBV, Produit VNC)
     ''' </summary>
+
+    <TestCategory("V5.9.3")>
     <TestMethod()> Public Sub T593_CalcTxComCmdHBVPRDVNC()
         Dim objSCMD As SousCommande
         Dim oFRNVNC As Fournisseur
@@ -1570,6 +1574,7 @@ Imports System.IO
     ''' <summary>
     ''' Test du caclul du Tx de commsion si intermédiaire (Commande HBV, Produit HBV)
     ''' </summary>
+    <TestCategory("V5.9.3")>
     <TestMethod()> Public Sub T593_CalcTxComCmdHBVPRDHBV()
         Dim objSCMD As SousCommande
         Dim oFRNHBV As Fournisseur
@@ -1629,6 +1634,8 @@ Imports System.IO
     ''' <summary>
     ''' Test du caclul du Tx de commsion sans intermédiaire (Commande VNC, Produit HBV)
     ''' </summary>
+
+    <TestCategory("V5.9.3")>
     <TestMethod()> Public Sub T593_CalcTxComCmdVNCPRDHBV()
         Dim objSCMD As SousCommande
         Dim oFRNHBV As Fournisseur
@@ -1688,7 +1695,10 @@ Imports System.IO
     ''' <summary>
     ''' Test du caclul du Tx de commsion sans intermédiaire (Commande VNC, Produit HBV)
     ''' </summary>
-    <TestMethod()> Public Sub T593_CalcTxComCmdVNCPRDVNC()
+    ''' 
+    <TestCategory("V5.9.3")>
+    <TestMethod()>
+    Public Sub T593_CalcTxComCmdVNCPRDVNC()
         Dim objSCMD As SousCommande
         Dim oFRNVNC As Fournisseur
         Dim oPRDVNC As Produit
@@ -1743,6 +1753,68 @@ Imports System.IO
         oFRNVNC.Save()
 
     End Sub
+    ''' <summary>
+    ''' Vérirfication que les objets Tiers des SousCommande et des Commandes sont bien différents
+    ''' pour une CMD Hobivin, le tiers de la Sous Commande est le client intermédiaire.
+    ''' </summary>
+    <TestMethod()>
+    <TestCategory("V5.9.3")>
+    Public Sub TestTiersSousCommandeDiffeentTiersCommande()
+
+
+        Dim objLgCMD1 As LgCommande
+        Dim objLgCMD2 As LgCommande
+        Dim oFRN2 As Fournisseur
+        Dim oPRD2 As Produit
+        Dim oCMD As CommandeClient
+
+
+
+
+        oFRN2 = New Fournisseur("FRNT20" & Now(), "Fournisseur2")
+        Assert.IsTrue(oFRN2.Save(), "FRN2.save" & oFRN2.getErreur())
+        oPRD2 = New Produit("PRDT20" & Now(), oFRN2, 1990)
+        Assert.IsTrue(oPRD2.save(), "OPRD2.Save" & oPRD2.getErreur())
+
+        'Création d'une commande client
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.save()
+        objLgCMD1 = oCMD.AjouteLigne("10", m_oProduit, 10, 12)
+        objLgCMD1.calculPrixTotal()
+        objLgCMD2 = oCMD.AjouteLigne("20", oPRD2, 20, 12)
+        objLgCMD1.calculPrixTotal()
+        oCMD.calculPrixTotal()
+        oCMD.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
+        oCMD.oTransporteur.AdresseLivraison.nom = "TestTransporteur"
+        oCMD.refLivraison = "REFLEVRAISON"
+        oCMD.CommFacturation.comment = "Mon Comment"
+        oCMD.dateLivraison = "31/08/2004"
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+
+
+        ' Act
+        Dim oSCMD As SousCommande
+        oSCMD = oCMD.colSousCommandes(1)
+        oSCMD.oTiers.nom = "TEST"
+
+        'Assert
+        Assert.AreNotEqual(oCMD.oTiers.nom, oSCMD.oTiers.nom)
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+        oPRD2.bDeleted = True
+        oFRN2.Save()
+
+        oFRN2.bDeleted = True
+        oFRN2.Save()
+
+
+    End Sub
+
 End Class
 
 

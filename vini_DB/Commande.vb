@@ -290,10 +290,10 @@ Public MustInherit Class Commande
                     RaiseUpdated()
                 End If
             Else
-                If Not oTiers.Equals(Value) Then
-                    m_oTiers = Value
-                    RaiseUpdated()
-                End If
+                '                If Not oTiers.Equals(Value) Then
+                m_oTiers = Value
+                '                   RaiseUpdated()
+                '          End If
             End If
         End If
 
