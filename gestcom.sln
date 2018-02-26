@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vini_DB", "vini_DB\vini_DB.vbproj", "{EEB9341C-D291-43A5-B51C-D88089D92BD0}"
 EndProject
@@ -15,9 +15,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vini_test", "vini_test\vini
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{D9AB8376-DE25-441F-9513-00FD99F1DBA6}"
 	ProjectSection(SolutionItems) = preProject
-		Docs\CodesCloudForge.txt = Docs\CodesCloudForge.txt
 		Docs\Contenu de la version 1.7.doc = Docs\Contenu de la version 1.7.doc
 		Docs\ErrorFax.doc = Docs\ErrorFax.doc
+		GIT.txt = GIT.txt
 		Docs\MSFLEXGRID.txt = Docs\MSFLEXGRID.txt
 		Docs\Notes sur les purges.doc = Docs\Notes sur les purges.doc
 		Docs\ProcInstall.doc = Docs\ProcInstall.doc
@@ -45,10 +45,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EFBD3173-66A3-485D-B1BA-81C850577847}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -225,5 +221,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {425006E0-511F-46E4-86CF-9CEA72B78DA2}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
