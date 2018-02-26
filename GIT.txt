@@ -1,6 +1,15 @@
 https:github.com/collinmarc/gestcom
 contact@marccollin.com wanadoo.
-test1
-test2
-test3
+
+Après Erreur en VS
+J'ai mis à jour le Git-Credential-Manager-for-windiws 1.14.0
+
+Dans la config fr git (Tortoise/Config)
+Git/Credential
+Aide : Avancé
+G /aide = Wincred
+
+en ligne de Commande : git push / git pull
+et j'ai rentré mon user/ dmp (2 fois)
+
 

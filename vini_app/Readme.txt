@@ -1,5 +1,7 @@
-﻿TestGit 2
-Test Git 
+﻿
+Version 5.9.3.0c
+Date : 26/02/2018
+#829   : Les Col Contenant et Couleur ne sont pas affichés dans la recherche de produit
 
 Version 5.9.3.0ab
 Date : 26/02/2018
