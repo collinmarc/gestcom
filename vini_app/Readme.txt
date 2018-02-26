@@ -1,5 +1,10 @@
-﻿Version 5.9.3.0
-Date : 
+﻿Version 5.9.3.0ab
+Date : 26/02/2018
+#828   : Agrandir la col Total comission sur la liste des sous-Commandes et la liste des commission à provisionner
+
+
+Version 5.9.3.0
+Date : 23/02/2018
 #815   : Lenteur en saisie de commande (PreCommande)
 #816 : notion de dossier dans la fiche produit
 #817 : Calcul du taux de commission
@@ -9,6 +14,9 @@ Date :
 #821: Adaptation HOBIVIN : Mouvement Articles 
 #822: Adaptation HOBIVIN : Releve de commission
 #823: Adaptation HOBIVIN : Historique Article
+#826 : bon Fournisseur
+#827 : Maj des souscommandes hobivin
+
 
 Version 5.9.1.2c
 Date : 10/01/2018
