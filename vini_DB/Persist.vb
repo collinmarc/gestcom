@@ -2138,7 +2138,7 @@ Public MustInherit Class Persist
 
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
 
-        Dim sqlString As String = " SELECT PRODUIT.PRD_ID, PRODUIT.PRD_CODE, PRODUIT.PRD_LIBELLE, CONTENANT.CONT_LIBELLE, CONTENANT.CONT_ID, PRODUIT.PRD_MIL, RQ_Couleur.PAR_VALUE " & _
+        Dim sqlString As String = " SELECT PRODUIT.PRD_ID, PRODUIT.PRD_CODE, PRODUIT.PRD_LIBELLE, CONTENANT.CONT_LIBELLE, CONTENANT.CONT_ID, PRODUIT.PRD_MIL, RQ_Couleur.PAR_VALUE, produit.PRD_coul_Id, produit.PRD_cont_id " &
                                     " FROM (CONTENANT INNER JOIN PRODUIT ON CONTENANT.CONT_ID = PRODUIT.PRD_CONT_ID) INNER JOIN RQ_Couleur ON PRODUIT.PRD_COUL_ID = RQ_Couleur.PAR_ID"
 
         Dim objOLeDBCommand As OleDbCommand
@@ -2190,7 +2190,6 @@ Public MustInherit Class Persist
         End If
 
         If idClient <> 0 Then
-            sqlString = "SELECT PRD_ID, PRD_CODE, PRD_LIBELLE , PCMD_ID, CONT_ID, CONT_LIBELLE,PRD_MIL,RQ_Couleur.PAR_VALUE FROM PRODUIT, PRECOMMANDE, CONTENANT, RQ_COULEUR "
             sqlString = "SELECT PRODUIT.PRD_ID, " &
                                 " PRODUIT.PRD_CODE, " &
                                         " PRODUIT.PRD_LIBELLE, " &

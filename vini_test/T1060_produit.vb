@@ -452,6 +452,40 @@ Imports vini_DB
         obj.save()
 
     End Sub
+    <TestCategory("V5.9.3")>
+    <TestMethod()>
+    Public Sub T71_ProduitLoadCouleurContenant()
+
+        Dim obj As Produit
+        Dim nid As Integer
+
+        obj = New Produit("T71", m_oFRN, 1990)
+        Dim oParam As Param
+        oParam = Param.colCouleur(1)
+        Dim strLibCouleur As String
+        obj.idCouleur = oParam.id
+        strLibCouleur = oParam.valeur
+        Dim oCont As contenant = contenant.colContenant(1)
+        Dim strLibCont As String
+        strLibCont = oCont.libelle
+        obj.idContenant = oCont.id
+
+
+        Assert.IsTrue(obj.save())
+
+        nid = obj.id
+        Dim oCol As Collection
+        oCol = Produit.getListe(vncTypeProduit.vncTous, "T71")
+        obj = oCol(1)
+
+        Assert.AreEqual(strLibCouleur, obj.libCouleur)
+        Assert.AreEqual(strLibCont, obj.libContenant)
+
+
+        obj.bDeleted = True
+        obj.save()
+
+    End Sub
 
 End Class
 
