@@ -1354,6 +1354,7 @@
     <Content Include="Requetes\Cretate_EXPORTParam.sql" />
     <Content Include="Requetes\extractPreCommande.sql" />
     <Content Include="Requetes\RQ_CLEAN.sql" />
+    <Content Include="Requetes\ToV5.9.3.0c.sql" />
     <Content Include="Requetes\ToV5.9.3.0a.sql" />
     <Content Include="Requetes\ToV5.9.3.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1207,6 +1207,8 @@ Public MustInherit Class Commande
                     Else
                         strReturn = "0"
                     End If
+                Case "CODEDEPOT"
+                    strReturn = My.MySettings.Default.CODEDEPOTQUADRA
 
             End Select
         Catch ex As Exception
