@@ -65,6 +65,7 @@ Friend Class frmMain
     Friend WithEvents MenuItem10 As System.Windows.Forms.MenuItem
     Friend WithEvents mnuMAJLivraisonCommande As System.Windows.Forms.MenuItem
     Friend WithEvents mnuUtil_PurgePrecommande As System.Windows.Forms.MenuItem
+    Friend WithEvents mnuImportTarif As MenuItem
     'Objet créé pour afficher l'evenement Connected/Disconnected
     Public m_currentuser As aut_user
 
@@ -311,6 +312,7 @@ Friend Class frmMain
         Me.StatusBarDB = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarError = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarEtat = New System.Windows.Forms.StatusBarPanel()
+        Me.mnuImportTarif = New System.Windows.Forms.MenuItem()
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -377,7 +379,7 @@ Friend Class frmMain
         'mnuDB
         '
         Me.mnuDB.Index = 1
-        Me.mnuDB.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuDB_Client, Me.mnuDB_Fournisseur, Me.mnuDB_Produit, Me.MenuItem11, Me.mnuDB_Appelation, Me.mnuDB_Tarif, Me.mnuDB_EditTarif, Me.MenuItem20, Me.mnuDB_GestTransporteur, Me.mnuDB_GestModeReglmt, Me.mnuDB_GestTauxTVA, Me.mnuDB_GestTypeClient, Me.mnuDB_GestCouleurs, Me.mnuDB_GestRegions, Me.mnuDB_GestConditionnement, Me.mnuDB_GestContentants})
+        Me.mnuDB.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuDB_Client, Me.mnuDB_Fournisseur, Me.mnuDB_Produit, Me.MenuItem11, Me.mnuDB_Appelation, Me.mnuDB_Tarif, Me.mnuDB_EditTarif, Me.mnuImportTarif, Me.MenuItem20, Me.mnuDB_GestTransporteur, Me.mnuDB_GestModeReglmt, Me.mnuDB_GestTauxTVA, Me.mnuDB_GestTypeClient, Me.mnuDB_GestCouleurs, Me.mnuDB_GestRegions, Me.mnuDB_GestConditionnement, Me.mnuDB_GestContentants})
         Me.mnuDB.MergeType = System.Windows.Forms.MenuMerge.Remove
         Me.mnuDB.Tag = "mnuDB"
         Me.mnuDB.Text = "&Données de base"
@@ -432,54 +434,54 @@ Friend Class frmMain
         '
         'MenuItem20
         '
-        Me.MenuItem20.Index = 7
+        Me.MenuItem20.Index = 8
         Me.MenuItem20.Text = "-"
         '
         'mnuDB_GestTransporteur
         '
-        Me.mnuDB_GestTransporteur.Index = 8
+        Me.mnuDB_GestTransporteur.Index = 9
         Me.mnuDB_GestTransporteur.Tag = "mnuDB_GestTransporteur"
         Me.mnuDB_GestTransporteur.Text = "Gestion Transporteur"
         '
         'mnuDB_GestModeReglmt
         '
-        Me.mnuDB_GestModeReglmt.Index = 9
+        Me.mnuDB_GestModeReglmt.Index = 10
         Me.mnuDB_GestModeReglmt.Tag = "mnuDB_GestModeReglmt"
         Me.mnuDB_GestModeReglmt.Text = "Gestion des modes de réglements"
         '
         'mnuDB_GestTauxTVA
         '
-        Me.mnuDB_GestTauxTVA.Index = 10
+        Me.mnuDB_GestTauxTVA.Index = 11
         Me.mnuDB_GestTauxTVA.Tag = "mnuDB_GestTauxTVA"
         Me.mnuDB_GestTauxTVA.Text = "Gestion des taux de TVA"
         '
         'mnuDB_GestTypeClient
         '
-        Me.mnuDB_GestTypeClient.Index = 11
+        Me.mnuDB_GestTypeClient.Index = 12
         Me.mnuDB_GestTypeClient.Tag = "mnuDB_GestTypeClient"
         Me.mnuDB_GestTypeClient.Text = "Gestion des types de client"
         '
         'mnuDB_GestCouleurs
         '
-        Me.mnuDB_GestCouleurs.Index = 12
+        Me.mnuDB_GestCouleurs.Index = 13
         Me.mnuDB_GestCouleurs.Tag = "mnuDB_GestCouleurs"
         Me.mnuDB_GestCouleurs.Text = "Gestion des couleurs"
         '
         'mnuDB_GestRegions
         '
-        Me.mnuDB_GestRegions.Index = 13
+        Me.mnuDB_GestRegions.Index = 14
         Me.mnuDB_GestRegions.Tag = "mnuDB_GestRegions"
         Me.mnuDB_GestRegions.Text = "Gestion des régions"
         '
         'mnuDB_GestConditionnement
         '
-        Me.mnuDB_GestConditionnement.Index = 14
+        Me.mnuDB_GestConditionnement.Index = 15
         Me.mnuDB_GestConditionnement.Tag = "mnuDB_GestConditionnement"
         Me.mnuDB_GestConditionnement.Text = "Gestion des conditionnements"
         '
         'mnuDB_GestContentants
         '
-        Me.mnuDB_GestContentants.Index = 15
+        Me.mnuDB_GestContentants.Index = 16
         Me.mnuDB_GestContentants.Tag = "mnuDB_GestContentants"
         Me.mnuDB_GestContentants.Text = "Gestion des contenants"
         '
@@ -1137,7 +1139,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 231)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 211)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1160,11 +1162,16 @@ Friend Class frmMain
         Me.StatusBarEtat.Name = "StatusBarEtat"
         Me.StatusBarEtat.Width = 399
         '
+        'mnuImportTarif
+        '
+        Me.mnuImportTarif.Index = 7
+        Me.mnuImportTarif.Text = "Import des tarifs XLS"
+        '
         'frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(1016, 253)
+        Me.ClientSize = New System.Drawing.Size(1016, 233)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default
@@ -1173,7 +1180,7 @@ Friend Class frmMain
         Me.Menu = Me.MainMenu1
         Me.Name = "frmMain"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Text = Dossier.VINICOM
+        Me.Text = "VINICOM"
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2096,6 +2103,14 @@ Friend Class frmMain
     End Sub
 
     Private Sub cbToolBarSave_Disposed(sender As Object, e As EventArgs) Handles cbToolBarSave.Disposed
+
+    End Sub
+
+    Private Sub mnuImportTarif_Click(sender As Object, e As EventArgs) Handles mnuImportTarif.Click
+        Dim ofrm As FrmVinicom
+        ofrm = New frmImportTarif
+        ofrm.MdiParent = Me
+        ofrm.Show()
 
     End Sub
 End Class

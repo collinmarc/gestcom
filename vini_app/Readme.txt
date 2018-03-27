@@ -2,6 +2,7 @@
 Version 5.9.4.0
 Date : 
 #830   : Ajouter un code dépot dans les export quadra
+#833   : Import des tarifs Gestcom 
 
 Version 5.9.3.0c
 Date : 26/02/2018

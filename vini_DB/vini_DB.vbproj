@@ -132,6 +132,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -209,6 +212,7 @@
     <Compile Include="Imap\ImapBase.vb" />
     <Compile Include="Imap\ImapException.vb" />
     <Compile Include="Imap\ImportPrestashop.vb" />
+    <Compile Include="ImportTarifGESTCOM.vb" />
     <Compile Include="Observable.vb" />
     <Compile Include="IObservateur.vb" />
     <Compile Include="lgFactHBV.vb" />
