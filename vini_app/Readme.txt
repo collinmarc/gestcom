@@ -1,4 +1,7 @@
-﻿
+﻿Version 5.9.4.0a
+Date : 
+#836   : Etat crMouvementArticles
+
 Version 5.9.4.0
 Date : 
 #830   : Ajouter un code dépot dans les export quadra

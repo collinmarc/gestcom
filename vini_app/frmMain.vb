@@ -194,6 +194,7 @@ Friend Class frmMain
         Me.mnuDB_Appelation = New System.Windows.Forms.MenuItem()
         Me.mnuDB_Tarif = New System.Windows.Forms.MenuItem()
         Me.mnuDB_EditTarif = New System.Windows.Forms.MenuItem()
+        Me.mnuImportTarif = New System.Windows.Forms.MenuItem()
         Me.MenuItem20 = New System.Windows.Forms.MenuItem()
         Me.mnuDB_GestTransporteur = New System.Windows.Forms.MenuItem()
         Me.mnuDB_GestModeReglmt = New System.Windows.Forms.MenuItem()
@@ -312,7 +313,6 @@ Friend Class frmMain
         Me.StatusBarDB = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarError = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarEtat = New System.Windows.Forms.StatusBarPanel()
-        Me.mnuImportTarif = New System.Windows.Forms.MenuItem()
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -431,6 +431,11 @@ Friend Class frmMain
         Me.mnuDB_EditTarif.Index = 6
         Me.mnuDB_EditTarif.Tag = "mnuDB_EditTarif"
         Me.mnuDB_EditTarif.Text = "Edition du Tarif"
+        '
+        'mnuImportTarif
+        '
+        Me.mnuImportTarif.Index = 7
+        Me.mnuImportTarif.Text = "Import des tarifs XLS"
         '
         'MenuItem20
         '
@@ -1139,7 +1144,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 211)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 191)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1162,16 +1167,11 @@ Friend Class frmMain
         Me.StatusBarEtat.Name = "StatusBarEtat"
         Me.StatusBarEtat.Width = 399
         '
-        'mnuImportTarif
-        '
-        Me.mnuImportTarif.Index = 7
-        Me.mnuImportTarif.Text = "Import des tarifs XLS"
-        '
         'frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(1016, 233)
+        Me.ClientSize = New System.Drawing.Size(1016, 213)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default

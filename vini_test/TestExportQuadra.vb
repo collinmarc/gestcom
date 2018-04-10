@@ -193,6 +193,7 @@ Imports System.IO
         Assert.AreEqual(tab(4), m_oProduit2.code)
         Assert.AreEqual(tab(5), "25")
         Assert.AreEqual(tab(6), "25.5")
+        Assert.AreEqual(tab(7), "2")
 
 
         'Export de la Première SousCommande (CMD VINICOM, PROD VINICOM)
@@ -222,6 +223,7 @@ Imports System.IO
         Assert.AreEqual(tab(4), m_oProduit.code)
         Assert.AreEqual(tab(5), "15")
         Assert.AreEqual(tab(6), "15.5")
+        Assert.AreEqual(tab(7), "2")
 
         objCMD.delete()
     End Sub
@@ -281,6 +283,7 @@ Imports System.IO
         Assert.AreEqual(TAB(4), m_oProduit2.code)
         Assert.AreEqual(TAB(5), "15")
         Assert.AreEqual(TAB(6), "15.5")
+        Assert.AreEqual(TAB(7), "2")
 
 
         objCMD.delete()
@@ -770,6 +773,7 @@ Imports System.IO
         Assert.AreEqual(tab(4), m_oProduit.code)
         Assert.AreEqual(tab(5), "15")
         Assert.AreEqual(tab(6), "15.5")
+        Assert.AreEqual(tab(7), "2")
 
         objCMD.delete()
     End Sub
