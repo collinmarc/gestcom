@@ -41,19 +41,25 @@ Public Class frmListeFactColisage
     Friend WithEvents cbxEtat As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents m_bsrcEtat As System.Windows.Forms.BindingSource
+    Friend WithEvents rbtriEtatFacture As System.Windows.Forms.RadioButton
+    Friend WithEvents rbTrieParNumero As System.Windows.Forms.RadioButton
+    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents tbCodeClient As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbCodeClient = New System.Windows.Forms.TextBox
-        Me.cbxEtat = New System.Windows.Forms.ComboBox
+        Me.components = New System.ComponentModel.Container()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbCodeClient = New System.Windows.Forms.TextBox()
+        Me.cbxEtat = New System.Windows.Forms.ComboBox()
         Me.m_bsrcEtat = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Label4 = New System.Windows.Forms.Label
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.rbtriEtatFacture = New System.Windows.Forms.RadioButton()
+        Me.rbTrieParNumero = New System.Windows.Forms.RadioButton()
+        Me.Label5 = New System.Windows.Forms.Label()
         CType(Me.m_bsrcEtat, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -136,10 +142,45 @@ Public Class frmListeFactColisage
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "Etat"
         '
+        'rbtriEtatFacture
+        '
+        Me.rbtriEtatFacture.AutoSize = True
+        Me.rbtriEtatFacture.Checked = True
+        Me.rbtriEtatFacture.Location = New System.Drawing.Point(191, 32)
+        Me.rbtriEtatFacture.Name = "rbtriEtatFacture"
+        Me.rbtriEtatFacture.Size = New System.Drawing.Size(83, 17)
+        Me.rbtriEtatFacture.TabIndex = 16
+        Me.rbtriEtatFacture.TabStop = True
+        Me.rbtriEtatFacture.Text = "Etat Facture"
+        Me.rbtriEtatFacture.UseVisualStyleBackColor = True
+        '
+        'rbTrieParNumero
+        '
+        Me.rbTrieParNumero.AutoSize = True
+        Me.rbTrieParNumero.Location = New System.Drawing.Point(72, 32)
+        Me.rbTrieParNumero.Name = "rbTrieParNumero"
+        Me.rbTrieParNumero.Size = New System.Drawing.Size(113, 17)
+        Me.rbTrieParNumero.TabIndex = 15
+        Me.rbTrieParNumero.TabStop = True
+        Me.rbTrieParNumero.Text = "Numéro de facture"
+        Me.rbTrieParNumero.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(9, 36)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(55, 13)
+        Me.Label5.TabIndex = 17
+        Me.Label5.Text = "Triée par :"
+        '
         'frmListeFactColisage
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.rbtriEtatFacture)
+        Me.Controls.Add(Me.rbTrieParNumero)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cbxEtat)
         Me.Controls.Add(Me.tbCodeClient)
@@ -151,7 +192,6 @@ Public Class frmListeFactColisage
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmListeFactColisage"
         Me.Text = "Liste des Factures de colisage"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -161,6 +201,9 @@ Public Class frmListeFactColisage
         Me.Controls.SetChildIndex(Me.tbCodeClient, 0)
         Me.Controls.SetChildIndex(Me.cbxEtat, 0)
         Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.Label5, 0)
+        Me.Controls.SetChildIndex(Me.rbTrieParNumero, 0)
+        Me.Controls.SetChildIndex(Me.rbtriEtatFacture, 0)
         CType(Me.m_bsrcEtat, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -175,11 +218,19 @@ Public Class frmListeFactColisage
 
     Private Sub cbAfficher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbAfficher.Click
         Dim str As String
-        Dim r1 As New crListeFactColisage()
-        Dim strReportName As String = r1.ResourceName
 
         Dim objReport As New ReportDocument()
-        objReport.Load(PATHTOREPORTS & strReportName)
+        If rbtriEtatFacture.Checked Then
+            Using r1 As New crListeFactColisage()
+                Dim strReportName As String = r1.ResourceName
+                objReport.Load(PATHTOREPORTS & strReportName)
+            End Using
+        Else
+            Using r1 As New crListeFactColisageParNumero()
+                Dim strReportName As String = r1.ResourceName
+                objReport.Load(PATHTOREPORTS & strReportName)
+            End Using
+        End If
 
 
         objReport.SetParameterValue("ddeb", Me.dtdeb.Value.ToShortDateString())

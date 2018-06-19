@@ -41,19 +41,25 @@ Public Class frmListeFactCom
     Friend WithEvents m_bsrcEtat As System.Windows.Forms.BindingSource
     Friend WithEvents tbCodeClient As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents rbTrieParNumero As System.Windows.Forms.RadioButton
+    Friend WithEvents rbtriCodeFounisseur As System.Windows.Forms.RadioButton
     Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.cbxEtat = New System.Windows.Forms.ComboBox
+        Me.components = New System.ComponentModel.Container()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtdeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtFin = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbxEtat = New System.Windows.Forms.ComboBox()
         Me.m_bsrcEtat = New System.Windows.Forms.BindingSource(Me.components)
-        Me.tbCodeClient = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.tbCodeClient = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.rbTrieParNumero = New System.Windows.Forms.RadioButton()
+        Me.rbtriCodeFounisseur = New System.Windows.Forms.RadioButton()
         CType(Me.m_bsrcEtat, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -62,7 +68,7 @@ Public Class frmListeFactCom
         Me.Label1.Location = New System.Drawing.Point(8, 8)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(120, 24)
-        Me.Label1.TabIndex = 1
+        Me.Label1.TabIndex = 0
         Me.Label1.Text = "Date de début"
         '
         'dtdeb
@@ -71,14 +77,14 @@ Public Class frmListeFactCom
         Me.dtdeb.Location = New System.Drawing.Point(128, 8)
         Me.dtdeb.Name = "dtdeb"
         Me.dtdeb.Size = New System.Drawing.Size(136, 20)
-        Me.dtdeb.TabIndex = 2
+        Me.dtdeb.TabIndex = 1
         '
         'Label2
         '
         Me.Label2.Location = New System.Drawing.Point(272, 8)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(88, 24)
-        Me.Label2.TabIndex = 3
+        Me.Label2.TabIndex = 2
         Me.Label2.Text = "Date de fin"
         '
         'dtFin
@@ -87,7 +93,7 @@ Public Class frmListeFactCom
         Me.dtFin.Location = New System.Drawing.Point(360, 8)
         Me.dtFin.Name = "dtFin"
         Me.dtFin.Size = New System.Drawing.Size(104, 20)
-        Me.dtFin.TabIndex = 4
+        Me.dtFin.TabIndex = 3
         '
         'cbAfficher
         '
@@ -101,7 +107,7 @@ Public Class frmListeFactCom
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(477, 34)
+        Me.Label4.Location = New System.Drawing.Point(477, 42)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(26, 13)
         Me.Label4.TabIndex = 13
@@ -115,7 +121,7 @@ Public Class frmListeFactCom
         Me.cbxEtat.Location = New System.Drawing.Point(606, 34)
         Me.cbxEtat.Name = "cbxEtat"
         Me.cbxEtat.Size = New System.Drawing.Size(121, 21)
-        Me.cbxEtat.TabIndex = 12
+        Me.cbxEtat.TabIndex = 6
         Me.cbxEtat.ValueMember = "codeEtat"
         '
         'm_bsrcEtat
@@ -127,20 +133,55 @@ Public Class frmListeFactCom
         Me.tbCodeClient.Location = New System.Drawing.Point(607, 8)
         Me.tbCodeClient.Name = "tbCodeClient"
         Me.tbCodeClient.Size = New System.Drawing.Size(120, 20)
-        Me.tbCodeClient.TabIndex = 11
+        Me.tbCodeClient.TabIndex = 5
         '
         'Label3
         '
         Me.Label3.Location = New System.Drawing.Point(474, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(103, 16)
-        Me.Label3.TabIndex = 10
+        Me.Label3.TabIndex = 4
         Me.Label3.Text = "Code Fournisseur :"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(9, 42)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(55, 13)
+        Me.Label5.TabIndex = 9
+        Me.Label5.Text = "Triée par :"
+        '
+        'rbTrieParNumero
+        '
+        Me.rbTrieParNumero.AutoSize = True
+        Me.rbTrieParNumero.Location = New System.Drawing.Point(72, 38)
+        Me.rbTrieParNumero.Name = "rbTrieParNumero"
+        Me.rbTrieParNumero.Size = New System.Drawing.Size(113, 17)
+        Me.rbTrieParNumero.TabIndex = 7
+        Me.rbTrieParNumero.TabStop = True
+        Me.rbTrieParNumero.Text = "Numéro de facture"
+        Me.rbTrieParNumero.UseVisualStyleBackColor = True
+        '
+        'rbtriCodeFounisseur
+        '
+        Me.rbtriCodeFounisseur.AutoSize = True
+        Me.rbtriCodeFounisseur.Checked = True
+        Me.rbtriCodeFounisseur.Location = New System.Drawing.Point(191, 38)
+        Me.rbtriCodeFounisseur.Name = "rbtriCodeFounisseur"
+        Me.rbtriCodeFounisseur.Size = New System.Drawing.Size(104, 17)
+        Me.rbtriCodeFounisseur.TabIndex = 8
+        Me.rbtriCodeFounisseur.TabStop = True
+        Me.rbtriCodeFounisseur.Text = "Code fournisseur"
+        Me.rbtriCodeFounisseur.UseVisualStyleBackColor = True
         '
         'frmListeFactCom
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.rbtriCodeFounisseur)
+        Me.Controls.Add(Me.rbTrieParNumero)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cbxEtat)
         Me.Controls.Add(Me.tbCodeClient)
@@ -152,7 +193,6 @@ Public Class frmListeFactCom
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmListeFactCom"
         Me.Text = "Liste des factures de commission"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.dtdeb, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
@@ -162,6 +202,9 @@ Public Class frmListeFactCom
         Me.Controls.SetChildIndex(Me.tbCodeClient, 0)
         Me.Controls.SetChildIndex(Me.cbxEtat, 0)
         Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.Label5, 0)
+        Me.Controls.SetChildIndex(Me.rbTrieParNumero, 0)
+        Me.Controls.SetChildIndex(Me.rbtriCodeFounisseur, 0)
         CType(Me.m_bsrcEtat, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -177,7 +220,12 @@ Public Class frmListeFactCom
         Dim str As String
 
         objReport = New ReportDocument
-        objReport.Load(PATHTOREPORTS & "crListeFactcom.rpt")
+        If rbtriCodeFounisseur.Checked Then
+            objReport.Load(PATHTOREPORTS & "crListeFactcom.rpt")
+        Else
+            objReport.Load(PATHTOREPORTS & "crListeFactcomParNumero.rpt")
+        End If
+
 
 
         objReport.SetParameterValue("ddeb", Me.dtdeb.Value)
