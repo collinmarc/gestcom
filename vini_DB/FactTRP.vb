@@ -19,7 +19,7 @@ Public Class FactTRP
         m_refReglement = ""
         m_dateReglement = DATE_DEFAUT
         m_typedonnee = vncEnums.vncTypeDonnee.FACTTRP
-        idModeReglement = poClient.idModeReglement1 'utilisation du mode de reglement du Tiers
+        m_IDModeReglement = poClient.idModeReglement1 'utilisation du mode de reglement du Tiers
     End Sub
     Public Shared Function createandload(ByVal pid As Long) As FactTRP
         '=======================================================================

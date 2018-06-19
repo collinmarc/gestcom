@@ -21,7 +21,7 @@ Public Class FactCom
         m_dateReglement = DATE_DEFAUT
         m_typedonnee = vncEnums.vncTypeDonnee.FACTCOMM
         m_dateStat = DATE_DEFAUT
-        idModeReglement = poTiers.idModeReglement1 'utilisation du mode de reglement du Tiers
+        m_IDModeReglement = poTiers.idModeReglement1 'utilisation du mode de reglement du Tiers
         'Pas de dupplication des commentaires car le commentaire facturation du client contient du commentaire 
         'pour le calcul du taux de commission
         'CommFacturation.comment = poTiers.CommFacturation.comment

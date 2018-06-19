@@ -1,4 +1,9 @@
-﻿Version 5.9.4.0a
+﻿Version 5.9.5
+Date : 
+#836   : Etat crMouvementArticles
+#840: Ajout des mentions légales sur les factures générées par GESTCOM 
+
+Version 5.9.4.0a
 Date : 
 #836   : Etat crMouvementArticles
 

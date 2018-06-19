@@ -39,7 +39,7 @@ Public Class frmGestFactCom
             End If
         End If
 
-        DisposeCr(CrystalReportViewer1)
+        Dispose()
         MyBase.Dispose(disposing)
     End Sub
 

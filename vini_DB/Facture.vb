@@ -72,7 +72,9 @@ Public MustInherit Class Facture
         Set(ByVal value As Integer)
             If Not value.Equals(m_IDModeReglement) Then
                 m_IDModeReglement = value
-                CalcDateEcheance()
+                If dateCommande <> DATE_DEFAUT Then
+                    CalcDateEcheance()
+                End If
                 RaiseUpdated()
             End If
         End Set

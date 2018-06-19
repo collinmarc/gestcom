@@ -21,7 +21,7 @@ Public Class FactColisage
         '       m_idModeRegelement = Param.getConstante("CST_COL_IDMODEREGLEMENT")
         m_TotalHT = 0
         m_TotalTTC = 0
-        idModeReglement = poFournisseur.idModeReglement2 'utilisation du mode de reglement du Tiers
+        m_IDModeReglement = poFournisseur.idModeReglement2 'utilisation du mode de reglement du Tiers
     End Sub
     Public Shared Function createandload(ByVal pid As Long) As FactColisage
         '=======================================================================
