@@ -39,6 +39,8 @@ Public Class frmEtatStock
     Friend WithEvents cbRecherche As System.Windows.Forms.Button
     Friend WithEvents Label2 As Label
     Friend WithEvents cbxDossier As ComboBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents DateTimePicker1 As System.Windows.Forms.DateTimePicker
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -47,6 +49,8 @@ Public Class frmEtatStock
         Me.cbAfficher = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbxDossier = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.SuspendLayout()
         '
         'Label1
@@ -62,19 +66,19 @@ Public Class frmEtatStock
         Me.tbCodeFourn.Location = New System.Drawing.Point(112, 8)
         Me.tbCodeFourn.Name = "tbCodeFourn"
         Me.tbCodeFourn.Size = New System.Drawing.Size(104, 20)
-        Me.tbCodeFourn.TabIndex = 2
+        Me.tbCodeFourn.TabIndex = 0
         '
         'cbRecherche
         '
         Me.cbRecherche.Location = New System.Drawing.Point(222, 5)
         Me.cbRecherche.Name = "cbRecherche"
         Me.cbRecherche.Size = New System.Drawing.Size(80, 24)
-        Me.cbRecherche.TabIndex = 3
+        Me.cbRecherche.TabIndex = 1
         Me.cbRecherche.Text = "Recherche"
         '
         'cbAfficher
         '
-        Me.cbAfficher.Location = New System.Drawing.Point(328, 5)
+        Me.cbAfficher.Location = New System.Drawing.Point(441, 31)
         Me.cbAfficher.Name = "cbAfficher"
         Me.cbAfficher.Size = New System.Drawing.Size(120, 24)
         Me.cbAfficher.TabIndex = 4
@@ -95,12 +99,31 @@ Public Class frmEtatStock
         Me.cbxDossier.Location = New System.Drawing.Point(112, 35)
         Me.cbxDossier.Name = "cbxDossier"
         Me.cbxDossier.Size = New System.Drawing.Size(104, 21)
-        Me.cbxDossier.TabIndex = 6
+        Me.cbxDossier.TabIndex = 2
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(222, 38)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(82, 13)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Date de calcul :"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(311, 35)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(100, 20)
+        Me.DateTimePicker1.TabIndex = 3
         '
         'frmEtatStock
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(952, 646)
+        Me.Controls.Add(Me.DateTimePicker1)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbxDossier)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.cbAfficher)
@@ -115,6 +138,8 @@ Public Class frmEtatStock
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
         Me.Controls.SetChildIndex(Me.cbxDossier, 0)
+        Me.Controls.SetChildIndex(Me.Label3, 0)
+        Me.Controls.SetChildIndex(Me.DateTimePicker1, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -134,6 +159,7 @@ Public Class frmEtatStock
         str = Replace(str, "%", "*")
         objReport.SetParameterValue("CodeFourn", Trim(str))
         objReport.SetParameterValue("Dossier", cbxDossier.Text)
+        objReport.SetParameterValue("DateCalcul", DateTimePicker1.Value)
         Persist.setReportConnection(objReport)
         CrystalReportViewer1.ReportSource = objReport
         restoreCursor()
@@ -162,5 +188,6 @@ Public Class frmEtatStock
         cbxDossier.Items.Clear()
         cbxDossier.Items.Add(Dossier.VINICOM)
         cbxDossier.Items.Add(Dossier.HOBIVIN)
+        DateTimePicker1.Value = Now
     End Sub
 End Class

@@ -3,6 +3,7 @@ Date :
 #836   : Etat crMouvementArticles
 #840: Ajout des mentions légales sur les factures générées par GESTCOM 
 #841: Tri par numéro de facture des listes de facture 
+#842: Modification de l'état du stock  Ajout d'une col Colis + date de calcul
 
 Version 5.9.4.0a
 Date : 
