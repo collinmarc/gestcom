@@ -39,7 +39,6 @@ Public Class frmGestFactCom
             End If
         End If
 
-        Dispose()
         MyBase.Dispose(disposing)
     End Sub
 
