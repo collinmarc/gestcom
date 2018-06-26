@@ -4,6 +4,7 @@ Date :
 #840: Ajout des mentions légales sur les factures générées par GESTCOM 
 #841: Tri par numéro de facture des listes de facture 
 #842: Modification de l'état du stock  Ajout d'une col Colis + date de calcul
+#845: Mode de règlement : GESTCOM vers QCOMPTA
 
 Version 5.9.4.0a
 Date : 
