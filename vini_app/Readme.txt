@@ -1,11 +1,17 @@
-﻿Version 5.9.5
-Date : 
+﻿Version 5.9.5.1
+#849 : Impossible de sauvegarder une commande
+#847 : etat des stocks (Totaux Fournisseur)
+
+Version 5.9.5
+Date : 29/06/2018
 #836   : Etat crMouvementArticles
 #840: Ajout des mentions légales sur les factures générées par GESTCOM 
 #841: Tri par numéro de facture des listes de facture 
 #842: Modification de l'état du stock  Ajout d'une col Colis + date de calcul
 #845: Mode de règlement : GESTCOM vers QCOMPTA
 #840 : Nouveaux modèle d'entete de facture
+#846 : Nouveaux modèle d'entete de facture
+#838 : Affichage du numéro de portable dans la commande
 
 Version 5.9.4.0a
 Date : 

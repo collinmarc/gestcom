@@ -579,6 +579,7 @@ Public Class frmGestFactTRP
         Me.ckEntete.Size = New System.Drawing.Size(59, 24)
         Me.ckEntete.TabIndex = 128
         Me.ckEntete.Text = "Entete"
+        Me.ckEntete.Checked = True
         '
         'cbAfficherEtat
         '

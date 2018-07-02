@@ -635,6 +635,7 @@ Public Class frmGestFactColisage
         Me.ckEntete.TabIndex = 132
         Me.ckEntete.Text = "Entete"
         Me.ckEntete.UseVisualStyleBackColor = True
+        Me.ckEntete.Checked = True
         '
         'cbAfficherEtat
         '

@@ -147,14 +147,14 @@ Public Class frmSaisieCommande
     Public WithEvents tbAdrLiv_Rue2 As System.Windows.Forms.TextBox
     Public WithEvents tbAdrLiv_cp As textBoxStrNumeric
     Public WithEvents tbAdrLiv_Ville As System.Windows.Forms.TextBox
-    Public WithEvents tbAdrLiv_Port As textBoxStrNumeric
-    Public WithEvents tbAdrLiv_Tel As textBoxStrNumeric
-    Public WithEvents tbAdrLiv_Fax As textBoxStrNumeric
+    Public WithEvents tbAdrLiv_Port As TextBox
+    Public WithEvents tbAdrLiv_Tel As TextBox
+    Public WithEvents tbAdrLiv_Fax As TextBox
     Public WithEvents tbAdrLiv_Email As System.Windows.Forms.TextBox
     Public WithEvents tbAdrFact_Ville As System.Windows.Forms.TextBox
-    Public WithEvents tbAdrFact_Port As textBoxStrNumeric
-    Public WithEvents tbAdrFact_Tel As textBoxStrNumeric
-    Public WithEvents tbAdrFact_Fax As textBoxStrNumeric
+    Public WithEvents tbAdrFact_Port As TextBox
+    Public WithEvents tbAdrFact_Tel As TextBox
+    Public WithEvents tbAdrFact_Fax As TextBox
     Public WithEvents tbAdrFact_Email As System.Windows.Forms.TextBox
     Friend WithEvents cboModeReglement As System.Windows.Forms.ComboBox
     Friend WithEvents laIdClient As System.Windows.Forms.Label
@@ -422,9 +422,9 @@ Public Class frmSaisieCommande
         Me.tbAdrFact_Rue2 = New System.Windows.Forms.TextBox()
         Me.tbAdrFact_cp = New vini_app.textBoxStrNumeric()
         Me.tbAdrFact_Ville = New System.Windows.Forms.TextBox()
-        Me.tbAdrFact_Port = New vini_app.textBoxStrNumeric()
-        Me.tbAdrFact_Tel = New vini_app.textBoxStrNumeric()
-        Me.tbAdrFact_Fax = New vini_app.textBoxStrNumeric()
+        Me.tbAdrFact_Port = New System.Windows.Forms.TextBox()
+        Me.tbAdrFact_Tel = New System.Windows.Forms.TextBox()
+        Me.tbAdrFact_Fax = New System.Windows.Forms.TextBox()
         Me.tbAdrFact_Email = New System.Windows.Forms.TextBox()
         Me.grpAdrLiv = New System.Windows.Forms.GroupBox()
         Me.tbAdrLiv_Nom = New System.Windows.Forms.TextBox()
@@ -440,9 +440,9 @@ Public Class frmSaisieCommande
         Me.tbAdrLiv_Rue2 = New System.Windows.Forms.TextBox()
         Me.tbAdrLiv_cp = New vini_app.textBoxStrNumeric()
         Me.tbAdrLiv_Ville = New System.Windows.Forms.TextBox()
-        Me.tbAdrLiv_Port = New vini_app.textBoxStrNumeric()
-        Me.tbAdrLiv_Tel = New vini_app.textBoxStrNumeric()
-        Me.tbAdrLiv_Fax = New vini_app.textBoxStrNumeric()
+        Me.tbAdrLiv_Port = New System.Windows.Forms.TextBox()
+        Me.tbAdrLiv_Tel = New System.Windows.Forms.TextBox()
+        Me.tbAdrLiv_Fax = New System.Windows.Forms.TextBox()
         Me.tbAdrLiv_Email = New System.Windows.Forms.TextBox()
         Me.tbRaisonSociale = New System.Windows.Forms.TextBox()
         Me.label = New System.Windows.Forms.Label()
@@ -4098,16 +4098,16 @@ Public Class frmSaisieCommande
     Public Overrides Function ControleAvantSauvegarde() As Boolean
         Dim bReturn As Boolean
         Debug.Assert(Not getCommandeCourante() Is Nothing, "Element Courant Requis")
+        bReturn = True
 
-
-        bReturn = isStringNum(tbAdrLiv_cp.Text)
-        bReturn = bReturn And isStringNum(tbAdrLiv_Tel.Text)
-        bReturn = bReturn And isStringNum(tbAdrLiv_Fax.Text)
-        bReturn = bReturn And isStringNum(tbAdrLiv_Port.Text)
-        bReturn = bReturn And isStringNum(tbAdrFact_cp.Text)
-        bReturn = bReturn And isStringNum(tbAdrFact_Tel.Text)
-        bReturn = bReturn And isStringNum(tbAdrFact_Fax.Text)
-        bReturn = bReturn And isStringNum(tbAdrFact_Port.Text)
+        'bReturn = isStringNum(tbAdrLiv_cp.Text)
+        '       bReturn = bReturn And isStringNum(tbAdrLiv_Tel.Text)
+        '      bReturn = bReturn And isStringNum(tbAdrLiv_Fax.Text)
+        '        bReturn = bReturn And isStringNum(tbAdrLiv_Port.Text)
+        '     bReturn = bReturn And isStringNum(tbAdrFact_cp.Text)
+        '    bReturn = bReturn And isStringNum(tbAdrFact_Tel.Text)
+        '   bReturn = bReturn And isStringNum(tbAdrFact_Fax.Text)
+        '  bReturn = bReturn And isStringNum(tbAdrFact_Port.Text)
 
         If Not IsNumeric(liNomClient.Tag) Or liNomClient.Tag = 0 Then
             DisplayError("ControleAvantSauvegarde", "Le Client n'est pas renseigné")
