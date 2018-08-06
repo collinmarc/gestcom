@@ -1,4 +1,7 @@
-﻿Version 5.9.5.1
+﻿Version 5.9.5.1a
+#853 : Liste des factures de commissions par numéro
+
+Version 5.9.5.1
 #849 : Impossible de sauvegarder une commande
 #847 : etat des stocks (Totaux Fournisseur)
 

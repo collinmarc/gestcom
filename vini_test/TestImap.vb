@@ -951,5 +951,77 @@ Imports System.Text.RegularExpressions
 
     End Sub
 
+    ''' <summary>
+    ''' Test de l'import Prestashop d'une commande saisie sur prestashop et envoyé sur marccollintest.com
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub TestImportPrestashopCmd2()
+        TestCleanDB()
+        Dim oParam As Param = Param.colModeReglement(1)
+
+        'Création du client
+        Dim oClient As New Client()
+        oClient.code = "CLTTST"
+        oClient.idPrestashop = 311
+        oClient.idModeReglement = oParam.id
+        Assert.IsTrue(oClient.save())
+        'On Créé le produit
+        Dim obj As Fournisseur
+        obj = New Fournisseur("TST", "nom")
+        Assert.IsTrue(obj.Save)
+        Dim oProduit As New Produit("019003", obj, 2010)
+        ' Assert.IsTrue(oProduit.save())
+
+
+        Dim olst As List(Of CommandeClient)
+        Dim oCmdCLT As CommandeClient
+        Dim oImportPrestashop As New ImportPrestashop("imap.gmail.com", "marccollintest@gmail.com", "tphhgv3..", Convert.ToUInt16(993), True)
+        oImportPrestashop.MSGFolderName = "MSGTRAITES"
+        olst = oImportPrestashop.Import()
+        Assert.AreEqual(1, olst.Count)
+
+        oCmdCLT = olst(0)
+
+        Assert.AreEqual(311L, oCmdCLT.IDPrestashop)
+        Assert.AreEqual("TESTIMPORT", oCmdCLT.NamePrestashop)
+        Assert.AreEqual(oClient.code, oCmdCLT.TiersCode)
+        Assert.AreEqual("MCII", oCmdCLT.RaisonSocialeLivraison)
+        Assert.AreEqual("MCII MCII", oCmdCLT.NomLivraison)
+        Assert.AreEqual("MCII MCII", oCmdCLT.caracteristiqueTiers.AdresseLivraisonNom)
+        Assert.AreEqual("23, la mettrie", oCmdCLT.caracteristiqueTiers.AdresseLivraisonRue1)
+        Assert.AreEqual("", oCmdCLT.caracteristiqueTiers.AdresseLivraisonRue2)
+        Assert.AreEqual("35250", oCmdCLT.caracteristiqueTiers.AdresseLivraisonCP)
+        Assert.AreEqual("Chasné sur illet", oCmdCLT.caracteristiqueTiers.AdresseLivraisonVille)
+        ' Vérification de transfert du mode de reglement
+        Assert.AreEqual(oParam.id, oCmdCLT.caracteristiqueTiers.idModeReglement)
+
+        Assert.AreEqual(1, oCmdCLT.colLignes.Count, "Nombre de lignes")
+        Dim nLigne As Integer = 0
+        Dim oLgCmd As LgCommande
+        oLgCmd = oCmdCLT.colLignes(1)
+        Assert.AreEqual("019003", oLgCmd.ProduitCode)
+        Assert.AreEqual(CDec(1), oLgCmd.qteCommande)
+        Assert.AreEqual(CDec(5.5), oLgCmd.prixU)
+        oLgCmd = oCmdCLT.colLignes(2)
+        Assert.AreEqual("demo_3", oLgCmd.ProduitCode)
+        Assert.AreEqual(CDec(1), oLgCmd.qteCommande)
+        Assert.AreEqual(CDec(5.5), oLgCmd.prixU)
+
+        'Envoi de 2 Commandes
+        EnvoiMailCmd()
+        EnvoiMailCmd()
+
+        olst = oImportPrestashop.Import()
+        Assert.AreEqual(2, olst.Count)
+
+        'Après traitement la boite de réception est vide
+
+        olst = oImportPrestashop.Import()
+        Assert.AreEqual(0, olst.Count)
+
+
+
+
+    End Sub
 
 End Class
