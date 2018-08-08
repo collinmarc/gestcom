@@ -13,11 +13,16 @@ Partial Class frmEditfactures
         If CrystalReportViewer1.ReportSource IsNot Nothing Then
             Dim oReport As ReportDocument
             oReport = CrystalReportViewer1.ReportSource
-            oReport.Dispose()
-            CrystalReportViewer1.ReportSource = Nothing
+            If oReport IsNot Nothing Then
+                Try
+                    oReport.Dispose()
+                Catch ex As Exception
 
+                End Try
+                CrystalReportViewer1.ReportSource = Nothing
+            End If
+            CrystalReportViewer1.Dispose()
         End If
-        CrystalReportViewer1.Dispose()
 
         MyBase.Dispose(disposing)
     End Sub
@@ -221,6 +226,10 @@ Partial Class frmEditfactures
         Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
         Me.CrystalReportViewer1.Location = New System.Drawing.Point(13, 94)
         Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
+        Me.CrystalReportViewer1.ShowCloseButton = False
+        Me.CrystalReportViewer1.ShowCopyButton = False
+        Me.CrystalReportViewer1.ShowLogo = False
+        Me.CrystalReportViewer1.ShowParameterPanelButton = False
         Me.CrystalReportViewer1.Size = New System.Drawing.Size(975, 572)
         Me.CrystalReportViewer1.TabIndex = 17
         '
@@ -241,9 +250,7 @@ Partial Class frmEditfactures
         Me.Controls.Add(Me.dtDateDeb)
         Me.Name = "frmEditfactures"
         Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.Text = "Edition des factures"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.grpTypeEditFactcom.ResumeLayout(False)
