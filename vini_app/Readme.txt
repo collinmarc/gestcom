@@ -1,4 +1,8 @@
-﻿Version 5.9.5.1a
+﻿Version 5.9.5.1b
+date 08/08/2018
+#871 : Tax de TVA sur les factures
+
+Version 5.9.5.1a
 date 08/08/2018
 #853 : Liste des factures de commissions par numéro
 #855 : Fact TRP : Montant de la taxe gazole incorrect
