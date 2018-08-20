@@ -947,7 +947,7 @@ Public MustInherit Class Commande
             End If
 
         Next oLg
-
+        CalcPoidsColis()
         'On passe par les accesseurs pour lever l'event Updated s'il y a lieu
         totalHT = nHT
         totalTTC = nTTC
@@ -975,7 +975,8 @@ Public MustInherit Class Commande
             qteColis = nqteColis
             bReturn = True
         Catch ex As Exception
-            setError("CommandeClient.calcPoidsColis", ex.ToString)
+            setError("Commande.calcPoidsColis", ex.ToString)
+            bReturn = False
         End Try
 
         Debug.Assert(bReturn, getErreur())
