@@ -1,7 +1,8 @@
 ﻿Version 5.9.5.1b
 date 08/08/2018
-#871 : Tax de TVA sur les factures
-#856 : Calcul du nbre collis pour les bons d'appro
+#871 : Taux de TVA sur les factures
+#856 : Calcul du nbre colis pour les bons d'appro
+#873 : RIB sur les BAF HOBIVIN
 
 Version 5.9.5.1a
 date 08/08/2018
