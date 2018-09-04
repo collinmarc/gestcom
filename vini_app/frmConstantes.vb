@@ -232,8 +232,8 @@ Partial Public Class frmConstantes
     End Sub
 
     Private Sub TestFTPEDI()
-        Dim oftp As ClsFTP
-        oftp = New ClsFTP(Me.tbFTPEDIUser.Text, Me.tbFTPEDIPwd.Text, Me.tbFTPEDISRV.Text, Me.tbFTPEDIPort.Text)
+        Dim oftp As clsFTPVinicom
+        oftp = New clsFTPVinicom(Me.tbFTPEDISRV.Text, Me.tbFTPEDIUser.Text, Me.tbFTPEDIPwd.Text, Me.tbFTPEDIRep.Text)
 
         If My.Computer.FileSystem.DirectoryExists("./TESTFTP") Then
             My.Computer.FileSystem.DeleteDirectory("./TESTFTP", FileIO.DeleteDirectoryOption.DeleteAllContents)
@@ -245,7 +245,7 @@ Partial Public Class frmConstantes
         DisplayStatus("")
         'Envoi du fichier par FTP (Pas utile dans note cas)
         DisplayStatus("Envoi du fichier par FTP ")
-        If oftp.Upload("./TESTFTP/testFTPEDI.txt", tbFTPEDIRep.Text) Then
+        If oftp.uploadFromDir("./TESTFTP") Then
             DisplayStatus("Envoi du fichier OK")
             'Suppression et recréation du répertoire de test
             If My.Computer.FileSystem.DirectoryExists("./TESTFTP") Then
@@ -254,7 +254,7 @@ Partial Public Class frmConstantes
             My.Computer.FileSystem.CreateDirectory("./TESTFTP")
 
             DisplayStatus("Reception du fichier par FTP ")
-            If (oftp.DownLoad(tbFTPEDIRep.Text, "testFTPEDI.txt", "./TESTFTP")) Then
+            If (oftp.downloadDirToDir("./TESTFTP")) Then
                 If My.Computer.FileSystem.FileExists("./TESTFTP/" & "TestFTPEDI.txt") Then
                     DisplayStatus("Réception du fichier OK")
                     MsgBox("Test OK")

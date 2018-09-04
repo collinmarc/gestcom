@@ -156,7 +156,7 @@ Partial Class frmConstantes
         Me.CST_TX_COMMISSIONTextBox = New System.Windows.Forms.TextBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.tbFTPEDIRepLocal = New System.Windows.Forms.TextBox()
         Me.cbTestFTPEDI = New System.Windows.Forms.Button()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -1507,7 +1507,7 @@ Partial Class frmConstantes
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.Label22)
-        Me.TabPage5.Controls.Add(Me.TextBox3)
+        Me.TabPage5.Controls.Add(Me.tbFTPEDIRepLocal)
         Me.TabPage5.Controls.Add(Me.cbTestFTPEDI)
         Me.TabPage5.Controls.Add(Me.Label21)
         Me.TabPage5.Controls.Add(Me.Label20)
@@ -1550,13 +1550,13 @@ Partial Class frmConstantes
         Me.Label22.TabIndex = 29
         Me.Label22.Text = "Rép Local :"
         '
-        'TextBox3
+        'tbFTPEDIRepLocal
         '
-        Me.TextBox3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CONSTANTESBindingSource, "CST_FTPEDI_REPLOCAL", True))
-        Me.TextBox3.Location = New System.Drawing.Point(101, 368)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(432, 20)
-        Me.TextBox3.TabIndex = 28
+        Me.tbFTPEDIRepLocal.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CONSTANTESBindingSource, "CST_FTPEDI_REPLOCAL", True))
+        Me.tbFTPEDIRepLocal.Location = New System.Drawing.Point(101, 368)
+        Me.tbFTPEDIRepLocal.Name = "tbFTPEDIRepLocal"
+        Me.tbFTPEDIRepLocal.Size = New System.Drawing.Size(432, 20)
+        Me.tbFTPEDIRepLocal.TabIndex = 28
         '
         'cbTestFTPEDI
         '
@@ -2218,5 +2218,5 @@ Partial Class frmConstantes
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents Label22 As System.Windows.Forms.Label
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents tbFTPEDIRepLocal As System.Windows.Forms.TextBox
 End Class
