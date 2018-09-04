@@ -24,14 +24,13 @@ Public Class frmEclatementCommande
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents totalHT As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Selected As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents CodeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dateCommande As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents TiersRS As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents totalTTC As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents qteColis As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents TiersCode As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents EtatCode As System.Windows.Forms.DataGridViewTextBoxColumn
     Protected m_colFact As ColEvent
     'Protected getElementCourant() As FactTRP
 
@@ -74,27 +73,20 @@ Public Class frmEclatementCommande
     Friend WithEvents tbCodeClient As System.Windows.Forms.TextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.m_bsrcScmd = New System.Windows.Forms.BindingSource(Me.components)
         Me.m_bsrcCommandeClient = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.dgvCommandes = New System.Windows.Forms.DataGridView()
-        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dateCommande = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.totalTTC = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.qteColis = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TiersCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EtatCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.dbSelectAll = New System.Windows.Forms.Button()
+        Me.dgvCommandes = New System.Windows.Forms.DataGridView()
         Me.cbRecherche = New System.Windows.Forms.Button()
+        Me.cbAfficher = New System.Windows.Forms.Button()
         Me.tbCodeClient = New System.Windows.Forms.TextBox()
         Me.dtdateFin = New System.Windows.Forms.DateTimePicker()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -116,14 +108,20 @@ Public Class frmEclatementCommande
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.totalHT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.Selected = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.CodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dateCommande = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TiersRS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.totalTTC = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.qteColis = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.m_bsrcScmd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcCommandeClient, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
+        CType(Me.dgvCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpSCMD.SuspendLayout()
         CType(Me.dgvSousCommandes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -137,116 +135,9 @@ Public Class frmEclatementCommande
         Me.m_bsrcCommandeClient.DataSource = GetType(vini_DB.CommandeClient)
         Me.m_bsrcCommandeClient.Filter = "EtatCode=6"
         '
-        'dgvCommandes
+        'BackgroundWorker1
         '
-        Me.dgvCommandes.AllowUserToAddRows = False
-        Me.dgvCommandes.AllowUserToDeleteRows = False
-        Me.dgvCommandes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgvCommandes.AutoGenerateColumns = False
-        Me.dgvCommandes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
-        Me.dgvCommandes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodeDataGridViewTextBoxColumn, Me.dateCommande, Me.TiersRS, Me.DataGridViewTextBoxColumn2, Me.totalTTC, Me.qteColis, Me.TiersCode, Me.EtatCode})
-        Me.dgvCommandes.DataSource = Me.m_bsrcCommandeClient
-        Me.dgvCommandes.Location = New System.Drawing.Point(5, 118)
-        Me.dgvCommandes.Name = "dgvCommandes"
-        Me.dgvCommandes.ReadOnly = True
-        Me.dgvCommandes.RowHeadersVisible = False
-        Me.dgvCommandes.RowHeadersWidth = 20
-        Me.dgvCommandes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvCommandes.Size = New System.Drawing.Size(322, 483)
-        Me.dgvCommandes.TabIndex = 127
-        Me.ToolTip1.SetToolTip(Me.dgvCommandes, "Liste des Commandes validées")
-        '
-        'CodeDataGridViewTextBoxColumn
-        '
-        Me.CodeDataGridViewTextBoxColumn.DataPropertyName = "code"
-        Me.CodeDataGridViewTextBoxColumn.HeaderText = "CMD"
-        Me.CodeDataGridViewTextBoxColumn.Name = "CodeDataGridViewTextBoxColumn"
-        Me.CodeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CodeDataGridViewTextBoxColumn.Width = 56
-        '
-        'dateCommande
-        '
-        Me.dateCommande.DataPropertyName = "dateCommande"
-        DataGridViewCellStyle1.Format = "d"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.dateCommande.DefaultCellStyle = DataGridViewCellStyle1
-        Me.dateCommande.HeaderText = "date"
-        Me.dateCommande.Name = "dateCommande"
-        Me.dateCommande.ReadOnly = True
-        Me.dateCommande.Width = 53
-        '
-        'TiersRS
-        '
-        Me.TiersRS.DataPropertyName = "TiersRS"
-        Me.TiersRS.HeaderText = "Client"
-        Me.TiersRS.Name = "TiersRS"
-        Me.TiersRS.ReadOnly = True
-        Me.TiersRS.Width = 58
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.DataPropertyName = "totalHT"
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle2
-        Me.DataGridViewTextBoxColumn2.HeaderText = "HT"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        Me.DataGridViewTextBoxColumn2.Width = 47
-        '
-        'totalTTC
-        '
-        Me.totalTTC.DataPropertyName = "totalTTC"
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.totalTTC.DefaultCellStyle = DataGridViewCellStyle3
-        Me.totalTTC.HeaderText = "TTC"
-        Me.totalTTC.Name = "totalTTC"
-        Me.totalTTC.ReadOnly = True
-        Me.totalTTC.Width = 53
-        '
-        'qteColis
-        '
-        Me.qteColis.DataPropertyName = "qteColis"
-        Me.qteColis.HeaderText = "qteColis"
-        Me.qteColis.Name = "qteColis"
-        Me.qteColis.ReadOnly = True
-        Me.qteColis.Width = 69
-        '
-        'TiersCode
-        '
-        Me.TiersCode.DataPropertyName = "TiersCode"
-        Me.TiersCode.HeaderText = "Code CLT"
-        Me.TiersCode.Name = "TiersCode"
-        Me.TiersCode.ReadOnly = True
-        Me.TiersCode.Width = 80
-        '
-        'EtatCode
-        '
-        Me.EtatCode.DataPropertyName = "EtatCode"
-        Me.EtatCode.HeaderText = "EtatCode"
-        Me.EtatCode.Name = "EtatCode"
-        Me.EtatCode.ReadOnly = True
-        Me.EtatCode.Width = 76
-        '
-        'cbAfficher
-        '
-        Me.cbAfficher.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbAfficher.BackColor = System.Drawing.SystemColors.Control
-        Me.cbAfficher.Cursor = System.Windows.Forms.Cursors.Default
-        Me.cbAfficher.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.cbAfficher.Location = New System.Drawing.Point(3, 79)
-        Me.cbAfficher.Name = "cbAfficher"
-        Me.cbAfficher.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cbAfficher.Size = New System.Drawing.Size(326, 23)
-        Me.cbAfficher.TabIndex = 4
-        Me.cbAfficher.Text = "A&fficher"
-        Me.ToolTip1.SetToolTip(Me.cbAfficher, "Afficher la liste des Commandes validées")
-        Me.cbAfficher.UseVisualStyleBackColor = False
+        Me.BackgroundWorker1.WorkerReportsProgress = True
         '
         'SplitContainer1
         '
@@ -288,6 +179,27 @@ Public Class frmEclatementCommande
         Me.dbSelectAll.Text = "Sélectionner Tout"
         Me.dbSelectAll.UseVisualStyleBackColor = True
         '
+        'dgvCommandes
+        '
+        Me.dgvCommandes.AllowUserToAddRows = False
+        Me.dgvCommandes.AllowUserToDeleteRows = False
+        Me.dgvCommandes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvCommandes.AutoGenerateColumns = False
+        Me.dgvCommandes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvCommandes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvCommandes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Selected, Me.CodeDataGridViewTextBoxColumn, Me.dateCommande, Me.TiersRS, Me.DataGridViewTextBoxColumn2, Me.totalTTC, Me.qteColis})
+        Me.dgvCommandes.DataSource = Me.m_bsrcCommandeClient
+        Me.dgvCommandes.Location = New System.Drawing.Point(5, 118)
+        Me.dgvCommandes.Name = "dgvCommandes"
+        Me.dgvCommandes.RowHeadersVisible = False
+        Me.dgvCommandes.RowHeadersWidth = 20
+        Me.dgvCommandes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvCommandes.Size = New System.Drawing.Size(322, 483)
+        Me.dgvCommandes.TabIndex = 127
+        Me.ToolTip1.SetToolTip(Me.dgvCommandes, "Liste des Commandes validées")
+        '
         'cbRecherche
         '
         Me.cbRecherche.Location = New System.Drawing.Point(160, 50)
@@ -295,6 +207,22 @@ Public Class frmEclatementCommande
         Me.cbRecherche.Size = New System.Drawing.Size(75, 23)
         Me.cbRecherche.TabIndex = 3
         Me.cbRecherche.Text = "Recherche"
+        '
+        'cbAfficher
+        '
+        Me.cbAfficher.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbAfficher.BackColor = System.Drawing.SystemColors.Control
+        Me.cbAfficher.Cursor = System.Windows.Forms.Cursors.Default
+        Me.cbAfficher.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.cbAfficher.Location = New System.Drawing.Point(3, 79)
+        Me.cbAfficher.Name = "cbAfficher"
+        Me.cbAfficher.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.cbAfficher.Size = New System.Drawing.Size(326, 23)
+        Me.cbAfficher.TabIndex = 4
+        Me.cbAfficher.Text = "A&fficher"
+        Me.ToolTip1.SetToolTip(Me.cbAfficher, "Afficher la liste des Commandes validées")
+        Me.cbAfficher.UseVisualStyleBackColor = False
         '
         'tbCodeClient
         '
@@ -357,7 +285,7 @@ Public Class frmEclatementCommande
         Me.cbEclatement.Name = "cbEclatement"
         Me.cbEclatement.Size = New System.Drawing.Size(645, 24)
         Me.cbEclatement.TabIndex = 129
-        Me.cbEclatement.Text = "Livraison +Genération Bons à Facturer"
+        Me.cbEclatement.Text = "Genération Bons à Facturer"
         '
         'grpSCMD
         '
@@ -517,9 +445,70 @@ Public Class frmEclatementCommande
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
         '
-        'BackgroundWorker1
+        'Selected
         '
-        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.Selected.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Selected.DataPropertyName = "Selected"
+        Me.Selected.HeaderText = "Sel"
+        Me.Selected.Name = "Selected"
+        Me.Selected.Width = 20
+        '
+        'CodeDataGridViewTextBoxColumn
+        '
+        Me.CodeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.CodeDataGridViewTextBoxColumn.DataPropertyName = "code"
+        Me.CodeDataGridViewTextBoxColumn.HeaderText = "CMD"
+        Me.CodeDataGridViewTextBoxColumn.Name = "CodeDataGridViewTextBoxColumn"
+        Me.CodeDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CodeDataGridViewTextBoxColumn.Width = 50
+        '
+        'dateCommande
+        '
+        Me.dateCommande.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.dateCommande.DataPropertyName = "dateCommande"
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.dateCommande.DefaultCellStyle = DataGridViewCellStyle1
+        Me.dateCommande.HeaderText = "date"
+        Me.dateCommande.Name = "dateCommande"
+        Me.dateCommande.ReadOnly = True
+        Me.dateCommande.Width = 70
+        '
+        'TiersRS
+        '
+        Me.TiersRS.DataPropertyName = "TiersRS"
+        Me.TiersRS.HeaderText = "Client"
+        Me.TiersRS.Name = "TiersRS"
+        Me.TiersRS.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "totalHT"
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle2
+        Me.DataGridViewTextBoxColumn2.HeaderText = "HT"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'totalTTC
+        '
+        Me.totalTTC.DataPropertyName = "totalTTC"
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.totalTTC.DefaultCellStyle = DataGridViewCellStyle3
+        Me.totalTTC.HeaderText = "TTC"
+        Me.totalTTC.Name = "totalTTC"
+        Me.totalTTC.ReadOnly = True
+        '
+        'qteColis
+        '
+        Me.qteColis.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.qteColis.DataPropertyName = "qteColis"
+        Me.qteColis.HeaderText = "qteColis"
+        Me.qteColis.Name = "qteColis"
+        Me.qteColis.ReadOnly = True
+        Me.qteColis.Width = 50
         '
         'frmEclatementCommande
         '
@@ -530,12 +519,12 @@ Public Class frmEclatementCommande
         Me.Text = "Eclatement de commandes clients"
         CType(Me.m_bsrcScmd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.m_bsrcCommandeClient, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvCommandes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel1.PerformLayout()
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
+        CType(Me.dgvCommandes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpSCMD.ResumeLayout(False)
         Me.grpSCMD.PerformLayout()
         CType(Me.dgvSousCommandes, System.ComponentModel.ISupportInitialize).EndInit()
@@ -622,7 +611,10 @@ Public Class frmEclatementCommande
         Debug.Assert(Not m_lstCommandes Is Nothing)
         Dim obj As CommandeClient
 
+        'Trie sur la date de commande
+        m_lstCommandes.Sort()
         For Each obj In m_lstCommandes
+            obj.Selected = False
             m_bsrcCommandeClient.Add(obj)
         Next obj
 
@@ -651,9 +643,9 @@ Public Class frmEclatementCommande
             ddeb = dtDatedeb.Value.ToShortDateString
             dfin = dtdateFin.Value.ToShortDateString
             codeClient = tbCodeClient.Text
-            'Recupération de la liste des commandes Validées sans charger les lignes de commandes
+            'Recupération de la liste des commandes Livrées sans charger les lignes de commandes
             CommandeClient.bChargerColLignes = False
-            col = CommandeClient.getListe(ddeb, dfin, codeClient, vncEtatCommande.vncValidee)
+            col = CommandeClient.getListe(ddeb, dfin, codeClient, vncEtatCommande.vncLivree)
             If col Is Nothing Then
                 bReturn = False
             Else
@@ -661,6 +653,7 @@ Public Class frmEclatementCommande
                 For Each oCmd As CommandeClient In col
                     m_lstCommandes.Add(oCmd)
                 Next
+                m_lstCommandes.Sort()
                 bReturn = True
             End If
             CommandeClient.bChargerColLignes = True
@@ -693,7 +686,7 @@ Public Class frmEclatementCommande
 
     Private Sub cbAfficher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbAfficher.Click
         If m_bsrcScmd.Count > 0 And isfrmUpdated() Then
-            If MsgBox("Vous avez déjà généré des Bons à Facturer , voulez-vous les sauvegarder?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            If MsgBox("Vous avez déjà généré des Bons à Facturer, voulez-vous les sauvegarder?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                 frmSave()
             End If
         End If
@@ -742,7 +735,10 @@ Public Class frmEclatementCommande
 
 
     Private Sub dbSelectAll_Click(sender As Object, e As EventArgs) Handles dbSelectAll.Click
-        dgvCommandes.SelectAll()
+        For Each oCmd As CommandeClient In m_bsrcCommandeClient
+            oCmd.Selected = True
+        Next
+        m_bsrcCommandeClient.ResetBindings(False)
     End Sub
 
     Private Sub dgvCommandes_SelectionChanged(sender As Object, e As EventArgs) Handles dgvCommandes.SelectionChanged
@@ -768,17 +764,11 @@ Public Class frmEclatementCommande
     ''' <remarks></remarks>
     Private Sub LivraisonEclatement()
         Dim oCmd As CommandeClient
-        For Each oRow As DataGridViewRow In dgvCommandes.SelectedRows
-            If oRow.DataBoundItem IsNot Nothing Then
-                oCmd = oRow.DataBoundItem
+        For Each oCmd In m_bsrcCommandeClient
+            If oCmd.Selected Then
                 oCmd.load()
-                If oCmd.EtatCode = vncEtatCommande.vncValidee Then
-                    For Each olg As LgCommande In oCmd.colLignes
-                        olg.qteLiv = olg.qteCommande
-                        olg.CalculCommission(oCmd.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
-                    Next
+                If oCmd.EtatCode = vncEtatCommande.vncLivree Then
                     oCmd.refLivraison = oCmd.code
-                    oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
 
                     oCmd.generationSousCommande()
                     For Each oScmd As SousCommande In oCmd.colSousCommandes
@@ -786,11 +776,9 @@ Public Class frmEclatementCommande
                     Next
 
                 End If
-                'Raffraichissement de la liste des commandes
             End If
+            'Raffraichissement de la liste des commandes
         Next
-        m_bsrcCommandeClient.ResetBindings(False)
-        m_bsrcCommandeClient.ResetBindings(False)
         setfrmUpdated()
     End Sub
 

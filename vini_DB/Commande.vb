@@ -34,6 +34,8 @@
 '===================================================================================================================================
 Public MustInherit Class Commande
     Inherits Persist
+    Implements IComparable(Of Commande)
+
 
     '=================== MEMBRES PRIVES ====================================
     Private m_code As String                  'code
@@ -1280,4 +1282,27 @@ Public MustInherit Class Commande
         End Set
     End Property
 
+    Public Overrides Function checkForDelete() As Boolean
+
+    End Function
+
+    Protected Overrides Function DBLoad(Optional pid As Integer = 0) As Boolean
+
+    End Function
+
+    Friend Overrides Function delete() As Boolean
+
+    End Function
+
+    Friend Overrides Function insert() As Boolean
+
+    End Function
+
+    Friend Overrides Function update() As Boolean
+
+    End Function
+
+    Public Function CompareTo(other As Commande) As Integer Implements IComparable(Of Commande).CompareTo
+        Return dateCommande.CompareTo(other.dateCommande)
+    End Function
 End Class ' Commande
