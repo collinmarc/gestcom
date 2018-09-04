@@ -967,9 +967,32 @@ Public MustInherit Class Commande
             npoids = 0
             nqteColis = 0
             For Each objLg In m_colLignes
-                objLg.calcPoidsColis()
-                npoids = npoids + objLg.poids
-                nqteColis = nqteColis + objLg.qteColis
+                objLg.poids = 0
+                objLg.qteColis = 0
+                'On ne calcule le poids et le nbre de clis que sur les lignes payantes
+                If Not objLg.bGratuit Then
+                    Dim nqteGratuit As Decimal = 0
+                    'REcherche des produits gratuits du même produit
+                    For Each objLgG As LgCommande In m_colLignes
+                        If objLgG.bGratuit And objLgG.oProduit.id = objLg.oProduit.id Then
+                            If objLgG.qteLiv <> 0 Then
+                                nqteGratuit = nqteGratuit + objLgG.qteLiv
+                            Else
+                                nqteGratuit = nqteGratuit + objLgG.qteCommande
+                            End If
+                        End If
+                    Next
+                    Dim nQteProduit As Decimal = 0
+                    If objLg.qteLiv <> 0 Then
+                        nQteProduit = objLg.qteLiv + nqteGratuit
+                    Else
+                        nQteProduit = objLg.qteCommande + nqteGratuit
+                    End If
+
+                    objLg.calcPoidsColis(nQteProduit)
+                    npoids = npoids + objLg.poids
+                    nqteColis = nqteColis + objLg.qteColis
+                End If
             Next
             poids = npoids
             qteColis = nqteColis

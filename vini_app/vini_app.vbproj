@@ -164,6 +164,9 @@
     <Compile Include="frmImportCommandeClientPrestashop.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmVerificationLivraison.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmMajLivraisonCommande.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -1400,6 +1403,7 @@
     <Content Include="Requetes\V5.9.003ToV5.9.004.SQL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Requetes\TOV5.9.6.SQL" />
     <Content Include="Requetes\V5.9.004b.SQL" />
     <Content Include="Requetes\VxxTOV5.6.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1465,6 +1469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportCommandeClientPrestashop.resx">
       <DependentUpon>frmImportCommandeClientPrestashop.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerificationLivraison.resx">
+      <DependentUpon>frmVerificationLivraison.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMajLivraisonCommande.resx">
       <DependentUpon>frmMajLivraisonCommande.vb</DependentUpon>
@@ -1791,6 +1798,7 @@
     <None Include="vini_DB.LgFactHBV.datasource" />
     <None Include="vini_DB.LgFactTRP.datasource" />
     <None Include="vini_DB.lgPrecomm.datasource" />
+    <None Include="vini_DB.MsgLivraison.datasource" />
     <None Include="vini_DB.mvtStock.datasource" />
     <None Include="vini_DB.Param.datasource" />
     <None Include="vini_DB.ParamModeReglement.datasource" />

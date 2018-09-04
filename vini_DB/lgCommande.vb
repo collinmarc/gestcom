@@ -456,13 +456,16 @@ Public Class LgCommande
 
     Public Sub calcPoidsColis()
         Debug.Assert(m_oProduit.id <> 0, "Produit inexistant")
-        Dim qte As Decimal
-        qte = qteCommande
         If qteLiv <> 0 Then
-            qte = qteLiv
+            calcPoidsColis(qteLiv)
+        Else
+            calcPoidsColis(qteCommande)
         End If
-        poids = m_oProduit.poids * qte
-        qteColis = m_oProduit.qteColis(qte)
+    End Sub
+    Public Sub calcPoidsColis(pQte As Decimal)
+        Debug.Assert(m_oProduit.id <> 0, "Produit inexistant")
+        poids = m_oProduit.poids * pQte
+        qteColis = m_oProduit.qteColis(pQte)
     End Sub
 
 #End Region

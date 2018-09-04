@@ -66,6 +66,7 @@ Friend Class frmMain
     Friend WithEvents mnuMAJLivraisonCommande As System.Windows.Forms.MenuItem
     Friend WithEvents mnuUtil_PurgePrecommande As System.Windows.Forms.MenuItem
     Friend WithEvents mnuImportTarif As MenuItem
+    Friend WithEvents mnuVerifInfosLivraisons As System.Windows.Forms.MenuItem
     'Objet créé pour afficher l'evenement Connected/Disconnected
     Public m_currentuser As aut_user
 
@@ -313,6 +314,7 @@ Friend Class frmMain
         Me.StatusBarDB = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarError = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarEtat = New System.Windows.Forms.StatusBarPanel()
+        Me.mnuVerifInfosLivraisons = New System.Windows.Forms.MenuItem()
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -493,7 +495,7 @@ Friend Class frmMain
         'mnuGC
         '
         Me.mnuGC.Index = 2
-        Me.mnuGC.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuGC_CmdCltSaisie, Me.mnuGC_BonAppro, Me.mnuGC_Lstcommandes, Me.mnuGC_LstBonAppro, Me.mnuGC_importCmd, Me.MenuItem7, Me.mnuEclatementCommandes, Me.mnuMAJLivraisonCommande, Me.mnuExportQuadra, Me.MenuItem10, Me.mnuGC_EtatStock, Me.mnuGC_MouvementArticle, Me.mnuGC_StatQteArticleMois, Me.MenuItem5, Me.mnuGC_JournalAnnoncesLivraison, Me.mnuGC_JournalAnnoncesAppro, Me.mnuGC_RecapAnnonces, Me.MenuItem9, Me.mnuGC_LstEntreesPlateforme, Me.mnuGC_LstSortiesPlateforme})
+        Me.mnuGC.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuGC_CmdCltSaisie, Me.mnuGC_BonAppro, Me.mnuGC_Lstcommandes, Me.mnuGC_LstBonAppro, Me.mnuGC_importCmd, Me.MenuItem7, Me.mnuEclatementCommandes, Me.mnuMAJLivraisonCommande, Me.mnuVerifInfosLivraisons, Me.mnuExportQuadra, Me.MenuItem10, Me.mnuGC_EtatStock, Me.mnuGC_MouvementArticle, Me.mnuGC_StatQteArticleMois, Me.MenuItem5, Me.mnuGC_JournalAnnoncesLivraison, Me.mnuGC_JournalAnnoncesAppro, Me.mnuGC_RecapAnnonces, Me.MenuItem9, Me.mnuGC_LstEntreesPlateforme, Me.mnuGC_LstSortiesPlateforme})
         Me.mnuGC.MergeType = System.Windows.Forms.MenuMerge.Remove
         Me.mnuGC.Tag = "mnuGC"
         Me.mnuGC.Text = "Gestion &Commerciale"
@@ -548,72 +550,72 @@ Friend Class frmMain
         '
         'mnuExportQuadra
         '
-        Me.mnuExportQuadra.Index = 8
+        Me.mnuExportQuadra.Index = 9
         Me.mnuExportQuadra.Text = "ExportQuadra"
         '
         'MenuItem10
         '
-        Me.MenuItem10.Index = 9
+        Me.MenuItem10.Index = 10
         Me.MenuItem10.Text = "-"
         '
         'mnuGC_EtatStock
         '
-        Me.mnuGC_EtatStock.Index = 10
+        Me.mnuGC_EtatStock.Index = 11
         Me.mnuGC_EtatStock.Shortcut = System.Windows.Forms.Shortcut.F7
         Me.mnuGC_EtatStock.Tag = "mnuGC_EtatStock"
         Me.mnuGC_EtatStock.Text = "&Etat du Stock"
         '
         'mnuGC_MouvementArticle
         '
-        Me.mnuGC_MouvementArticle.Index = 11
+        Me.mnuGC_MouvementArticle.Index = 12
         Me.mnuGC_MouvementArticle.Shortcut = System.Windows.Forms.Shortcut.F8
         Me.mnuGC_MouvementArticle.Tag = "mnuGC_MouvementArticle"
         Me.mnuGC_MouvementArticle.Text = "&Mouvement Article"
         '
         'mnuGC_StatQteArticleMois
         '
-        Me.mnuGC_StatQteArticleMois.Index = 12
+        Me.mnuGC_StatQteArticleMois.Index = 13
         Me.mnuGC_StatQteArticleMois.Shortcut = System.Windows.Forms.Shortcut.F9
         Me.mnuGC_StatQteArticleMois.Tag = "mnuGC_StatQteArticleMois"
         Me.mnuGC_StatQteArticleMois.Text = "Qte / Article / mois"
         '
         'MenuItem5
         '
-        Me.MenuItem5.Index = 13
+        Me.MenuItem5.Index = 14
         Me.MenuItem5.Text = "-"
         '
         'mnuGC_JournalAnnoncesLivraison
         '
-        Me.mnuGC_JournalAnnoncesLivraison.Index = 14
+        Me.mnuGC_JournalAnnoncesLivraison.Index = 15
         Me.mnuGC_JournalAnnoncesLivraison.Tag = "mnuGC_JournalAnnoncesLivraison"
         Me.mnuGC_JournalAnnoncesLivraison.Text = "Journal d'annonces LIVRAISON"
         '
         'mnuGC_JournalAnnoncesAppro
         '
-        Me.mnuGC_JournalAnnoncesAppro.Index = 15
+        Me.mnuGC_JournalAnnoncesAppro.Index = 16
         Me.mnuGC_JournalAnnoncesAppro.Tag = "mnuGC_JournalAnnoncesAppro"
         Me.mnuGC_JournalAnnoncesAppro.Text = "Journal d'annonces APPROVISIONNEMENT"
         '
         'mnuGC_RecapAnnonces
         '
-        Me.mnuGC_RecapAnnonces.Index = 16
+        Me.mnuGC_RecapAnnonces.Index = 17
         Me.mnuGC_RecapAnnonces.Tag = "mnuGC_RecapAnnonces"
         Me.mnuGC_RecapAnnonces.Text = "Recapitulatif annonces Transporteur"
         '
         'MenuItem9
         '
-        Me.MenuItem9.Index = 17
+        Me.MenuItem9.Index = 18
         Me.MenuItem9.Text = "-"
         '
         'mnuGC_LstEntreesPlateforme
         '
-        Me.mnuGC_LstEntreesPlateforme.Index = 18
+        Me.mnuGC_LstEntreesPlateforme.Index = 19
         Me.mnuGC_LstEntreesPlateforme.Tag = "mnuGC_LstEntreesPlateforme"
         Me.mnuGC_LstEntreesPlateforme.Text = "Liste des entrées plateforme"
         '
         'mnuGC_LstSortiesPlateforme
         '
-        Me.mnuGC_LstSortiesPlateforme.Index = 19
+        Me.mnuGC_LstSortiesPlateforme.Index = 20
         Me.mnuGC_LstSortiesPlateforme.Tag = "mnuGC_LstSortiesPlateforme"
         Me.mnuGC_LstSortiesPlateforme.Text = "Liste des sorties plateforme"
         '
@@ -1076,7 +1078,7 @@ Friend Class frmMain
         Me.mnuToolBar.Location = New System.Drawing.Point(0, 0)
         Me.mnuToolBar.Name = "mnuToolBar"
         Me.mnuToolBar.ShowToolTips = True
-        Me.mnuToolBar.Size = New System.Drawing.Size(1016, 28)
+        Me.mnuToolBar.Size = New System.Drawing.Size(890, 28)
         Me.mnuToolBar.TabIndex = 1
         Me.mnuToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
         '
@@ -1144,11 +1146,11 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 191)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 548)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
-        Me.StatusBar1.Size = New System.Drawing.Size(1016, 22)
+        Me.StatusBar1.Size = New System.Drawing.Size(890, 22)
         Me.StatusBar1.TabIndex = 3
         '
         'StatusBarDB
@@ -1165,13 +1167,18 @@ Friend Class frmMain
         Me.StatusBarEtat.Alignment = System.Windows.Forms.HorizontalAlignment.Right
         Me.StatusBarEtat.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring
         Me.StatusBarEtat.Name = "StatusBarEtat"
-        Me.StatusBarEtat.Width = 399
+        Me.StatusBarEtat.Width = 273
+        '
+        'mnuVerifInfosLivraisons
+        '
+        Me.mnuVerifInfosLivraisons.Index = 8
+        Me.mnuVerifInfosLivraisons.Text = "Vérification des informations de livraisons"
         '
         'frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(1016, 213)
+        Me.ClientSize = New System.Drawing.Size(890, 570)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default
@@ -1181,6 +1188,7 @@ Friend Class frmMain
         Me.Name = "frmMain"
         Me.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Text = "VINICOM"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2109,6 +2117,14 @@ Friend Class frmMain
     Private Sub mnuImportTarif_Click(sender As Object, e As EventArgs) Handles mnuImportTarif.Click
         Dim ofrm As FrmVinicom
         ofrm = New frmImportTarif
+        ofrm.MdiParent = Me
+        ofrm.Show()
+
+    End Sub
+
+    Private Sub mnuVerifInfosLivraisons_Click(sender As Object, e As EventArgs) Handles mnuVerifInfosLivraisons.Click
+        Dim ofrm As FrmVinicom
+        ofrm = New frmVerificationLivraison
         ofrm.MdiParent = Me
         ofrm.Show()
 

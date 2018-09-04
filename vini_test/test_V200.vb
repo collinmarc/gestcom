@@ -76,7 +76,7 @@ Imports vini_DB
 
         objLgCmd = objCmd.AjouteLigne("10", m_objPRD, 18, 10.5)
 
-        objLgCmd.calcPoidsColis()
+        objLgCmd.calcPoidsColis(objLgCmd.qteCommande)
         Assert.AreEqual(objLgCmd.poids, 18 * poidsCont, "Poids de la ligne")
         Assert.AreEqual(objLgCmd.qteColis, 18 / nbreCond, "QteColis de la ligne")
 

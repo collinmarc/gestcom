@@ -1114,48 +1114,59 @@ Public Class CommandeClient
             nFile = FreeFile()
             FileOpen(nFile, strFileName, OpenMode.Output, OpenAccess.Write, OpenShare.LockWrite)
             For Each oLg In m_colLignes
-                '1
-                strResult = Right("00000000" + Trim(Me.code), 8)
-                '9
-                strResult = strResult + Format(Now(), "ddMMyyyy")
-                '17
-                strResult = strResult + Format(Me.dateEnlevement, "ddMMyyyy")
-                '25
-                strResult = strResult + Format(Me.dateLivraison, "ddMMyyyy")
-                '33
-                strResult = strResult + Left(Me.oTiers.code + Space(8), 8)
-                '41
-                strResult = strResult + Left(Me.NomLivraison + Space(30), 30)
-                '71
-                strResult = strResult + Left(Me.RaisonSocialeLivraison + Space(30), 30)
-                '101
-                strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue1 + Space(30), 30)
-                '131
-                strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue2 + Space(30), 30)
-                '161
-                strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.cp + Space(5), 5)
-                '166
-                strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.ville + Space(26), 26)
-                '192
-                strResult = strResult + Left(Me.CommLivraison.comment + Space(100), 100)
-                '292
-                strResult = strResult + Format(oLg.num, "000")
-                '295
-                strResult = strResult + Left(oLg.oProduit.code + Space(15), 15)
-                '310
-                strResult = strResult + Format(oLg.qteColis, "0000000")
-                '317
-                strResult = strResult + Format(oLg.qteCommande, "0000000")
-                '324
-                strResult = strResult + Left(Me.oTransporteur.nom + Space(50), 50)
-                '374
-                strResult = Replace(strResult, vbCrLf, "--")
-                strResult = Replace(strResult, vbCr, "-")
-                strResult = Replace(strResult, vbLf, "-")
-                strResult = Replace(strResult, vbNullChar, "-")
-                strResult = Replace(strResult, vbTab, "-")
-                strResult = Replace(strResult, vbBack, "-")
-                PrintLine(nFile, strResult)
+                If Not oLg.bGratuit Then
+                    'Cumul des qte commandées du même produit 
+                    Dim nQteComm As Decimal = oLg.qteCommande
+                    For Each oLgG As LgCommande In m_colLignes
+                        If oLgG.bGratuit And oLgG.oProduit.id = oLg.oProduit.id Then
+                            nQteComm = nQteComm + oLgG.qteCommande
+                        End If
+                    Next
+                    'Le Calcul du nombre de colis a déjà été fait
+
+                    '1
+                    strResult = Right("00000000" + Trim(Me.code), 8)
+                    '9
+                    strResult = strResult + Format(Now(), "ddMMyyyy")
+                    '17
+                    strResult = strResult + Format(Me.dateEnlevement, "ddMMyyyy")
+                    '25
+                    strResult = strResult + Format(Me.dateLivraison, "ddMMyyyy")
+                    '33
+                    strResult = strResult + Left(Me.oTiers.code + Space(8), 8)
+                    '41
+                    strResult = strResult + Left(Me.NomLivraison + Space(30), 30)
+                    '71
+                    strResult = strResult + Left(Me.RaisonSocialeLivraison + Space(30), 30)
+                    '101
+                    strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue1 + Space(30), 30)
+                    '131
+                    strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue2 + Space(30), 30)
+                    '161
+                    strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.cp + Space(5), 5)
+                    '166
+                    strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.ville + Space(26), 26)
+                    '192
+                    strResult = strResult + Left(Me.CommLivraison.comment + Space(100), 100)
+                    '292
+                    strResult = strResult + Format(oLg.num, "000")
+                    '295
+                    strResult = strResult + Left(oLg.oProduit.code + Space(15), 15)
+                    '310
+                    strResult = strResult + Format(oLg.qteColis, "0000000")
+                    '317
+                    strResult = strResult + Format(nQteComm, "0000000")
+                    '324
+                    strResult = strResult + Left(Me.oTransporteur.nom + Space(50), 50)
+                    '374
+                    strResult = Replace(strResult, vbCrLf, "--")
+                    strResult = Replace(strResult, vbCr, "-")
+                    strResult = Replace(strResult, vbLf, "-")
+                    strResult = Replace(strResult, vbNullChar, "-")
+                    strResult = Replace(strResult, vbTab, "-")
+                    strResult = Replace(strResult, vbBack, "-")
+                    PrintLine(nFile, strResult)
+                End If
             Next oLg
             FileClose(nFile)
 
@@ -1267,5 +1278,27 @@ Public Class CommandeClient
 
     End Function
 
+    Public Function LivrerToutOK() As Boolean
+        Dim bReturn As Boolean
+        Try
 
+            Dim oLgCom As LgCommande
+            For Each oLgCom In Me.colLignes
+                If oLgCom.bResume Then
+                    oLgCom.load()
+                End If
+                'La qte Livrée est initialisée avec la Qt en Commande
+                oLgCom.qteLiv = oLgCom.qteCommande
+                'Calcul de la commssion sur la Qte Livrée
+                oLgCom.CalculCommission(Me.Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
+            Next oLgCom
+            'La Commande passe à Livré
+            Me.changeEtat(vncActionEtatCommande.vncActionLivrer)
+            bReturn = True
+        Catch ex As Exception
+            setError("CommandeClient.LivrerToutOK ERR" & ex.Message)
+            bReturn = False
+        End Try
+
+    End Function
 End Class ' CommandeClient

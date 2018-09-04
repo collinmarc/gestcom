@@ -578,7 +578,7 @@ Public Class Produit
                 Next
                 If bok Then
                     nColis = CInt(nqte / CDec(objCond.valeur))
-                    If ((nqte / CDec(objCond.valeur) - nColis)) <> 0 Then
+                    If ((nqte / CDec(objCond.valeur) - nColis)) > 0 Then
                         'S'il y a un reste => ajout d'un colis
                         nColis = nColis + 1
                     End If

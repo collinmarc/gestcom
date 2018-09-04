@@ -177,6 +177,7 @@
     <Compile Include="Client.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="clsFTP.vb" />
     <Compile Include="clsFTPVinicom.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -213,6 +214,8 @@
     <Compile Include="Imap\ImapException.vb" />
     <Compile Include="Imap\ImportPrestashop.vb" />
     <Compile Include="ImportTarifGESTCOM.vb" />
+    <Compile Include="MsgLivraison.vb" />
+    <Compile Include="mvtEDI.vb" />
     <Compile Include="Observable.vb" />
     <Compile Include="IObservateur.vb" />
     <Compile Include="lgFactHBV.vb" />

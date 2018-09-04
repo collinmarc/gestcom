@@ -143,7 +143,9 @@ Public Class FrmVinicom
             'Debug.Assert(MdiParent.GetType().Name().Equals("frmMain"))
             ofrmMain = MdiParent
             setToolbarButtons_vinicom()
-            ofrmMain.setFrmActive(Me)
+            If ofrmMain IsNot Nothing Then
+                ofrmMain.setFrmActive(Me)
+            End If
 
             If GLOBALCONNECTION.Equals("Medium") Then
                 Persist.shared_connect()
@@ -464,7 +466,9 @@ Public Class FrmVinicom
             If Not bTesting Then
                 AddHandlerValidated(Controls)
             End If
-            EnableControls(False)
+            If Not bTesting Then
+                EnableControls(False)
+            End If
         End If
         Me.WindowState = FormWindowState.Maximized
     End Sub

@@ -1154,15 +1154,7 @@ Public Class frmCommandeClient
         Dim bReturn As Boolean
 
         setcursorWait()
-        For Each oLgCom In getCommandeCourante.colLignes
-            If oLgCom.bResume Then
-                bReturn = oLgCom.load()
-                Debug.Assert(bReturn, LgCommande.getErreur())
-            End If
-            oLgCom.qteLiv = oLgCom.qteCommande
-            'Calcul de la commssion sur la Qte Livrée
-            oLgCom.CalculCommission(getCommandeCourante().Origine, CalculCommQte.CALCUL_COMMISSION_QTE_LIVREE)
-        Next oLgCom
+        getCommandeCourante.LivrerToutOK()
         If getCommandeCourante.estPartiellementLivree() Then
             ActionLivrer()
         End If

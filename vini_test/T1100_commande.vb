@@ -2,6 +2,7 @@
 Imports System
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports vini_DB
+Imports System.IO
 
 
 <TestClass()> Public Class T1100_commande
@@ -13,6 +14,8 @@ Imports vini_DB
     Dim objProduit1 As Produit
     Dim objProduit2 As Produit
     Dim objProduit3 As Produit
+    Dim oCont As contenant
+    Dim oCond As New Param()
     <TestInitialize()> Public Overrides Sub TestInitialize()
         MyBase.TestInitialize()
 
@@ -22,7 +25,26 @@ Imports vini_DB
         m_oFourn = New Fournisseur("FRNT1100", "MonFournisseur")
         m_oFourn.Save()
 
+
+
+        oCont = New contenant()
+        oCont.code = "BLLE"
+        oCont.poids = 1020
+        oCont.defaut = False
+        Assert.IsTrue(oCont.Save())
+
+        oCond.code = "CAISS12"
+        oCond.type = PAR_CONDITIONNEMENT
+        oCond.valeur = 12
+        oCond.defaut = False
+        Assert.IsTrue(oCond.Save())
+
+        Param.LoadcolParams()
+        contenant.LoadcolContenants()
+
         m_oProduit = New Produit("TSTPRDT1100", m_oFourn, 1990)
+        m_oProduit.idConditionnement = oCond.id
+        m_oProduit.idContenant = oCont.id
         m_oProduit.save()
 
         m_oClient = New Client("CLTT1100", "MonClient")
@@ -56,6 +78,13 @@ Imports vini_DB
         m_oClient.save()
         Persist.shared_disconnect()
 
+        oCont.bDeleted = True
+        oCont.Save()
+
+        oCond.bDeleted = True
+        oCond.Save()
+
+        Param.LoadcolParams()
         MyBase.TestCleanup()
     End Sub
     <TestMethod()> Public Sub T010_Object()
@@ -1151,6 +1180,159 @@ Imports vini_DB
 
 
     End Sub
+    ''' <summary>
+    ''' Test de Prise en compte de produits gratuits dans le calcul des nombre de colis
+    ''' </summary>
+    ''' <remarks></remarks>
+
+    <TestMethod()> Public Sub T_PECGratuitNbreColis()
+        Dim objCmd As CommandeClient
+        Dim objLgCmd1 As LgCommande
+        Dim objLgCmd2 As LgCommande
+        Dim objLgCmd3 As LgCommande
+        Dim nidCmd As Integer
+
+        'GIVEN j'ai un produit avec un contenant de 1020 et un conditionnement par 12 
+        oCont.poids = 1020
+        oCond.valeur = 12
+        Assert.IsTrue(oCont.Save)
+        Assert.IsTrue(oCond.Save)
+        m_oProduit.idContenant = oCont.id
+        m_oProduit.idConditionnement = oCond.id
+        m_oProduit.save()
+        'AND une Commande Client créée
+        objCmd = New CommandeClient(m_oClient)
+
+        'WHEN j'ajoute une ligne de 11 produit payant
+        objLgCmd1 = objCmd.AjouteLigne("10", m_oProduit, 11, 10.5, False)
+        'AND un produit Gratuit
+        objLgCmd2 = objCmd.AjouteLigne("20", m_oProduit, 1, 0, True)
+
+        'THEN le nombre de colis de la premier Ligne est égal à 1
+        'Les qte de colis ne sont uniquement que sur les Payants
+        Assert.AreEqual(CDec(1), objLgCmd1.qteColis, "QteColis de la ligne 1")
+        'AND le nombre de colis de la Ligne gratuite est égale à 0
+        Assert.AreEqual(CDec(0), objLgCmd2.qteColis, "QteColis de la ligne 2")
+
+        'AND le nombre de colis de la commande est égale à 1
+        Assert.AreEqual(1D, objCmd.qteColis, "QteColis de la Commande ")
+        'AND le poids de la commande est égale à 12* poids unitaire
+        Assert.AreEqual(CDec(12 * oCont.poids), objCmd.poids, "Poids de la Commande ")
+
+        'WHEN j'ajoute une autre Ligne gratuite
+        objLgCmd3 = objCmd.AjouteLigne("30", m_oProduit, 1, 0, True)
+
+        'THEN le nombre de colis de la premier Ligne est égal à 2
+        Assert.AreEqual(CDec(2), objLgCmd1.qteColis, "QteColis de la ligne 1")
+        'AND le nombre de colis des Lignes gratuites est égale à 0
+        Assert.AreEqual(CDec(0), objLgCmd2.qteColis, "QteColis de la ligne 2")
+        Assert.AreEqual(CDec(0), objLgCmd3.qteColis, "QteColis de la ligne 3")
+
+        'AND Le nombre de colis de la commande est égale à 2
+        Assert.AreEqual(2D, objCmd.qteColis, "QteColis de la Commande ")
+        'AND le poids est de 13
+        Assert.AreEqual(CDec(13 * oCont.poids), objCmd.poids, "Poids de la Commande ")
+
+    End Sub
+    ''' <summary>
+    ''' Test de Prise en compte de produits gratuits dans le calcul des nombre de colis
+    ''' </summary>
+    ''' <remarks></remarks>
+
+    <TestMethod()> Public Sub T_PECGratuitWebEDI()
+        Dim objCmd As CommandeClient
+        Dim objLgCmd1 As LgCommande
+        Dim objLgCmd2 As LgCommande
+        Dim objLgCmd3 As LgCommande
+        Dim nidCmd As Integer
+
+        'GIVEN j'ai un produit avec un contenant de 1020 et un conditionnement par 12 
+        oCont.poids = 1020
+        oCond.valeur = 12
+        Assert.IsTrue(oCont.Save)
+        Assert.IsTrue(oCond.Save)
+        m_oProduit.idContenant = oCont.id
+        m_oProduit.idConditionnement = oCond.id
+        m_oProduit.save()
+        'AND une Commande Client créée
+        objCmd = New CommandeClient(m_oClient)
+        'And le Fichier d'export n'existe pas
+        If System.IO.File.Exists("./exportWebEDI.txt") Then
+            System.IO.File.Delete("./exportWebEDI.txt")
+        End If
+
+
+        'WHEN j'ajoute une ligne de 11 produit payant
+        objLgCmd1 = objCmd.AjouteLigne("10", m_oProduit, 11, 10.5, False)
+        'AND un produit Gratuit
+        objLgCmd2 = objCmd.AjouteLigne("20", m_oProduit, 1, 0, True)
+        'AND j'ajoute une autre Ligne gratuite
+        objLgCmd3 = objCmd.AjouteLigne("30", m_oProduit, 1, 0, True)
+        'AND J'export en WebEDI
+        objCmd.exporterWebEDI("./exportEDI.txt")
+
+        'THEN 
+        'Le Fichier d'export est bien créé
+        Assert.IsTrue(System.IO.File.Exists("./ExportEDI.txt"))
+        Dim oSr As StreamReader = System.IO.File.OpenText("./ExportEDI.txt")
+        Dim nLineNumber As Integer = 0
+        Dim strResult As String
+        While Not oSr.EndOfStream
+
+            nLineNumber = nLineNumber + 1
+            strResult = oSr.ReadLine()
+        End While
+
+        Assert.AreEqual(1, nLineNumber, "Une seule Ligne de fichier")
+        Assert.AreEqual("0000002", Mid(strResult, 310, 7), "qte Colis en WebEDI")
+        Assert.AreEqual("0000013", Mid(strResult, 317, 7), "qte Commandée en WebEDI")
+
+    End Sub
+    <TestMethod()> Public Sub T_ToutLivrerOK()
+        Dim objCmd As CommandeClient
+        Dim objLgCmd1 As LgCommande
+        Dim objLgCmd2 As LgCommande
+        Dim objLgCmd3 As LgCommande
+        Dim nidCmd As Integer
+
+        'GIVEN j'ai un produit avec un contenant de 1020 et un conditionnement par 12 
+        oCont.poids = 1020
+        oCond.valeur = 12
+        Assert.IsTrue(oCont.Save)
+        Assert.IsTrue(oCond.Save)
+        m_oProduit.idContenant = oCont.id
+        m_oProduit.idConditionnement = oCond.id
+        m_oProduit.save()
+        'AND une Commande Client créée
+        objCmd = New CommandeClient(m_oClient)
+        'And le Fichier d'export n'existe pas
+        If System.IO.File.Exists("./exportWebEDI.txt") Then
+            System.IO.File.Delete("./exportWebEDI.txt")
+        End If
+
+
+        'WHEN j'ajoute une ligne de 11 produit payant
+        objLgCmd1 = objCmd.AjouteLigne("10", m_oProduit, 11, 10.5, False)
+        'AND un produit Gratuit
+        objLgCmd2 = objCmd.AjouteLigne("20", m_oProduit, 1, 0, True)
+        'AND j'ajoute une autre Ligne gratuite
+        objLgCmd3 = objCmd.AjouteLigne("30", m_oProduit, 1, 0, True)
+        'AND je valide ma commande
+        objCmd.save()
+        'And je Livre ma Commande
+        objCmd.LivrerToutOK()
+
+
+        'THEN 
+        'Le nombre de Colis est de 2
+        Assert.AreEqual(ETAT_LIVREE, objCmd.etat.codeEtat)
+        'Pour Chaque Ligne la qte Livrée est égale à la Qte Commandées
+        For Each objLg As LgCommande In objCmd.colLignes
+            Assert.AreEqual(objLg.qteCommande, objLg.qteLiv)
+        Next
+
+    End Sub
+
 End Class
 
 

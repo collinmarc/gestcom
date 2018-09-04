@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Collections.Generic
 '===================================================================================================================================
 'Projet : Vinicom
 'Auteur : Marc Collin 
@@ -300,8 +301,15 @@ Public Class clsFTPVinicom
 
                     For Each strFileName In Directory.GetFiles(strLocalDirName)
                         oInf = New FileInfo(strFileName)
+                        Dim targetFileName As String
+                        If String.IsNullOrEmpty(remoteDir) Then
+                            targetFileName = oInf.Name
+                        Else
+                            targetFileName = remoteDir & "/" & oInf.Name
 
-                        If m_FTP.Upload(strFileName, oInf.Name) Then
+                        End If
+
+                        If m_FTP.Upload(strFileName, targetFileName) Then
                             nReturn = nReturn + 1
                         Else
                             If Not String.IsNullOrEmpty(m_strErrorDescription) Then
@@ -351,7 +359,41 @@ Public Class clsFTPVinicom
 
         Return bReturn
     End Function ' downloadToDir
+    ''' <summary>
+    ''' Download All Files from Remote Directory
+    ''' </summary>
+    ''' <param name="strLocalDirName"></param>
+    ''' <param name="strFileName"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function downloadDirToDir(ByVal strLocalDirName As String) As Boolean
+        Dim bReturn As Boolean
 
+        Try
+
+            bReturn = False
+            m_strErrorDescription = String.Empty
+            'Pose du verrou
+            If lockTo() Then
+                Dim lstFile As List(Of String) = m_FTP.ListDirectory("/" & m_RemoteDir)
+                For Each strFile As String In lstFile
+                    If strFile <> "." And strFile <> ".." Then
+                        If m_FTP.FtpFileExists("/" & m_RemoteDir & "/" & strFile) Then
+                            m_FTP.Download("/" & m_RemoteDir & "/" & strFile, strLocalDirName & "/" & strFile, True)
+                        End If
+                    End If
+
+                Next
+                'Libération du verrou
+                bReturn = unlockTo()
+            End If
+        Catch ex As Exception
+            Debug.Assert(False, "clsFTPVinicom.downloadToDir" & ex.Message)
+            bReturn = False
+        End Try
+
+        Return bReturn
+    End Function ' downloadToDir
     '=======================================================================
     'Fonction : shortResume()
     'Description : Rend un resumé de l'objet sous forme de chaine
