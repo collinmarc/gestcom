@@ -1325,7 +1325,7 @@ Imports System.IO
 
         'THEN 
         'Le nombre de Colis est de 2
-        Assert.AreEqual(ETAT_LIVREE, objCmd.etat.codeEtat)
+        Assert.AreEqual(vncEnums.vncEtatCommande.vncLivree, objCmd.etat.codeEtat)
         'Pour Chaque Ligne la qte Livrée est égale à la Qte Commandées
         For Each objLg As LgCommande In objCmd.colLignes
             Assert.AreEqual(objLg.qteCommande, objLg.qteLiv)

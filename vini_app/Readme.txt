@@ -1,8 +1,10 @@
-﻿Version 5.9.5.1b
-date 08/08/2018
+﻿Version 5.9.6b
+date xx/xx/2018
 #871 : Taux de TVA sur les factures
 #856 : Calcul du nbre colis pour les bons d'appro
 #873 : RIB sur les BAF HOBIVIN
+#870 : Automatisation du retour de Livraison
+#875 : Totaux sur liste des factures de colisage et de transport
 
 Version 5.9.5.1a
 date 08/08/2018

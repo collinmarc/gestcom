@@ -181,7 +181,7 @@ Imports System.Text.RegularExpressions
 
     End Sub
 
-    <TestMethod()> Public Sub TestSendMailCmd()
+    <TestMethod(), Ignore()> Public Sub TestSendMailCmd()
         Dim mail As MailMessage = New MailMessage("marc@marccollin.com", "marccollintest@gmail.com")
 
         mail.Subject = "TEST"
@@ -222,7 +222,7 @@ Imports System.Text.RegularExpressions
 
         smtp = New SmtpClient()
         'Connection avec PHPNET
-                smtp.Host = "smtpauth.phpnet.org"
+        smtp.Host = "smtpauth.phpnet.org"
         smtp.Port = 8025
         'smtp.EnableSsl = True
         smtp.Credentials = New System.Net.NetworkCredential("marc@marccollin.com", "tphhgv3..")
@@ -955,7 +955,7 @@ Imports System.Text.RegularExpressions
     ''' Test de l'import Prestashop d'une commande saisie sur prestashop et envoyé sur marccollintest.com
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod()> Public Sub TestImportPrestashopCmd2()
+    <TestMethod(), Ignore()> Public Sub TestImportPrestashopCmd2()
         TestCleanDB()
         Dim oParam As Param = Param.colModeReglement(1)
 

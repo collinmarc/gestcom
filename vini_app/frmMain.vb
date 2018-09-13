@@ -214,6 +214,7 @@ Friend Class frmMain
         Me.MenuItem7 = New System.Windows.Forms.MenuItem()
         Me.mnuEclatementCommandes = New System.Windows.Forms.MenuItem()
         Me.mnuMAJLivraisonCommande = New System.Windows.Forms.MenuItem()
+        Me.mnuVerifInfosLivraisons = New System.Windows.Forms.MenuItem()
         Me.mnuExportQuadra = New System.Windows.Forms.MenuItem()
         Me.MenuItem10 = New System.Windows.Forms.MenuItem()
         Me.mnuGC_EtatStock = New System.Windows.Forms.MenuItem()
@@ -314,7 +315,6 @@ Friend Class frmMain
         Me.StatusBarDB = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarError = New System.Windows.Forms.StatusBarPanel()
         Me.StatusBarEtat = New System.Windows.Forms.StatusBarPanel()
-        Me.mnuVerifInfosLivraisons = New System.Windows.Forms.MenuItem()
         CType(Me.StatusBarDB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarError, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StatusBarEtat, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -495,7 +495,7 @@ Friend Class frmMain
         'mnuGC
         '
         Me.mnuGC.Index = 2
-        Me.mnuGC.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuGC_CmdCltSaisie, Me.mnuGC_BonAppro, Me.mnuGC_Lstcommandes, Me.mnuGC_LstBonAppro, Me.mnuGC_importCmd, Me.MenuItem7, Me.mnuEclatementCommandes, Me.mnuMAJLivraisonCommande, Me.mnuVerifInfosLivraisons, Me.mnuExportQuadra, Me.MenuItem10, Me.mnuGC_EtatStock, Me.mnuGC_MouvementArticle, Me.mnuGC_StatQteArticleMois, Me.MenuItem5, Me.mnuGC_JournalAnnoncesLivraison, Me.mnuGC_JournalAnnoncesAppro, Me.mnuGC_RecapAnnonces, Me.MenuItem9, Me.mnuGC_LstEntreesPlateforme, Me.mnuGC_LstSortiesPlateforme})
+        Me.mnuGC.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuGC_CmdCltSaisie, Me.mnuGC_BonAppro, Me.mnuGC_Lstcommandes, Me.mnuGC_LstBonAppro, Me.mnuGC_importCmd, Me.MenuItem7, Me.mnuVerifInfosLivraisons, Me.mnuEclatementCommandes, Me.mnuExportQuadra, Me.mnuMAJLivraisonCommande, Me.MenuItem10, Me.mnuGC_EtatStock, Me.mnuGC_MouvementArticle, Me.mnuGC_StatQteArticleMois, Me.MenuItem5, Me.mnuGC_JournalAnnoncesLivraison, Me.mnuGC_JournalAnnoncesAppro, Me.mnuGC_RecapAnnonces, Me.MenuItem9, Me.mnuGC_LstEntreesPlateforme, Me.mnuGC_LstSortiesPlateforme})
         Me.mnuGC.MergeType = System.Windows.Forms.MenuMerge.Remove
         Me.mnuGC.Tag = "mnuGC"
         Me.mnuGC.Text = "Gestion &Commerciale"
@@ -540,17 +540,22 @@ Friend Class frmMain
         '
         'mnuEclatementCommandes
         '
-        Me.mnuEclatementCommandes.Index = 6
+        Me.mnuEclatementCommandes.Index = 7
         Me.mnuEclatementCommandes.Text = "Eclatement des Commandes"
         '
         'mnuMAJLivraisonCommande
         '
-        Me.mnuMAJLivraisonCommande.Index = 7
+        Me.mnuMAJLivraisonCommande.Index = 9
         Me.mnuMAJLivraisonCommande.Text = "Mise à jour Infos livaison"
+        '
+        'mnuVerifInfosLivraisons
+        '
+        Me.mnuVerifInfosLivraisons.Index = 6
+        Me.mnuVerifInfosLivraisons.Text = "Vérification des informations de livraisons"
         '
         'mnuExportQuadra
         '
-        Me.mnuExportQuadra.Index = 9
+        Me.mnuExportQuadra.Index = 8
         Me.mnuExportQuadra.Text = "ExportQuadra"
         '
         'MenuItem10
@@ -1146,7 +1151,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 548)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 528)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1169,16 +1174,11 @@ Friend Class frmMain
         Me.StatusBarEtat.Name = "StatusBarEtat"
         Me.StatusBarEtat.Width = 273
         '
-        'mnuVerifInfosLivraisons
-        '
-        Me.mnuVerifInfosLivraisons.Index = 8
-        Me.mnuVerifInfosLivraisons.Text = "Vérification des informations de livraisons"
-        '
         'frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(890, 570)
+        Me.ClientSize = New System.Drawing.Size(890, 550)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default

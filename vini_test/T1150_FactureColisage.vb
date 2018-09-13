@@ -211,7 +211,7 @@ Imports System.IO
         Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
         Assert.AreEqual(2, oFactCol1.colLignes.Count, "2 ligne par Facture")
         Assert.AreEqual(m_objFRN.idModeReglement2, oFactCol1.idModeReglement)
-        Assert.AreNotEqual(CDate("01/01/2000"), oFactCol1.dEcheance)
+        '        Assert.AreNotEqual(CDate("01/01/2000"), oFactCol1.dEcheance)
 
         oLgFactCol = oFactCol1.colLignes(1)
         ' la Ligne pour le Produit 4 ne doit pas être prise en compte

@@ -886,8 +886,10 @@ Imports CrystalDecisions.CrystalReports.Engine
         oFact = New FactCom(m_oFourn)
         oFact.idModeReglement = oParam.id
 
-        Assert.AreEqual("LC", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
-        Assert.AreEqual("LCR", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
+        ''Assert.AreEqual("LC", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
+        '        Assert.AreEqual("LCR", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
+        Assert.AreEqual("TA", oFact.getAttributeValue("MODEREGLEMENT2", Nothing))
+        Assert.AreEqual("TRA", oFact.getAttributeValue("MODEREGLEMENT4", Nothing))
 
         oParam = New ParamModeReglement()
         oParam.code = "CHQ30NETS"
