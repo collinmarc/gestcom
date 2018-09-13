@@ -72,7 +72,15 @@ Public Class mvtEDI
                     Else
                         Dim tabFields As String() = oLine.Split(";")
                         omvtEDI = New mvtEDI(tabFields(6), tabFields(4), tabFields(5))
-                        lstMvt.Add(omvtEDI)
+                        'Vérification des entrées sorties
+                        Try
+                            If omvtEDI.Sortie <> 0 Then
+                                lstMvt.Add(omvtEDI)
+                            End If
+
+                        Catch ex As Exception
+
+                        End Try
                     End If
                 Next
                 If pbRenameFile Then
@@ -93,12 +101,23 @@ Public Class mvtEDI
         Dim lstcumuls As New List(Of mvtEDI)
         Dim omvtCumul As mvtEDI = Nothing
         Try
+            'Tri de la liste par numero de commande
             pListmvt.Sort()
             Dim entreeMVT As Integer = 0
             Dim sortieMVT As Integer = 0
             For Each oMvt As mvtEDI In pListmvt
-                entreeMVT = CInt(oMvt.Entree)
-                sortieMVT = CInt(oMvt.Sortie)
+                Try
+                    entreeMVT = CInt(oMvt.Entree)
+
+                Catch ex As Exception
+                    entreeMVT = 0
+                End Try
+                Try
+                    sortieMVT = CInt(oMvt.Sortie)
+
+                Catch ex As Exception
+                    sortieMVT = 0
+                End Try
 
                 If omvtCumul Is Nothing Then
                     omvtCumul = New mvtEDI()
