@@ -1,6 +1,10 @@
 Imports vini_DB
 Imports System.ComponentModel
 
+Public Class UserState
+    Public nNum As Integer
+    Public strMsg As String
+End Class
 Public Class frmVerificationLivraison
     Inherits FrmDonBase
     Protected m_lstCommandes As List(Of CommandeClient)
@@ -21,6 +25,9 @@ Public Class frmVerificationLivraison
     Friend WithEvents rbManuel As System.Windows.Forms.RadioButton
     Friend WithEvents pnlFichierATraiter As System.Windows.Forms.Panel
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
+    Friend WithEvents lblMessage As System.Windows.Forms.Label
     Protected m_colFact As ColEvent
     'Protected getElementCourant() As FactTRP
 
@@ -72,6 +79,9 @@ Public Class frmVerificationLivraison
         Me.MessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcMsgLivraison = New System.Windows.Forms.BindingSource(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.lblMessage = New System.Windows.Forms.Label()
         Me.pnlFichierATraiter.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcMsgLivraison, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,7 +130,7 @@ Public Class frmVerificationLivraison
         'rbManuel
         '
         Me.rbManuel.AutoSize = True
-        Me.rbManuel.Location = New System.Drawing.Point(12, 35)
+        Me.rbManuel.Location = New System.Drawing.Point(13, 35)
         Me.rbManuel.Name = "rbManuel"
         Me.rbManuel.Size = New System.Drawing.Size(113, 17)
         Me.rbManuel.TabIndex = 12
@@ -131,7 +141,7 @@ Public Class frmVerificationLivraison
         '
         Me.rbFTP.AutoSize = True
         Me.rbFTP.Checked = True
-        Me.rbFTP.Location = New System.Drawing.Point(12, 12)
+        Me.rbFTP.Location = New System.Drawing.Point(13, 12)
         Me.rbFTP.Name = "rbFTP"
         Me.rbFTP.Size = New System.Drawing.Size(166, 17)
         Me.rbFTP.TabIndex = 11
@@ -142,7 +152,7 @@ Public Class frmVerificationLivraison
         'ckAfficherCmdOK
         '
         Me.ckAfficherCmdOK.AutoSize = True
-        Me.ckAfficherCmdOK.Location = New System.Drawing.Point(7, 102)
+        Me.ckAfficherCmdOK.Location = New System.Drawing.Point(13, 102)
         Me.ckAfficherCmdOK.Name = "ckAfficherCmdOK"
         Me.ckAfficherCmdOK.Size = New System.Drawing.Size(226, 17)
         Me.ckAfficherCmdOK.TabIndex = 10
@@ -163,9 +173,9 @@ Public Class frmVerificationLivraison
         '
         Me.btnTraiter.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnTraiter.Location = New System.Drawing.Point(7, 125)
+        Me.btnTraiter.Location = New System.Drawing.Point(13, 125)
         Me.btnTraiter.Name = "btnTraiter"
-        Me.btnTraiter.Size = New System.Drawing.Size(992, 23)
+        Me.btnTraiter.Size = New System.Drawing.Size(991, 23)
         Me.btnTraiter.TabIndex = 4
         Me.btnTraiter.Text = "Traiter le fichier"
         Me.btnTraiter.UseVisualStyleBackColor = True
@@ -182,10 +192,10 @@ Public Class frmVerificationLivraison
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumCommandeDataGridViewTextBoxColumn, Me.DateMessageDataGridViewTextBoxColumn, Me.NbreColisLivreDataGridViewTextBoxColumn, Me.MessageDataGridViewTextBoxColumn})
         Me.DataGridView1.DataSource = Me.m_bsrcMsgLivraison
-        Me.DataGridView1.Location = New System.Drawing.Point(13, 184)
+        Me.DataGridView1.Location = New System.Drawing.Point(13, 209)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(992, 399)
+        Me.DataGridView1.Size = New System.Drawing.Size(992, 374)
         Me.DataGridView1.TabIndex = 0
         '
         'NumCommandeDataGridViewTextBoxColumn
@@ -234,10 +244,34 @@ Public Class frmVerificationLivraison
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         Me.OpenFileDialog1.Filter = "Fichier CSV|*.csv|Tous les fichiers|*.*"
         '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ProgressBar1.Location = New System.Drawing.Point(13, 155)
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(991, 23)
+        Me.ProgressBar1.TabIndex = 15
+        '
+        'lblMessage
+        '
+        Me.lblMessage.AutoSize = True
+        Me.lblMessage.Location = New System.Drawing.Point(13, 190)
+        Me.lblMessage.Name = "lblMessage"
+        Me.lblMessage.Size = New System.Drawing.Size(39, 13)
+        Me.lblMessage.TabIndex = 16
+        Me.lblMessage.Text = "Label2"
+        '
         'frmVerificationLivraison
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1011, 633)
+        Me.Controls.Add(Me.lblMessage)
+        Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.pnlFichierATraiter)
         Me.Controls.Add(Me.rbManuel)
         Me.Controls.Add(Me.rbFTP)
@@ -377,14 +411,15 @@ Public Class frmVerificationLivraison
 
     Private Sub btnTraiter_Click(sender As Object, e As EventArgs) Handles btnTraiter.Click
         Me.Cursor = Cursors.WaitCursor
-        VerificationInfosLivraison(rbFTP.Checked, ckAfficherCmdOK.Checked, tbFilePath.Text)
-        Me.Cursor = Cursors.Default
+        btnTraiter.Enabled = False
+        BackgroundWorker1.RunWorkerAsync(New UserState())
     End Sub
 
-    Private Function VerificationInfosLivraison(pFTP As Boolean, pAffichageOK As Boolean, Optional pFileName As String = "") As Boolean
+    Private Function VerificationInfosLivraison(bgw As BackgroundWorker, pFTP As Boolean, pAffichageOK As Boolean, Optional pFileName As String = "") As Boolean
         Dim olst As New List(Of MsgLivraison)
         '    Récupération du fichier à traiter
         If pFTP Then
+
             '        Récupération du fichier FTP
             Dim strSRV As String = Param.getConstante("CST_FTPEDI_SRV")
             Dim strUser As String = Param.getConstante("CST_FTPEDI_USER")
@@ -392,21 +427,25 @@ Public Class frmVerificationLivraison
             Dim strPort As String = Param.getConstante("CST_FTPEDI_PORT")
             Dim strRepDistant As String = Param.getConstante("CST_FTPEDI_REP")
             Dim strRepLocal As String = Param.getConstante("CST_FTPEDI_REPLOCAL")
+            Dim nFiles As Integer
 
 
             If Not System.IO.Directory.Exists(strRepLocal) Then
                 System.IO.Directory.CreateDirectory(strRepLocal)
             End If
-
-            DisplayStatus("Récupération des fichiers sur le serveur")
+            bgw.ReportProgress(10, "Récupération des fichiers sur le serveur")
+            '            DisplayStatus("Récupération des fichiers sur le serveur")
+            nFiles = mvtEDI.getFilesCount(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
             mvtEDI.getFilesFromFTP(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
 
-            DisplayStatus("Traitement des fichiers")
 
             Dim tabFiles As String() = System.IO.Directory.GetFiles(strRepLocal, "*.csv")
 
             ' Parcours des fichiers .CSV
+            Dim nCount As Integer = 0
             For Each strFile As String In tabFiles
+                nCount = nCount + 1
+                bgw.ReportProgress((nCount / tabFiles.Length) * 90, "Traitement des fichiers")
                 Dim olst1 As List(Of MsgLivraison)
                 olst1 = mvtEDI.VerificationCommandes(strFile)
                 olst.AddRange(olst1)
@@ -415,7 +454,7 @@ Public Class frmVerificationLivraison
             Dim strFile As String
             strFile = pFileName
             If System.IO.File.Exists(strFile) Then
-                DisplayStatus("Traitement du Fichier")
+                bgw.ReportProgress(50, "Traitement du fichier")
                 Dim nLines As Integer = 0
                 nLines = nLines + System.IO.File.ReadAllLines(strFile).Length
 
@@ -425,13 +464,7 @@ Public Class frmVerificationLivraison
 
         'oLst la liste des messages issus de la vérification
 
-        For Each omsg As MsgLivraison In olst
-            If Not ckAfficherCmdOK.Checked And omsg.Resultat = 0 Then
-            Else
-                m_bsrcMsgLivraison.Add(omsg)
-            End If
-        Next
-
+        bgw.ReportProgress(100, olst)
 
     End Function
 
@@ -452,5 +485,40 @@ Public Class frmVerificationLivraison
         If OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
             tbFilePath.Text = OpenFileDialog1.FileName
         End If
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        Dim strMsg As String
+
+        If e.ProgressPercentage = 100 Then
+            Dim olst As New List(Of MsgLivraison)
+            olst = TryCast(e.UserState, List(Of MsgLivraison))
+            If olst IsNot Nothing Then
+                For Each oMsg As MsgLivraison In olst
+                    m_bsrcMsgLivraison.Add(oMsg)
+                Next
+
+            End If
+            lblMessage.Text = "Traietment terminé"
+            ProgressBar1.Value = ProgressBar1.Maximum
+
+        Else
+            strMsg = e.UserState.ToString()
+            lblMessage.Text = strMsg
+            ProgressBar1.Value = e.ProgressPercentage
+
+        End If
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        btnTraiter.Enabled = True
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        btnTraiter.Enabled = False
+        '        Me.Cursor = Cursors.WaitCursor
+        VerificationInfosLivraison(Me.BackgroundWorker1, rbFTP.Checked, ckAfficherCmdOK.Checked, tbFilePath.Text)
     End Sub
 End Class

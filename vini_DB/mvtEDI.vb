@@ -70,16 +70,18 @@ Public Class mvtEDI
                     If bPremierLigne Then
                         bPremierLigne = False
                     Else
-                        Dim tabFields As String() = oLine.Split(";")
-                        omvtEDI = New mvtEDI(tabFields(6), tabFields(4), tabFields(5))
-                        'Vérification des entrées sorties
                         Try
+
+                            Dim tabFields As String() = oLine.Split(";")
+                            omvtEDI = New mvtEDI(tabFields(6), tabFields(4), tabFields(5))
+                            'Vérification des entrées sorties
                             If omvtEDI.Sortie <> 0 Then
                                 lstMvt.Add(omvtEDI)
                             End If
 
                         Catch ex As Exception
-
+                            'Erreur dans le fichier d'origine
+                            'on ne fait rien
                         End Try
                     End If
                 Next
@@ -173,6 +175,21 @@ Public Class mvtEDI
             Dim oFileInfo As New System.IO.FileInfo(strFile)
             oftp.deleteRemotefile(pRepDistant & "/" & oFileInfo.Name)
         Next
+
+    End Function
+    Public Shared Function getFilesCount(pSRV As String, pPort As String, pUser As String, pPassword As String, pRepDistant As String, pRepLocal As String) As Integer
+        Dim nReturn As Integer = 0
+        Dim oftp As clsFTPVinicom
+        oftp = New clsFTPVinicom(pSRV, pUser, pPassword, pRepDistant)
+        Try
+            nReturn = oftp.getRemoteFileCount()
+
+        Catch ex As Exception
+            nReturn = 0
+            setError("MvtEDI.getFilesCount ERR " & ex.Message)
+        End Try
+
+        Return nReturn
 
     End Function
 

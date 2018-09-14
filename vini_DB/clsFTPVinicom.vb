@@ -394,6 +394,25 @@ Public Class clsFTPVinicom
 
         Return bReturn
     End Function ' downloadToDir
+    ''' <summary>
+    ''' Rend le nombre de fichier dans le répertoire distant
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function getRemoteFileCount() As Integer
+        Dim nReturn As Integer = 0
+
+        Try
+
+            nReturn = 0
+            Dim lstFile As List(Of String) = m_FTP.ListDirectory("/" & m_RemoteDir)
+            nReturn = lstFile.Count
+        Catch ex As Exception
+            nReturn = 0
+        End Try
+
+        Return 0
+    End Function ' getRemoteFileCount
     '=======================================================================
     'Fonction : shortResume()
     'Description : Rend un resumé de l'objet sous forme de chaine
