@@ -130,6 +130,8 @@ Public Class frmFournisseurTab
     Friend WithEvents cbCommissions As System.Windows.Forms.Button
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents ckIntermediaire As System.Windows.Forms.CheckBox
+    Friend WithEvents cbxDossier As System.Windows.Forms.ComboBox
     Friend WithEvents cbxExportBaf As System.Windows.Forms.ComboBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.cboRegion = New System.Windows.Forms.ComboBox()
@@ -138,6 +140,8 @@ Public Class frmFournisseurTab
         Me.Label27 = New System.Windows.Forms.Label()
         Me.cbxExportBaf = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.ckIntermediaire = New System.Windows.Forms.CheckBox()
+        Me.cbxDossier = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'cboRegion
@@ -202,10 +206,32 @@ Public Class frmFournisseurTab
         Me.Label4.TabIndex = 76
         Me.Label4.Text = "Export des Baf :"
         '
+        'ckIntermediaire
+        '
+        Me.ckIntermediaire.AutoSize = True
+        Me.ckIntermediaire.Checked = True
+        Me.ckIntermediaire.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ckIntermediaire.Location = New System.Drawing.Point(297, 82)
+        Me.ckIntermediaire.Name = "ckIntermediaire"
+        Me.ckIntermediaire.Size = New System.Drawing.Size(86, 17)
+        Me.ckIntermediaire.TabIndex = 77
+        Me.ckIntermediaire.Text = "Intermediaire"
+        Me.ckIntermediaire.UseVisualStyleBackColor = True
+        '
+        'cbxDossier
+        '
+        Me.cbxDossier.FormattingEnabled = True
+        Me.cbxDossier.Location = New System.Drawing.Point(400, 82)
+        Me.cbxDossier.Name = "cbxDossier"
+        Me.cbxDossier.Size = New System.Drawing.Size(121, 21)
+        Me.cbxDossier.TabIndex = 78
+        '
         'frmFournisseurTab
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(968, 734)
+        Me.Controls.Add(Me.cbxDossier)
+        Me.Controls.Add(Me.ckIntermediaire)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cbxExportBaf)
         Me.Controls.Add(Me.Label27)
@@ -224,6 +250,8 @@ Public Class frmFournisseurTab
         Me.Controls.SetChildIndex(Me.Label27, 0)
         Me.Controls.SetChildIndex(Me.cbxExportBaf, 0)
         Me.Controls.SetChildIndex(Me.Label4, 0)
+        Me.Controls.SetChildIndex(Me.ckIntermediaire, 0)
+        Me.Controls.SetChildIndex(Me.cbxDossier, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -265,6 +293,8 @@ Public Class frmFournisseurTab
             Next
 
             cbxExportBaf.SelectedIndex = objFournisseur.bExportInternet
+            ckIntermediaire.Checked = objFournisseur.bIntermdiaire
+            cbxDossier.Text = objFournisseur.Dossier
         End If
 
         Return bReturn
@@ -280,6 +310,8 @@ Public Class frmFournisseurTab
                 objFournisseur.idRegion = cboRegion.SelectedItem.id
                 objFournisseur.libregion = cboRegion.SelectedItem.Valeur
                 objFournisseur.bExportInternet = cbxExportBaf.SelectedIndex
+                objFournisseur.bIntermdiaire = ckIntermediaire.Checked
+                objFournisseur.Dossier = cbxDossier.Text
                 bReturn = True
             Catch ex As Exception
                 DisplayError("frmFournisseur.MAJElement", ex.ToString())
@@ -342,6 +374,9 @@ Public Class frmFournisseurTab
             cbCommissions.Visible = False
         End If
 
+        cbxDossier.Items.Clear()
+        cbxDossier.Items.Add(Dossier.VINICOM)
+        cbxDossier.Items.Add(Dossier.HOBIVIN)
         'Suppression du controle de l'evenement Validated
         '        RemoveHandler cbCommissions.Validated, AddressOf ControlUpdated
         'on peut aussi supprimer la génération de det evenement
@@ -373,4 +408,12 @@ Public Class frmFournisseurTab
         End Try
         Return bReturn
     End Function
+
+    Private Sub ckIntermediaire_CheckedChanged(sender As Object, e As EventArgs) Handles ckIntermediaire.CheckedChanged
+        If ckIntermediaire.Checked = False Then
+            cbxDossier.Visible = False
+        Else
+            cbxDossier.Visible = True
+        End If
+    End Sub
 End Class

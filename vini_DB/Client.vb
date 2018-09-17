@@ -541,7 +541,7 @@ Public Class Client
             m_oPreCommande.colLignes.clear()
             m_oPreCommande.save()
             'chargement de la liste des commandes du client
-            colCommande = CommandeClient.getListe(, Me.rs)
+            colCommande = CommandeClient.getListe(strNomClient:=Me.rs, pOrigine:="")
             'pour chaque commande
             For Each objCommandeClient In colCommande
                 If objCommandeClient.oTiers.id = m_id Then

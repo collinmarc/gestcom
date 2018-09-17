@@ -210,12 +210,15 @@ Public Class CommandeClient
     End Property
 #End Region
 #Region "Méthodes de Classe"
-    '=======================================================================
-    '                           METHODE DE CLASSE                          |  
-    'Fonction : getListe 
-    'Description : Liste des Clients
-    'Retour : Rend une collection de Clients
-    '=======================================================================
+    ''' <summary>
+    ''' Rend un liste de commande pour un Dossier Donné (VINICOM par défaut)
+    ''' </summary>
+    ''' <param name="strCode">Code Commande</param>
+    ''' <param name="strNomClient">NomClient</param>
+    ''' <param name="pEtat">Etat de la commande</param>
+    ''' <param name="pOrigine">Dossier (VINICOM par defaut, "" = Tous)</param>
+    ''' <returns>Collection</returns>
+    ''' <remarks></remarks>
     Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "VINICOM") As Collection
         Dim colReturn As Collection
 

@@ -511,7 +511,7 @@ Public MustInherit Class Persist
         Debug.Assert(Me.GetType.Name.Equals("Fournisseur"), "Object de type Fournisseur requis")
 
         Dim sqlString As String = "INSERT INTO FOURNISSEUR( " & _
-                                    "FRN_CODE, FRN_NOM, FRN_RS, FRN_RIB1, FRN_RIB2, FRN_RIB3, FRN_RIB4,  FRN_BANQUE, FRN_RGN_ID , FRN_SIRET, FRN_TVAINTRACOM , FRN_RGLMT_ID, FRN_ADR_IDENT,FRN_BEXP_INTERNET, FRN_COMPTA, FRN_ID_MRGLMT1,FRN_ID_MRGLMT2,FRN_ID_MRGLMT3,FRN_IDPRESTASHOP )" & _
+                                    "FRN_CODE, FRN_NOM, FRN_RS, FRN_RIB1, FRN_RIB2, FRN_RIB3, FRN_RIB4,  FRN_BANQUE, FRN_RGN_ID , FRN_SIRET, FRN_TVAINTRACOM , FRN_RGLMT_ID, FRN_ADR_IDENT,FRN_BEXP_INTERNET, FRN_COMPTA, FRN_ID_MRGLMT1,FRN_ID_MRGLMT2,FRN_ID_MRGLMT3,FRN_IDPRESTASHOP, FRN_BINTERMEDIAIRE, FRN_DOSSIER )" & _
                                   " VALUES (" & _
                                     "?, " & _
                                     "?, " & _
@@ -525,6 +525,8 @@ Public MustInherit Class Persist
                                     "?," & _
                                     "?," & _
                                     "?," & _
+                                    "?, " & _
+                                    "?, " & _
                                     "?, " & _
                                     "?, " & _
                                     "?, " & _
@@ -564,6 +566,8 @@ Public MustInherit Class Persist
         CreateParamP_FRN_ID_MRGLMT2(objOLeDBCommand)
         CreateParamP_FRN_ID_MRGLMT3(objOLeDBCommand)
         CreateParamP_FRN_IDPRESTASHOP(objOLeDBCommand)
+        CreateParamP_FRN_BINTERMEDIAIRE(objOLeDBCommand)
+        CreateParamP_FRN_DOSSIER(objOLeDBCommand)
         m_dbconn.BeginTransaction()
         objOLeDBCommand.Transaction = m_dbconn.transaction
         Try
@@ -947,7 +951,9 @@ Public MustInherit Class Persist
                                         "FRN_ID_MRGLMT1 = ? ," & _
                                         "FRN_ID_MRGLMT2 = ? ," & _
                                         "FRN_ID_MRGLMT3 = ?, " & _
-                                        "FRN_IDPRESTASHOP = ? " & _
+                                        "FRN_IDPRESTASHOP = ?, " & _
+                                        "FRN_BINTERMEDIAIRE = ?, " & _
+                                        "FRN_DOSSIER = ? " & _
                                   " WHERE FRN_ID = ?"
         Dim objOLeDBCommand As OleDbCommand
 
@@ -978,6 +984,8 @@ Public MustInherit Class Persist
         CreateParamP_FRN_ID_MRGLMT2(objOLeDBCommand)
         CreateParamP_FRN_ID_MRGLMT3(objOLeDBCommand)
         CreateParamP_FRN_IDPRESTASHOP(objOLeDBCommand)
+        CreateParamP_FRN_BINTERMEDIAIRE(objOLeDBCommand)
+        CreateParamP_FRN_DOSSIER(objOLeDBCommand)
         CreateParameterP_ID(objOLeDBCommand)
 
 
@@ -1155,7 +1163,7 @@ Public MustInherit Class Persist
                                     " FRN_LIV_TEL, FRN_LIV_FAX, FRN_LIV_PORT, FRN_LIV_EMAIL, " & _
                                     " FRN_FACT_NOM, FRN_FACT_RUE1, FRN_FACT_RUE2, FRN_FACT_CP, FRN_FACT_VILLE, " & _
                                     " FRN_FACT_TEL, FRN_FACT_FAX, FRN_FACT_PORT, FRN_FACT_EMAIL, FRN_ADR_IDENT, " & _
-                                    " FRN_COM_CMD, FRN_COM_LIV, FRN_COM_FACT, FRN_COM_LIBRE,FRN_BEXP_INTERNET, FRN_COMPTA, FRN_ID_MRGLMT1,FRN_ID_MRGLMT2,FRN_ID_MRGLMT3, FRN_IDPRESTASHOP " & _
+                                    " FRN_COM_CMD, FRN_COM_LIV, FRN_COM_FACT, FRN_COM_LIBRE,FRN_BEXP_INTERNET, FRN_COMPTA, FRN_ID_MRGLMT1,FRN_ID_MRGLMT2,FRN_ID_MRGLMT3, FRN_IDPRESTASHOP, FRN_BINTERMEDIAIRE, FRN_DOSSIER " & _
                                   " FROM (FOURNISSEUR LEFT OUTER JOIN RQ_Region ON FOURNISSEUR.FRN_RGN_ID = RQ_Region.PAR_ID) LEFT OUTER JOIN RQ_ModeReglement ON FOURNISSEUR.FRN_RGLMT_ID = RQ_ModeReglement.PAR_ID" & _
                                   " WHERE FRN_ID = ?"
         Dim objOLeDBCommand As OleDbCommand
@@ -1222,6 +1230,8 @@ Public MustInherit Class Persist
                 objFRN.idModeReglement2 = getInteger(objRS, "FRN_ID_MRGLMT2")
                 objFRN.idModeReglement3 = getInteger(objRS, "FRN_ID_MRGLMT3")
                 objFRN.idPrestashop = getInteger(objRS, "FRN_IDPRESTASHOP")
+                objFRN.bIntermdiaire = getInteger(objRS, "FRN_BINTERMEDIAIRE")
+                objFRN.Dossier = GetString(objRS, "FRN_DOSSIER")
                 objRS.Close()
                 objRS = Nothing
                 cleanErreur()
@@ -1245,7 +1255,7 @@ Public MustInherit Class Persist
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "L'id doit être renseigné")
 
-        Dim sqlString As String = "SELECT FRN_ID, FRN_CODE, FRN_NOM, FRN_RS, FRN_BEXP_INTERNET " &
+        Dim sqlString As String = "SELECT FRN_ID, FRN_CODE, FRN_NOM, FRN_RS, FRN_BEXP_INTERNET, FRN_BINTERMEDIAIRE, FRN_DOSSIER " &
                                   " FROM FOURNISSEUR " &
                                   " WHERE FRN_ID = ?"
         Dim objOLeDBCommand As OleDbCommand
@@ -1271,6 +1281,8 @@ Public MustInherit Class Persist
                 objFRN.nom = GetString(objRS, "FRN_NOM")
                 objFRN.rs = GetString(objRS, "FRN_RS")
                 objFRN.bExportInternet = getInteger(objRS, "FRN_BEXP_INTERNET")
+                objFRN.bIntermdiaire = GetBoolean(objRS, "FRN_BINTERMEDIAIRE")
+                objFRN.Dossier = GetString(objRS, "FRN_DOSSIER")
                 m_bResume = True
             End If
 
@@ -3373,6 +3385,16 @@ Public MustInherit Class Persist
         Dim objFRN As Fournisseur
         objFRN = Me
         objCommand.Parameters.AddWithValue("?", objFRN.idPrestashop)
+    End Sub
+    Private Sub CreateParamP_FRN_BINTERMEDIAIRE(ByVal objCommand As OleDbCommand)
+        Dim objFRN As Fournisseur
+        objFRN = Me
+        objCommand.Parameters.AddWithValue("?", objFRN.bIntermdiaire)
+    End Sub
+    Private Sub CreateParamP_FRN_DOSSIER(ByVal objCommand As OleDbCommand)
+        Dim objFRN As Fournisseur
+        objFRN = Me
+        objCommand.Parameters.AddWithValue("?", objFRN.Dossier)
     End Sub
     Private Sub CreateParamP_FRN_LIV_NOM(ByVal objCommand As OleDbCommand)
         Dim objFRN As Fournisseur

@@ -1,7 +1,12 @@
-﻿Version 5.9.6
+﻿Version 5.9.6.1
+date 17/09/2018
+#870 : Automatisation du retour de Livraison (PEC des commandes Hobivin)
+
+Version 5.9.6
 date xx/xx/2018
 #856 : Calcul du nbre colis pour les bons d'appro
 #870 : Automatisation du retour de Livraison
+#878 : Ajout de la notion de dossier dans la fiche fournisseur
 
 Version 5.9.5.2
 date 13/09/2018

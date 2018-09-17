@@ -44,6 +44,8 @@ Imports vini_DB
         m_obj.AdresseLivraison.Email = "contact@marccollin.com"
         m_obj.CommCommande.comment = "Essai"
         m_obj.bExportInternet = 1
+        m_obj.bIntermdiaire = True
+        m_obj.Dossier = "HOBIVIN"
 
         Assert.AreEqual(m_obj.code, "CODE")
         Assert.AreEqual(m_obj.nom, "MonFournisseur")
@@ -57,6 +59,8 @@ Imports vini_DB
         Assert.AreEqual(m_obj.numtvaintracom, "0987654321")
         Assert.AreEqual(m_obj.CommCommande.comment, "Essai")
         Assert.AreEqual(m_obj.bExportInternet, 1)
+        Assert.IsTrue(m_obj.bIntermdiaire)
+        Assert.AreEqual("HOBIVIN", m_obj.Dossier)
 
 
         '<<TestMethod()>()> des indicateurs
@@ -84,6 +88,8 @@ Imports vini_DB
         objFRN.AdresseLivraison.port = "0680667189"
         objFRN.AdresseLivraison.Email = "contact@marccollin.com"
         objFRN.CommCommande.comment = "Essai"
+        objFRN.bIntermdiaire = True
+        objFRN.Dossier = "HOBIVIN"
         Assert.IsTrue(m_obj.Equals(objFRN), "Egal à un semblable")
         objFRN.bExportInternet = 0
         Assert.IsFalse(m_obj.Equals(objFRN), "Egal à un Différent")
@@ -133,7 +139,8 @@ Imports vini_DB
         objfrn.idModeReglement2 = objParam.id
         objParam = Param.colModeReglement(3)
         objfrn.idModeReglement3 = objParam.id
-
+        objfrn.bIntermdiaire = True
+        objfrn.Dossier = "HOBIVIN"
         '            objfrn.bAdressesIdentiques = True
         '<<TestMethod()>()> des indicateurs Avant le Save
         Assert.IsTrue(objfrn.bNew)
@@ -160,6 +167,8 @@ Imports vini_DB
         objParam = Param.colModeReglement(3)
         Assert.AreEqual(objfrn.idModeReglement3, objParam.id)
 
+        Assert.AreEqual(True, objfrn2.bIntermdiaire)
+        Assert.AreEqual("HOBIVIN", objfrn2.Dossier)
         'III - Modification du Fournisseur
         '=================================
         ' Modification du Fournisseur
@@ -177,6 +186,8 @@ Imports vini_DB
         objfrn2.AdresseFacturation.fax = "211223344"
         objfrn2.bAdressesIdentiques = True
         objfrn2.idModeReglement2 = objfrn.idModeReglement3
+        objfrn2.bIntermdiaire = False
+        objfrn2.Dossier = ""
 
         '<<TestMethod()>()> des indicateurs Avant le Save
         Assert.IsFalse(objfrn2.bNew)
@@ -194,6 +205,8 @@ Imports vini_DB
         Assert.IsTrue(objfrn.load(n), "Load")
         Assert.IsTrue(objfrn.Equals(objfrn2))
         Assert.AreEqual(objfrn.idModeReglement2, objfrn.idModeReglement3)
+        Assert.AreEqual(False, objfrn.bIntermdiaire)
+        Assert.AreEqual("", objfrn.Dossier)
 
         'IV - Suppression du Fournisseur
         '=================================

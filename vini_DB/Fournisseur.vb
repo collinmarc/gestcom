@@ -38,6 +38,8 @@ Public Class Fournisseur
     Private m_idRegion As Integer
     Private m_libRegion As String
     Private m_bExportInternet As Integer
+    Private m_bIntermediaire As Boolean
+    Private m_dossier As String
     '=======================================================================
     '                           METHODE DE CLASSE                          |  
     'Fonction : getListe 
@@ -71,6 +73,26 @@ Public Class Fournisseur
         End Set
 
     End Property
+    Public Property bIntermdiaire As Boolean
+        Get
+            Return m_bIntermediaire
+        End Get
+        Set(ByVal value As Boolean)
+            m_bIntermediaire = value
+            If m_bIntermediaire Then
+                Dossier = ""
+            End If
+        End Set
+    End Property
+    Public Property Dossier() As String
+        Get
+            Return m_dossier
+        End Get
+        Set(ByVal value As String)
+            m_dossier = value
+        End Set
+    End Property
+
     'Export des bons  à facture sur internet
     Public Property bExportInternet() As Integer
         Get
@@ -258,6 +280,8 @@ Public Class Fournisseur
             bReturn = MyBase.Equals(obj)
             bReturn = bReturn And (objFrn.idRegion.Equals(Me.idRegion))
             bReturn = bReturn And (objFrn.bExportInternet.Equals(Me.bExportInternet))
+            bReturn = bReturn And (objFrn.bIntermdiaire.Equals(Me.bIntermdiaire))
+            bReturn = bReturn And (objFrn.Dossier.Equals(Me.Dossier))
 
             Return bReturn
         Catch ex As Exception

@@ -1025,6 +1025,7 @@ Imports System.IO
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
+
     End Sub
 
     ''' <summary>
