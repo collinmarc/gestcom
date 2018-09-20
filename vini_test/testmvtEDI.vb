@@ -265,7 +265,7 @@ Imports System.IO
 
         'THEN
         mvtEDI.VerificationCommandes("TSTEDI//testGroussard.csv")
-        objCmd = CommandeClient.getListe(strCode)(1)
+        objCmd = CommandeClient.getListe(strCode, "", vncEtatCommande.vncRien, "")(1)
         objCmd.load()
         'L'état de la Ccommande est Livrée
         Assert.AreEqual(vncEtatCommande.vncLivree, objCmd.etat.codeEtat)
@@ -318,7 +318,7 @@ Imports System.IO
 
         'THEN
         mvtEDI.VerificationCommandes("TSTEDI//testGroussard.csv")
-        objCmd = CommandeClient.getListe(strCode)(1)
+        objCmd = CommandeClient.getListe(strCode, "", vncEtatCommande.vncRien, "")(1)
         objCmd.load()
         'L'état de la Ccommande est restée à l'état Validée
         Assert.AreEqual(vncEtatCommande.vncValidee, objCmd.etat.codeEtat)
@@ -419,7 +419,7 @@ Imports System.IO
         mvtEDI.VerificationCommandes("TSTEDI//testGroussard.csv")
 
         'La Première commande n'est pas Livrée
-        objCmd = CommandeClient.getListe(strCode)(1)
+        objCmd = CommandeClient.getListe(strCode, "", vncEtatCommande.vncRien, "")(1)
         objCmd.load()
         'L'état de la Ccommande est restée à l'état Validée
         Assert.AreEqual(vncEtatCommande.vncValidee, objCmd.etat.codeEtat)
@@ -428,7 +428,7 @@ Imports System.IO
             Assert.AreEqual(0D, olg.qteLiv)
         Next
         'La Seconde commande 'est Livrée
-        objCmd = CommandeClient.getListe(strCode2)(1)
+        objCmd = CommandeClient.getListe(strCode2, "", vncEtatCommande.vncRien, "")(1)
         objCmd.load()
         'L'état de la Ccommande est restée à l'état Validée
         Assert.AreEqual(vncEtatCommande.vncLivree, objCmd.etat.codeEtat)

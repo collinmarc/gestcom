@@ -209,7 +209,7 @@ Public Class mvtEDI
                 omsg.NbreColisLivre = omvt.Sortie
                 omsg.DateMessage = DateTime.Now
                 'Chargement de la commande 'Tous dossiers Confondus'
-                oCol = CommandeClient.getListe(omvt.NumCMD, pOrigine:="")
+                oCol = CommandeClient.getListe(strCode:=omvt.NumCMD, strNomClient:="", pEtat:=vncEtatCommande.vncRien, pOrigine:="")
                 If oCol.Count > 0 Then
                     ocmd = oCol(1)
                     ocmd.load()

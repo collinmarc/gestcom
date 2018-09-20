@@ -63,7 +63,7 @@ Imports System.IO
         Assert.IsTrue(m_objCLT.save(), "Client.Create")
 
 
-        col = CommandeClient.getListe(#6/2/1964#, #6/2/1964#)
+        col = CommandeClient.getListe(#6/2/1964#, #6/2/1964#, "", vncEtatCommande.vncRien, "")
         For Each m_oCmd In col
             m_oCmd.bDeleted = True
             m_oCmd.save()

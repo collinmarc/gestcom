@@ -995,33 +995,33 @@ Imports System.IO
         cmdCode = objCMD.code
 
         'Vérification avec la bonne origine
-        oCol = CommandeClient.getListe(cmdCode, , , Dossier.HOBIVIN)
+        oCol = CommandeClient.getListe(cmdCode, "", vncEtatCommande.vncRien, Dossier.HOBIVIN)
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec la Mauvaise origine
-        oCol = CommandeClient.getListe(cmdCode, , , Dossier.VINICOM)
+        oCol = CommandeClient.getListe(cmdCode, "", vncEtatCommande.vncRien, Dossier.VINICOM)
         Assert.AreEqual(0, oCol.Count)
 
         'Vérification sans origine
-        oCol = CommandeClient.getListe(cmdCode, , , "")
+        oCol = CommandeClient.getListe(cmdCode, "", vncEtatCommande.vncRien, "")
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec les dates et la bonne origine
-        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , Dossier.HOBIVIN)
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), "", vncEtatCommande.vncRien, Dossier.HOBIVIN)
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
 
         'Vérification avec les dates et sans la bonne origine
-        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , Dossier.VINICOM)
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), "", vncEtatCommande.vncRien, Dossier.VINICOM)
         Assert.AreEqual(0, oCol.Count)
 
         'Vérification avec les dates et Sans l'origine
-        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), , , "")
+        oCol = CommandeClient.getListe(CDate("05/02/1964"), CDate("07/02/1964"), "", vncEtatCommande.vncRien, "")
         Assert.AreEqual(1, oCol.Count)
         objCMD = oCol(1)
         Assert.AreEqual(nId, objCMD.id)
@@ -1287,6 +1287,81 @@ Imports System.IO
         Assert.AreEqual(1, nLineNumber, "Une seule Ligne de fichier")
         Assert.AreEqual("0000002", Mid(strResult, 310, 7), "qte Colis en WebEDI")
         Assert.AreEqual("0000013", Mid(strResult, 317, 7), "qte Commandée en WebEDI")
+
+    End Sub
+    ''' <summary>
+    ''' Test de Prise en compte de produits gratuits dans le calcul des nombre de colis
+    ''' Cas ou un echantillons est ajouté à la commande
+    ''' </summary>
+    ''' <remarks></remarks>
+
+    <TestMethod()> Public Sub T_PECEchantillonWebEDI()
+        Dim objCmd As CommandeClient
+        Dim objLgCmd1 As LgCommande
+        Dim objLgCmd2 As LgCommande
+        Dim objLgCmd3 As LgCommande
+        Dim nidCmd As Integer
+
+        oCont.poids = 1020
+        oCond.valeur = 12
+        'GIVEN j'ai un produit (P1) avec un poids de 1020 et un conditionnement par 12 
+        Assert.IsTrue(oCont.Save)
+        Assert.IsTrue(oCond.Save)
+        m_oProduit.idContenant = oCont.id
+        m_oProduit.idConditionnement = oCond.id
+        m_oProduit.save()
+        'AND j'ai un produit (P2) avec un poids de 1020 et un conditionnement par 12
+        Dim oPrd2 As Produit
+        oPrd2 = New Produit("TSTPRDPECECHANT", m_oFourn, 1990)
+        oPrd2.idConditionnement = oCond.id
+        oPrd2.idContenant = oCont.id
+        oPrd2.save()
+        oPrd2.idContenant = oCont.id
+        oPrd2.idConditionnement = oCond.id
+        oPrd2.save()
+        'AND une Commande Client créée
+        objCmd = New CommandeClient(m_oClient)
+        'And le Fichier d'export n'existe pas
+        If System.IO.File.Exists("./exportWebEDI.txt") Then
+            System.IO.File.Delete("./exportWebEDI.txt")
+        End If
+
+
+        'WHEN j'ajoute une ligne de 11 produit payant
+        objLgCmd1 = objCmd.AjouteLigne("10", m_oProduit, 11, 10.5, False)
+        'AND un produit Gratuit
+        objLgCmd2 = objCmd.AjouteLigne("20", m_oProduit, 1, 0, True)
+        'AND j'ajoute une Ligne gratuite du produit 2
+        objLgCmd3 = objCmd.AjouteLigne("30", oPrd2, 1, 0, True)
+        'AND J'export en WebEDI
+        objCmd.exporterWebEDI("./exportEDI.txt")
+
+        'THEN 
+        'Le Fichier d'export est bien créé
+        Assert.IsTrue(System.IO.File.Exists("./ExportEDI.txt"))
+        Dim oSr As StreamReader = System.IO.File.OpenText("./ExportEDI.txt")
+        Dim nLineNumber As Integer = 0
+        Dim strResult As String
+        While Not oSr.EndOfStream
+
+            nLineNumber = nLineNumber + 1
+            strResult = oSr.ReadLine()
+        End While
+        oSr.Close() ')
+        'Suppression du produit avant les vérifications pour être sur
+        oPrd2.bDeleted = True
+        oPrd2.save()
+
+        Assert.AreEqual(2, nLineNumber, "Deux seule Ligne de fichier")
+
+        oSr = System.IO.File.OpenText("./ExportEDI.txt")
+        strResult = oSr.ReadLine()
+        Assert.AreEqual("0000001", Mid(strResult, 310, 7), "qte Colis en WebEDI")
+        Assert.AreEqual("0000012", Mid(strResult, 317, 7), "qte Commandée en WebEDI")
+        strResult = oSr.ReadLine()
+        Assert.AreEqual("0000001", Mid(strResult, 310, 7), "qte Colis en WebEDI")
+        Assert.AreEqual("0000001", Mid(strResult, 317, 7), "qte Commandée en WebEDI")
+        oSr.Close() ')
 
     End Sub
     <TestMethod()> Public Sub T_ToutLivrerOK()

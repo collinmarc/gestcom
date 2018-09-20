@@ -275,7 +275,7 @@ Public Class frmControleStock
 
             Case vncCheckStock.checkStockNumCMDCLT
                 DisplayStatus("Lectures de la  commande")
-                colToutesCommandes = CommandeClient.getListe(pnumCMDCLT, pOrigine:="")
+                colToutesCommandes = CommandeClient.getListe(pnumCMDCLT, "", vncEtatCommande.vncRien, "")
 
             Case vncCheckStock.checkStockNumBA
                 DisplayStatus("Lecture du Bon d'appro")

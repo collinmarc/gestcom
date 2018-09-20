@@ -120,7 +120,7 @@ Imports vini_DB
         oTaux.save()
 
 
-        col = CommandeClient.getListe(CDate("06/02/1964"), CDate("06/02/1964"))
+        col = CommandeClient.getListe(#6/2/1964#, #6/2/1964#, "", vncEtatCommande.vncRien, "")
         For Each m_oCmd In col
             m_oCmd.bDeleted = True
             m_oCmd.save()

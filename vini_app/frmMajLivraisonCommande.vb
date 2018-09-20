@@ -678,7 +678,7 @@ Public Class frmMajLivraisonCommande
             RSClient = tbRSClient.Text
             'Recupération de la liste des commandes Validées sans charger les lignes de commandes
             CommandeClient.bChargerColLignes = False
-            col = CommandeClient.getListe(ddeb, dfin, RSClient, vncEtatCommande.vncEclatee)
+            col = CommandeClient.getListe(ddeb, dfin, RSClient, vncEtatCommande.vncEclatee, "")
             If col Is Nothing Then
                 bReturn = False
             Else

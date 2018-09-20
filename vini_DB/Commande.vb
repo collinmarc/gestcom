@@ -971,7 +971,7 @@ Public MustInherit Class Commande
             For Each objLg In m_colLignes
                 objLg.poids = 0
                 objLg.qteColis = 0
-                'On ne calcule le poids et le nbre de clis que sur les lignes payantes
+                'On ne calcule le poids et le nbre de colis que sur les lignes payantes
                 If Not objLg.bGratuit Then
                     Dim nqteGratuit As Decimal = 0
                     'REcherche des produits gratuits du même produit
@@ -994,6 +994,35 @@ Public MustInherit Class Commande
                     objLg.calcPoidsColis(nQteProduit)
                     npoids = npoids + objLg.poids
                     nqteColis = nqteColis + objLg.qteColis
+                End If
+            Next
+            'On reparcours la liste de lignes pour vérifier qu'ils n'y a de lignes Gratuites sans Lingnes Payantes 
+            'Echantillons ajoutée à la commande
+            For Each objLg In m_colLignes
+                'Que les Lignes gratuites
+                If objLg.bGratuit Then
+                    objLg.poids = 0
+                    objLg.qteColis = 0
+                    Dim nqteGratuit As Decimal = 0
+                    Dim bLignePayante As Boolean = False
+                    'REcherche des produits payant du même produit
+                    For Each objLgG As LgCommande In m_colLignes
+                        If Not objLgG.bGratuit And objLgG.oProduit.id = objLg.oProduit.id Then
+                            bLignePayante = True
+                        End If
+                    Next
+                    If Not bLignePayante Then
+                        Dim nQteProduit As Decimal = 0
+                        If objLg.qteLiv <> 0 Then
+                            nQteProduit = objLg.qteLiv
+                        Else
+                            nQteProduit = objLg.qteCommande
+                        End If
+
+                        objLg.calcPoidsColis(nQteProduit)
+                        npoids = npoids + objLg.poids
+                        nqteColis = nqteColis + objLg.qteColis
+                    End If
                 End If
             Next
             poids = npoids

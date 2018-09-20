@@ -1,4 +1,8 @@
-﻿Version 5.9.6.1
+﻿Version 5.9.6.1a
+date 20/09/2018
+#880 : ExportWEBEDI des Commandes avec gratuitées
+
+Version 5.9.6.1
 date 17/09/2018
 #870 : Automatisation du retour de Livraison (PEC des commandes Hobivin)
 

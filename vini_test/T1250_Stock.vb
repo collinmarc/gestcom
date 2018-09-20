@@ -836,7 +836,7 @@ Imports vini_DB
         Assert.IsTrue(objMVTStk.save(), "Sauvegarde du Mouvement de stock")
 
 
-        objCommande = CommandeClient.getListe(strCodeCmd, pOrigine:="")(1)
+        objCommande = CommandeClient.getListe(strCodeCmd, "", pEtat:=vncEtatCommande.vncRien, pOrigine:="")(1)
         objCommande.load()
         objCommande.regenereMvtStock()
 

@@ -219,7 +219,7 @@ Public Class CommandeClient
     ''' <param name="pOrigine">Dossier (VINICOM par defaut, "" = Tous)</param>
     ''' <returns>Collection</returns>
     ''' <remarks></remarks>
-    Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "VINICOM") As Collection
+    Public Shared Function getListe(ByVal strCode As String, ByVal strNomClient As String, ByVal pEtat As vncEtatCommande, pOrigine As String) As Collection
         Dim colReturn As Collection
 
         Persist.shared_connect()
@@ -227,7 +227,7 @@ Public Class CommandeClient
         Persist.shared_disconnect()
         Return colReturn
     End Function
-    Public Shared Function getListe(ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien, Optional pOrigine As String = "VINICOM") As Collection
+    Public Shared Function getListe(ByVal pddeb As Date, ByVal pdfin As Date, ByVal pNomClient As String, ByVal pEtat As vncEtatCommande, pOrigine As String) As Collection
         Dim colReturn As Collection
 
         shared_connect()
@@ -1169,6 +1169,65 @@ Public Class CommandeClient
                     strResult = Replace(strResult, vbTab, "-")
                     strResult = Replace(strResult, vbBack, "-")
                     PrintLine(nFile, strResult)
+                End If
+            Next oLg
+            'On REcparcours la Liste pour vérifier qu'il n'y a pas de produit gratuits tout seul (Echantillons)
+            For Each oLg In m_colLignes
+                If oLg.bGratuit Then
+                    'Y-a-t-il une ligne non gratuite ?
+                    Dim bLignePayante As Boolean = False
+                    For Each oLgG As LgCommande In m_colLignes
+                        If Not oLgG.bGratuit And oLgG.oProduit.id = oLg.oProduit.id Then
+                            bLignePayante = True
+                        End If
+                    Next
+                    If Not bLignePayante Then
+                        'Il n'y a pas de lignes payantes associées à la ligne gratuite
+                        Dim nQteComm As Decimal = oLg.qteCommande
+
+                        '1
+                        strResult = Right("00000000" + Trim(Me.code), 8)
+                        '9
+                        strResult = strResult + Format(Now(), "ddMMyyyy")
+                        '17
+                        strResult = strResult + Format(Me.dateEnlevement, "ddMMyyyy")
+                        '25
+                        strResult = strResult + Format(Me.dateLivraison, "ddMMyyyy")
+                        '33
+                        strResult = strResult + Left(Me.oTiers.code + Space(8), 8)
+                        '41
+                        strResult = strResult + Left(Me.NomLivraison + Space(30), 30)
+                        '71
+                        strResult = strResult + Left(Me.RaisonSocialeLivraison + Space(30), 30)
+                        '101
+                        strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue1 + Space(30), 30)
+                        '131
+                        strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.rue2 + Space(30), 30)
+                        '161
+                        strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.cp + Space(5), 5)
+                        '166
+                        strResult = strResult + Left(Me.caracteristiqueTiers.AdresseLivraison.ville + Space(26), 26)
+                        '192
+                        strResult = strResult + Left(Me.CommLivraison.comment + Space(100), 100)
+                        '292
+                        strResult = strResult + Format(oLg.num, "000")
+                        '295
+                        strResult = strResult + Left(oLg.oProduit.code + Space(15), 15)
+                        '310
+                        strResult = strResult + Format(oLg.qteColis, "0000000")
+                        '317
+                        strResult = strResult + Format(nQteComm, "0000000")
+                        '324
+                        strResult = strResult + Left(Me.oTransporteur.nom + Space(50), 50)
+                        '374
+                        strResult = Replace(strResult, vbCrLf, "--")
+                        strResult = Replace(strResult, vbCr, "-")
+                        strResult = Replace(strResult, vbLf, "-")
+                        strResult = Replace(strResult, vbNullChar, "-")
+                        strResult = Replace(strResult, vbTab, "-")
+                        strResult = Replace(strResult, vbBack, "-")
+                        PrintLine(nFile, strResult)
+                    End If
                 End If
             Next oLg
             FileClose(nFile)

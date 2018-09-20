@@ -593,11 +593,12 @@ Public Class frmCommandeClient
                     Debug.WriteLine(strResult)
                 End While
                 FileClose(nFile)
-
-                If (nLineNumber <> getCommandeCourante().colLignes.Count) Then
-                    MsgBox("Erreur en Creation du fichier, Recommencer plus tard")
-                    bReturn = False
-                End If
+                'V5.9.6.1: Les lignes gratuites ne sont pas exportées, on ne peut donc pas controler le nombre de lignes 
+                bReturn = True
+                'If (nLineNumber <> getCommandeCourante().colLignes.Count) Then
+                '    MsgBox("Erreur en Creation du fichier, Recommencer plus tard")
+                '    bReturn = False
+                'End If
                 If bReturn Then
                     oMailClient = New SmtpClient(Param.getConstante("CST_EDI_HOST"), Param.getConstante("CST_EDI_PORT"))
                     oMailItem = New MailMessage(Param.getConstante("CST_EDI_FROM"), Me.tbMailPLTF.Text)

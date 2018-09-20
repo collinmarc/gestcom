@@ -645,7 +645,7 @@ Public Class frmEclatementCommande
             codeClient = tbCodeClient.Text
             'Recupération de la liste des commandes Livrées sans charger les lignes de commandes
             CommandeClient.bChargerColLignes = False
-            col = CommandeClient.getListe(ddeb, dfin, codeClient, vncEtatCommande.vncLivree)
+            col = CommandeClient.getListe(ddeb, dfin, codeClient, vncEtatCommande.vncLivree, "")
             If col Is Nothing Then
                 bReturn = False
             Else

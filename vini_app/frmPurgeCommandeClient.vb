@@ -168,7 +168,7 @@ Public Class frmPurgeCommandeClient
         setcursorWait()
         Try
             'Chargement de toutes les Commandes Clients antérieures à la date fixée dans l'état Rapprochée
-            colCommande = CommandeClient.getListe(DATE_DEFAUT, DateAdd(DateInterval.Day, -1, pDatePurge), , vncEnums.vncEtatCommande.vncEclatee)
+            colCommande = CommandeClient.getListe(DATE_DEFAUT, DateAdd(DateInterval.Day, -1, pDatePurge), "", vncEnums.vncEtatCommande.vncEclatee, "")
             pbProgressBar.Minimum = 0
             pbProgressBar.Maximum = colCommande.Count
             pbProgressBar.Step = 1
