@@ -725,139 +725,43 @@ Public Class FactColisage
 
         'Debug.Assert(Not String.IsNullOrEmpty(pCodeFourn), "Le Code Fournisseur doit être spécifié")
 
-        Dim oMvt As vini_DB.dsVinicom.MVT_STOCKRow
         Dim nSI As Decimal
         Dim nSF As Decimal
         Dim nEntree As Decimal
         Dim nSortie As Decimal
-        Dim nEntreeMois As Decimal
-        Dim nSortieMois As Decimal
-        Dim oRow As dsVinicom.RECAP_COLISAGERow
-        Dim oTAMvt As New vini_DB.dsVinicomTableAdapters.MVT_STOCKTableAdapter()
 
         Dim dDatePrec As Date = DateTime.MinValue
-        Dim objFRN As Fournisseur
-        Dim nQteColis As Decimal
         Dim pDS As dsVinicom
-        Dim colFourn As Collection
-        Dim bTrtCommence As Boolean '' Le traitement est -il commencé ?
+        Dim colPRD As Collection
 
         pDS = New dsVinicom()
         nSI = 0
         nSF = 0
         nEntree = 0
         nSortie = 0
+
+        Dim ocol As Collection
+        Dim idFourn As Integer = 0
+        If Not String.IsNullOrEmpty(pCodeFourn) Then
+            ocol = Fournisseur.getListe(strCode:=pCodeFourn)
+            If ocol.Count <> 1 Then
+                Return pDS
+            End If
+            idFourn = ocol(1).id
+        End If
         Try
+            'Charegement de la Liste des produits Plateformes
+            colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn)
+            'chargement des Mouvements de Stocks depuis le dernier inventaire et Calcul du Stock initial
+            For Each oPRD As Produit In colPRD
+                oPRD.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+                oPRD.GenereDataSetRecapColisage(pdDeb, pdFin, pCout, pDS)
+            Next
 
 
-            colFourn = Fournisseur.getListe(pCodeFourn)
-            For Each objFRN In colFourn
-                If objFRN.code <> "999" Then
-                    oTAMvt.Connection = Persist.oleDBConnection
-                    ' Liste des Mouvements de stock trié par FRN/DATE/TYPE/PRD_CODE
-                    oTAMvt.FillForRECAPCOLISAGE(pDS.MVT_STOCK, pdDeb.ToShortDateString(), pdFin.ToShortDateString(), objFRN.code)
-                    dDatePrec = DateTime.MinValue
-                    nSI = 0
-                    nSF = 0
-                    nEntree = 0
-                    nSortie = 0
-                    nEntreeMois = 0
-                    nSortieMois = 0
-                    bTrtCommence = False
-
-                    For Each oMvt In pDS.MVT_STOCK
-                        'Les Mouvements d'inventaire autre que Ceux du debut ne sont pas pris en compte
-                        If oMvt.STK_TYPE = vncTypeMvt.vncMvtInventaire And Not oMvt.STK_DATE.ToShortDateString.Equals(pdDeb.ToShortDateString) Then
-                            Continue For
-                        End If
-
-                        'Calcul de la Quantité de Colis (Arrondi au Supéieur)
-                        If oMvt.IsCONDNull() Then
-                            nQteColis = 1
-                        Else
-                            nQteColis = oMvt.STK_QTE / oMvt.COND
-                            If (nQteColis - Int(nQteColis) <> 0) Then
-                                nQteColis = nQteColis + 1
-                            End If
-                        End If
-                        oMvt.STK_QTECOLIS = Int(nQteColis)
-
-                        'Test sur la rupture de mois pour calculer le cout
-                        If bTrtCommence Then
-                            If IsRuptureMois(oMvt.STK_DATE, dDatePrec) Then
-                                AjoutLigneRecapMoisEnCours(pDS, objFRN, pCout, nEntreeMois, nSortieMois)
-                                nEntreeMois = 0
-                                nSortieMois = 0
-                            End If
-                            ' on ajout des lignes à partir du mois suivant , jusqu'au mois précédent le mvt de stock en cours
-                            ajouteLignesRecapMensuelMoisVide(pDS, objFRN, getDateDebutdeMoisSuivant(dDatePrec), getDateFindeMoisPrecedent(oMvt.STK_DATE), nSF, pCout)
-                        End If
-
-                        'Traitement d'une ligne de mouvement de stock
-                        '======================================================================
-
-                        dDatePrec = oMvt.STK_DATE
-                        bTrtCommence = True
-                        'Si c'un Mouvement d'inventaire
-                        If oMvt.STK_TYPE = vncTypeMvt.vncMvtInventaire Then
-                            nSI = nSI + oMvt.STK_QTECOLIS
-                            nSF = nSI
-                        Else
-                            If oMvt.STK_QTECOLIS > 0 Then
-                                nEntree = oMvt.STK_QTECOLIS
-                                nSortie = 0
-                            End If
-                            If oMvt.STK_QTECOLIS < 0 Then
-                                nSortie = oMvt.STK_QTECOLIS
-                                nEntree = 0
-                            End If
-                            If oMvt.STK_QTECOLIS = 0 Then
-                                nSortie = 0
-                                nEntree = 0
-                            End If
-
-                            nSF = nSI + oMvt.STK_QTECOLIS 'Le Stock Final est égal au Stock initial + Mvt Stock
-                        End If
-
-                        'Creation d'une Ligne de Recap
-                        If (nSI <> 0 Or nEntree <> 0 Or nSortie <> 0 Or nSF <> 0) Then
-                            oRow = pDS.RECAP_COLISAGE.NewRECAP_COLISAGERow()
-                            oRow.RC_TYPE = oMvt.STK_TYPE
-                            oRow.RC_SI = nSI
-                            oRow.RC_ENTREE = nEntree
-                            oRow.RC_SORTIE = nSortie
-                            oRow.RC_SF = nSF
-                            oRow.RC_PRD_CODE = oMvt.PRD_CODE
-                            oRow.RC_PRD_LIBELLE = oMvt.PRD_LIBELLE
-                            oRow.RC_FRN_CODE = oMvt.FRN_CODE
-                            oRow.RC_FRN_NOM = oMvt.FRN_NOM
-                            oRow.RC_FRN_RS = oMvt.FRN_RS
-                            oRow.RC_DATE = oMvt.STK_DATE
-                            oRow.RC_LIBELLE = oMvt.STK_LIB
-                            oRow.RC_COUT = 0
-                            pDS.RECAP_COLISAGE.AddRECAP_COLISAGERow(oRow)
-                        End If
-                        nEntreeMois = nEntreeMois + nEntree
-                        nSortieMois = nSortieMois + nSortie
-
-
-
-                        'Le Stock final devient le Stock initial pour le mouvement suivant
-                        nSI = nSF
-
-                    Next
-                    '=== Traitement des lignes jusqu'à la date finale
-                    If bTrtCommence Then
-                        '==== Solde du mois en cours
-                        AjoutLigneRecapMoisEnCours(pDS, objFRN, pCout, nEntreeMois, nSortieMois)
-                        '==== Boucle sur les mois jusqu'à la date finale
-                        ajouteLignesRecapMensuelMoisVide(pDS, objFRN, getDateDebutdeMoisSuivant(dDatePrec), getDateFindeMois(pdFin), nSF, pCout)
-
-                    End If
-                End If
-            Next 'oFourn
         Catch ex As Exception
-            Debug.Assert(False, ex.Message, ex.StackTrace)
+            setError(ex.StackTrace, ex.Message)
+            pDS = New dsVinicom()
         End Try
 
 

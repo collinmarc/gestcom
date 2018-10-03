@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 '===================================================================================================================================
 'Projet : Vinicom
 'Auteur : Marc Collin 
@@ -56,6 +57,37 @@ Public Class ColEventSorted
         End If
         m_col.Add(sKey, obj)
         AddHandler obj.Updated, AddressOf MyHandler
+        RaiseUpdated()
+    End Sub
+    Public Sub AddRange(ByVal lst As IEnumerable(Of racine))
+        Dim nindex As Integer
+        Dim bindexTrouve As Boolean
+        Dim skeyorigine As String
+        Dim skey As String
+        skey = CStr(m_col.Count)
+
+        For Each obj As racine In lst
+            If obj.GetType() Is GetType(mvtStock) Then
+                Dim oMvt As mvtStock
+                oMvt = obj
+                skey = oMvt.key
+            Else
+                skey = m_col.Count
+            End If
+            If m_col.ContainsKey(CStr(skey)) Then
+                skeyorigine = skey
+                bindexTrouve = False
+                For nindex = 0 To 100000
+                    skey = skeyorigine & "_" & nindex
+                    If Not m_col.ContainsKey(CStr(skey)) Then
+                        bindexTrouve = True
+                        Exit For
+                    End If
+                Next
+            End If
+            m_col.Add(skey, obj)
+            AddHandler obj.Updated, AddressOf MyHandler
+        Next
         RaiseUpdated()
     End Sub
     '=======================================================================

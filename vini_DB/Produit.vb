@@ -813,10 +813,11 @@ Public Class Produit
             Return m_code & " | " & m_nom & " | " & m_millesime & " | " & libContenant & " | " & libCouleur
         End Get
     End Property
-    '==========================================================
-    'Function : loadcolmvtStock
-    'Description : Chargement de la collection des mouvements de stocks
-    '==========================================================
+    ''' <summary>
+    ''' Chargement de toute la Liste des mouvents de Stocks
+    ''' </summary>
+    ''' <returns>TRUE/FALSE</returns>
+    ''' <remarks></remarks>
     Public Function loadcolmvtStock() As Boolean
         Dim bReturn As Boolean
 
@@ -829,6 +830,24 @@ Public Class Produit
             m_bcolMvtStockUpdated = False ' La Liste des mouvements de stocks n'est pas mise à jour
             shared_disconnect()
         End If
+        Return bReturn
+    End Function 'loadcolmvtStock
+    ''' <summary>
+    ''' Chargement de la Liste des mouvents de Stocks depuis le dernier mouvement d'inventaire
+    ''' </summary>
+    ''' <returns>TRUE/FALSE</returns>
+    ''' <remarks></remarks>
+    Public Function loadcolmvtStockDepuisLeDernierMouvementInventaire() As Boolean
+        Dim bReturn As Boolean
+
+        bReturn = True
+        m_colMvtStock.clear()
+        shared_connect()
+        m_bcolMvtStockLoaded = True ' La collection des mouvements de stock est considérée comme chargée
+        m_colMvtStock.AddRange(mvtStock.getListeDepuisDernMvtInventaire(m_id))
+        m_bcolMvtStockLoaded = bReturn ' La Liste des mouvement de stock est chargée
+        m_bcolMvtStockUpdated = False ' La Liste des mouvements de stocks n'est pas mise à jour
+        shared_disconnect()
         Return bReturn
     End Function 'loadcolmvtStock
     '=======================================================================
@@ -1084,6 +1103,7 @@ Public Class Produit
 
         Try
             'Recherche du dernier inventaire
+            loadcolmvtStockDepuisLeDernierMouvementInventaire()
             nIndexDernierMvtInventaire = rechercheDernierInventaire()
             If nIndexDernierMvtInventaire <> -1 Then
                 Debug.Assert(nIndexDernierMvtInventaire <= m_colMvtStock.Count)
@@ -1253,4 +1273,103 @@ Public Class Produit
 
         Return bReturn
     End Function
+
+    Public Function GenereDataSetRecapColisage(ByVal pdDeb As Date, ByVal pdFin As Date, ByVal pCout As Decimal, ByRef pDs As dsVinicom) As Boolean
+
+        'Debug.Assert(Not String.IsNullOrEmpty(pCodeFourn), "Le Code Fournisseur doit être spécifié")
+        Dim bReturn As Boolean
+        Dim nSI As Decimal
+        Dim nSF As Decimal
+        Dim nEntree As Decimal
+        Dim nSortie As Decimal
+
+        Dim dDatePrec As Date = DateTime.MinValue
+
+        nSI = 0
+        nSF = 0
+        nEntree = 0
+        nSortie = 0
+        bReturn = False
+        Try
+            Dim oPRD As Produit = Me
+            Dim oStockAu As Decimal = oPRD.CalculeStockAu(pdDeb.AddDays(-1))  'Calcul du Stock la veille du Début
+            oStockAu = oPRD.qteColis(oStockAu) 'Conversion en Colis
+
+            Dim nmvtDu(31) As Decimal
+            Dim nStockAu(31) As Decimal
+            For njour As Integer = 1 To 31
+                nmvtDu(njour) = 0
+                nStockAu(njour) = 0
+            Next
+            'Boucle pour calculer les mvt par jour
+            For nIndex As Integer = oPRD.colmvtStock.Count - 1 To 0 Step -1
+                Dim oMvtStk As mvtStock = oPRD.colmvtStock(nIndex)
+                If oMvtStk.datemvt >= pdDeb And oMvtStk.datemvt <= pdFin Then
+                    'C'est un Mvt de la bonne date
+                    If oMvtStk.typeMvt <> vncTypeMvt.vncMvtInventaire Then
+                        Dim qteColis As Decimal = oPRD.qteColis(oMvtStk.qte)
+                        nmvtDu(oMvtStk.datemvt.Day) = nmvtDu(oMvtStk.datemvt.Day) + qteColis
+                    End If
+                End If
+            Next
+            'Boucle pour calculer le stock à la fin de chaque journée
+            For njour As Integer = 1 To 31
+                nStockAu(njour) = oStockAu + nmvtDu(njour)
+                oStockAu = nStockAu(njour)
+            Next
+
+            Dim oFournisseur As New Fournisseur()
+            oFournisseur.load(oPRD.idFournisseur)
+            pDS.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=oPRD.code, RC_PRD_LIBELLE:=oPRD.nom,
+                                                            RC_FRN_CODE:=oFournisseur.code,
+                                                            RC_FRN_NOM:=oFournisseur.nom,
+                                                            RC_FRN_RS:=oFournisseur.rs,
+                                                            RC_COUT_U:=pCout,
+                                                            RC_S01:=nStockAu(1),
+                                                            RC_S02:=nStockAu(2),
+                                                            RC_S03:=nStockAu(3),
+                                                            RC_S04:=nStockAu(4),
+                                                            RC_S05:=nStockAu(5),
+                                                            RC_S06:=nStockAu(6),
+                                                            RC_S07:=nStockAu(7),
+                                                            RC_S08:=nStockAu(8),
+                                                            RC_S09:=nStockAu(9),
+                                                            RC_S10:=nStockAu(10),
+                                                            RC_S11:=nStockAu(11),
+                                                            RC_S12:=nStockAu(12),
+                                                            RC_S13:=nStockAu(13),
+                                                            RC_S14:=nStockAu(14),
+                                                            RC_S15:=nStockAu(15),
+                                                            RC_S16:=nStockAu(16),
+                                                            RC_S17:=nStockAu(17),
+                                                            RC_S18:=nStockAu(18),
+                                                            RC_S19:=nStockAu(19),
+                                                            RC_S20:=nStockAu(20),
+                                                            RC_S21:=nStockAu(21),
+                                                            RC_S22:=nStockAu(22),
+                                                            RC_S23:=nStockAu(23),
+                                                            RC_S24:=nStockAu(24),
+                                                            RC_S25:=nStockAu(25),
+                                                            RC_S26:=nStockAu(26),
+                                                            RC_S27:=nStockAu(27),
+                                                            RC_S28:=nStockAu(28),
+                                                            RC_S29:=nStockAu(29),
+                                                            RC_S30:=nStockAu(30),
+                                                            RC_S31:=nStockAu(31)
+                                                            )
+
+
+
+
+            bReturn = True
+        Catch ex As Exception
+            setError("Produit.GenereDataSetRecapcolisage", ex.Message)
+            bReturn = False
+        End Try
+
+
+        Return bReturn
+
+    End Function
+
 End Class

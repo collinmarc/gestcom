@@ -2654,6 +2654,79 @@ Public MustInherit Class Persist
 
     End Function 'ListeMVTSTK
 
+    Protected Shared Function ListeMVTSTKDepuisDernMvtInventaire(ByVal pidProduit As Integer) As List(Of mvtStock)
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(pidProduit <> 0, "L'idProduit doit être renseigné")
+
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        '        Dim objParam As OleDbParameter
+        Dim colReturn As New List(Of mvtStock)
+
+        Dim idMvt As Integer
+        Dim idPRDmvt As Integer
+        Dim datemvt As Date
+        Dim typemvt As vncTypeMvt
+        Dim refidmvt As Integer
+        Dim libmvt As String
+        Dim qtemvt As Decimal
+        Dim commvt As String
+        Dim objmvt As mvtStock
+
+
+
+        Dim sqlString As String = " SELECT [STK_ID], [STK_PRD_ID], [STK_DATE], [STK_TYPE], [STK_REF_ID], [STK_LIB], [STK_QTE], [STK_COMM]" & _
+                                  " FROM MVT_STOCK AS MVT1"
+        Dim strWhere As String = " STK_PRD_ID = ? "
+        strWhere = strWhere & "AND STK_DATE >= (SELECT Max(STK_DATE) FROM MVT_STOCK AS MVT2 WHERE MVT2.STK_PRD_ID= MVT1.STK_PRD_ID and MVT2.STK_TYPE = " & vncTypeMvt.vncMvtInventaire & ")"
+
+        Dim strOrder As String = " STK_DATE DESC, STK_TYPE DESC"
+
+
+
+        sqlString = sqlString & " WHERE " & strWhere & " ORDER BY " & strOrder
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        'Paramétre ProduitID 
+
+        Try
+            Dim objParam As OleDbParameter
+            objParam = objCommand.Parameters.AddWithValue("?", pidProduit)
+
+            objRS = objCommand.ExecuteReader()
+            colReturn = New List(Of mvtStock)
+            While (objRS.Read())
+                idMvt = GetString(objRS, "STK_ID")
+                idPRDmvt = GetString(objRS, "STK_PRD_ID")
+                datemvt = GetString(objRS, "STK_DATE")
+                typemvt = GetString(objRS, "STK_TYPE")
+                refidmvt = GetString(objRS, "STK_REF_ID")
+                libmvt = GetString(objRS, "STK_LIB")
+                qtemvt = GetString(objRS, "STK_QTE")
+                commvt = GetString(objRS, "STK_COMM")
+                'Ajout de la ligne dans le produit
+                objmvt = New mvtStock(datemvt, idPRDmvt, typemvt, qtemvt, libmvt)
+                objmvt.setid(idMvt)
+                objmvt.Commentaire = commvt
+                objmvt.idReference = refidmvt
+                objmvt.resetBooleans()
+                colReturn.Add(objmvt)
+            End While
+            objRS.Close()
+
+        Catch ex As Exception
+            setError("LoadMVTSTK", ex.ToString())
+            Debug.Assert(False, getErreur())
+            colReturn = New List(Of mvtStock)
+        End Try
+
+        Return colReturn
+
+    End Function 'ListeMVTSTKDepuisDernMvtInventaire
     '=======================================================================
     'Fonction : ListeMVTSTK()
     'Description : Rend une liste des Mouvements de Stock d'un Founisseur classé par ordre chronologique

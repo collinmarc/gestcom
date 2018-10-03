@@ -136,6 +136,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="crRecapColisageJournalier.vb">
+      <DependentUpon>crRecapColisageJournalier.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CrystalReport1.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1435,6 +1442,11 @@
       <LastGenOutput>crListeFactColisageParNumero.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="crRecapColisageJournalier.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crRecapColisageJournalier.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.vb</LastGenOutput>
@@ -1455,6 +1467,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmConstantes.resx">
       <DependentUpon>frmConstantes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmcrRecapColisage.resx">
+      <DependentUpon>frmcrRecapColisage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCumulVentesArticles.resx">
       <DependentUpon>frmCumulVentesArticles.vb</DependentUpon>

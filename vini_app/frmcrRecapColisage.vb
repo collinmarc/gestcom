@@ -33,22 +33,18 @@ Public Class frmcrRecapColisage
     'Elle peut être modifiée en utilisant le Concepteur Windows Form.  
     'Ne la modifiez pas en utilisant l'éditeur de code.
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
-    Friend WithEvents dtdeb As System.Windows.Forms.DateTimePicker
-    Friend WithEvents dtFin As System.Windows.Forms.DateTimePicker
+    Friend WithEvents dtMois As System.Windows.Forms.DateTimePicker
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents ckDetail As System.Windows.Forms.CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdeb = New System.Windows.Forms.DateTimePicker
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.dtFin = New System.Windows.Forms.DateTimePicker
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.ckDetail = New System.Windows.Forms.CheckBox
-        Me.tbCodeFourn = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtMois = New System.Windows.Forms.DateTimePicker()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.ckDetail = New System.Windows.Forms.CheckBox()
+        Me.tbCodeFourn = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -57,31 +53,16 @@ Public Class frmcrRecapColisage
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(84, 20)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Date de Début"
+        Me.Label1.Text = "Mois :"
         '
-        'dtdeb
+        'dtMois
         '
-        Me.dtdeb.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdeb.Location = New System.Drawing.Point(99, 8)
-        Me.dtdeb.Name = "dtdeb"
-        Me.dtdeb.Size = New System.Drawing.Size(130, 20)
-        Me.dtdeb.TabIndex = 0
-        '
-        'Label2
-        '
-        Me.Label2.Location = New System.Drawing.Point(235, 12)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(67, 20)
-        Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Date de Fin"
-        '
-        'dtFin
-        '
-        Me.dtFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFin.Location = New System.Drawing.Point(308, 8)
-        Me.dtFin.Name = "dtFin"
-        Me.dtFin.Size = New System.Drawing.Size(104, 20)
-        Me.dtFin.TabIndex = 1
+        Me.dtMois.CustomFormat = "MMMM yyyy"
+        Me.dtMois.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtMois.Location = New System.Drawing.Point(99, 8)
+        Me.dtMois.Name = "dtMois"
+        Me.dtMois.Size = New System.Drawing.Size(130, 20)
+        Me.dtMois.TabIndex = 0
         '
         'cbAfficher
         '
@@ -127,15 +108,10 @@ Public Class frmcrRecapColisage
         Me.Controls.Add(Me.ckDetail)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cbAfficher)
-        Me.Controls.Add(Me.dtFin)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.dtdeb)
+        Me.Controls.Add(Me.dtMois)
         Me.Name = "frmcrRecapColisage"
         Me.Text = "Récapitulatif Colisage"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        Me.Controls.SetChildIndex(Me.dtdeb, 0)
-        Me.Controls.SetChildIndex(Me.Label2, 0)
-        Me.Controls.SetChildIndex(Me.dtFin, 0)
+        Me.Controls.SetChildIndex(Me.dtMois, 0)
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.ckDetail, 0)
@@ -158,7 +134,7 @@ Public Class frmcrRecapColisage
 
         Dim objReport As ReportDocument
         Dim oDS As vini_DB.dsVinicom
-        Dim r1 As New crRecapColisage()
+        Dim r1 As New crRecapColisageJournalier()
         Dim strReportName As String = r1.ResourceName
         Dim strCodeFourn As String
         Dim nCout As Decimal
@@ -170,16 +146,16 @@ Public Class frmcrRecapColisage
 
 
         debAffiche()
-        oDS = FactColisage.GenereDataSetRecapColisage(Me.dtdeb.Value, Me.dtFin.Value, strCodeFourn, nCout)
+        Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
+        Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
+        oDS = FactColisage.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout)
 
         setReportConnection(objReport)
         objReport.SetDataSource(oDS)
         'Les paramètres sont passé juste pour informations car ils ne sont pas utilisé
-        objReport.SetParameterValue("dDeb", Me.dtdeb.Value)
-        objReport.SetParameterValue("dFin", Me.dtFin.Value)
+
+        objReport.SetParameterValue("Mois", dDeb.ToString("MMMM yyyy"))
         objReport.SetParameterValue("codeFourn", Me.tbCodeFourn.Text)
-        objReport.SetParameterValue("bDetail", Me.ckDetail.Checked)
-        objReport.SetParameterValue("Cout", nCout)
 
         CrystalReportViewer1.ReportSource = objReport
         finAffiche()
@@ -216,8 +192,8 @@ Public Class frmcrRecapColisage
     End Sub
 
     Private Sub frmcrRecapColisage_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        dtdeb.Value = DateTime.Now
-        dtFin.Value = DateTime.Now
+        dtMois.Value = DateTime.Now
+
 
     End Sub
 End Class

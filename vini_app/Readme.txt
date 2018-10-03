@@ -1,4 +1,9 @@
-﻿Version 5.9.6.1a
+﻿Version 5.9.6.2
+date 
+#xxx : RecapColisage par jour
+
+
+Version 5.9.6.1a
 date 20/09/2018
 #880 : ExportWEBEDI des Commandes avec gratuitées
 

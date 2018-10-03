@@ -42,6 +42,7 @@ Imports System.IO
         Assert.IsTrue(m_objFRN.Save(), "FRN.Create")
 
         m_objPRD = New Produit("F01001", m_objFRN, 1990)
+        m_objPRD.idConditionnement = Param.conditionnementdefaut.id
         Assert.IsTrue(m_objPRD.save(), "Prod.Create")
 
         m_objFRN2 = New Fournisseur("F02", "FRn de'' test2")
@@ -409,120 +410,78 @@ Imports System.IO
     ''' <remarks></remarks>
     <TestMethod()> Public Sub T80_GenereDataSet()
 
-        Dim tabRows As System.Data.DataRow()
         Dim n As Integer
 
+        m_objPRD.loadcolmvtStock()
+        m_objPRD.bStock = vncTypeProduit.vncPlateforme
+        m_objPRD.colmvtStock.clear()
+        m_objPRD.save()
         'Ajout de Stock Initial = 120
         Persist.shared_connect()
-        m_objPRD.ajouteLigneMvtStock(CDate("01/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/2005", 120)
-        m_objPRD.savecolmvtStock()
+        m_objPRD.ajouteLigneMvtStock(CDate("01/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 120)
         'Ajout d'un Second Mvt d'inventaire = 60
-        m_objPRD.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/2005", 60)
-        m_objPRD.savecolmvtStock()
+        m_objPRD.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
 
         'Ajout d'une Commande Décembre = 60
-        m_objPRD.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/12/1999", -60)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'une Commande Décembre = 48
-        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12/1999", -48)
-        m_objPRD.savecolmvtStock()
+        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
 
-        'Ajout d'une Commande Février = 54
-        m_objPRD.ajouteLigneMvtStock(CDate("05/02/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -54)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'une Commande Février = 36
-        m_objPRD.ajouteLigneMvtStock(CDate("06/02/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -36)
-        m_objPRD.savecolmvtStock()
+        'Ajout d'une Commande JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        m_objPRD.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
+        'Commande du 04
+        m_objPRD.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
 
-        'Ajout d'un Appro Mars = 48
-        m_objPRD.ajouteLigneMvtStock(CDate("05/02/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 05/03/2000", 48)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'une Commande Mars = 42
-        m_objPRD.ajouteLigneMvtStock(CDate("06/02/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/03/2000", 42)
-        m_objPRD.savecolmvtStock()
+        'Le 10 => un Appro+une Commande
 
-        'Ajout d'un Appro Avril = 18
-        m_objPRD.ajouteLigneMvtStock(CDate("05/04/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 05/04/2000", 18)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Appro  Avril = 12
-        m_objPRD.ajouteLigneMvtStock(CDate("06/04/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/04/2000", 12)
-        m_objPRD.savecolmvtStock()
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
 
-        'Ajout d'un Mbt Regul Mai  = +12
-        m_objPRD.ajouteLigneMvtStock(CDate("05/05/2000"), vncTypeMvt.vncmvtRegul, 0, "REGUL au 05/05/2000", 12)
-        m_objPRD.savecolmvtStock()
-
-        'Ajout d'un Mbt Regul Mai  = -6
-        m_objPRD.ajouteLigneMvtStock(CDate("06/05/2000"), vncTypeMvt.vncmvtRegul, 0, "REGUL au 06/05/2000", -6)
-        m_objPRD.savecolmvtStock()
-        Persist.shared_disconnect()
-
-
-        'Ajout d'Inventaire  Juin = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("01/06/2000"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au  01/06/2000", 6)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Appro  Juin = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("06/06/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/06/2000", 120)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'une Cmd  Juiller = 66
-        m_objPRD.ajouteLigneMvtStock(CDate("06/06/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/06/2000", 66)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Appro  Juiller = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("06/06/2000"), vncTypeMvt.vncmvtRegul, 0, "APPRO au 06/06/2000", 120)
-        m_objPRD.savecolmvtStock()
-
-        'Ajout d'Inventaire  Decembre = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("01/10/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au  01/07/1999", 6)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Appro  Decembre = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("06/10/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/07/1999", 120)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'une Cmd  Decembre = 66
-        m_objPRD.ajouteLigneMvtStock(CDate("06/10/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 06/07/1999", 66)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Appro  Decembre = 120
-        m_objPRD.ajouteLigneMvtStock(CDate("06/10/1999"), vncTypeMvt.vncmvtRegul, 0, "APPRO au 06/07/1999", 120)
-        m_objPRD.savecolmvtStock()
+        m_objPRD.save()
 
 
         Dim oDS As dsVinicom
-        Dim oRECAPRow As dsVinicom.RECAP_COLISAGERow
-        oDS = FactColisage.GenereDataSetRecapColisage("01/12/1999", "30/05/2000", m_objFRN.code, 0.1)
-        For Each oRECAPRow In oDS.RECAP_COLISAGE
-            Console.WriteLine(oRECAPRow.RC_DATE.ToShortDateString() + "," + oRECAPRow.RC_TYPE + "," + oRECAPRow.RC_SI.ToString() + " + " + oRECAPRow.RC_ENTREE.ToString() + " " + oRECAPRow.RC_SORTIE.ToString() + " = " + oRECAPRow.RC_SF.ToString() + "/" + oRECAPRow.RC_COUT.ToString())
-        Next
-        tabRows = oDS.RECAP_COLISAGE.Select("RC_TYPE = '9'")
-        Assert.AreEqual(6, tabRows.Length)
+        oDS = FactColisage.GenereDataSetRecapColisage("01/01/2000", "31/01/2000", m_objFRN.code, 0.1)
 
-        n = 0 ''Janvier
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48), oRECAPRow.RC_SF)
+        Assert.AreEqual(1, oDS.RECAPCOLISAGEJOURN.Count, "1 ligne générée dans le dataset")
 
-        n = 1 ''Fevrier
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48), oRECAPRow.RC_SF)
+        Dim oRow As dsVinicom.RECAPCOLISAGEJOURNRow
+        oRow = oDS.RECAPCOLISAGEJOURN(0)
 
-        n = 2 'Mars
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42), oRECAPRow.RC_SF)
+        Assert.AreEqual(m_objPRD.code, oRow.RC_PRD_CODE)
+        Assert.AreEqual((36 - 48) / 6D, oRow.RC_S01)
+        Assert.AreEqual((36 - 48 - 12) / 6D, oRow.RC_S02)
+        Assert.AreEqual((36 - 48 - 12 + 48) / 6D, oRow.RC_S03)
+        Assert.AreEqual((36 - 48 - 12 + 48 - 12) / 6D, oRow.RC_S04)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S05)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S06)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S07)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S08)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S09)
+        Assert.AreEqual((36 - 48 - 12 + 48 - 12 + 120 - 36) / 6D, oRow.RC_S10)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S11)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S12)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S13)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S14)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S15)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S16)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S17)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S18)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S19)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S20)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S21)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S22)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S23)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S24)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S25)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S26)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S27)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S28)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S29)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S30)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S31)
 
-        n = 3 'Avril
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42), oRECAPRow.RC_SF)
-
-        n = 4 'Mai
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42 + 18 + 12), oRECAPRow.RC_SF)
-
-        n = 5 'Juin
-        oRECAPRow = CType(tabRows(n), dsVinicom.RECAP_COLISAGERow)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42 + 18 + 12), oRECAPRow.RC_SI)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 60 - 48 - 54 - 36 + 48 + 42 + 18 + 12 + 12 - 6), oRECAPRow.RC_SF)
 
     End Sub 'T80_GenereDataset
 

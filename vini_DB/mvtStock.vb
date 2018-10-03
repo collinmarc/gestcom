@@ -1,29 +1,8 @@
-'===================================================================================================================================
-'Projet : Vinicom
-'Auteur : Marc Collin 
-'Création : 23/06/04
-'===================================================================================================================================
-' Classe : mvtStock
-' Description : Mouvement de Stock
-'===================================================================================================================================
-'Membres de Classes
-'==================
-'Public
-'Protected
-'Private
-'Membres d'instances
-'==================
-'Public
-'   toString()      : Rend 'objet sous forme de chaine
-'   Equals()        : Test l'équivalence d'instance
-'Protected
-'Private
-'===================================================================================================================================
-'Historique :
-'============
-'8/03/05 : Méthode key : pour tri inverse de type de mvt
-'30/07/07 : Ajout des informations sur la facture de colisage
-'===================================================================================================================================
+Imports System.Collections.Generic
+''' <summary>
+''' Classe mouvement de Stock
+''' </summary>
+''' <remarks></remarks>
 Public Class mvtStock
     Inherits Persist
 
@@ -218,7 +197,7 @@ Public Class mvtStock
         End If
 
         Debug.Assert(id <> 0, "idCommande <> 0")
-        bReturn = LoadMVTSTK()
+        bReturn = loadMVTSTK()
         Return bReturn
     End Function 'DBLoad
     Public Overrides Function save() As Boolean
@@ -237,7 +216,7 @@ Public Class mvtStock
     Friend Overrides Function delete() As Boolean
         Debug.Assert(id <> 0, "idCommande <> 0")
         Dim bReturn As Boolean
-        bReturn = deleteMVTSTK
+        bReturn = deleteMVTSTK()
         Return bReturn
 
     End Function ' delete
@@ -280,7 +259,7 @@ Public Class mvtStock
         Debug.Assert(m_idProduit <> 0, "Le Produit n'est pas Renseigné")
         Debug.Assert(id <> 0, "id <> 0")
         Dim bReturn As Boolean
-        bReturn = UpdateMVTSTK
+        bReturn = updateMVTSTK()
         Return bReturn
 
     End Function 'Update
@@ -300,7 +279,7 @@ Public Class mvtStock
         colReturn = Persist.ListeMVTSTK_FACTCOL(pidFactColisage)
         Persist.shared_disconnect()
         Return colReturn
-    End Function 'getListe
+    End Function 'getListeColisage
     Public Shared Function getListe(ByVal pidProduit As Integer, Optional ByVal pidCmd As Integer = -1, Optional ByVal pidBA As Integer = -1) As ColEventSorted
         '=======================================================================
         'Fonction : getListe()
@@ -322,6 +301,28 @@ Public Class mvtStock
                 colReturn = Persist.ListeMVTSTK(pidProduit)
             End If
         End If
+        Persist.shared_disconnect()
+        Return colReturn
+    End Function 'getListe
+    ''' <summary>
+    ''' Chergement de la liste des Mvt de stocks depuis le dernier inventaire
+    ''' </summary>
+    ''' <param name="pidProduit">ID du produit</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function getListeDepuisDernMvtInventaire(ByVal pidProduit As Integer) As List(Of mvtStock)
+        '=======================================================================
+        'Fonction : getListe()
+        'Description : Rend une liste des mvt de stocks
+        'Détails    :  Si ID Commande est renseigné alors on ajoute un filtre sur le type de Mvt = "2"
+        '               Si ID BA est renseigné alors on ajoute un filtre sur le type de Mvt = "3"
+        '               Sinon on retourne tous les mvts de stocks
+        'Retour : collection des mouvements de stock
+        '=======================================================================
+        Dim colReturn As New List(Of mvtStock)
+
+        Persist.shared_connect()
+        colReturn = Persist.ListeMVTSTKDepuisDernMvtInventaire(pidProduit)
         Persist.shared_disconnect()
         Return colReturn
     End Function 'getListe

@@ -905,7 +905,7 @@ Imports vini_DB
 
     End Sub
 
-    <TestMethod()> Public Sub T70_GenerationMvtInventaire()
+    <TestMethod(), TestCategory("5.9.6.2")> Public Sub T70_GenerationMvtInventaire()
 
         objP1.ajouteLigneMvtStock("01/01/2001", vncTypeMvt.vncMvtInventaire, 0, "Iventaire au 01/1", 10)
         objP1.ajouteLigneMvtStock("10/01/2001", vncTypeMvt.vncMvtCommandeClient, 0, "CMD 10/1", -5)
@@ -916,7 +916,8 @@ Imports vini_DB
 
         Assert.AreEqual(CDec(10 - 5 + 15 - 7 - 1), objP1.QteStock)
         Assert.AreEqual(CDec(10 - 5 + 15), objP1.CalculeStockAu("01/02/2001"))
-        objP1.genereMvtInventaire("01/02/2001", objP1.CalculeStockAu("01/02/01"))
+        'Génération d'un mvt d'inventaire au 01/02/2001 avec la Qte en Stick au 
+        objP1.genereMvtInventaire("01/02/2001", objP1.CalculeStockAu("01/02/2001"))
         Assert.AreEqual(CDec(10 - 5 + 15 - 7 - 1), objP1.QteStock)
         Assert.AreEqual(CDbl(10 - 5 + 15), objP1.QteStockDernInventaire)
 
@@ -978,6 +979,144 @@ Imports vini_DB
 
     End Sub
 
+    <TestMethod(), TestCategory("5.9.6.2")>
+    Public Sub TestGetMvtStockDepuisDernInventaire()
+        Dim nidPRD As Long
+        Dim nidCMD As Long
+        Dim objPRD As Produit
+        Dim objCommande As CommandeClient
+        Dim objMVTStk As mvtStock
+        Dim strCodeCmd As String
+
+        'GIVEN
+        '-----
+        Dim oMvt As mvtStock
+        objP1.ajouteLigneMvtStock(#1/1/2018#, vncTypeMvt.vncMvtInventaire, 0, "SI au 1/01", 100)
+        objP1.ajouteLigneMvtStock(#1/2/2018#, vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 2/01", 10)
+        objP1.ajouteLigneMvtStock(#1/3/2018#, vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 3/01", 5)
+        objP1.ajouteLigneMvtStock(#1/4/2018#, vncTypeMvt.vncmvtBonAppro, 0, "BA au 4/01", 11)
+        objP1.ajouteLigneMvtStock(#1/5/2018#, vncTypeMvt.vncmvtBonAppro, 0, "BA au 5/01", 6)
+        objP1.ajouteLigneMvtStock(#2/1/2018#, vncTypeMvt.vncMvtInventaire, 0, "SI au 1/02", 1000)
+        objP1.ajouteLigneMvtStock(#2/2/2018#, vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 2/02", 100)
+        objP1.ajouteLigneMvtStock(#2/3/2018#, vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 3/02", 50)
+        objP1.ajouteLigneMvtStock(#2/4/2018#, vncTypeMvt.vncmvtBonAppro, 0, "BA au 4/02", 110)
+        objP1.ajouteLigneMvtStock(#2/5/2018#, vncTypeMvt.vncmvtBonAppro, 0, "BA au 5/02", 60)
+        objP1.savecolmvtStock()
+
+
+        'WHEN
+        '-----
+        Dim bRes As Boolean = objP1.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+
+        'THEN
+        '----
+        Assert.IsTrue(bRes, "Le load a fonctionné")
+        Assert.AreEqual(5, objP1.colmvtStock.Count, "Il y a 5 element dans a liste")
+        'Attention la liste des triée dans l'ordre SEC des dates
+        oMvt = objP1.colmvtStock(4)
+        Assert.AreEqual(#2/1/2018#, oMvt.datemvt, "mvt1.date = 01/02/2018")
+        Assert.AreEqual(vncTypeMvt.vncMvtInventaire, oMvt.typeMvt, "mvt1.Type = Mouvement d'inventaire")
+        Assert.AreEqual(1000D, oMvt.qte, "mvt1.qte = 1000")
+        oMvt = objP1.colmvtStock(3)
+        Assert.AreEqual(#2/2/2018#, oMvt.datemvt, "mvt2.date = 01/02/2018")
+        Assert.AreEqual(vncTypeMvt.vncMvtCommandeClient, oMvt.typeMvt, "mvt2.Type ")
+        Assert.AreEqual(100D, oMvt.qte, "mvt2.qte ")
+        oMvt = objP1.colmvtStock(2)
+        Assert.AreEqual(#2/3/2018#, oMvt.datemvt, "mvt3.date ")
+        Assert.AreEqual(vncTypeMvt.vncMvtCommandeClient, oMvt.typeMvt, "mvt3.Type ")
+        Assert.AreEqual(50D, oMvt.qte, "mvt3.qte ")
+        oMvt = objP1.colmvtStock(1)
+        Assert.AreEqual(#2/4/2018#, oMvt.datemvt, "mvt4.date ")
+        Assert.AreEqual(vncTypeMvt.vncmvtBonAppro, oMvt.typeMvt, "mvt4.Type ")
+        Assert.AreEqual(110D, oMvt.qte, "mvt4.qte ")
+        oMvt = objP1.colmvtStock(0)
+        Assert.AreEqual(#2/5/2018#, oMvt.datemvt, "mvt5.date ")
+        Assert.AreEqual(vncTypeMvt.vncmvtBonAppro, oMvt.typeMvt, "mvt5.Type ")
+        Assert.AreEqual(60D, oMvt.qte, "mvt5.qte ")
+
+
+    End Sub
+    ''' <summary>
+    ''' Test la génération du dataset Colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod(), TestCategory("5.9.6.2")>
+    Public Sub T_GenereDataColisageProduit()
+
+        Dim n As Integer
+
+        objP1.loadcolmvtStock()
+        objP1.bStock = vncTypeProduit.vncPlateforme
+        objP1.colmvtStock.clear()
+        objP1.save()
+        'Ajout de Stock Initial = 120
+        Persist.shared_connect()
+        objP1.ajouteLigneMvtStock(CDate("01/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 120)
+        'Ajout d'un Second Mvt d'inventaire = 60
+        objP1.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
+
+        'Ajout d'une Commande Décembre = 60
+        objP1.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+
+        'Ajout d'une Commande JAnvier
+        objP1.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        objP1.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        objP1.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
+        'Commande du 04
+        objP1.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+
+        'Le 10 => un Appro+une Commande
+
+        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
+        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
+
+        objP1.save()
+
+        Dim oDS As dsVinicom = New dsVinicom()
+
+        objP1.GenereDataSetRecapColisage(#1/1/2000#, #1/31/2000#, 1.5, oDS)
+
+
+        Assert.AreEqual(1, oDS.RECAPCOLISAGEJOURN.Count)
+        Dim oRow As dsVinicom.RECAPCOLISAGEJOURNRow
+        oRow = oDS.RECAPCOLISAGEJOURN(0)
+
+        Assert.AreEqual(objP1.code, oRow.RC_PRD_CODE)
+        Assert.AreEqual((36 - 48) / 6D, oRow.RC_S01)
+        Assert.AreEqual((36 - 48 - 12) / 6D, oRow.RC_S02)
+        Assert.AreEqual((36 - 48 - 12 + 48) / 6D, oRow.RC_S03)
+        Assert.AreEqual((36 - 48 - 12 + 48 - 12) / 6D, oRow.RC_S04)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S05)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S06)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S07)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S08)
+        Assert.AreEqual(oRow.RC_S04, oRow.RC_S09)
+        Assert.AreEqual((36 - 48 - 12 + 48 - 12 + 120 - 36) / 6D, oRow.RC_S10)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S11)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S12)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S13)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S14)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S15)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S16)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S17)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S18)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S19)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S20)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S21)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S22)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S23)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S24)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S25)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S26)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S27)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S28)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S29)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S30)
+        Assert.AreEqual(oRow.RC_S10, oRow.RC_S31)
+
+
+    End Sub 'T80_GenereDataset
 End Class
 
 
