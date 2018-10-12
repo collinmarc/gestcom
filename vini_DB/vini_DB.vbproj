@@ -206,6 +206,7 @@
     <Compile Include="EtatFactHBVGeneree.vb" />
     <Compile Include="EtatFactHBVExportee.vb" />
     <Compile Include="ExportQuadra.vb" />
+    <Compile Include="FactColisageJ.vb" />
     <Compile Include="FactHBV.vb" />
     <Compile Include="Imap\cmdPrestashop.vb" />
     <Compile Include="Imap\Imap.vb" />

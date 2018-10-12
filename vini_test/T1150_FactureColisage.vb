@@ -5,6 +5,8 @@ Imports NUnit.Extensions.Forms
 Imports vini_DB
 Imports vini_App
 Imports System.IO
+Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Shared
 
 
 
@@ -84,12 +86,12 @@ Imports System.IO
     End Sub
     <TestMethod()> Public Sub T10_DB()
 
-        Dim objFACT As FactColisage
+        Dim objFACT As FactColisageJ
         Dim nId As Integer
 
         'I - Création d'une Facture 
         '=========================
-        objFACT = New FactColisage(m_objFRN)
+        objFACT = New FactColisageJ(m_objFRN)
         objFACT.idModeReglement = 1
         objFACT.dEcheance = "01/04/1964"
 
@@ -98,7 +100,7 @@ Imports System.IO
         nId = objFACT.id
 
 
-        objFACT = FactColisage.createandload(nId)
+        objFACT = FactColisageJ.createandload(nId)
 
         Assert.AreEqual(CDate("01/04/1964"), objFACT.dEcheance)
         Assert.AreEqual(1, objFACT.idModeReglement)
@@ -108,7 +110,7 @@ Imports System.IO
         objFACT.idModeReglement = 2
 
         Assert.IsTrue(objFACT.save(), "Update" & objFACT.getErreur)
-        objFACT = FactColisage.createandload(nId)
+        objFACT = FactColisageJ.createandload(nId)
 
         ' Assert.AreEqual(CDate("01/04/1984"), objFACT.dEcheance)
         Assert.AreEqual(2, objFACT.idModeReglement)
@@ -125,10 +127,10 @@ Imports System.IO
     <TestMethod()> Public Sub T60_GenerationFactureColisage()
 
         Dim oCmd As CommandeClient
-        Dim oFactCol1 As FactColisage
+        Dim oFactCol1 As FactColisageJ
         'Dim oFactcol2 As FactColisage
         'Dim oFactCol3 As FactColisage
-        Dim oLgFactCol As LgFactColisage
+        Dim oLgFactCol As LgFactColisageOLD
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
         Dim objProduit As Produit
@@ -201,7 +203,7 @@ Imports System.IO
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         '' Fournisseur 2
         'oFactcol2 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN2)
@@ -280,8 +282,8 @@ Imports System.IO
     <TestMethod()> Public Sub T70_GenerationFactureColisage2Mois()
 
         Dim oCmd As CommandeClient
-        Dim oFactCol1 As FactColisage
-        Dim oLgFactCol As LgFactColisage
+        Dim oFactCol1 As FactColisageJ
+        Dim oLgFactCol As LgFactColisageOLD
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
 
@@ -314,7 +316,7 @@ Imports System.IO
 
 
         ' Fournisseur 1
-        oFactCol1 = FactColisage.GenereFacture(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
 
 
@@ -435,14 +437,14 @@ Imports System.IO
 
         'Le 10 => un Appro+une Commande
 
-        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 240)
         m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
 
         m_objPRD.save()
 
 
         Dim oDS As dsVinicom
-        oDS = FactColisage.GenereDataSetRecapColisage("01/01/2000", "31/01/2000", m_objFRN.code, 0.1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage("01/01/2000", "31/01/2000", m_objFRN.code, 0.1)
 
         Assert.AreEqual(1, oDS.RECAPCOLISAGEJOURN.Count, "1 ligne générée dans le dataset")
 
@@ -486,11 +488,180 @@ Imports System.IO
     End Sub 'T80_GenereDataset
 
     ''' <summary>
+    ''' Test la génération du dataset Colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T80_GenereEtatRecapColisage()
+
+        Dim n As Integer
+
+
+        If System.IO.File.Exists("REcapColisageJ.pdf") Then
+            System.IO.File.Delete("REcapColisageJ.pdf")
+        End If
+        m_objPRD.loadcolmvtStock()
+        m_objPRD.bStock = vncTypeProduit.vncPlateforme
+        m_objPRD.nom = "PRODUIT DE TEST POUR LE RECAP COLISAGE JOURNALIER"
+        m_objPRD.colmvtStock.clear()
+        m_objPRD.save()
+        Dim objPRD2 As New Produit("PRD002", m_objFRN, 2018)
+        objPRD2.idConditionnement = Param.conditionnementdefaut.id
+        objPRD2.nom = "PRODUIT2"
+        objPRD2.save()
+
+
+        m_objFRN.rs = "CAVE DES MILLE SOLEILS"
+        m_objFRN.Save()
+
+        'Ajout de Stock Initial = 120
+        m_objPRD.ajouteLigneMvtStock(CDate("01/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 120)
+        'Ajout d'un Second Mvt d'inventaire = 60
+        m_objPRD.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
+
+        'Ajout d'une Commande Décembre = 60
+        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+
+        'Ajout d'une Commande JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        m_objPRD.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
+        'Commande du 04
+        m_objPRD.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+
+        'Le 10 => un Appro+une Commande
+
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
+        m_objPRD.ajouteLigneMvtStock(CDate("11/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 11/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("12/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 12/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("13/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 13/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("14/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 14/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("15/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 15/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("16/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 16/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("17/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 17/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("18/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 18/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("19/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 19/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("20/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 20/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("21/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 21/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("22/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 22/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("23/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 23/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("24/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 24/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("25/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 25/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("26/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 26/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("27/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 27/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("28/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 28/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("29/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 29/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("30/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 30/01/2000", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("31/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 31/01/2000", -6)
+
+        m_objPRD.save()
+
+        'Mouvements de stock pour le Produit2
+        '===========================================
+        objPRD2.ajouteLigneMvtStock(CDate("01/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 1200)
+        'Ajout d'un Second Mvt d'inventaire = 60
+        objPRD2.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 720)
+
+        'Ajout d'une Commande Décembre = 60
+        objPRD2.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+
+        'Ajout d'une Commande JAnvier
+        objPRD2.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        objPRD2.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        objPRD2.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 480)
+        'Commande du 04
+        objPRD2.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+
+        'Le 10 => un Appro+une Commande
+
+        objPRD2.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
+        objPRD2.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
+        objPRD2.ajouteLigneMvtStock(CDate("11/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 11/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("12/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 12/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("13/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 13/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("14/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 14/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("15/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 15/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("16/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 16/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("17/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 17/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("18/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 18/01/2000", -60)
+        objPRD2.ajouteLigneMvtStock(CDate("19/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 19/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("20/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 20/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("21/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 21/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("22/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 22/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("23/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 23/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("24/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 24/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("25/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 25/01/2000", -60)
+        objPRD2.ajouteLigneMvtStock(CDate("26/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 26/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("27/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 27/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("28/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 28/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("29/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 29/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("30/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 30/01/2000", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("31/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 31/01/2000", -6)
+
+        objPRD2.save()
+
+        Dim oDS As dsVinicom
+        Dim dDeb As Date = CDate("01/01/2000")
+        Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1)
+
+        Dim objReport As ReportDocument
+
+        objReport = New ReportDocument
+        objReport.Load("V:\V5\vini_app/" & "crRecapColisageJournalier.rpt")
+
+
+        Dim periode As String = dDeb.ToString("MMMM yyyy")
+        objReport.SetParameterValue("Periode", periode)
+
+        objReport.SetDataSource(oDS)
+
+
+        objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "REcapColisageJ.pdf")
+        Assert.IsTrue(System.IO.File.Exists("REcapColisageJ.pdf"))
+
+        System.Diagnostics.Process.Start("REcapColisageJ.pdf")
+
+
+    End Sub 'T80_GenereEtatRecapColisage
+    Private Sub setReportConnection(ByVal objReport As ReportDocument)
+
+        Dim myConnectionInfo As ConnectionInfo = New ConnectionInfo()
+        myConnectionInfo.ServerName = Persist.oleDBConnection.DataSource
+        myConnectionInfo.DatabaseName = Persist.oleDBConnection.Database
+        myConnectionInfo.UserID = My.Settings.ReportCnxUser
+        myConnectionInfo.Password = My.Settings.ReportCnxPassword
+
+        Dim mySections As Sections = objReport.ReportDefinition.Sections
+        For Each mySection As Section In mySections
+            Dim myReportObjects As ReportObjects = mySection.ReportObjects
+            For Each myReportObject As ReportObject In myReportObjects
+                If myReportObject.Kind = ReportObjectKind.SubreportObject Then
+                    Dim mySubreportObject As SubreportObject = CType(myReportObject, SubreportObject)
+                    Dim subReportDocument As ReportDocument = mySubreportObject.OpenSubreport(mySubreportObject.SubreportName)
+                    setReportConnection(subReportDocument)
+                End If
+            Next
+        Next
+        'On n'applique pas la connexion sur les tables, car ce rapport est base sur un dataset 
+
+        ''Applique la connection sur les tables du rapport
+        'Dim myTables As Tables = objReport.Database.Tables
+        'For Each myTable As CrystalDecisions.CrystalReports.Engine.Table In myTables
+        '    Dim myTableLogonInfo As TableLogOnInfo = myTable.LogOnInfo
+        '    myTableLogonInfo.ConnectionInfo = myConnectionInfo
+        '    myTable.ApplyLogOnInfo(myTableLogonInfo)
+        'Next
+    End Sub
+
+    ''' <summary>
     ''' Test l'export vers Quadra
     ''' </summary>
     ''' <remarks></remarks>
     <TestMethod()> Public Sub T100_EXPORT()
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         Dim strLines As String()
         Dim strLine As String
         Dim strLine1 As String
@@ -505,7 +676,7 @@ Imports System.IO
         oParam.valeur2 = 30
         Assert.IsTrue(oParam.Save())
 
-        objFact = New FactColisage(m_objFRN)
+        objFact = New FactColisageJ(m_objFRN)
         objFact.periode = "1er Timestre 1964"
         objFact.dateFacture = CDate("06/02/1964")
         objFact.totalHT = 150.56
@@ -596,7 +767,7 @@ Imports System.IO
     ''' </summary>
     ''' <remarks></remarks>
     <TestMethod()> Public Sub T100_EXPORTAVOIR()
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         Dim strLines As String()
         Dim strLine As String
         Dim strLine1 As String
@@ -611,7 +782,7 @@ Imports System.IO
         oParam.valeur2 = 30
         Assert.IsTrue(oParam.Save())
 
-        objFact = New FactColisage(m_objFRN)
+        objFact = New FactColisageJ(m_objFRN)
         objFact.periode = "1er Timestre 1964"
         objFact.dateFacture = CDate("06/02/1964")
         objFact.totalHT = -150.56
@@ -699,11 +870,11 @@ Imports System.IO
     End Sub
     <TestMethod()> Public Sub T110_ChampsLongs()
 
-        Dim objFACT As FactColisage
+        Dim objFACT As FactColisageJ
 
         'I - Création d'une Facture 
         '=========================
-        objFACT = New FactColisage(m_objFRN)
+        objFACT = New FactColisageJ(m_objFRN)
 
         objFACT.periode = "1er Timestre 1964".PadRight(500, "x")
         'Save
@@ -718,8 +889,8 @@ Imports System.IO
     'Test l'incrémenation des codes
     <TestMethod()> Public Sub T70_GetNextCode()
 
-        Dim obj1 As New FactColisage(m_objFRN)
-        Dim obj2 As New FactColisage(m_objFRN)
+        Dim obj1 As New FactColisageJ(m_objFRN)
+        Dim obj2 As New FactColisageJ(m_objFRN)
 
         obj1.save()
         obj2.save()

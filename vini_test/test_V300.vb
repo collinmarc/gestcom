@@ -196,11 +196,11 @@ Imports vini_App
 
     <TestMethod()> Public Sub T30_TestFactColisage()
 
-        Dim oFactColisage As FactColisage
-        Dim oFactColisage2 As FactColisage
+        Dim oFactColisage As FactColisageJ
+        Dim oFactColisage2 As FactColisageJ
         Dim nId As Integer
 
-        oFactColisage = New FactColisage(m_objFRN)
+        oFactColisage = New FactColisageJ(m_objFRN)
         Assert.AreEqual(vncEtatCommande.vncFactCOLGeneree, oFactColisage.etat.codeEtat, oFactColisage.etat.codeEtat, "Etat Généréée")
         Assert.AreEqual("", oFactColisage.periode, "Période par defaut")
         Assert.AreEqual(Param.getConstante("CST_FACT_COL_TAXES"), oFactColisage.montantTaxes.ToString(), "Montant des taxes")
@@ -220,7 +220,7 @@ Imports vini_App
         Assert.IsTrue(oFactColisage.save, "FactCol.insert")
         nId = oFactColisage.id
 
-        oFactColisage2 = FactColisage.createandload(nId)
+        oFactColisage2 = FactColisageJ.createandload(nId)
 
         Assert.IsTrue(oFactColisage.Equals(oFactColisage2), "Equal after create and load")
         oFactColisage2.periode = "TEST2"
@@ -234,7 +234,7 @@ Imports vini_App
         oFactColisage2.refReglement = "CHQ TEST2"
         Assert.IsTrue(oFactColisage2.save, "Factcolisage.update")
 
-        oFactColisage = FactColisage.createandload(nId)
+        oFactColisage = FactColisageJ.createandload(nId)
 
         Assert.AreEqual("TEST2", oFactColisage2.periode)
         Assert.AreEqual(#1/1/2006#, oFactColisage2.dateFacture)
@@ -249,7 +249,7 @@ Imports vini_App
         oFactColisage.bDeleted = True
         oFactColisage.save()
 
-        oFactColisage = FactColisage.createandload(nId)
+        oFactColisage = FactColisageJ.createandload(nId)
         Assert.IsTrue(oFactColisage.id = 0, "After Delete Id = 0")
 
     End Sub
@@ -260,14 +260,14 @@ Imports vini_App
     ''' <remarks></remarks>
 
     <TestMethod()> Public Sub T40_TestLgFactColisage()
-        Dim oFactCol As FactColisage
-        Dim oLgFactCol As LgFactColisage
+        Dim oFactCol As FactColisageJ
+        Dim oLgFactCol As LgFactColisageOLD
         Dim nid As Integer
         Dim strResult As String
 
-        oFactCol = New FactColisage(m_objFRN)
+        oFactCol = New FactColisageJ(m_objFRN)
 
-        oLgFactCol = New LgFactColisage()
+        oLgFactCol = New LgFactColisageOLD()
         oLgFactCol.dDeb = #1/1/2004#
         oLgFactCol.dFin = #1/31/2004#
         oLgFactCol.StockInitial = 15
@@ -279,7 +279,8 @@ Imports vini_App
         oLgFactCol.calculPrixTotal()
         Assert.AreEqual(0.75D, oLgFactCol.MontantHT, "Montant HT")
 
-        oFactCol.AjouteLigneFactColisage(oLgFactCol)
+        '''TODO : Changement de ligne de Colisage
+        '        oFactCol.AjouteLigne(oLgFactCol)
 
         Assert.AreEqual(0.75D + oFactCol.montantTaxes, oFactCol.totalHT)
 
@@ -287,7 +288,7 @@ Imports vini_App
 
         nid = oFactCol.id
 
-        oFactCol = FactColisage.createandload(nid)
+        oFactCol = FactColisageJ.createandload(nid)
 
         oFactCol.loadcolLignes()
 
@@ -316,42 +317,42 @@ Imports vini_App
     ''' </summary>
     ''' <remarks></remarks>
     <TestMethod()> Public Sub T50_ListeFactColisage()
-        Dim oFactCol1 As FactColisage
-        Dim oFactCol2 As FactColisage
-        Dim oFactCol3 As FactColisage
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactCol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
 
         Dim oCol As Collection = New Collection()
-        oCol = FactColisage.getListe(#1/1/2004#, #12/31/2004#)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
         For Each oFactCol1 In oCol
             oFactCol1.bDeleted = True
             oFactCol1.save()
         Next
 
 
-        oFactCol1 = New FactColisage(m_objFRN)
+        oFactCol1 = New FactColisageJ(m_objFRN)
         oFactCol1.dateFacture = #1/1/2004#
         oFactCol1.save()
 
-        oFactCol2 = New FactColisage(m_objFRN2)
+        oFactCol2 = New FactColisageJ(m_objFRN2)
         oFactCol2.dateFacture = #2/1/2004#
         oFactCol2.save()
 
-        oFactCol3 = New FactColisage(m_objFRN3)
+        oFactCol3 = New FactColisageJ(m_objFRN3)
         oFactCol3.dateFacture = #3/1/2004#
         oFactCol3.changeEtat(vncActionEtatCommande.vncActionFactCOLExporter)
         oFactCol3.save()
 
-        oCol = FactColisage.getListe(#1/1/2004#, #12/31/2004#)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
         Assert.AreEqual(3, oCol.Count, "GetListe sur date")
-        oCol = FactColisage.getListe(#1/1/2004#, #12/31/2004#, m_objFRN2.code)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#, m_objFRN2.code)
         Assert.AreEqual(1, oCol.Count, "GetListe sur date+Code Fourn")
-        oCol = FactColisage.getListe(#1/1/2004#, #12/31/2004#, , vncEtatCommande.vncFactCOLGeneree)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#, , vncEtatCommande.vncFactCOLGeneree)
         Assert.AreEqual(2, oCol.Count, "GetListe sur date+Etat")
-        oCol = FactColisage.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLGeneree)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLGeneree)
         Assert.AreEqual(1, oCol.Count, "GetListe sur date+Etat =>1")
-        oCol = FactColisage.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLExportee)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLExportee)
         Assert.AreEqual(0, oCol.Count, "GetListe sur date+Etat =>0")
-        oCol = FactColisage.getListe(#3/1/2004#, #3/1/2004#, , vncEtatCommande.vncFactCOLExportee)
+        oCol = FactColisageJ.getListe(#3/1/2004#, #3/1/2004#, , vncEtatCommande.vncFactCOLExportee)
         Assert.AreEqual(1, oCol.Count, "GetListe sur date+Etat =>1")
 
         oFactCol1.bDeleted = True
@@ -361,7 +362,7 @@ Imports vini_App
         oFactCol3.bDeleted = True
         oFactCol3.save()
 
-        oCol = FactColisage.getListe(#1/1/2004#, #12/31/2004#)
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
         Assert.AreEqual(0, oCol.Count, "GetListe sur date apres delete")
 
     End Sub
@@ -369,10 +370,10 @@ Imports vini_App
     <TestMethod()> Public Sub T60_GenerationFactureColisage()
 
         Dim oCmd As CommandeClient
-        Dim oFactCol1 As FactColisage
-        Dim oFactcol2 As FactColisage
-        Dim oFactCol3 As FactColisage
-        Dim oLgFactCol As LgFactColisage
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisageOLD
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
 
@@ -407,12 +408,12 @@ Imports vini_App
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         ' Fournisseur 2
-        oFactcol2 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN2)
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN2)
         ' Fournisseur 3
-        oFactCol3 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN3)
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("01/02/1964"), m_objFRN3)
 
 
         Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")

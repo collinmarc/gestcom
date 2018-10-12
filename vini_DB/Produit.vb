@@ -1282,9 +1282,10 @@ Public Class Produit
         Dim nSF As Decimal
         Dim nEntree As Decimal
         Dim nSortie As Decimal
+        Dim periode As String
 
         Dim dDatePrec As Date = DateTime.MinValue
-
+        periode = pdDeb.ToString("MMMM yyyy")
         nSI = 0
         nSF = 0
         nEntree = 0
@@ -1320,7 +1321,7 @@ Public Class Produit
 
             Dim oFournisseur As New Fournisseur()
             oFournisseur.load(oPRD.idFournisseur)
-            pDS.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=oPRD.code, RC_PRD_LIBELLE:=oPRD.nom,
+            pDs.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=oPRD.code, RC_PRD_LIBELLE:=oPRD.nom,
                                                             RC_FRN_CODE:=oFournisseur.code,
                                                             RC_FRN_NOM:=oFournisseur.nom,
                                                             RC_FRN_RS:=oFournisseur.rs,
@@ -1355,7 +1356,9 @@ Public Class Produit
                                                             RC_S28:=nStockAu(28),
                                                             RC_S29:=nStockAu(29),
                                                             RC_S30:=nStockAu(30),
-                                                            RC_S31:=nStockAu(31)
+                                                            RC_S31:=nStockAu(31),
+                                                            PERIODE:=periode,
+                                                            RC_IDPRODUIT:=oPRD.id
                                                             )
 
 

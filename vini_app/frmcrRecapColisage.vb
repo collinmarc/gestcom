@@ -148,7 +148,7 @@ Public Class frmcrRecapColisage
         debAffiche()
         Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
         Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
-        oDS = FactColisage.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout)
 
         setReportConnection(objReport)
         objReport.SetDataSource(oDS)

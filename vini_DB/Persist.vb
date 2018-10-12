@@ -12049,13 +12049,13 @@ Public MustInherit Class Persist
         'Retour : Rend Vrai si l'INSERT s'est correctement effectué
         '=======================================================================
         Dim bReturn As Boolean
-        Dim objFACT As FactColisage
+        Dim objFACT As FactColisageJ
         bReturn = False
 
         Debug.Assert(Me.GetType().Name.Equals("FactColisage"), "Objet de Type 'FactColisage' Requis")
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id = 0, "ID=0")
-        objFACT = CType(Me, FactColisage)
+        objFACT = CType(Me, FactColisageJ)
 
         Dim sqlString As String = "INSERT INTO FACTCOLISAGE( " & _
                                     "FCOL_CODE," & _
@@ -12159,10 +12159,10 @@ Public MustInherit Class Persist
 
         Dim sqlString As String = "DELETE FROM FactColisage WHERE FCOL_ID=? "
         Dim objCommand As OleDbCommand
-        Dim objFACT As FactColisage
+        Dim objFACT As FactColisageJ
         '        Dim objParam As OleDbParameter
 
-        objFACT = CType(Me, FactColisage)
+        objFACT = CType(Me, FactColisageJ)
         objCommand = New OleDbCommand
         objCommand.Connection = m_dbconn.Connection
         objCommand.CommandText = sqlString
@@ -12210,7 +12210,7 @@ Public MustInherit Class Persist
 
         Dim objCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
-        Dim objFCOL As FactColisage
+        Dim objFCOL As FactColisageJ
         '        Dim objParam As OleDbParameter
         Dim bReturn As Boolean
 
@@ -12232,7 +12232,7 @@ Public MustInherit Class Persist
                 Return False
             End If
             objRS.Read()
-            objFCOL = CType(Me, FactColisage)
+            objFCOL = CType(Me, FactColisageJ)
             Try
                 objFCOL.code = GetString(objRS, "FCOL_CODE")
             Catch ex As InvalidCastException
@@ -12330,13 +12330,13 @@ Public MustInherit Class Persist
         'Retour : Rend Vrai si l'UPDATE s'est correctement effectué
         '=======================================================================
         Dim bReturn As Boolean
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         bReturn = False
 
         Debug.Assert(Me.GetType().Name.Equals("FactColisage"), "Objet de Type FactColisage Requis")
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "ID<>0")
-        objFact = CType(Me, FactColisage)
+        objFact = CType(Me, FactColisageJ)
 
         Dim sqlString As String = "UPDATE FactColisage SET " & _
                                     "FCOL_CODE = ? ," & _
@@ -12401,7 +12401,7 @@ Public MustInherit Class Persist
 
     '==========================================================================
     'Methode : deletecolLGCOL
-    'Description : Suppression des lignes d'une Facture de transport
+    'Description : Suppression des lignes d'une Facture de Colisage
     Protected Function deletecolLgCOL() As Boolean
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "Id <> 0")
@@ -12438,42 +12438,32 @@ Public MustInherit Class Persist
     End Function 'deletecolLgCOL
 
     Protected Function INSERTcolLGCOL() As Boolean
-        Dim objFactColisage As Commande
+        Dim objFactColisageJ As Commande
         Dim bReturn As Boolean
-        Dim objLgCOL As LgFactColisage
+        Dim objLgCOL As LgCommande
 
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
-        Debug.Assert(m_id <> 0, "Le Client doit être Sauvegardé")
+        Debug.Assert(m_id <> 0, "La facture  doit être Sauvegardée")
         Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.FACTCOL, "Objet de type FactColisage requis")
-        objFactColisage = Me
-        Debug.Assert(Not objFactColisage.colLignes Is Nothing, "ColLignes is Nothing")
+        objFactColisageJ = Me
+        Debug.Assert(Not objFactColisageJ.colLignes Is Nothing, "ColLignes is Nothing")
 
 
         Dim sqlString As String = "INSERT INTO LGFACTCOLISAGE (" & _
                                     "LGCOL_NUM," & _
                                     "LGCOL_FACTCOL_ID," & _
-                                    "LGCOL_DDEB," & _
-                                    "LGCOL_DFIN," & _
-                                    "LGCOL_STK_INI," & _
-                                    "LGCOL_STK_IN," & _
-                                    "LGCOL_STK_OUT," & _
-                                    "LGCOL_STK_FINAL," & _
                                     "LGCOL_QTE," & _
                                     "LGCOL_PU," & _
-                                    "LGCOL_MT_HT" & _
+                                    "LGCOL_MT_HT," & _
+                                    "LGCOL_PRD_ID" & _
                                     ") VALUES ( " & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? ," & _
-                                    "? " & _
-                                  " )"
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? ," & _
+                                        "? " & _
+                                " )"
         Dim sqlString3 As String = "SELECT MAX(LGCOL_ID) FROM LGFactColisage"
         Dim objCommand As OleDbCommand
         Dim objCommandID As OleDbCommand
@@ -12502,25 +12492,15 @@ Public MustInherit Class Persist
             Dim oParam4 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.VarChar)
             Dim oParam5 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
             Dim oParam6 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
-            Dim oParam7 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
-            Dim oParam8 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
-            Dim oParam9 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
-            Dim oParam10 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
-            Dim oParam11 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
 
-            For Each objLgCOL In objFactColisage.colLignes
+            For Each objLgCOL In objFactColisageJ.colLignes
 
                 oParam1.Value = objLgCOL.num
-                oParam2.Value = objFactColisage.id
-                oParam3.Value = objLgCOL.dDeb
-                oParam4.Value = objLgCOL.dFin
-                oParam5.Value = objLgCOL.StockInitial
-                oParam6.Value = objLgCOL.Entrees
-                oParam7.Value = objLgCOL.Sorties
-                oParam8.Value = objLgCOL.StockFinal
-                oParam9.Value = objLgCOL.qte
-                oParam10.Value = CDbl(objLgCOL.pu)
-                oParam11.Value = CDbl(objLgCOL.MontantHT)
+                oParam2.Value = objFactColisageJ.id
+                oParam3.Value = objLgCOL.qteCommande
+                oParam4.Value = CDbl(objLgCOL.prixU)
+                oParam5.Value = CDbl(objLgCOL.prixHT)
+                oParam6.Value = objLgCOL.oProduit.id
                 objCommand.ExecuteNonQuery()
                 objRS = objCommandID.ExecuteReader
                 If objRS.Read Then
@@ -12559,25 +12539,20 @@ Public MustInherit Class Persist
         Dim sqlString As String = "UPDATE LGFactColisage SET " & _
                                     "LGCOL_NUM = ? ," & _
                                     "LGCOL_FACTCOL_ID = ? ," & _
-                                    "LGCOL_DDEB= ? , " & _
-                                    "LGCOL_DFIN= ? , " & _
-                                    "LGCOL_STK_INI= ? , " & _
-                                    "LGCOL_STK_IN= ? , " & _
-                                    "LGCOL_STK_OUT= ? , " & _
-                                    "LGCOL_STK_FINAL= ? , " & _
                                     "LGCOL_QTE= ? , " & _
                                     "LGCOL_PU= ? , " & _
-                                    "LGCOL_MT_HT = ? " & _
+                                    "LGCOL_MT_HT = ?, " & _
+                                    "LGCOL_PRD_ID = ? " & _
                                     " WHERE " & _
                                     " LGCOL_ID = ?"
         Dim objCommand As OleDbCommand
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         '        Dim objParam As OleDbParameter
         Dim bReturn As Boolean
-        Dim objLgCOL As LgFactColisage
+        Dim objLgCOL As LgCommande
 
 
-        objFact = CType(Me, FactColisage)
+        objFact = CType(Me, FactColisageJ)
         objCommand = New OleDbCommand
         objCommand.Connection = m_dbconn.Connection
         objCommand.CommandText = sqlString
@@ -12591,16 +12566,11 @@ Public MustInherit Class Persist
             Try
                 objCommand.Parameters.Clear()
                 objCommand.Parameters.AddWithValue("?", objLgCOL.num)
-                objCommand.Parameters.AddWithValue("?", m_id)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.dDeb)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.dFin)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.StockInitial)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.Entrees)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.Sorties)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.StockFinal)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.qte)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.pu)
-                objCommand.Parameters.AddWithValue("?", objLgCOL.MontantHT)
+                objCommand.Parameters.AddWithValue("?", objFact.id)
+                objCommand.Parameters.AddWithValue("?", objLgCOL.qteCommande)
+                objCommand.Parameters.AddWithValue("?", objLgCOL.prixU)
+                objCommand.Parameters.AddWithValue("?", objLgCOL.prixHT)
+                objCommand.Parameters.AddWithValue("?", objLgCOL.oProduit.id)
                 objCommand.Parameters.AddWithValue("?", objLgCOL.id)
                 objCommand.ExecuteNonQuery()
             Catch ex As Exception
@@ -12627,27 +12597,22 @@ Public MustInherit Class Persist
     Protected Function LoadcolLgFactColisage() As Boolean
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "Id <> 0")
-        Debug.Assert(Me.GetType().Name.Equals("FactColisage"))
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.FACTCOL, "Objet de type FactColisage requis")
 
         Dim bReturn As Boolean
         Dim objCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
-        Dim objFactColisage As FactColisage
-        Dim objLGCOL As LgFactColisage
+        Dim objFactColisage As FactColisageJ
+        Dim objLGCOL As LgCommande
 
         Dim sqlString As String = "SELECT " & _
                                     "LGCOL_ID," & _
                                     "LGCOL_NUM," & _
                                     "LGCOL_FACTCOL_ID," & _
-                                    "LGCOL_DDEB," & _
-                                    "LGCOL_DFIN," & _
-                                    "LGCOL_STK_INI," & _
-                                    "LGCOL_STK_IN," & _
-                                    "LGCOL_STK_OUT," & _
-                                    "LGCOL_STK_FINAL," & _
                                     "LGCOL_QTE," & _
                                     "LGCOL_PU," & _
-                                    "LGCOL_MT_HT " & _
+                                    "LGCOL_MT_HT, " & _
+                                    "LGCOL_PRD_ID " & _
                                   " FROM LGFactColisage" & _
                                   " WHERE LGCOL_FACTCOL_ID = ? ORDER BY LGCOL_NUM"
 
@@ -12661,77 +12626,73 @@ Public MustInherit Class Persist
         CreateParameterP_ID(objCommand)
 
         Try
-            objFactColisage = CType(Me, FactColisage)
+            Dim objLG As LgCommande
+            Dim oProduit As Produit = Nothing
+            Dim lgnum As String
+            Dim qtecommande As Double
+            Dim prixU As Double
+            Dim prixHT As Double
+            Dim idCmd As Integer
+            Dim idlgcmd As Integer
+
+            objFactColisage = CType(Me, FactColisageJ)
             objRS = objCommand.ExecuteReader
             While objRS.Read
                 Try
-                    objLGCOL = New LgFactColisage
-                    Try
-                        objLGCOL.setid(GetString(objRS, "LGCOL_ID"))
-                    Catch ex As InvalidCastException
-                        objLGCOL.setid(0)
-                    End Try
-                    Try
-                        objLGCOL.num = GetString(objRS, "LGCOL_NUM")
-                    Catch ex As InvalidCastException
-                        objLGCOL.num = ""
-                    End Try
-                    Try
-                        objLGCOL.idFactColisage = GetString(objRS, "LGCOL_FACTCOL_ID")
-                    Catch ex As InvalidCastException
-                        objLGCOL.idFactColisage = 0
-                    End Try
-                    Try
-                        objLGCOL.dDeb = GetString(objRS, "LGCOL_DDEB")
-                    Catch ex As InvalidCastException
-                        objLGCOL.dDeb = DATE_DEFAUT
-                    End Try
-                    Try
-                        objLGCOL.dFin = GetString(objRS, "LGCOL_DFIN")
-                    Catch ex As InvalidCastException
-                        objLGCOL.dFin = DATE_DEFAUT
-                    End Try
-                    Try
-                        objLGCOL.StockInitial = GetString(objRS, "LGCOL_STK_INI")
-                    Catch ex As InvalidCastException
-                        objLGCOL.StockInitial = 0
-                    End Try
-                    Try
-                        objLGCOL.StockFinal = GetString(objRS, "LGCOL_STK_FINAL")
-                    Catch ex As InvalidCastException
-                        objLGCOL.StockFinal = 0
-                    End Try
-                    Try
-                        objLGCOL.Entrees = GetString(objRS, "LGCOL_STK_IN")
-                    Catch ex As InvalidCastException
-                        objLGCOL.Entrees = 0
-                    End Try
-                    Try
-                        objLGCOL.Sorties = GetString(objRS, "LGCOL_STK_OUT")
-                    Catch ex As InvalidCastException
-                        objLGCOL.Sorties = 0
-                    End Try
-                    Try
-                        objLGCOL.qte = GetString(objRS, "LGCOL_QTE")
-                    Catch ex As InvalidCastException
-                        objLGCOL.qte = 0
-                    End Try
-                    Try
-                        objLGCOL.pu = GetString(objRS, "LGCOL_PU")
-                    Catch ex As InvalidCastException
-                        objLGCOL.pu = ""
-                    End Try
-                    Try
-                        objLGCOL.MontantHT = GetString(objRS, "LGCOL_MT_HT")
-                    Catch ex As InvalidCastException
-                        objLGCOL.MontantHT = 0
-                    End Try
-                    objFactColisage.resetBooleans()
-                    objFactColisage.AjouteLigneFactColisage(objLGCOL, False)
+                    lgnum = GetString(objRS, "LGCOL_NUM")
                 Catch ex As InvalidCastException
+                    lgnum = 0
+                End Try
+
+                Try 'Produit
+                    oProduit = New Produit
+                    oProduit.setid(getInteger(objRS, "LGCOL_PRD_ID"))
+                Catch ex As InvalidCastException
+                    oProduit.setid(0)
+                End Try
+
+                Try 'ID de la ligne commande
+                    idlgcmd = getInteger(objRS, "LGCOL_ID")
+                Catch ex As InvalidCastException
+                    idlgcmd = 0
+                End Try
+
+                Try 'ID de la commande
+                    idCmd = getInteger(objRS, "LGCOL_FACTCOL_ID")
+                Catch ex As InvalidCastException
+                    idCmd = 0
+                End Try
+
+                Try 'Qte Commandée
+                    qtecommande = GetString(objRS, "LGCOL_QTE")
+                Catch ex As InvalidCastException
+                    qtecommande = 0
+                End Try
+                Try 'Prix unitaire
+                    prixU = GetString(objRS, "LGCOL_PU")
+                Catch ex As InvalidCastException
+                    prixU = 0
+                End Try
+                Try 'Prix HT
+                    prixHT = GetString(objRS, "LGCOL_MT_HT")
+                Catch ex As InvalidCastException
+                    prixHT = 0
+                End Try
+
+                'Ajout de la ligne dans le client, le prix de la commande n'est pas recalculé!!!
+                Try
+                    oProduit.DBLoadLight()
+                    objLG = objFactColisage.AjouteLigne(lgnum, oProduit, qtecommande, prixU, p_prixHT:=prixHT)
+                    If objLG Is Nothing Then
+                        Throw New Exception("Impossible d'ajouter la ligne de Facture de colisage" & lgnum)
+                    End If
+
+                Catch ex As Exception
+                    setError("LoadColgFactColisage", "Erreur en ajout de ligne" & ex.Message)
                     bReturn = False
                     Exit While
                 End Try
+
             End While
             objRS.Close()
             objRS = Nothing
@@ -12769,7 +12730,7 @@ Public MustInherit Class Persist
 
         Dim strWhere As String = ""
         Dim objCommand As OleDbCommand
-        Dim objFCT As FactColisage
+        Dim objFCT As FactColisageJ
         Dim objRS As OleDbDataReader = Nothing
         Dim strId As String
         Dim objParam As OleDbParameter
@@ -12840,7 +12801,7 @@ Public MustInherit Class Persist
             objRS = Nothing
             For Each strId In colTemp
                 nId = CLng(strId)
-                objFCT = FactColisage.createandload(nId)
+                objFCT = FactColisageJ.createandload(nId)
                 objFCT.resetBooleans()
 
                 If objFCT.id <> 0 Then
@@ -12878,7 +12839,7 @@ Public MustInherit Class Persist
 
         Dim strWhere As String = ""
         Dim objCommand As OleDbCommand
-        Dim objFCT As FactColisage
+        Dim objFCT As FactColisageJ
         Dim objRS As OleDbDataReader = Nothing
         Dim strId As String
         Dim nId As Long
@@ -12941,7 +12902,7 @@ Public MustInherit Class Persist
             objRS = Nothing
             For Each strId In colTemp
                 nId = CType(strId, Long)
-                objFCT = FactColisage.createandload(nId)
+                objFCT = FactColisageJ.createandload(nId)
                 objFCT.resetBooleans()
 
                 If objFCT.id <> 0 Then
@@ -12972,7 +12933,7 @@ Public MustInherit Class Persist
         Dim strWhere As String = " FACTCOLISAGE.FCOL_FRN_ID = FOURNISSEUR.FRN_ID AND RQ_FACTURES.FACT_ID = FCOL_ID AND RQ_FACTURES.FACT_TYPEFACT = " & vncEnums.vncTypeDonnee.FACTCOL & _
         " AND (RQ_FACTURES.FACT_TOTAL_REGLEMENT IS NULL OR RQ_FACTURES.FACT_TOTAL_REGLEMENT < RQ_FACTURES.FACT_TOTAL_TTC)"
         Dim objCommand As OleDbCommand
-        Dim objFACT As FactColisage
+        Dim objFACT As FactColisageJ
         Dim objRS As OleDbDataReader = Nothing
         Dim objParam As OleDbParameter
         objCommand = New OleDbCommand
@@ -13009,7 +12970,7 @@ Public MustInherit Class Persist
         Try
             objRS = objCommand.ExecuteReader
             While (objRS.Read())
-                objFACT = New FactColisage
+                objFACT = New FactColisageJ
                 objFACT.m_bResume = True ' C'est un objet Résumé
                 Try
                     objFACT.m_id = GetString(objRS, "FCOL_ID")
@@ -13095,7 +13056,7 @@ Public MustInherit Class Persist
 
     End Sub
     Private Sub CreateParameterP_FCOL_TOTAL_TAXES(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.montantTaxes)
     End Sub
@@ -13116,40 +13077,40 @@ Public MustInherit Class Persist
         objCommand.Parameters.AddWithValue("?", objCMD.CommFacturation.comment)
     End Sub
     Private Sub CreateParameterP_FCOL_PERIODE(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", truncate(objCMD.periode, 50))
     End Sub
     Private Sub CreateParameterP_FCOL_MONTANT_REGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", CDbl(objCMD.montantReglement))
 
     End Sub
     Private Sub CreateParameterP_FCOL_DATE_REGLEMENT(ByVal objCommand As OleDbCommand)
 
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.dateReglement)
 
     End Sub
     Private Sub CreateParameterP_FCOL_REF_REGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", truncate(objCMD.refReglement, 50))
     End Sub
     Private Sub CreateParameterP_FCOL_IDMODEREGLEMENT(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.idModeReglement)
     End Sub
     Private Sub CreateParameterP_FCOL_DECHEANCE(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.dEcheance)
     End Sub
     Private Sub CreateParameterP_FCOL_BINTERNET(ByVal objCommand As OleDbCommand)
-        Dim objCMD As FactColisage
+        Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", objCMD.bExportInternet)
     End Sub

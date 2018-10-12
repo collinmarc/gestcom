@@ -137,11 +137,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="crRecapColisageJournalier.vb">
-      <DependentUpon>crRecapColisageJournalier.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
+      <DependentUpon>crRecapColisageJournalier.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="CrystalReport1.vb">
       <AutoGen>True</AutoGen>
@@ -1400,6 +1400,9 @@
     <Content Include="Requetes\ToV5.9.1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Requetes\TOV5.9.7.SQL">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Requetes\V5.6To5.7.sql" />
     <Content Include="Requetes\V5.6TOV5.7.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1442,11 +1445,11 @@
       <LastGenOutput>crListeFactColisageParNumero.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="crRecapColisageJournalier.rpt">
+    <EmbeddedResource Include="crRecapColisageJournalier.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crRecapColisageJournalier.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.vb</LastGenOutput>
@@ -1473,6 +1476,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCumulVentesArticles.resx">
       <DependentUpon>frmCumulVentesArticles.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestFactColisage.resx">
+      <DependentUpon>frmGestFactColisage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportTarif.resx">
       <DependentUpon>frmImportTarif.vb</DependentUpon>

@@ -24,6 +24,23 @@
 '
 '===================================================================================================================================
 Public Class LgFactColisage
+    Inherits LgCommande
+    Public Sub New(ByVal pidFact As Integer)
+
+        MyBase.New(pidFact, 0, 0)
+    End Sub
+    Public Property idFactColisage() As Integer
+        Get
+            Return idCmd
+        End Get
+        Private Set(ByVal value As Integer)
+            idCmd = value
+        End Set
+    End Property
+
+End Class
+
+Public Class LgFactColisageOLD
     Inherits Persist
 
     Private m_num As Integer                'Numéro d'ordre de ligne
@@ -272,18 +289,7 @@ Public Class LgFactColisage
         Try
             objLgFactColisage = CType(obj, LgFactColisage)
             bReturn = True
-            bReturn = bReturn And (m_num.Equals(objLgFactColisage.num))
-            bReturn = bReturn And (m_idFactColisage = objLgFactColisage.idFactColisage)
-            bReturn = bReturn And (m_Montant_HT = objLgFactColisage.MontantHT)
-            bReturn = bReturn And (m_dDeb.Equals(objLgFactColisage.dDeb))
-            bReturn = bReturn And (m_dFin.Equals(objLgFactColisage.dFin))
-            bReturn = bReturn And (m_StockInitial.Equals(objLgFactColisage.StockInitial))
-            bReturn = bReturn And (m_StockFinal.Equals(objLgFactColisage.StockFinal))
-            bReturn = bReturn And (m_Entrees = objLgFactColisage.Entrees)
-            bReturn = bReturn And (m_Sorties = objLgFactColisage.Sorties)
-            bReturn = bReturn And (m_qte = objLgFactColisage.qte)
-            bReturn = bReturn And (m_pu = objLgFactColisage.pu)
-            bReturn = bReturn And (m_Montant_HT = objLgFactColisage.MontantHT)
+            bReturn = bReturn And MyBase.Equals(objLgFactColisage)
         Catch ex As Exception
             bReturn = False
         End Try

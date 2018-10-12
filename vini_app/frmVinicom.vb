@@ -428,14 +428,14 @@ Public Class FrmVinicom
         End If
 
         Dim objfrmFact As frmGestFactColisage
-        Dim objFacture As FactColisage
+        Dim objFacture As FactColisageJ
         Dim nid As Long
         Dim bReturn As Boolean
 
         objfrmFact = New frmGestFactColisage
         nid = tag
         Try
-            objFacture = FactColisage.createandload(nid)
+            objFacture = FactColisageJ.createandload(nid)
             If objFacture.id <> 0 Then
                 objfrmFact.MdiParent = Me.MdiParent
                 objfrmFact.Show()

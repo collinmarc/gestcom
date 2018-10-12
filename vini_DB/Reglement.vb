@@ -428,7 +428,7 @@ Public Class Reglement
                 If (m_oFacture Is Nothing) Then
                     Select Case TypeFact
                         Case vncEnums.vncTypeDonnee.FACTCOL
-                            m_oFacture = FactColisage.createandload(IdFact)
+                            m_oFacture = FactColisageJ.createandload(IdFact)
                         Case vncEnums.vncTypeDonnee.FACTCOMM
                             m_oFacture = FactCom.createandload(IdFact)
                         Case vncEnums.vncTypeDonnee.FACTTRP
@@ -444,7 +444,7 @@ Public Class Reglement
                 If (m_oFacture Is Nothing) Then
                     Select Case TypeFact
                         Case vncEnums.vncTypeDonnee.FACTCOL
-                            m_oFacture = FactColisage.createandload(IdFact)
+                            m_oFacture = FactColisageJ.createandload(IdFact)
                         Case vncEnums.vncTypeDonnee.FACTCOMM
                             m_oFacture = FactCom.createandload(IdFact)
                         Case vncEnums.vncTypeDonnee.FACTTRP

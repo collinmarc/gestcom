@@ -1813,56 +1813,56 @@ FROM         IMAGES</CommandText>
         <xs:element name="CONSTANTES" msprop:Generator_UserTableName="CONSTANTES" msprop:Generator_RowEvArgName="CONSTANTESRowChangeEvent" msprop:Generator_TableVarName="tableCONSTANTES" msprop:Generator_TablePropName="CONSTANTES" msprop:Generator_RowDeletingName="CONSTANTESRowDeleting" msprop:Generator_RowChangingName="CONSTANTESRowChanging" msprop:Generator_RowDeletedName="CONSTANTESRowDeleted" msprop:Generator_RowEvHandlerName="CONSTANTESRowChangeEventHandler" msprop:Generator_TableClassName="CONSTANTESDataTable" msprop:Generator_RowChangedName="CONSTANTESRowChanged" msprop:Generator_RowClassName="CONSTANTESRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="CST_SOC_NOMSOC" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_NOMSOC" msprop:Generator_ColumnPropNameInRow="CST_SOC_NOMSOC" msprop:Generator_ColumnPropNameInTable="CST_SOC_NOMSOCColumn" msprop:Generator_UserColumnName="CST_SOC_NOMSOC" minOccurs="0">
+              <xs:element name="CST_SOC_NOMSOC" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CST_SOC_NOMSOC" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_NOMSOC" msprop:Generator_ColumnPropNameInTable="CST_SOC_NOMSOCColumn" msprop:Generator_UserColumnName="CST_SOC_NOMSOC" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_ADRESSE_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_RUE1Column" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_RUE1" minOccurs="0">
+              <xs:element name="CST_SOC_ADRESSE_RUE1" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_RUE1Column" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_RUE1" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_ADRESSE_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_RUE2Column" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_RUE2" minOccurs="0">
+              <xs:element name="CST_SOC_ADRESSE_RUE2" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_RUE2Column" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_RUE2" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_ADRESSE_CP" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_CP" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_CP" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_CPColumn" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_CP" minOccurs="0">
+              <xs:element name="CST_SOC_ADRESSE_CP" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_CP" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_CP" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_CPColumn" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_CP" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_VILLEColumn" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_VILLE" minOccurs="0">
+              <xs:element name="CST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInRow="CST_SOC_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInTable="CST_SOC_ADRESSE_VILLEColumn" msprop:Generator_UserColumnName="CST_SOC_ADRESSE_VILLE" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_TEL" msprop:Generator_ColumnPropNameInRow="CST_SOC_TEL" msprop:Generator_ColumnPropNameInTable="CST_SOC_TELColumn" msprop:Generator_UserColumnName="CST_SOC_TEL" minOccurs="0">
+              <xs:element name="CST_SOC_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_TEL" msprop:Generator_ColumnPropNameInRow="CST_SOC_TEL" msprop:Generator_ColumnPropNameInTable="CST_SOC_TELColumn" msprop:Generator_UserColumnName="CST_SOC_TEL" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_FAX" msprop:Generator_ColumnPropNameInRow="CST_SOC_FAX" msprop:Generator_ColumnPropNameInTable="CST_SOC_FAXColumn" msprop:Generator_UserColumnName="CST_SOC_FAX" minOccurs="0">
+              <xs:element name="CST_SOC_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_FAX" msprop:Generator_ColumnPropNameInRow="CST_SOC_FAX" msprop:Generator_ColumnPropNameInTable="CST_SOC_FAXColumn" msprop:Generator_UserColumnName="CST_SOC_FAX" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_PORT" msprop:Generator_ColumnPropNameInRow="CST_SOC_PORT" msprop:Generator_ColumnPropNameInTable="CST_SOC_PORTColumn" msprop:Generator_UserColumnName="CST_SOC_PORT" minOccurs="0">
+              <xs:element name="CST_SOC_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_SOC_PORT" msprop:Generator_ColumnPropNameInRow="CST_SOC_PORT" msprop:Generator_ColumnPropNameInTable="CST_SOC_PORTColumn" msprop:Generator_UserColumnName="CST_SOC_PORT" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
@@ -1876,190 +1876,190 @@ FROM         IMAGES</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_FAX_PAGE_GARDE" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_PAGE_GARDE" msprop:Generator_ColumnPropNameInRow="CST_FAX_PAGE_GARDE" msprop:Generator_ColumnPropNameInTable="CST_FAX_PAGE_GARDEColumn" msprop:Generator_UserColumnName="CST_FAX_PAGE_GARDE" minOccurs="0">
+              <xs:element name="CST_FAX_PAGE_GARDE" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_PAGE_GARDE" msprop:Generator_ColumnPropNameInRow="CST_FAX_PAGE_GARDE" msprop:Generator_ColumnPropNameInTable="CST_FAX_PAGE_GARDEColumn" msprop:Generator_UserColumnName="CST_FAX_PAGE_GARDE" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnPropNameInRow="CST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnPropNameInTable="CST_FAX_ENVOI_PAGE_GARDEColumn" msprop:Generator_UserColumnName="CST_FAX_ENVOI_PAGE_GARDE" type="xs:boolean" minOccurs="0" />
-              <xs:element name="CST_FAX_SERVERNAME" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_SERVERNAME" msprop:Generator_ColumnPropNameInRow="CST_FAX_SERVERNAME" msprop:Generator_ColumnPropNameInTable="CST_FAX_SERVERNAMEColumn" msprop:Generator_UserColumnName="CST_FAX_SERVERNAME" minOccurs="0">
+              <xs:element name="CST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnPropNameInRow="CST_FAX_ENVOI_PAGE_GARDE" msprop:Generator_ColumnPropNameInTable="CST_FAX_ENVOI_PAGE_GARDEColumn" msprop:Generator_UserColumnName="CST_FAX_ENVOI_PAGE_GARDE" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="CST_FAX_SERVERNAME" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_SERVERNAME" msprop:Generator_ColumnPropNameInRow="CST_FAX_SERVERNAME" msprop:Generator_ColumnPropNameInTable="CST_FAX_SERVERNAMEColumn" msprop:Generator_UserColumnName="CST_FAX_SERVERNAME" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_CMD_CLTColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_CMD_CLT" type="xs:int" minOccurs="0" />
-              <xs:element name="CST_DERN_NUM_SCMD" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_SCMD" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_SCMD" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_SCMDColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_SCMD" type="xs:int" minOccurs="0" />
-              <xs:element name="CST_DERN_NUM_BA" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_BA" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_BA" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_BAColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_BA" type="xs:int" minOccurs="0" />
-              <xs:element name="CST_VERSION_BD" msprop:Generator_ColumnVarNameInTable="columnCST_VERSION_BD" msprop:Generator_ColumnPropNameInRow="CST_VERSION_BD" msprop:Generator_ColumnPropNameInTable="CST_VERSION_BDColumn" msprop:Generator_UserColumnName="CST_VERSION_BD" minOccurs="0">
+              <xs:element name="CST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_CMD_CLT" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_CMD_CLTColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_CMD_CLT" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="CST_DERN_NUM_SCMD" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_SCMD" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_SCMD" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_SCMDColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_SCMD" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="CST_DERN_NUM_BA" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_BA" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_BA" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_BAColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_BA" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="CST_VERSION_BD" msprop:Generator_ColumnVarNameInTable="columnCST_VERSION_BD" msprop:Generator_ColumnPropNameInRow="CST_VERSION_BD" msprop:Generator_ColumnPropNameInTable="CST_VERSION_BDColumn" msprop:Generator_UserColumnName="CST_VERSION_BD" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_FAX_PREFIX" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_PREFIX" msprop:Generator_ColumnPropNameInRow="CST_FAX_PREFIX" msprop:Generator_ColumnPropNameInTable="CST_FAX_PREFIXColumn" msprop:Generator_UserColumnName="CST_FAX_PREFIX" minOccurs="0">
+              <xs:element name="CST_FAX_PREFIX" msprop:Generator_ColumnVarNameInTable="columnCST_FAX_PREFIX" msprop:Generator_ColumnPropNameInRow="CST_FAX_PREFIX" msprop:Generator_ColumnPropNameInTable="CST_FAX_PREFIXColumn" msprop:Generator_UserColumnName="CST_FAX_PREFIX" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_TX_COMMISSION" msprop:Generator_ColumnVarNameInTable="columnCST_TX_COMMISSION" msprop:Generator_ColumnPropNameInRow="CST_TX_COMMISSION" msprop:Generator_ColumnPropNameInTable="CST_TX_COMMISSIONColumn" msprop:Generator_UserColumnName="CST_TX_COMMISSION" type="xs:float" minOccurs="0" />
-              <xs:element name="CST_DERN_NUM_FACTCOM" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_FACTCOM" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_FACTCOM" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_FACTCOMColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_FACTCOM" type="xs:int" minOccurs="0" />
-              <xs:element name="CST_PATH_FACTCOM" msprop:Generator_ColumnVarNameInTable="columnCST_PATH_FACTCOM" msprop:Generator_ColumnPropNameInRow="CST_PATH_FACTCOM" msprop:Generator_ColumnPropNameInTable="CST_PATH_FACTCOMColumn" msprop:Generator_UserColumnName="CST_PATH_FACTCOM" minOccurs="0">
+              <xs:element name="CST_TX_COMMISSION" msprop:Generator_ColumnVarNameInTable="columnCST_TX_COMMISSION" msprop:Generator_ColumnPropNameInRow="CST_TX_COMMISSION" msprop:Generator_ColumnPropNameInTable="CST_TX_COMMISSIONColumn" msprop:Generator_UserColumnName="CST_TX_COMMISSION" type="xs:float" default="0" minOccurs="0" />
+              <xs:element name="CST_DERN_NUM_FACTCOM" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_FACTCOM" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_FACTCOM" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_FACTCOMColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_FACTCOM" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="CST_PATH_FACTCOM" msprop:Generator_ColumnVarNameInTable="columnCST_PATH_FACTCOM" msprop:Generator_ColumnPropNameInRow="CST_PATH_FACTCOM" msprop:Generator_ColumnPropNameInTable="CST_PATH_FACTCOMColumn" msprop:Generator_UserColumnName="CST_PATH_FACTCOM" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="100" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_FACT_TRPColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_FACT_TRP" type="xs:int" minOccurs="0" />
-              <xs:element name="CST_TAXES_TRP" msprop:Generator_ColumnVarNameInTable="columnCST_TAXES_TRP" msprop:Generator_ColumnPropNameInRow="CST_TAXES_TRP" msprop:Generator_ColumnPropNameInTable="CST_TAXES_TRPColumn" msprop:Generator_UserColumnName="CST_TAXES_TRP" type="xs:double" minOccurs="0" />
-              <xs:element name="CST_PATH_FACTTRP" msprop:Generator_ColumnVarNameInTable="columnCST_PATH_FACTTRP" msprop:Generator_ColumnPropNameInRow="CST_PATH_FACTTRP" msprop:Generator_ColumnPropNameInTable="CST_PATH_FACTTRPColumn" msprop:Generator_UserColumnName="CST_PATH_FACTTRP" minOccurs="0">
+              <xs:element name="CST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnVarNameInTable="columnCST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnPropNameInRow="CST_DERN_NUM_FACT_TRP" msprop:Generator_ColumnPropNameInTable="CST_DERN_NUM_FACT_TRPColumn" msprop:Generator_UserColumnName="CST_DERN_NUM_FACT_TRP" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="CST_TAXES_TRP" msprop:Generator_ColumnVarNameInTable="columnCST_TAXES_TRP" msprop:Generator_ColumnPropNameInRow="CST_TAXES_TRP" msprop:Generator_ColumnPropNameInTable="CST_TAXES_TRPColumn" msprop:Generator_UserColumnName="CST_TAXES_TRP" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="CST_PATH_FACTTRP" msprop:Generator_ColumnVarNameInTable="columnCST_PATH_FACTTRP" msprop:Generator_ColumnPropNameInRow="CST_PATH_FACTTRP" msprop:Generator_ColumnPropNameInTable="CST_PATH_FACTTRPColumn" msprop:Generator_UserColumnName="CST_PATH_FACTTRP" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnVarNameInTable="columnCST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnPropNameInRow="CST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnPropNameInTable="CST_TRP_IDMODEREGLEMENTColumn" msprop:Generator_UserColumnName="CST_TRP_IDMODEREGLEMENT" minOccurs="0">
+              <xs:element name="CST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnVarNameInTable="columnCST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnPropNameInRow="CST_TRP_IDMODEREGLEMENT" msprop:Generator_ColumnPropNameInTable="CST_TRP_IDMODEREGLEMENTColumn" msprop:Generator_UserColumnName="CST_TRP_IDMODEREGLEMENT" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_NOMSOC" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_NOMSOC" msprop:Generator_ColumnPropNameInRow="CST_SOC2_NOMSOC" msprop:Generator_ColumnPropNameInTable="CST_SOC2_NOMSOCColumn" msprop:Generator_UserColumnName="CST_SOC2_NOMSOC" minOccurs="0">
+              <xs:element name="CST_SOC2_NOMSOC" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_NOMSOC" msprop:Generator_ColumnPropNameInRow="CST_SOC2_NOMSOC" msprop:Generator_ColumnPropNameInTable="CST_SOC2_NOMSOCColumn" msprop:Generator_UserColumnName="CST_SOC2_NOMSOC" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_RUE1Column" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_RUE1" minOccurs="0">
+              <xs:element name="CST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_RUE1" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_RUE1Column" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_RUE1" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_RUE2Column" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_RUE2" minOccurs="0">
+              <xs:element name="CST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_RUE2" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_RUE2Column" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_RUE2" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_ADRESSE_CP" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_CP" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_CP" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_CPColumn" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_CP" minOccurs="0">
+              <xs:element name="CST_SOC2_ADRESSE_CP" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_CP" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_CP" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_CPColumn" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_CP" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_VILLEColumn" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_VILLE" minOccurs="0">
+              <xs:element name="CST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInRow="CST_SOC2_ADRESSE_VILLE" msprop:Generator_ColumnPropNameInTable="CST_SOC2_ADRESSE_VILLEColumn" msprop:Generator_UserColumnName="CST_SOC2_ADRESSE_VILLE" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_TEL" msprop:Generator_ColumnPropNameInRow="CST_SOC2_TEL" msprop:Generator_ColumnPropNameInTable="CST_SOC2_TELColumn" msprop:Generator_UserColumnName="CST_SOC2_TEL" minOccurs="0">
+              <xs:element name="CST_SOC2_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_TEL" msprop:Generator_ColumnPropNameInRow="CST_SOC2_TEL" msprop:Generator_ColumnPropNameInTable="CST_SOC2_TELColumn" msprop:Generator_UserColumnName="CST_SOC2_TEL" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_FAX" msprop:Generator_ColumnPropNameInRow="CST_SOC2_FAX" msprop:Generator_ColumnPropNameInTable="CST_SOC2_FAXColumn" msprop:Generator_UserColumnName="CST_SOC2_FAX" minOccurs="0">
+              <xs:element name="CST_SOC2_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_FAX" msprop:Generator_ColumnPropNameInRow="CST_SOC2_FAX" msprop:Generator_ColumnPropNameInTable="CST_SOC2_FAXColumn" msprop:Generator_UserColumnName="CST_SOC2_FAX" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_EMAIL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_EMAIL" msprop:Generator_ColumnPropNameInRow="CST_SOC2_EMAIL" msprop:Generator_ColumnPropNameInTable="CST_SOC2_EMAILColumn" msprop:Generator_UserColumnName="CST_SOC2_EMAIL" minOccurs="0">
+              <xs:element name="CST_SOC2_EMAIL" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_EMAIL" msprop:Generator_ColumnPropNameInRow="CST_SOC2_EMAIL" msprop:Generator_ColumnPropNameInTable="CST_SOC2_EMAILColumn" msprop:Generator_UserColumnName="CST_SOC2_EMAIL" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_SOC2_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_PORT" msprop:Generator_ColumnPropNameInRow="CST_SOC2_PORT" msprop:Generator_ColumnPropNameInTable="CST_SOC2_PORTColumn" msprop:Generator_UserColumnName="CST_SOC2_PORT" minOccurs="0">
+              <xs:element name="CST_SOC2_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_SOC2_PORT" msprop:Generator_ColumnPropNameInRow="CST_SOC2_PORT" msprop:Generator_ColumnPropNameInTable="CST_SOC2_PORTColumn" msprop:Generator_UserColumnName="CST_SOC2_PORT" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_NOM" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_NOM" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_NOM" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_NOMColumn" msprop:Generator_UserColumnName="CST_PLTFRM_NOM" minOccurs="0">
+              <xs:element name="CST_PLTFRM_NOM" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_NOM" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_NOM" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_NOMColumn" msprop:Generator_UserColumnName="CST_PLTFRM_NOM" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_RUE1" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_RUE1" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_RUE1Column" msprop:Generator_UserColumnName="CST_PLTFRM_RUE1" minOccurs="0">
+              <xs:element name="CST_PLTFRM_RUE1" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_RUE1" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_RUE1" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_RUE1Column" msprop:Generator_UserColumnName="CST_PLTFRM_RUE1" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_RUE2" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_RUE2" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_RUE2Column" msprop:Generator_UserColumnName="CST_PLTFRM_RUE2" minOccurs="0">
+              <xs:element name="CST_PLTFRM_RUE2" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_RUE2" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_RUE2" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_RUE2Column" msprop:Generator_UserColumnName="CST_PLTFRM_RUE2" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_CP" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_CP" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_CP" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_CPColumn" msprop:Generator_UserColumnName="CST_PLTFRM_CP" minOccurs="0">
+              <xs:element name="CST_PLTFRM_CP" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_CP" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_CP" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_CPColumn" msprop:Generator_UserColumnName="CST_PLTFRM_CP" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_VILLE" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_VILLE" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_VILLEColumn" msprop:Generator_UserColumnName="CST_PLTFRM_VILLE" minOccurs="0">
+              <xs:element name="CST_PLTFRM_VILLE" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_VILLE" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_VILLE" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_VILLEColumn" msprop:Generator_UserColumnName="CST_PLTFRM_VILLE" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_TEL" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_TEL" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_TELColumn" msprop:Generator_UserColumnName="CST_PLTFRM_TEL" minOccurs="0">
+              <xs:element name="CST_PLTFRM_TEL" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_TEL" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_TEL" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_TELColumn" msprop:Generator_UserColumnName="CST_PLTFRM_TEL" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_FAX" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_FAX" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_FAXColumn" msprop:Generator_UserColumnName="CST_PLTFRM_FAX" minOccurs="0">
+              <xs:element name="CST_PLTFRM_FAX" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_FAX" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_FAX" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_FAXColumn" msprop:Generator_UserColumnName="CST_PLTFRM_FAX" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_EMAIL" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_EMAIL" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_EMAIL" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_EMAILColumn" msprop:Generator_UserColumnName="CST_PLTFRM_EMAIL" minOccurs="0">
+              <xs:element name="CST_PLTFRM_EMAIL" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_EMAIL" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_EMAIL" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_EMAILColumn" msprop:Generator_UserColumnName="CST_PLTFRM_EMAIL" default="&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_PLTFRM_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_PORT" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_PORT" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_PORTColumn" msprop:Generator_UserColumnName="CST_PLTFRM_PORT" minOccurs="0">
+              <xs:element name="CST_PLTFRM_PORT" msprop:Generator_ColumnVarNameInTable="columnCST_PLTFRM_PORT" msprop:Generator_ColumnPropNameInRow="CST_PLTFRM_PORT" msprop:Generator_ColumnPropNameInTable="CST_PLTFRM_PORTColumn" msprop:Generator_UserColumnName="CST_PLTFRM_PORT" default="&quot;&quot;" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_TRP_TXGAZOLE" msprop:Generator_ColumnVarNameInTable="columnCST_TRP_TXGAZOLE" msprop:Generator_ColumnPropNameInRow="CST_TRP_TXGAZOLE" msprop:Generator_ColumnPropNameInTable="CST_TRP_TXGAZOLEColumn" msprop:Generator_UserColumnName="CST_TRP_TXGAZOLE" type="xs:double" minOccurs="0" />
+              <xs:element name="CST_TRP_TXGAZOLE" msprop:Generator_ColumnVarNameInTable="columnCST_TRP_TXGAZOLE" msprop:Generator_ColumnPropNameInRow="CST_TRP_TXGAZOLE" msprop:Generator_ColumnPropNameInTable="CST_TRP_TXGAZOLEColumn" msprop:Generator_UserColumnName="CST_TRP_TXGAZOLE" type="xs:double" default="0" minOccurs="0" />
               <xs:element name="CST_PU_PALL_PREP" msprop:Generator_ColumnVarNameInTable="columnCST_PU_PALL_PREP" msprop:Generator_ColumnPropNameInRow="CST_PU_PALL_PREP" msprop:Generator_ColumnPropNameInTable="CST_PU_PALL_PREPColumn" msprop:Generator_UserColumnName="CST_PU_PALL_PREP" type="xs:double" minOccurs="0" />
               <xs:element name="CST_PU_PALL_NONPREP" msprop:Generator_ColumnVarNameInTable="columnCST_PU_PALL_NONPREP" msprop:Generator_ColumnPropNameInRow="CST_PU_PALL_NONPREP" msprop:Generator_ColumnPropNameInTable="CST_PU_PALL_NONPREPColumn" msprop:Generator_UserColumnName="CST_PU_PALL_NONPREP" type="xs:double" minOccurs="0" />
               <xs:element name="FTP_HOSTNAME" msprop:Generator_ColumnVarNameInTable="columnFTP_HOSTNAME" msprop:Generator_ColumnPropNameInRow="FTP_HOSTNAME" msprop:Generator_ColumnPropNameInTable="FTP_HOSTNAMEColumn" msprop:Generator_UserColumnName="FTP_HOSTNAME" minOccurs="0">
@@ -2206,7 +2206,7 @@ FROM         IMAGES</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CST_ID" msprop:Generator_ColumnVarNameInTable="columnCST_ID" msprop:Generator_ColumnPropNameInRow="CST_ID" msprop:Generator_ColumnPropNameInTable="CST_IDColumn" msprop:Generator_UserColumnName="CST_ID" type="xs:short" />
+              <xs:element name="CST_ID" msprop:Generator_ColumnVarNameInTable="columnCST_ID" msprop:Generator_ColumnPropNameInRow="CST_ID" msprop:Generator_ColumnPropNameInTable="CST_IDColumn" msprop:Generator_UserColumnName="CST_ID" type="xs:short" default="0" />
               <xs:element name="CST_EDI_HOST" msprop:Generator_ColumnVarNameInTable="columnCST_EDI_HOST" msprop:Generator_ColumnPropNameInRow="CST_EDI_HOST" msprop:Generator_ColumnPropNameInTable="CST_EDI_HOSTColumn" msprop:Generator_UserColumnName="CST_EDI_HOST" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -2473,7 +2473,7 @@ FROM         IMAGES</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="LOCK" msprop:Generator_TableClassName="LOCKDataTable" msprop:Generator_RowEvArgName="LOCKRowChangeEvent" msprop:Generator_TableVarName="tableLOCK" msprop:Generator_TablePropName="LOCK" msprop:Generator_RowDeletingName="LOCKRowDeleting" msprop:Generator_RowChangingName="LOCKRowChanging" msprop:Generator_RowDeletedName="LOCKRowDeleted" msprop:Generator_RowEvHandlerName="LOCKRowChangeEventHandler" msprop:Generator_RowChangedName="LOCKRowChanged" msprop:Generator_UserTableName="LOCK" msprop:Generator_RowClassName="LOCKRow">
+        <xs:element name="LOCK" msprop:Generator_TableClassName="LOCKDataTable" msprop:Generator_RowEvArgName="LOCKRowChangeEvent" msprop:Generator_TableVarName="tableLOCK" msprop:Generator_TablePropName="LOCK" msprop:Generator_RowDeletingName="LOCKRowDeleting" msprop:Generator_RowChangingName="LOCKRowChanging" msprop:Generator_RowDeletedName="LOCKRowDeleted" msprop:Generator_RowEvHandlerName="LOCKRowChangeEventHandler" msprop:Generator_UserTableName="LOCK" msprop:Generator_RowChangedName="LOCKRowChanged" msprop:Generator_RowClassName="LOCKRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="LCK_PERSISTID" msprop:Generator_ColumnVarNameInTable="columnLCK_PERSISTID" msprop:Generator_ColumnPropNameInRow="LCK_PERSISTID" msprop:Generator_ColumnPropNameInTable="LCK_PERSISTIDColumn" msprop:Generator_UserColumnName="LCK_PERSISTID" type="xs:int" />
@@ -2682,6 +2682,8 @@ FROM         IMAGES</CommandText>
               <xs:element name="RC_S29" msprop:Generator_ColumnVarNameInTable="columnRC_S29" msprop:Generator_ColumnPropNameInRow="RC_S29" msprop:Generator_ColumnPropNameInTable="RC_S29Column" msprop:Generator_UserColumnName="RC_S29" type="xs:decimal" default="0" minOccurs="0" />
               <xs:element name="RC_S30" msprop:Generator_ColumnVarNameInTable="columnRC_S30" msprop:Generator_ColumnPropNameInRow="RC_S30" msprop:Generator_ColumnPropNameInTable="RC_S30Column" msprop:Generator_UserColumnName="RC_S30" type="xs:decimal" default="0" minOccurs="0" />
               <xs:element name="RC_S31" msprop:Generator_ColumnVarNameInTable="columnRC_S31" msprop:Generator_ColumnPropNameInRow="RC_S31" msprop:Generator_ColumnPropNameInTable="RC_S31Column" msprop:Generator_UserColumnName="RC_S31" type="xs:decimal" default="0" minOccurs="0" />
+              <xs:element name="PERIODE" msprop:Generator_ColumnVarNameInTable="columnPERIODE" msprop:Generator_ColumnPropNameInRow="PERIODE" msprop:Generator_ColumnPropNameInTable="PERIODEColumn" msprop:Generator_UserColumnName="PERIODE" type="xs:string" minOccurs="0" />
+              <xs:element name="RC_IDPRODUIT" msprop:Generator_ColumnVarNameInTable="columnRC_IDPRODUIT" msprop:Generator_ColumnPropNameInRow="RC_IDPRODUIT" msprop:Generator_ColumnPropNameInTable="RC_IDPRODUITColumn" msprop:Generator_UserColumnName="RC_IDPRODUIT" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -68,7 +68,7 @@ Public Class frmEditfactures
             oCol = FactTRP.getListe(ddeb, dfin, tbCodeTiers.Text)
         End If
         If rbFactCol.Checked Then
-            oCol = FactColisage.getListe(ddeb, dfin, tbCodeTiers.Text)
+            oCol = FactColisageJ.getListe(ddeb, dfin, tbCodeTiers.Text)
         End If
         tabIds = New ArrayList()
         For Each objFact In oCol

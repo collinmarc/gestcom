@@ -2762,40 +2762,82 @@ Partial Public Class dsVinicom
             Me.columnCST_FTPEDI_REPLOCAL = New Global.System.Data.DataColumn("CST_FTPEDI_REPLOCAL", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCST_FTPEDI_REPLOCAL)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnCST_ID}, true))
+            Me.columnCST_SOC_NOMSOC.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_NOMSOC.MaxLength = 50
+            Me.columnCST_SOC_ADRESSE_RUE1.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_ADRESSE_RUE1.MaxLength = 50
+            Me.columnCST_SOC_ADRESSE_RUE2.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_ADRESSE_RUE2.MaxLength = 50
+            Me.columnCST_SOC_ADRESSE_CP.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_ADRESSE_CP.MaxLength = 50
+            Me.columnCST_SOC_ADRESSE_VILLE.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_ADRESSE_VILLE.MaxLength = 50
+            Me.columnCST_SOC_TEL.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_TEL.MaxLength = 50
+            Me.columnCST_SOC_FAX.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_FAX.MaxLength = 50
+            Me.columnCST_SOC_PORT.DefaultValue = CType("""""",String)
             Me.columnCST_SOC_PORT.MaxLength = 50
             Me.columnCST_SOC_EMAIL.MaxLength = 50
+            Me.columnCST_FAX_PAGE_GARDE.DefaultValue = CType("""""",String)
             Me.columnCST_FAX_PAGE_GARDE.MaxLength = 50
+            Me.columnCST_FAX_ENVOI_PAGE_GARDE.DefaultValue = CType(false,Boolean)
+            Me.columnCST_FAX_SERVERNAME.DefaultValue = CType("""""",String)
             Me.columnCST_FAX_SERVERNAME.MaxLength = 50
+            Me.columnCST_DERN_NUM_CMD_CLT.DefaultValue = CType(0,Integer)
+            Me.columnCST_DERN_NUM_SCMD.DefaultValue = CType(0,Integer)
+            Me.columnCST_DERN_NUM_BA.DefaultValue = CType(0,Integer)
+            Me.columnCST_VERSION_BD.DefaultValue = CType("""""",String)
             Me.columnCST_VERSION_BD.MaxLength = 50
+            Me.columnCST_FAX_PREFIX.DefaultValue = CType("""""",String)
             Me.columnCST_FAX_PREFIX.MaxLength = 50
+            Me.columnCST_TX_COMMISSION.DefaultValue = CType(0!,Single)
+            Me.columnCST_DERN_NUM_FACTCOM.DefaultValue = CType(0,Integer)
+            Me.columnCST_PATH_FACTCOM.DefaultValue = CType("""""",String)
             Me.columnCST_PATH_FACTCOM.MaxLength = 100
+            Me.columnCST_DERN_NUM_FACT_TRP.DefaultValue = CType(0,Integer)
+            Me.columnCST_TAXES_TRP.DefaultValue = CType(0R,Double)
+            Me.columnCST_PATH_FACTTRP.DefaultValue = CType("""",String)
             Me.columnCST_PATH_FACTTRP.MaxLength = 50
+            Me.columnCST_TRP_IDMODEREGLEMENT.DefaultValue = CType("""""",String)
             Me.columnCST_TRP_IDMODEREGLEMENT.MaxLength = 50
+            Me.columnCST_SOC2_NOMSOC.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_NOMSOC.MaxLength = 50
+            Me.columnCST_SOC2_ADRESSE_RUE1.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_ADRESSE_RUE1.MaxLength = 50
+            Me.columnCST_SOC2_ADRESSE_RUE2.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_ADRESSE_RUE2.MaxLength = 50
+            Me.columnCST_SOC2_ADRESSE_CP.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_ADRESSE_CP.MaxLength = 50
+            Me.columnCST_SOC2_ADRESSE_VILLE.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_ADRESSE_VILLE.MaxLength = 50
+            Me.columnCST_SOC2_TEL.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_TEL.MaxLength = 50
+            Me.columnCST_SOC2_FAX.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_FAX.MaxLength = 50
+            Me.columnCST_SOC2_EMAIL.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_EMAIL.MaxLength = 50
+            Me.columnCST_SOC2_PORT.DefaultValue = CType("""""",String)
             Me.columnCST_SOC2_PORT.MaxLength = 50
+            Me.columnCST_PLTFRM_NOM.DefaultValue = CType("""""",String)
             Me.columnCST_PLTFRM_NOM.MaxLength = 50
+            Me.columnCST_PLTFRM_RUE1.DefaultValue = CType("""""",String)
             Me.columnCST_PLTFRM_RUE1.MaxLength = 50
+            Me.columnCST_PLTFRM_RUE2.DefaultValue = CType("""""",String)
             Me.columnCST_PLTFRM_RUE2.MaxLength = 50
+            Me.columnCST_PLTFRM_CP.DefaultValue = CType("""",String)
             Me.columnCST_PLTFRM_CP.MaxLength = 50
+            Me.columnCST_PLTFRM_VILLE.DefaultValue = CType("""",String)
             Me.columnCST_PLTFRM_VILLE.MaxLength = 50
+            Me.columnCST_PLTFRM_TEL.DefaultValue = CType("""",String)
             Me.columnCST_PLTFRM_TEL.MaxLength = 50
+            Me.columnCST_PLTFRM_FAX.DefaultValue = CType("""",String)
             Me.columnCST_PLTFRM_FAX.MaxLength = 50
+            Me.columnCST_PLTFRM_EMAIL.DefaultValue = CType("""",String)
             Me.columnCST_PLTFRM_EMAIL.MaxLength = 50
+            Me.columnCST_PLTFRM_PORT.DefaultValue = CType("""""",String)
             Me.columnCST_PLTFRM_PORT.MaxLength = 50
+            Me.columnCST_TRP_TXGAZOLE.DefaultValue = CType(0R,Double)
             Me.columnFTP_HOSTNAME.MaxLength = 50
             Me.columnFTP_USERNAME.MaxLength = 50
             Me.columnFTP_PASSWORD.MaxLength = 50
@@ -2818,6 +2860,7 @@ Partial Public Class dsVinicom
             Me.columnCST_SOC2_COMPTEPRODUIT_COL.MaxLength = 10
             Me.columnCST_ID.AllowDBNull = false
             Me.columnCST_ID.Unique = true
+            Me.columnCST_ID.DefaultValue = CType(0,Short)
             Me.columnCST_EDI_HOST.MaxLength = 50
             Me.columnCST_EDI_PORT.MaxLength = 50
             Me.columnCST_EDI_FROM.MaxLength = 50
@@ -7069,20 +7112,24 @@ Partial Public Class dsVinicom
         
         Private columnRC_S31 As Global.System.Data.DataColumn
         
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.TableName = "RECAPCOLISAGEJOURN"
-            Me.BeginInit
-            Me.InitClass
-            Me.EndInit
-        End Sub
+        Private columnPERIODE As Global.System.Data.DataColumn
         
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private columnRC_IDPRODUIT As Global.System.Data.DataColumn
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub New()
+            MyBase.New()
+            Me.TableName = "RECAPCOLISAGEJOURN"
+            Me.BeginInit()
+            Me.InitClass()
+            Me.EndInit()
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Friend Sub New(ByVal table As Global.System.Data.DataTable)
-            MyBase.New
+            MyBase.New()
             Me.TableName = table.TableName
             If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
                 Me.CaseSensitive = table.CaseSensitive
@@ -7096,345 +7143,361 @@ Partial Public Class dsVinicom
             Me.Prefix = table.Prefix
             Me.MinimumCapacity = table.MinimumCapacity
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
             MyBase.New(info, context)
-            Me.InitVars
+            Me.InitVars()
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_PRD_CODEColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_PRD_CODE
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_PRD_LIBELLEColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_PRD_LIBELLE
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_FRN_CODEColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_FRN_CODE
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_FRN_NOMColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_FRN_NOM
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_FRN_RSColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_FRN_RS
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_COUT_UColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_COUT_U
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S01Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S01
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S02Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S02
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S03Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S03
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S04Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S04
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S05Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S05
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S06Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S06
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S07Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S07
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S08Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S08
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S09Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S09
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S10Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S10
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S11Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S11
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S12Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S12
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S13Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S13
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S14Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S14
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S15Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S15
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S16Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S16
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S17Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S17
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S18Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S18
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S19Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S19
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S20Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S20
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S21Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S21
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S22Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S22
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S23Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S23
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S24Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S24
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S25Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S25
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S26Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S26
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S27Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S27
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S28Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S28
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S29Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S29
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S30Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S30
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property RC_S31Column() As Global.System.Data.DataColumn
             Get
                 Return Me.columnRC_S31
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property PERIODEColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPERIODE
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property RC_IDPRODUITColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRC_IDPRODUIT
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+         Global.System.ComponentModel.Browsable(False)> _
         Public ReadOnly Property Count() As Integer
             Get
                 Return Me.Rows.Count
             End Get
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As RECAPCOLISAGEJOURNRow
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Default Public ReadOnly Property Item(ByVal index As Integer) As RECAPCOLISAGEJOURNRow
             Get
-                Return CType(Me.Rows(index),RECAPCOLISAGEJOURNRow)
+                Return CType(Me.Rows(index), RECAPCOLISAGEJOURNRow)
             End Get
         End Property
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Event RECAPCOLISAGEJOURNRowChanging As RECAPCOLISAGEJOURNRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Event RECAPCOLISAGEJOURNRowChanged As RECAPCOLISAGEJOURNRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Event RECAPCOLISAGEJOURNRowDeleting As RECAPCOLISAGEJOURNRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Event RECAPCOLISAGEJOURNRowDeleted As RECAPCOLISAGEJOURNRowChangeEventHandler
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Overloads Sub AddRECAPCOLISAGEJOURNRow(ByVal row As RECAPCOLISAGEJOURNRow)
             Me.Rows.Add(row)
         End Sub
-        
+
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Overloads Function AddRECAPCOLISAGEJOURNRow( _
@@ -7474,9 +7537,11 @@ Partial Public Class dsVinicom
                     ByVal RC_S28 As Decimal, _
                     ByVal RC_S29 As Decimal, _
                     ByVal RC_S30 As Decimal, _
-                    ByVal RC_S31 As Decimal) As RECAPCOLISAGEJOURNRow
+                    ByVal RC_S31 As Decimal, _
+                    ByVal PERIODE As String, _
+                    ByVal RC_IDPRODUIT As Integer) As RECAPCOLISAGEJOURNRow
             Dim rowRECAPCOLISAGEJOURNRow As RECAPCOLISAGEJOURNRow = CType(Me.NewRow, RECAPCOLISAGEJOURNRow)
-            Dim columnValuesArray() As Object = New Object() {RC_PRD_CODE, RC_PRD_LIBELLE, RC_FRN_CODE, RC_FRN_NOM, RC_FRN_RS, RC_COUT_U, RC_S01, RC_S02, RC_S03, RC_S04, RC_S05, RC_S06, RC_S07, RC_S08, RC_S09, RC_S10, RC_S11, RC_S12, RC_S13, RC_S14, RC_S15, RC_S16, RC_S17, RC_S18, RC_S19, RC_S20, RC_S21, RC_S22, RC_S23, RC_S24, RC_S25, RC_S26, RC_S27, RC_S28, RC_S29, RC_S30, RC_S31}
+            Dim columnValuesArray() As Object = New Object() {RC_PRD_CODE, RC_PRD_LIBELLE, RC_FRN_CODE, RC_FRN_NOM, RC_FRN_RS, RC_COUT_U, RC_S01, RC_S02, RC_S03, RC_S04, RC_S05, RC_S06, RC_S07, RC_S08, RC_S09, RC_S10, RC_S11, RC_S12, RC_S13, RC_S14, RC_S15, RC_S16, RC_S17, RC_S18, RC_S19, RC_S20, RC_S21, RC_S22, RC_S23, RC_S24, RC_S25, RC_S26, RC_S27, RC_S28, RC_S29, RC_S30, RC_S31, PERIODE, RC_IDPRODUIT}
             rowRECAPCOLISAGEJOURNRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowRECAPCOLISAGEJOURNRow)
             Return rowRECAPCOLISAGEJOURNRow
@@ -7536,6 +7601,8 @@ Partial Public Class dsVinicom
             Me.columnRC_S29 = MyBase.Columns("RC_S29")
             Me.columnRC_S30 = MyBase.Columns("RC_S30")
             Me.columnRC_S31 = MyBase.Columns("RC_S31")
+            Me.columnPERIODE = MyBase.Columns("PERIODE")
+            Me.columnRC_IDPRODUIT = MyBase.Columns("RC_IDPRODUIT")
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -7615,6 +7682,10 @@ Partial Public Class dsVinicom
             MyBase.Columns.Add(Me.columnRC_S30)
             Me.columnRC_S31 = New Global.System.Data.DataColumn("RC_S31", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnRC_S31)
+            Me.columnPERIODE = New Global.System.Data.DataColumn("PERIODE", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPERIODE)
+            Me.columnRC_IDPRODUIT = New Global.System.Data.DataColumn("RC_IDPRODUIT", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRC_IDPRODUIT)
             Me.columnRC_S01.DefaultValue = CType(0D, Decimal)
             Me.columnRC_S02.ReadOnly = True
             Me.columnRC_S02.DefaultValue = CType(0D, Decimal)
@@ -8108,12 +8179,11 @@ Partial Public Class dsVinicom
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Property CST_SOC_NOMSOC() As String
             Get
-                Try
+                If Me.IsCST_SOC_NOMSOCNull Then
+                    Return String.Empty
+                Else
                     Return CType(Me(Me.tableCONSTANTES.CST_SOC_NOMSOCColumn), String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("La valeur pour la colonne 'CST_SOC_NOMSOC' dans la table 'CONSTANTES' est DBNull." & _
-                            "", e)
-                End Try
+                End If
             End Get
             Set(value As String)
                 Me(Me.tableCONSTANTES.CST_SOC_NOMSOCColumn) = value
@@ -8124,12 +8194,11 @@ Partial Public Class dsVinicom
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Property CST_SOC_ADRESSE_RUE1() As String
             Get
-                Try
+                If Me.IsCST_SOC_ADRESSE_RUE1Null Then
+                    Return String.Empty
+                Else
                     Return CType(Me(Me.tableCONSTANTES.CST_SOC_ADRESSE_RUE1Column), String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("La valeur pour la colonne 'CST_SOC_ADRESSE_RUE1' dans la table 'CONSTANTES' est D" & _
-                            "BNull.", e)
-                End Try
+                End If
             End Get
             Set(value As String)
                 Me(Me.tableCONSTANTES.CST_SOC_ADRESSE_RUE1Column) = value
@@ -8140,12 +8209,11 @@ Partial Public Class dsVinicom
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Property CST_SOC_ADRESSE_RUE2() As String
             Get
-                Try
+                If Me.IsCST_SOC_ADRESSE_RUE2Null Then
+                    Return String.Empty
+                Else
                     Return CType(Me(Me.tableCONSTANTES.CST_SOC_ADRESSE_RUE2Column), String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("La valeur pour la colonne 'CST_SOC_ADRESSE_RUE2' dans la table 'CONSTANTES' est D" & _
-                            "BNull.", e)
-                End Try
+                End If
             End Get
             Set(value As String)
                 Me(Me.tableCONSTANTES.CST_SOC_ADRESSE_RUE2Column) = value
@@ -13476,6 +13544,38 @@ Partial Public Class dsVinicom
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property PERIODE() As String
+            Get
+                Try
+                    Return CType(Me(Me.tableRECAPCOLISAGEJOURN.PERIODEColumn), String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("La valeur pour la colonne 'PERIODE' dans la table 'RECAPCOLISAGEJOURN' est DBNull" & _
+                            ".", e)
+                End Try
+            End Get
+            Set(value As String)
+                Me(Me.tableRECAPCOLISAGEJOURN.PERIODEColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property RC_IDPRODUIT() As Integer
+            Get
+                Try
+                    Return CType(Me(Me.tableRECAPCOLISAGEJOURN.RC_IDPRODUITColumn), Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("La valeur pour la colonne 'RC_IDPRODUIT' dans la table 'RECAPCOLISAGEJOURN' est D" & _
+                            "BNull.", e)
+                End Try
+            End Get
+            Set(value As Integer)
+                Me(Me.tableRECAPCOLISAGEJOURN.RC_IDPRODUITColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Function IsRC_PRD_CODENull() As Boolean
             Return Me.IsNull(Me.tableRECAPCOLISAGEJOURN.RC_PRD_CODEColumn)
         End Function
@@ -13916,6 +14016,30 @@ Partial Public Class dsVinicom
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub SetRC_S31Null()
             Me(Me.tableRECAPCOLISAGEJOURN.RC_S31Column) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsPERIODENull() As Boolean
+            Return Me.IsNull(Me.tableRECAPCOLISAGEJOURN.PERIODEColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetPERIODENull()
+            Me(Me.tableRECAPCOLISAGEJOURN.PERIODEColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsRC_IDPRODUITNull() As Boolean
+            Return Me.IsNull(Me.tableRECAPCOLISAGEJOURN.RC_IDPRODUITColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetRC_IDPRODUITNull()
+            Me(Me.tableRECAPCOLISAGEJOURN.RC_IDPRODUITColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

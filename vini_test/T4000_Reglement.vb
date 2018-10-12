@@ -353,13 +353,13 @@ Imports System.IO
     ''' </summary>
     ''' <remarks>on ne travaille plus avec les reglement en gestcom</remarks>
     <TestMethod(), Ignore()> Public Sub T100_EXPORT()
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         Dim strLines As String()
         Dim strLine1 As String
         Dim strLine2 As String
         Dim objReglement As Reglement
 
-        objFact = New FactColisage(m_objFRN)
+        objFact = New FactColisageJ(m_objFRN)
         objFact.periode = "1er Timestre 1964"
         objFact.dateFacture = CDate("06/02/1964")
         objFact.totalHT = 150.56
@@ -446,16 +446,16 @@ Imports System.IO
 
     <TestMethod()> Public Sub T110_LsttFactureCOLnonReglées()
 
-        Dim objFact As FactColisage
+        Dim objFact As FactColisageJ
         Dim objReglement As Reglement
         Dim colFact As Collection
 
-        objFact = New FactColisage(m_objFRN)
+        objFact = New FactColisageJ(m_objFRN)
         objFact.totalTTC = 115.56
         objFact.totalHT = 100
         Assert.IsTrue(objFact.save(), objFact.getErreur())
 
-        colFact = FactColisage.getListeNonReglee(, m_objFRN.rs)
+        colFact = FactColisageJ.getListeNonReglee(, m_objFRN.rs)
         Assert.AreEqual(1, colFact.Count)
 
         'Ajout d'un reglement partiel
@@ -465,7 +465,7 @@ Imports System.IO
         Assert.IsTrue(objReglement.save(), objReglement.getErreur())
 
 
-        colFact = FactColisage.getListeNonReglee(, m_objFRN.rs)
+        colFact = FactColisageJ.getListeNonReglee(, m_objFRN.rs)
         Assert.AreEqual(1, colFact.Count)
 
         'Ajout d'un reglement du solde
@@ -474,7 +474,7 @@ Imports System.IO
         objReglement.Montant = objFact.totalTTC - 10
         Assert.IsTrue(objReglement.save(), objReglement.getErreur())
 
-        colFact = FactColisage.getListeNonReglee(, m_objFRN.rs)
+        colFact = FactColisageJ.getListeNonReglee(, m_objFRN.rs)
         Assert.AreEqual(0, colFact.Count)
 
         objFact.bDeleted = True

@@ -20,7 +20,7 @@
     <Shape ID="DesignTable:FICHETECHNIQUE_FOURNISSEUR" ZOrder="4" X="545" Y="86" Height="139" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="92" />
     <Shape ID="DesignTable:IMAGES" ZOrder="3" X="388" Y="214" Height="122" Width="300" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="126" SplitterPosition="24" />
     <Shape ID="DesignTable:RECAP_COLISAGE" ZOrder="13" X="134" Y="650" Height="317" Width="169" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="313" />
-    <Shape ID="DesignTable:RECAPCOLISAGEJOURN" ZOrder="1" X="0" Y="0" Height="410" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="406" />
+    <Shape ID="DesignTable:RECAPCOLISAGEJOURN" ZOrder="1" X="0" Y="0" Height="410" Width="204" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="406" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

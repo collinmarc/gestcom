@@ -241,13 +241,13 @@ Public Class frmRechercheDB
             Case vncTypeDonnee.FACTTRP
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactTRP)
             Case vncTypeDonnee.FACTCOL
-                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisage)
+                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisageJ)
             Case vncTypeDonnee.FACTCOMM_NONREGLEE
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactCom)
             Case vncTypeDonnee.FACTTRP_NONREGLEE
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactTRP)
             Case vncTypeDonnee.FACTCOL_NONREGLEE
-                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisage)
+                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisageJ)
         End Select
         Select Case m_TypeDonnees
             Case vncEnums.vncTypeDonnee.CLIENT
@@ -453,8 +453,8 @@ Public Class frmRechercheDB
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactTRP)
                 m_ocol = FactTRP.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
             Case vncTypeDonnee.FACTCOL
-                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisage)
-                m_ocol = FactColisage.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
+                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisageJ)
+                m_ocol = FactColisageJ.getListe(tbCode.Text, tbNom.Text, cboEtat.SelectedItem.codeEtat)
             Case vncTypeDonnee.FACTCOMM_NONREGLEE
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactCom)
                 m_ocol = FactCom.getListeNonReglee(tbCode.Text, tbNom.Text)
@@ -462,8 +462,8 @@ Public Class frmRechercheDB
                 Me.m_bsrc.DataSource = GetType(vini_DB.FactTRP)
                 m_ocol = FactTRP.getListeNonReglee(tbCode.Text, tbNom.Text)
             Case vncTypeDonnee.FACTCOL_NONREGLEE
-                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisage)
-                m_ocol = FactColisage.getListeNonReglee(tbCode.Text, tbNom.Text)
+                Me.m_bsrc.DataSource = GetType(vini_DB.FactColisageJ)
+                m_ocol = FactColisageJ.getListeNonReglee(tbCode.Text, tbNom.Text)
         End Select
 
         If Not m_ocol Is Nothing Then

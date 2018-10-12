@@ -64,7 +64,7 @@ Public Class frmSaisieReglement
                     m_oFacture = FactCom.createandload(tbNumFactCom.Text)
                 End If
                 If (rbFactColisage.Checked) Then
-                    m_oFacture = FactColisage.createandload(tbNumFactCom.Text)
+                    m_oFacture = FactColisageJ.createandload(tbNumFactCom.Text)
                 End If
                 If (rbFactureTransport.Checked) Then
                     m_oFacture = FactTRP.createandload(tbNumFactCom.Text)

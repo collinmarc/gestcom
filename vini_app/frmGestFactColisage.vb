@@ -103,11 +103,15 @@ Public Class frmGestFactColisage
     Friend WithEvents PuDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents MontantHTDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents CrystalReportViewer1 As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Friend WithEvents NumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ProduitCodeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents QteCommandeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PrixUDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PrixHTDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PrixTTCDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents cbReglement As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.grpEntete = New System.Windows.Forms.GroupBox()
         Me.tbPeriode = New System.Windows.Forms.TextBox()
         Me.m_bsrcFactColisage = New System.Windows.Forms.BindingSource(Me.components)
@@ -122,14 +126,6 @@ Public Class frmGestFactColisage
         Me.SSTabCommandeClient = New System.Windows.Forms.TabControl()
         Me.tpLignes = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.DDebDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DFinDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.StockInitialDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EntreesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SortiesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.StockFinalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PuDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontantHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcLgFact = New System.Windows.Forms.BindingSource(Me.components)
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -149,6 +145,7 @@ Public Class frmGestFactColisage
         Me.tbCommentaireFacturation = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.tpValidCmd = New System.Windows.Forms.TabPage()
+        Me.CrystalReportViewer1 = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.cbBrowse = New System.Windows.Forms.Button()
         Me.tbDossierStockage = New System.Windows.Forms.TextBox()
         Me.cbStocker = New System.Windows.Forms.Button()
@@ -163,7 +160,12 @@ Public Class frmGestFactColisage
         Me.Label35 = New System.Windows.Forms.Label()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.cbReglement = New System.Windows.Forms.Button()
-        Me.CrystalReportViewer1 = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
+        Me.NumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProduitCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QteCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixTTCDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpEntete.SuspendLayout()
         CType(Me.m_bsrcFactColisage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SSTabCommandeClient.SuspendLayout()
@@ -205,7 +207,7 @@ Public Class frmGestFactColisage
         '
         'm_bsrcFactColisage
         '
-        Me.m_bsrcFactColisage.DataSource = GetType(vini_DB.FactColisage)
+        Me.m_bsrcFactColisage.DataSource = GetType(vini_DB.FactColisageJ)
         '
         'Label3
         '
@@ -324,73 +326,13 @@ Public Class frmGestFactColisage
         Me.DataGridView1.AutoGenerateColumns = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DDebDataGridViewTextBoxColumn, Me.DFinDataGridViewTextBoxColumn, Me.StockInitialDataGridViewTextBoxColumn, Me.EntreesDataGridViewTextBoxColumn, Me.SortiesDataGridViewTextBoxColumn, Me.StockFinalDataGridViewTextBoxColumn, Me.PuDataGridViewTextBoxColumn, Me.MontantHTDataGridViewTextBoxColumn})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumDataGridViewTextBoxColumn, Me.ProduitCodeDataGridViewTextBoxColumn, Me.QteCommandeDataGridViewTextBoxColumn, Me.PrixUDataGridViewTextBoxColumn, Me.PrixHTDataGridViewTextBoxColumn, Me.PrixTTCDataGridViewTextBoxColumn})
         Me.DataGridView1.DataSource = Me.m_bsrcLgFact
         Me.DataGridView1.Location = New System.Drawing.Point(8, 14)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(968, 412)
         Me.DataGridView1.TabIndex = 0
-        '
-        'DDebDataGridViewTextBoxColumn
-        '
-        Me.DDebDataGridViewTextBoxColumn.DataPropertyName = "dDeb"
-        Me.DDebDataGridViewTextBoxColumn.HeaderText = "Date début"
-        Me.DDebDataGridViewTextBoxColumn.Name = "DDebDataGridViewTextBoxColumn"
-        Me.DDebDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'DFinDataGridViewTextBoxColumn
-        '
-        Me.DFinDataGridViewTextBoxColumn.DataPropertyName = "dFin"
-        Me.DFinDataGridViewTextBoxColumn.HeaderText = "Date fin"
-        Me.DFinDataGridViewTextBoxColumn.Name = "DFinDataGridViewTextBoxColumn"
-        Me.DFinDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'StockInitialDataGridViewTextBoxColumn
-        '
-        Me.StockInitialDataGridViewTextBoxColumn.DataPropertyName = "StockInitial"
-        Me.StockInitialDataGridViewTextBoxColumn.HeaderText = "Stock Initial"
-        Me.StockInitialDataGridViewTextBoxColumn.Name = "StockInitialDataGridViewTextBoxColumn"
-        Me.StockInitialDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'EntreesDataGridViewTextBoxColumn
-        '
-        Me.EntreesDataGridViewTextBoxColumn.DataPropertyName = "Entrees"
-        Me.EntreesDataGridViewTextBoxColumn.HeaderText = "Entrées"
-        Me.EntreesDataGridViewTextBoxColumn.Name = "EntreesDataGridViewTextBoxColumn"
-        Me.EntreesDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'SortiesDataGridViewTextBoxColumn
-        '
-        Me.SortiesDataGridViewTextBoxColumn.DataPropertyName = "Sorties"
-        Me.SortiesDataGridViewTextBoxColumn.HeaderText = "Sorties"
-        Me.SortiesDataGridViewTextBoxColumn.Name = "SortiesDataGridViewTextBoxColumn"
-        Me.SortiesDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'StockFinalDataGridViewTextBoxColumn
-        '
-        Me.StockFinalDataGridViewTextBoxColumn.DataPropertyName = "StockFinal"
-        Me.StockFinalDataGridViewTextBoxColumn.HeaderText = "Stock Final"
-        Me.StockFinalDataGridViewTextBoxColumn.Name = "StockFinalDataGridViewTextBoxColumn"
-        Me.StockFinalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PuDataGridViewTextBoxColumn
-        '
-        Me.PuDataGridViewTextBoxColumn.DataPropertyName = "pu"
-        DataGridViewCellStyle1.Format = "c2"
-        Me.PuDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-        Me.PuDataGridViewTextBoxColumn.HeaderText = "Prix unitaire"
-        Me.PuDataGridViewTextBoxColumn.Name = "PuDataGridViewTextBoxColumn"
-        Me.PuDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'MontantHTDataGridViewTextBoxColumn
-        '
-        Me.MontantHTDataGridViewTextBoxColumn.DataPropertyName = "MontantHT"
-        DataGridViewCellStyle2.Format = "c2"
-        Me.MontantHTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.MontantHTDataGridViewTextBoxColumn.HeaderText = "Montant HT"
-        Me.MontantHTDataGridViewTextBoxColumn.Name = "MontantHTDataGridViewTextBoxColumn"
-        Me.MontantHTDataGridViewTextBoxColumn.ReadOnly = True
         '
         'm_bsrcLgFact
         '
@@ -599,6 +541,21 @@ Public Class frmGestFactColisage
         Me.tpValidCmd.TabIndex = 4
         Me.tpValidCmd.Text = "Editions"
         '
+        'CrystalReportViewer1
+        '
+        Me.CrystalReportViewer1.ActiveViewIndex = -1
+        Me.CrystalReportViewer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CrystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
+        Me.CrystalReportViewer1.DisplayStatusBar = False
+        Me.CrystalReportViewer1.Location = New System.Drawing.Point(10, 32)
+        Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
+        Me.CrystalReportViewer1.Size = New System.Drawing.Size(966, 510)
+        Me.CrystalReportViewer1.TabIndex = 136
+        Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        '
         'cbBrowse
         '
         Me.cbBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -629,13 +586,14 @@ Public Class frmGestFactColisage
         'ckEntete
         '
         Me.ckEntete.AutoSize = True
+        Me.ckEntete.Checked = True
+        Me.ckEntete.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ckEntete.Location = New System.Drawing.Point(10, 8)
         Me.ckEntete.Name = "ckEntete"
         Me.ckEntete.Size = New System.Drawing.Size(57, 17)
         Me.ckEntete.TabIndex = 132
         Me.ckEntete.Text = "Entete"
         Me.ckEntete.UseVisualStyleBackColor = True
-        Me.ckEntete.Checked = True
         '
         'cbAfficherEtat
         '
@@ -708,33 +666,57 @@ Public Class frmGestFactColisage
         Me.cbReglement.Text = "Règlements"
         Me.cbReglement.UseVisualStyleBackColor = True
         '
-        'CrystalReportViewer1
+        'NumDataGridViewTextBoxColumn
         '
-        Me.CrystalReportViewer1.ActiveViewIndex = -1
-        Me.CrystalReportViewer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CrystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.CrystalReportViewer1.DisplayStatusBar = False
-        Me.CrystalReportViewer1.Location = New System.Drawing.Point(10, 32)
-        Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
-        Me.CrystalReportViewer1.Size = New System.Drawing.Size(966, 510)
-        Me.CrystalReportViewer1.TabIndex = 136
-        Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+        Me.NumDataGridViewTextBoxColumn.DataPropertyName = "num"
+        Me.NumDataGridViewTextBoxColumn.HeaderText = "num"
+        Me.NumDataGridViewTextBoxColumn.Name = "NumDataGridViewTextBoxColumn"
+        Me.NumDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProduitCodeDataGridViewTextBoxColumn
+        '
+        Me.ProduitCodeDataGridViewTextBoxColumn.DataPropertyName = "ProduitCode"
+        Me.ProduitCodeDataGridViewTextBoxColumn.HeaderText = "ProduitCode"
+        Me.ProduitCodeDataGridViewTextBoxColumn.Name = "ProduitCodeDataGridViewTextBoxColumn"
+        Me.ProduitCodeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'QteCommandeDataGridViewTextBoxColumn
+        '
+        Me.QteCommandeDataGridViewTextBoxColumn.DataPropertyName = "qteCommande"
+        Me.QteCommandeDataGridViewTextBoxColumn.HeaderText = "qteCommande"
+        Me.QteCommandeDataGridViewTextBoxColumn.Name = "QteCommandeDataGridViewTextBoxColumn"
+        Me.QteCommandeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixUDataGridViewTextBoxColumn
+        '
+        Me.PrixUDataGridViewTextBoxColumn.DataPropertyName = "prixU"
+        Me.PrixUDataGridViewTextBoxColumn.HeaderText = "prixU"
+        Me.PrixUDataGridViewTextBoxColumn.Name = "PrixUDataGridViewTextBoxColumn"
+        Me.PrixUDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixHTDataGridViewTextBoxColumn
+        '
+        Me.PrixHTDataGridViewTextBoxColumn.DataPropertyName = "prixHT"
+        Me.PrixHTDataGridViewTextBoxColumn.HeaderText = "prixHT"
+        Me.PrixHTDataGridViewTextBoxColumn.Name = "PrixHTDataGridViewTextBoxColumn"
+        Me.PrixHTDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixTTCDataGridViewTextBoxColumn
+        '
+        Me.PrixTTCDataGridViewTextBoxColumn.DataPropertyName = "prixTTC"
+        Me.PrixTTCDataGridViewTextBoxColumn.HeaderText = "prixTTC"
+        Me.PrixTTCDataGridViewTextBoxColumn.Name = "PrixTTCDataGridViewTextBoxColumn"
+        Me.PrixTTCDataGridViewTextBoxColumn.ReadOnly = True
         '
         'frmGestFactColisage
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(1016, 686)
         Me.Controls.Add(Me.cbReglement)
         Me.Controls.Add(Me.cbAnnExport)
         Me.Controls.Add(Me.SSTabCommandeClient)
         Me.Controls.Add(Me.grpEntete)
         Me.Name = "frmGestFactColisage"
-        Me.ShowInTaskbar = False
         Me.Text = "Facture de colisage"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.grpEntete.ResumeLayout(False)
         Me.grpEntete.PerformLayout()
         CType(Me.m_bsrcFactColisage, System.ComponentModel.ISupportInitialize).EndInit()
@@ -762,12 +744,12 @@ Public Class frmGestFactColisage
     Protected Overrides Function creerElement() As Boolean
         Debug.Assert(Not isfrmUpdated(), "La fenetre n'est pas libre")
         Dim bReturn As Boolean
-        bReturn = setElementCourant2(New FactColisage(New Fournisseur()))
+        bReturn = setElementCourant2(New FactColisageJ(New Fournisseur()))
 
         Return bReturn
     End Function
-    Protected Shadows Function getElementCourant() As FactColisage
-        Return CType(m_ElementCourant, FactColisage)
+    Protected Shadows Function getElementCourant() As FactColisageJ
+        Return CType(m_ElementCourant, FactColisageJ)
     End Function
     Public Overrides Function setElementCourant2(ByVal pElement As Persist) As Boolean
         Dim bReturn As Boolean
@@ -918,13 +900,12 @@ Public Class frmGestFactColisage
         Dim objLg As LgFactColisage
 
 
-        objLg = New LgFactColisage
+        objLg = New LgFactColisage(getElementCourant().id)
         objLg.num = getElementCourant().getNextNumLg()
         odlg = New dlgLgFactColisage
         odlg.setElementCourant(objLg)
-        odlg.setTiersCourant(getElementCourant().oTiers)
         If odlg.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            objLg = getElementCourant().AjouteLigneFactColisage(objLg, True)
+            objLg = getElementCourant().AjouteLigne(objLg, True)
             m_bsrcLgFact.Add(objLg)
         End If
         bReturn = True
@@ -1095,7 +1076,6 @@ Public Class frmGestFactColisage
             objLg = m_bsrcLgFact.Current
             odlg = New dlgLgFactColisage
             odlg.setElementCourant(objLg)
-            odlg.setTiersCourant(getElementCourant().oTiers)
             If odlg.ShowDialog() = Windows.Forms.DialogResult.OK Then
                 affichecolLignes()
             End If

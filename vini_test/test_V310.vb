@@ -141,10 +141,10 @@ Imports vini_App
     <TestMethod()> Public Sub T60_GenerationFactureColisage()
 
         Dim oCmd As CommandeClient
-        Dim oFactCol1 As FactColisage
-        Dim oFactcol2 As FactColisage
-        Dim oFactCol3 As FactColisage
-        Dim oLgFactCol As LgFactColisage
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisageOLD
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
 
@@ -200,12 +200,12 @@ Imports vini_App
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         ' Fournisseur 2
-        oFactcol2 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN2)
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN2)
         ' Fournisseur 3
-        oFactCol3 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN3)
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("28/02/1964"), m_objFRN3)
 
 
         Assert.AreEqual(0, oFactCol1.id, "fActure non Sauvegardée")

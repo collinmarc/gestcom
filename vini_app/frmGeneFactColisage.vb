@@ -429,8 +429,8 @@ Public Class frmGeneFactColisage
 
     End Sub
 
-    Protected Shadows Function getElementCourant() As FactColisage
-        Return CType(m_ElementCourant, FactColisage)
+    Protected Shadows Function getElementCourant() As FactColisageJ
+        Return CType(m_ElementCourant, FactColisageJ)
     End Function
 
     Protected Overrides Function frmSave() As Boolean
@@ -529,11 +529,11 @@ Public Class frmGeneFactColisage
     Private Sub genererFactures()
         Dim colFact As New Collection
         Dim oFRN As Fournisseur
-        Dim oFact As FactColisage
+        Dim oFact As FactColisageJ
         oFRN = Fournisseur.createandload(tbCodeFournisseur.Text)
         If (Not oFRN Is Nothing) Then
             setcursorWait()
-            oFact = FactColisage.GenereFacture(dtDatedeb.Value.ToShortDateString(), dtdateFin.Value.ToShortDateString(), oFRN)
+            oFact = FactColisageJ.GenereFacture(dtDatedeb.Value.ToShortDateString(), dtdateFin.Value.ToShortDateString(), oFRN)
             If Not oFact Is Nothing Then
                 oFact.periode = tbPeriode.Text
                 oFact.dateFacture = dtDateFacture.Value.ToShortDateString()

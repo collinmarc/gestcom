@@ -362,9 +362,9 @@ Public Class frmExportFacture
                     DisplayMessage("== EXPORTATION DES FACTURES DE COLISAGE ==")
                 strFile = strPath + "/FACTCOL" + Format(Now(), "yyyyMMdd")
                 If bCodeFact Then
-                    colFact = FactColisage.getListe(strCode)
+                    colFact = FactColisageJ.getListe(strCode)
                 Else
-                    colFact = FactColisage.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactCOLGeneree)
+                    colFact = FactColisageJ.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactCOLGeneree)
                 End If
                 bReturn = bReturn And exportFacture(strFile, colFact)
             End If
@@ -380,15 +380,15 @@ Public Class frmExportFacture
             End If
 
 
-                If bReturn Then
-                    MessageBox.Show(My.Resources.STR_EXPORTCOMPTA_OK)
-                    If (MessageBox.Show(My.Resources.STR_VALIDATION_EXPORT_FACTURE, "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes) Then
-                        ValiderExport()
-                    End If
-                Else
-                    MessageBox.Show(My.Resources.STR_EXPORTCOMPTA_NOK, "Export", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If bReturn Then
+                MessageBox.Show(My.Resources.STR_EXPORTCOMPTA_OK)
+                If (MessageBox.Show(My.Resources.STR_VALIDATION_EXPORT_FACTURE, "Validation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes) Then
+                    ValiderExport()
                 End If
-                restoreCursor()
+            Else
+                MessageBox.Show(My.Resources.STR_EXPORTCOMPTA_NOK, "Export", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+            restoreCursor()
         Catch ex As Exception
             DisplayMessage(ex.Message)
         End Try
@@ -435,7 +435,7 @@ Public Class frmExportFacture
             End If
             If bExportFactureColisage Then
                 DisplayMessage("== Validation Export Facture de colisage ==")
-                colFact = FactColisage.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactCOLGeneree)
+                colFact = FactColisageJ.getListe(dateDeb, dateFin, , vncEtatCommande.vncFactCOLGeneree)
                 For Each objFact As Facture In colFact
                     objFact.changeEtat(vncActionEtatCommande.vncActionFactCOLExporter)
                     objFact.Save()
