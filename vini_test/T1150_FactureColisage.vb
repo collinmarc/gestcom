@@ -437,8 +437,12 @@ Imports CrystalDecisions.Shared
         objReport = New ReportDocument
         objReport.Load("V:\V5\vini_app/" & "crRecapColisageJournalier.rpt")
 
-
+        Assert.IsTrue(2, objReport.ParameterFields.Count)
+        Assert.AreEqual("Periode", objReport.ParameterFields(0).Name)
+        Assert.AreEqual("NbJour", objReport.ParameterFields(1).Name)
         Dim periode As String = dDeb.ToString("MMMM yyyy")
+
+        objReport.SetParameterValue("NbJour", dFin.Day)
         objReport.SetParameterValue("Periode", periode)
 
         objReport.SetDataSource(oDS)
@@ -448,6 +452,140 @@ Imports CrystalDecisions.Shared
         Assert.IsTrue(System.IO.File.Exists("REcapColisageJ.pdf"))
 
         System.Diagnostics.Process.Start("REcapColisageJ.pdf")
+
+
+    End Sub 'T80_GenereEtatRecapColisage
+    ''' <summary>
+    ''' Test la génération du dataset Colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T80_GenereEtatRecapColisageMois28jours()
+
+        Dim n As Integer
+
+
+        If System.IO.File.Exists("REcapColisageJ28.pdf") Then
+            System.IO.File.Delete("REcapColisageJ28.pdf")
+        End If
+        m_objPRD.loadcolmvtStock()
+        m_objPRD.bStock = vncTypeProduit.vncPlateforme
+        m_objPRD.nom = "PRODUIT DE TEST POUR LE RECAP COLISAGE JOURNALIER"
+        m_objPRD.colmvtStock.clear()
+        m_objPRD.save()
+        Dim objPRD2 As New Produit("PRD002", m_objFRN, 2018)
+        objPRD2.idConditionnement = Param.conditionnementdefaut.id
+        objPRD2.nom = "PRODUIT2"
+        objPRD2.save()
+
+
+        m_objFRN.rs = "CAVE DES MILLE SOLEILS"
+        m_objFRN.Save()
+
+        'Ajout de Stock Initial = 120
+        m_objPRD.ajouteLigneMvtStock(CDate("01/12/1998"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 120)
+        'Ajout d'un Second Mvt d'inventaire = 60
+        m_objPRD.ajouteLigneMvtStock(CDate("05/12/1998"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
+
+        'Ajout d'une Commande Décembre = 60
+        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1998"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+
+        'Ajout d'une Commande JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("01/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        m_objPRD.ajouteLigneMvtStock(CDate("02/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        m_objPRD.ajouteLigneMvtStock(CDate("03/02/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
+        'Commande du 04
+        m_objPRD.ajouteLigneMvtStock(CDate("04/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+
+        'Le 10 => un Appro+une Commande
+
+        m_objPRD.ajouteLigneMvtStock(CDate("10/02/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/02/1999", 120)
+        m_objPRD.ajouteLigneMvtStock(CDate("10/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/02/1999", -36)
+        m_objPRD.ajouteLigneMvtStock(CDate("11/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 11/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("12/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 12/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("13/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 13/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("14/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 14/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("15/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 15/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("16/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 16/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("17/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 17/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("18/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 18/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("19/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 19/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("20/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 20/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("21/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 21/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("22/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 22/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("23/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 23/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("24/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 24/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("25/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 25/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("26/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 26/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("27/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 27/02/1999", -6)
+        m_objPRD.ajouteLigneMvtStock(CDate("28/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 28/02/1999", -6)
+
+        m_objPRD.save()
+
+        'Mouvements de stock pour le Produit2
+        '===========================================
+        objPRD2.ajouteLigneMvtStock(CDate("01/12/1998"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/12", 1200)
+        'Ajout d'un Second Mvt d'inventaire = 60
+        objPRD2.ajouteLigneMvtStock(CDate("05/12/1998"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 720)
+
+        'Ajout d'une Commande Décembre = 60
+        objPRD2.ajouteLigneMvtStock(CDate("06/12/1998"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+
+        'Ajout d'une Commande JAnvier
+        objPRD2.ajouteLigneMvtStock(CDate("01/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
+        objPRD2.ajouteLigneMvtStock(CDate("02/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        'Ajout d'un Appro JAnvier
+        objPRD2.ajouteLigneMvtStock(CDate("03/02/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/02/1999", 480)
+        'Commande du 04
+        objPRD2.ajouteLigneMvtStock(CDate("04/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+
+        'Le 10 => un Appro+une Commande
+
+        objPRD2.ajouteLigneMvtStock(CDate("10/02/1999"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/02/1999", 120)
+        objPRD2.ajouteLigneMvtStock(CDate("10/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/02/1999", -36)
+        objPRD2.ajouteLigneMvtStock(CDate("11/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 11/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("12/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 12/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("13/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 13/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("14/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 14/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("15/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 15/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("16/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 16/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("17/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 17/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("18/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 18/02/1999", -60)
+        objPRD2.ajouteLigneMvtStock(CDate("19/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 19/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("20/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 20/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("21/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 21/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("22/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 22/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("23/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 23/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("24/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 24/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("25/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 25/02/1999", -60)
+        objPRD2.ajouteLigneMvtStock(CDate("26/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 26/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("27/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 27/02/1999", -6)
+        objPRD2.ajouteLigneMvtStock(CDate("28/02/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 28/02/1999", -6)
+
+        objPRD2.save()
+
+        Dim oDS As dsVinicom
+        Dim dDeb As Date = CDate("01/02/1999")
+        Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1)
+
+        Dim objReport As ReportDocument
+
+        objReport = New ReportDocument
+        objReport.Load("V:\V5\vini_app/" & "crRecapColisageJournalier.rpt")
+
+
+        Dim periode As String = dDeb.ToString("MMMM yyyy")
+        objReport.SetParameterValue("Periode", periode)
+        objReport.SetParameterValue("NbJour", 28)
+
+        objReport.SetDataSource(oDS)
+
+
+        objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "REcapColisageJ28.pdf")
+        Assert.IsTrue(System.IO.File.Exists("REcapColisageJ28.pdf"))
+
+        System.Diagnostics.Process.Start("REcapColisageJ28.pdf")
 
 
     End Sub 'T80_GenereEtatRecapColisage

@@ -45,16 +45,12 @@ Public Class frmGeneFactColisage
     'Elle peut être modifiée en utilisant le Concepteur Windows Form.  
     'Ne la modifiez pas en utilisant l'éditeur de code.
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents dtdateFin As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents dtDatedeb As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Public WithEvents cbAfficher As System.Windows.Forms.Button
     Friend WithEvents cbGenerer As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents dtDateFacture As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents tbPeriode As System.Windows.Forms.TextBox
     Friend WithEvents grpFact As System.Windows.Forms.GroupBox
     Friend WithEvents dtDateFactCourante As System.Windows.Forms.DateTimePicker
     Friend WithEvents tbPeriodeFactCourante As System.Windows.Forms.TextBox
@@ -69,36 +65,32 @@ Public Class frmGeneFactColisage
     Friend WithEvents liFacture As System.Windows.Forms.LinkLabel
     Friend WithEvents liTiers As System.Windows.Forms.LinkLabel
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dtdateFin = New System.Windows.Forms.DateTimePicker
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.cbAfficher = New System.Windows.Forms.Button
-        Me.cbGenerer = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.dtDateFacture = New System.Windows.Forms.DateTimePicker
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.tbPeriode = New System.Windows.Forms.TextBox
-        Me.grpFact = New System.Windows.Forms.GroupBox
-        Me.cbSave = New System.Windows.Forms.Button
-        Me.dtDateFactCourante = New System.Windows.Forms.DateTimePicker
-        Me.tbPeriodeFactCourante = New System.Windows.Forms.TextBox
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.tbMontantTTCFactCourante = New vini_app.textBoxCurrency
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tbMontantHTFactCourante = New vini_app.textBoxCurrency
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.liTiers = New System.Windows.Forms.LinkLabel
-        Me.liFacture = New System.Windows.Forms.LinkLabel
-        Me.cbRecherche = New System.Windows.Forms.Button
-        Me.dgvMvtStock = New System.Windows.Forms.DataGridView
-        Me.DatemvtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.QteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.components = New System.ComponentModel.Container()
+        Me.tbCodeFournisseur = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtDatedeb = New System.Windows.Forms.DateTimePicker()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cbAfficher = New System.Windows.Forms.Button()
+        Me.cbGenerer = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtDateFacture = New System.Windows.Forms.DateTimePicker()
+        Me.grpFact = New System.Windows.Forms.GroupBox()
+        Me.cbSave = New System.Windows.Forms.Button()
+        Me.dtDateFactCourante = New System.Windows.Forms.DateTimePicker()
+        Me.tbPeriodeFactCourante = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tbMontantTTCFactCourante = New vini_app.textBoxCurrency()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbMontantHTFactCourante = New vini_app.textBoxCurrency()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.liTiers = New System.Windows.Forms.LinkLabel()
+        Me.liFacture = New System.Windows.Forms.LinkLabel()
+        Me.cbRecherche = New System.Windows.Forms.Button()
+        Me.dgvMvtStock = New System.Windows.Forms.DataGridView()
+        Me.DatemvtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LibelleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcMvtStock = New System.Windows.Forms.BindingSource(Me.components)
         Me.grpFact.SuspendLayout()
         CType(Me.dgvMvtStock, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -118,30 +110,15 @@ Public Class frmGeneFactColisage
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(136, 16)
         Me.Label1.TabIndex = 108
-        Me.Label1.Text = "Fournisseur"
-        '
-        'dtdateFin
-        '
-        Me.dtdateFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdateFin.Location = New System.Drawing.Point(232, 32)
-        Me.dtdateFin.Name = "dtdateFin"
-        Me.dtdateFin.Size = New System.Drawing.Size(88, 20)
-        Me.dtdateFin.TabIndex = 1
-        '
-        'Label8
-        '
-        Me.Label8.Location = New System.Drawing.Point(8, 32)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(176, 16)
-        Me.Label8.TabIndex = 107
-        Me.Label8.Text = "date de fin de Livraison"
+        Me.Label1.Text = "Code Fournisseur"
         '
         'dtDatedeb
         '
-        Me.dtDatedeb.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtDatedeb.CustomFormat = "MMMM yyyy"
+        Me.dtDatedeb.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtDatedeb.Location = New System.Drawing.Point(232, 8)
         Me.dtDatedeb.Name = "dtDatedeb"
-        Me.dtDatedeb.Size = New System.Drawing.Size(88, 20)
+        Me.dtDatedeb.Size = New System.Drawing.Size(103, 20)
         Me.dtDatedeb.TabIndex = 0
         '
         'Label14
@@ -150,17 +127,19 @@ Public Class frmGeneFactColisage
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(176, 16)
         Me.Label14.TabIndex = 106
-        Me.Label14.Text = "date de début de Livraison"
+        Me.Label14.Text = "Mois de facturation"
         '
         'cbAfficher
         '
+        Me.cbAfficher.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbAfficher.BackColor = System.Drawing.SystemColors.Control
         Me.cbAfficher.Cursor = System.Windows.Forms.Cursors.Default
         Me.cbAfficher.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.cbAfficher.Location = New System.Drawing.Point(8, 80)
+        Me.cbAfficher.Location = New System.Drawing.Point(13, 80)
         Me.cbAfficher.Name = "cbAfficher"
         Me.cbAfficher.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cbAfficher.Size = New System.Drawing.Size(352, 24)
+        Me.cbAfficher.Size = New System.Drawing.Size(347, 24)
         Me.cbAfficher.TabIndex = 4
         Me.cbAfficher.Text = "A&fficher les Mouvements de Stocks"
         Me.cbAfficher.UseVisualStyleBackColor = False
@@ -185,27 +164,12 @@ Public Class frmGeneFactColisage
         '
         'dtDateFacture
         '
+        Me.dtDateFacture.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dtDateFacture.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtDateFacture.Location = New System.Drawing.Point(525, 8)
         Me.dtDateFacture.Name = "dtDateFacture"
         Me.dtDateFacture.Size = New System.Drawing.Size(104, 20)
         Me.dtDateFacture.TabIndex = 10
-        '
-        'Label6
-        '
-        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label6.Location = New System.Drawing.Point(423, 36)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(96, 16)
-        Me.Label6.TabIndex = 123
-        Me.Label6.Text = "Période"
-        '
-        'tbPeriode
-        '
-        Me.tbPeriode.Location = New System.Drawing.Point(525, 34)
-        Me.tbPeriode.Name = "tbPeriode"
-        Me.tbPeriode.Size = New System.Drawing.Size(176, 20)
-        Me.tbPeriode.TabIndex = 12
         '
         'grpFact
         '
@@ -330,16 +294,15 @@ Public Class frmGeneFactColisage
         Me.dgvMvtStock.AllowUserToAddRows = False
         Me.dgvMvtStock.AllowUserToDeleteRows = False
         Me.dgvMvtStock.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvMvtStock.AutoGenerateColumns = False
-        Me.dgvMvtStock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgvMvtStock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvMvtStock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvMvtStock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DatemvtDataGridViewTextBoxColumn, Me.LibelleDataGridViewTextBoxColumn, Me.QteDataGridViewTextBoxColumn})
         Me.dgvMvtStock.DataSource = Me.m_bsrcMvtStock
         Me.dgvMvtStock.Location = New System.Drawing.Point(13, 111)
         Me.dgvMvtStock.Name = "dgvMvtStock"
-        Me.dgvMvtStock.ReadOnly = True
         Me.dgvMvtStock.Size = New System.Drawing.Size(347, 472)
         Me.dgvMvtStock.TabIndex = 124
         '
@@ -349,7 +312,6 @@ Public Class frmGeneFactColisage
         Me.DatemvtDataGridViewTextBoxColumn.HeaderText = "Date"
         Me.DatemvtDataGridViewTextBoxColumn.Name = "DatemvtDataGridViewTextBoxColumn"
         Me.DatemvtDataGridViewTextBoxColumn.ReadOnly = True
-        Me.DatemvtDataGridViewTextBoxColumn.Width = 55
         '
         'LibelleDataGridViewTextBoxColumn
         '
@@ -357,7 +319,6 @@ Public Class frmGeneFactColisage
         Me.LibelleDataGridViewTextBoxColumn.HeaderText = "libelle"
         Me.LibelleDataGridViewTextBoxColumn.Name = "LibelleDataGridViewTextBoxColumn"
         Me.LibelleDataGridViewTextBoxColumn.ReadOnly = True
-        Me.LibelleDataGridViewTextBoxColumn.Width = 58
         '
         'QteDataGridViewTextBoxColumn
         '
@@ -365,7 +326,6 @@ Public Class frmGeneFactColisage
         Me.QteDataGridViewTextBoxColumn.HeaderText = "qte"
         Me.QteDataGridViewTextBoxColumn.Name = "QteDataGridViewTextBoxColumn"
         Me.QteDataGridViewTextBoxColumn.ReadOnly = True
-        Me.QteDataGridViewTextBoxColumn.Width = 47
         '
         'm_bsrcMvtStock
         '
@@ -378,21 +338,16 @@ Public Class frmGeneFactColisage
         Me.Controls.Add(Me.dgvMvtStock)
         Me.Controls.Add(Me.cbRecherche)
         Me.Controls.Add(Me.grpFact)
-        Me.Controls.Add(Me.tbPeriode)
         Me.Controls.Add(Me.tbCodeFournisseur)
-        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.dtDateFacture)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cbGenerer)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.dtdateFin)
-        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dtDatedeb)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.cbAfficher)
         Me.Name = "frmGeneFactColisage"
         Me.Text = "Génération de factures de Colisage"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.grpFact.ResumeLayout(False)
         Me.grpFact.PerformLayout()
         CType(Me.dgvMvtStock, System.ComponentModel.ISupportInitialize).EndInit()
@@ -417,11 +372,9 @@ Public Class frmGeneFactColisage
         Dim objControl As Control
         MyBase.EnableControls(bEnabled)
         dtDatedeb.Enabled = True
-        dtdateFin.Enabled = True
         tbCodeFournisseur.Enabled = True
         cbAfficher.Enabled = True
         dtDateFacture.Enabled = True
-        tbPeriode.Enabled = True
         cbRecherche.Enabled = True
         For Each objControl In grpFact.Controls
             objControl.Enabled = True
@@ -444,16 +397,9 @@ Public Class frmGeneFactColisage
 
 #Region "Methodes privées"
     Private Sub initFenetre()
-        Dim MoisSuivant As Date
-        Dim premierMoisSuivant As Date
-        Dim dernierMoisCourant As Date
         'Date de Début = 01 du mois Courant
         dtDatedeb.Value = "01/" & Now.Month() & "/" & Now.Year
-        MoisSuivant = DateAdd(DateInterval.Month, +1, Now())
-        premierMoisSuivant = "01/" & MoisSuivant.Month() & "/" & MoisSuivant.Year()
-        dernierMoisCourant = DateAdd(DateInterval.Day, -1, premierMoisSuivant)
 
-        dtdateFin.Value = dernierMoisCourant
         dtDateFacture.Value = Now()
         m_colMouvementsStock = New Collection
     End Sub
@@ -497,8 +443,8 @@ Public Class frmGeneFactColisage
         setcursorWait()
         Try
 
-            ddeb = dtDatedeb.Value.ToShortDateString
-            dfin = dtdateFin.Value.ToShortDateString
+            ddeb = dtDatedeb.Value
+            dfin = ddeb.AddMonths(1).AddDays(-1)
             codeFournisseur = tbCodeFournisseur.Text
             oFRN = Fournisseur.createandload(codeFournisseur)
             If Not oFRN Is Nothing Then
@@ -535,7 +481,6 @@ Public Class frmGeneFactColisage
             setcursorWait()
             oFact = FactColisageJ.GenereFacture(dtDatedeb.Value, oFRN)
             If Not oFact Is Nothing Then
-                oFact.periode = tbPeriode.Text
                 oFact.dateFacture = dtDateFacture.Value.ToShortDateString()
                 setElementCourant2(oFact)
             End If
@@ -675,4 +620,5 @@ Public Class frmGeneFactColisage
     Private Sub cbSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbSave.Click
         frmSave()
     End Sub
+
 End Class

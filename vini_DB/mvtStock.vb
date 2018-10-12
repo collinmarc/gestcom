@@ -182,6 +182,7 @@ Public Class mvtStock
             m_bControle = Value
         End Set
     End Property
+
 #End Region
 #Region "Interface Persist"
     '=======================================================================

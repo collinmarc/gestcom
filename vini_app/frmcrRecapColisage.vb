@@ -37,12 +37,10 @@ Public Class frmcrRecapColisage
     Friend WithEvents dtMois As System.Windows.Forms.DateTimePicker
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents ckDetail As System.Windows.Forms.CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtMois = New System.Windows.Forms.DateTimePicker()
         Me.cbAfficher = New System.Windows.Forms.Button()
-        Me.ckDetail = New System.Windows.Forms.CheckBox()
         Me.tbCodeFourn = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -73,19 +71,9 @@ Public Class frmcrRecapColisage
         Me.cbAfficher.TabIndex = 4
         Me.cbAfficher.Text = "Afficher"
         '
-        'ckDetail
-        '
-        Me.ckDetail.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ckDetail.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ckDetail.Location = New System.Drawing.Point(749, 8)
-        Me.ckDetail.Name = "ckDetail"
-        Me.ckDetail.Size = New System.Drawing.Size(65, 23)
-        Me.ckDetail.TabIndex = 3
-        Me.ckDetail.Text = "Détails"
-        '
         'tbCodeFourn
         '
-        Me.tbCodeFourn.Location = New System.Drawing.Point(502, 8)
+        Me.tbCodeFourn.Location = New System.Drawing.Point(401, 8)
         Me.tbCodeFourn.Name = "tbCodeFourn"
         Me.tbCodeFourn.Size = New System.Drawing.Size(100, 20)
         Me.tbCodeFourn.TabIndex = 2
@@ -93,11 +81,11 @@ Public Class frmcrRecapColisage
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(418, 11)
+        Me.Label3.Location = New System.Drawing.Point(306, 12)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.Size = New System.Drawing.Size(89, 13)
         Me.Label3.TabIndex = 8
-        Me.Label3.Text = "Fournisseur"
+        Me.Label3.Text = "Code Fournisseur"
         '
         'frmcrRecapColisage
         '
@@ -105,7 +93,6 @@ Public Class frmcrRecapColisage
         Me.ClientSize = New System.Drawing.Size(1000, 678)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.tbCodeFourn)
-        Me.Controls.Add(Me.ckDetail)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cbAfficher)
         Me.Controls.Add(Me.dtMois)
@@ -114,7 +101,6 @@ Public Class frmcrRecapColisage
         Me.Controls.SetChildIndex(Me.dtMois, 0)
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
-        Me.Controls.SetChildIndex(Me.ckDetail, 0)
         Me.Controls.SetChildIndex(Me.tbCodeFourn, 0)
         Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.ResumeLayout(False)
@@ -154,8 +140,8 @@ Public Class frmcrRecapColisage
         objReport.SetDataSource(oDS)
         'Les paramètres sont passé juste pour informations car ils ne sont pas utilisé
 
-        objReport.SetParameterValue("Mois", dDeb.ToString("MMMM yyyy"))
-        objReport.SetParameterValue("codeFourn", Me.tbCodeFourn.Text)
+        objReport.SetParameterValue("Periode", dDeb.ToString("MMMM yyyy"))
+        objReport.SetParameterValue("NbJour", dFin.Day)
 
         CrystalReportViewer1.ReportSource = objReport
         finAffiche()
