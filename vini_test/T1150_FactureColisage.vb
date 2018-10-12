@@ -440,13 +440,13 @@ Imports CrystalDecisions.Shared
         Assert.IsTrue(2, objReport.ParameterFields.Count)
         Assert.AreEqual("Periode", objReport.ParameterFields(0).Name)
         Assert.AreEqual("NbJour", objReport.ParameterFields(1).Name)
+
+        objReport.SetDataSource(oDS)
+
         Dim periode As String = dDeb.ToString("MMMM yyyy")
 
         objReport.SetParameterValue("NbJour", dFin.Day)
         objReport.SetParameterValue("Periode", periode)
-
-        objReport.SetDataSource(oDS)
-
 
         objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "REcapColisageJ.pdf")
         Assert.IsTrue(System.IO.File.Exists("REcapColisageJ.pdf"))
@@ -575,13 +575,13 @@ Imports CrystalDecisions.Shared
         objReport.Load("V:\V5\vini_app/" & "crRecapColisageJournalier.rpt")
 
 
-        Dim periode As String = dDeb.ToString("MMMM yyyy")
-        objReport.SetParameterValue("Periode", periode)
-        objReport.SetParameterValue("NbJour", 28)
 
         objReport.SetDataSource(oDS)
 
 
+        Dim periode As String = dDeb.ToString("MMMM yyyy")
+        objReport.SetParameterValue("Periode", periode)
+        objReport.SetParameterValue("NbJour", 28)
         objReport.ExportToDisk(ExportFormatType.PortableDocFormat, "REcapColisageJ28.pdf")
         Assert.IsTrue(System.IO.File.Exists("REcapColisageJ28.pdf"))
 

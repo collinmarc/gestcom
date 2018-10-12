@@ -85,7 +85,6 @@ Public Class frmGestFactColisage
     Friend WithEvents cboModeReglement As System.Windows.Forms.ComboBox
     Friend WithEvents m_bsrcFactColisage As System.Windows.Forms.BindingSource
     Friend WithEvents m_bsrcModeReglement As System.Windows.Forms.BindingSource
-    Friend WithEvents ckEntete As System.Windows.Forms.CheckBox
     Friend WithEvents cbAnnExport As System.Windows.Forms.Button
     Friend WithEvents cbBrowse As System.Windows.Forms.Button
     Friend WithEvents tbDossierStockage As System.Windows.Forms.TextBox
@@ -109,6 +108,8 @@ Public Class frmGestFactColisage
     Friend WithEvents PrixUDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents PrixHTDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents PrixTTCDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents rbRecap As System.Windows.Forms.RadioButton
+    Friend WithEvents rbFacture As System.Windows.Forms.RadioButton
     Friend WithEvents cbReglement As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -126,6 +127,12 @@ Public Class frmGestFactColisage
         Me.SSTabCommandeClient = New System.Windows.Forms.TabControl()
         Me.tpLignes = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.NumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProduitCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QteCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrixTTCDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.m_bsrcLgFact = New System.Windows.Forms.BindingSource(Me.components)
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -149,7 +156,6 @@ Public Class frmGestFactColisage
         Me.cbBrowse = New System.Windows.Forms.Button()
         Me.tbDossierStockage = New System.Windows.Forms.TextBox()
         Me.cbStocker = New System.Windows.Forms.Button()
-        Me.ckEntete = New System.Windows.Forms.CheckBox()
         Me.cbAfficherEtat = New System.Windows.Forms.Button()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -160,12 +166,8 @@ Public Class frmGestFactColisage
         Me.Label35 = New System.Windows.Forms.Label()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.cbReglement = New System.Windows.Forms.Button()
-        Me.NumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ProduitCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.QteCommandeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrixUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrixHTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrixTTCDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.rbFacture = New System.Windows.Forms.RadioButton()
+        Me.rbRecap = New System.Windows.Forms.RadioButton()
         Me.grpEntete.SuspendLayout()
         CType(Me.m_bsrcFactColisage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SSTabCommandeClient.SuspendLayout()
@@ -333,6 +335,48 @@ Public Class frmGestFactColisage
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(968, 412)
         Me.DataGridView1.TabIndex = 0
+        '
+        'NumDataGridViewTextBoxColumn
+        '
+        Me.NumDataGridViewTextBoxColumn.DataPropertyName = "num"
+        Me.NumDataGridViewTextBoxColumn.HeaderText = "num"
+        Me.NumDataGridViewTextBoxColumn.Name = "NumDataGridViewTextBoxColumn"
+        Me.NumDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProduitCodeDataGridViewTextBoxColumn
+        '
+        Me.ProduitCodeDataGridViewTextBoxColumn.DataPropertyName = "ProduitCode"
+        Me.ProduitCodeDataGridViewTextBoxColumn.HeaderText = "ProduitCode"
+        Me.ProduitCodeDataGridViewTextBoxColumn.Name = "ProduitCodeDataGridViewTextBoxColumn"
+        Me.ProduitCodeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'QteCommandeDataGridViewTextBoxColumn
+        '
+        Me.QteCommandeDataGridViewTextBoxColumn.DataPropertyName = "qteCommande"
+        Me.QteCommandeDataGridViewTextBoxColumn.HeaderText = "qteCommande"
+        Me.QteCommandeDataGridViewTextBoxColumn.Name = "QteCommandeDataGridViewTextBoxColumn"
+        Me.QteCommandeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixUDataGridViewTextBoxColumn
+        '
+        Me.PrixUDataGridViewTextBoxColumn.DataPropertyName = "prixU"
+        Me.PrixUDataGridViewTextBoxColumn.HeaderText = "prixU"
+        Me.PrixUDataGridViewTextBoxColumn.Name = "PrixUDataGridViewTextBoxColumn"
+        Me.PrixUDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixHTDataGridViewTextBoxColumn
+        '
+        Me.PrixHTDataGridViewTextBoxColumn.DataPropertyName = "prixHT"
+        Me.PrixHTDataGridViewTextBoxColumn.HeaderText = "prixHT"
+        Me.PrixHTDataGridViewTextBoxColumn.Name = "PrixHTDataGridViewTextBoxColumn"
+        Me.PrixHTDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrixTTCDataGridViewTextBoxColumn
+        '
+        Me.PrixTTCDataGridViewTextBoxColumn.DataPropertyName = "prixTTC"
+        Me.PrixTTCDataGridViewTextBoxColumn.HeaderText = "prixTTC"
+        Me.PrixTTCDataGridViewTextBoxColumn.Name = "PrixTTCDataGridViewTextBoxColumn"
+        Me.PrixTTCDataGridViewTextBoxColumn.ReadOnly = True
         '
         'm_bsrcLgFact
         '
@@ -529,11 +573,12 @@ Public Class frmGestFactColisage
         '
         'tpValidCmd
         '
+        Me.tpValidCmd.Controls.Add(Me.rbRecap)
+        Me.tpValidCmd.Controls.Add(Me.rbFacture)
         Me.tpValidCmd.Controls.Add(Me.CrystalReportViewer1)
         Me.tpValidCmd.Controls.Add(Me.cbBrowse)
         Me.tpValidCmd.Controls.Add(Me.tbDossierStockage)
         Me.tpValidCmd.Controls.Add(Me.cbStocker)
-        Me.tpValidCmd.Controls.Add(Me.ckEntete)
         Me.tpValidCmd.Controls.Add(Me.cbAfficherEtat)
         Me.tpValidCmd.Location = New System.Drawing.Point(4, 22)
         Me.tpValidCmd.Name = "tpValidCmd"
@@ -583,21 +628,9 @@ Public Class frmGestFactColisage
         Me.cbStocker.TabIndex = 133
         Me.cbStocker.Text = "Stocker"
         '
-        'ckEntete
-        '
-        Me.ckEntete.AutoSize = True
-        Me.ckEntete.Checked = True
-        Me.ckEntete.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ckEntete.Location = New System.Drawing.Point(10, 8)
-        Me.ckEntete.Name = "ckEntete"
-        Me.ckEntete.Size = New System.Drawing.Size(57, 17)
-        Me.ckEntete.TabIndex = 132
-        Me.ckEntete.Text = "Entete"
-        Me.ckEntete.UseVisualStyleBackColor = True
-        '
         'cbAfficherEtat
         '
-        Me.cbAfficherEtat.Location = New System.Drawing.Point(222, 3)
+        Me.cbAfficherEtat.Location = New System.Drawing.Point(295, 2)
         Me.cbAfficherEtat.Name = "cbAfficherEtat"
         Me.cbAfficherEtat.Size = New System.Drawing.Size(80, 24)
         Me.cbAfficherEtat.TabIndex = 127
@@ -666,47 +699,27 @@ Public Class frmGestFactColisage
         Me.cbReglement.Text = "Règlements"
         Me.cbReglement.UseVisualStyleBackColor = True
         '
-        'NumDataGridViewTextBoxColumn
+        'rbFacture
         '
-        Me.NumDataGridViewTextBoxColumn.DataPropertyName = "num"
-        Me.NumDataGridViewTextBoxColumn.HeaderText = "num"
-        Me.NumDataGridViewTextBoxColumn.Name = "NumDataGridViewTextBoxColumn"
-        Me.NumDataGridViewTextBoxColumn.ReadOnly = True
+        Me.rbFacture.AutoSize = True
+        Me.rbFacture.Checked = True
+        Me.rbFacture.Location = New System.Drawing.Point(10, 9)
+        Me.rbFacture.Name = "rbFacture"
+        Me.rbFacture.Size = New System.Drawing.Size(61, 17)
+        Me.rbFacture.TabIndex = 137
+        Me.rbFacture.TabStop = True
+        Me.rbFacture.Text = "Facture"
+        Me.rbFacture.UseVisualStyleBackColor = True
         '
-        'ProduitCodeDataGridViewTextBoxColumn
+        'rbRecap
         '
-        Me.ProduitCodeDataGridViewTextBoxColumn.DataPropertyName = "ProduitCode"
-        Me.ProduitCodeDataGridViewTextBoxColumn.HeaderText = "ProduitCode"
-        Me.ProduitCodeDataGridViewTextBoxColumn.Name = "ProduitCodeDataGridViewTextBoxColumn"
-        Me.ProduitCodeDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'QteCommandeDataGridViewTextBoxColumn
-        '
-        Me.QteCommandeDataGridViewTextBoxColumn.DataPropertyName = "qteCommande"
-        Me.QteCommandeDataGridViewTextBoxColumn.HeaderText = "qteCommande"
-        Me.QteCommandeDataGridViewTextBoxColumn.Name = "QteCommandeDataGridViewTextBoxColumn"
-        Me.QteCommandeDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PrixUDataGridViewTextBoxColumn
-        '
-        Me.PrixUDataGridViewTextBoxColumn.DataPropertyName = "prixU"
-        Me.PrixUDataGridViewTextBoxColumn.HeaderText = "prixU"
-        Me.PrixUDataGridViewTextBoxColumn.Name = "PrixUDataGridViewTextBoxColumn"
-        Me.PrixUDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PrixHTDataGridViewTextBoxColumn
-        '
-        Me.PrixHTDataGridViewTextBoxColumn.DataPropertyName = "prixHT"
-        Me.PrixHTDataGridViewTextBoxColumn.HeaderText = "prixHT"
-        Me.PrixHTDataGridViewTextBoxColumn.Name = "PrixHTDataGridViewTextBoxColumn"
-        Me.PrixHTDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PrixTTCDataGridViewTextBoxColumn
-        '
-        Me.PrixTTCDataGridViewTextBoxColumn.DataPropertyName = "prixTTC"
-        Me.PrixTTCDataGridViewTextBoxColumn.HeaderText = "prixTTC"
-        Me.PrixTTCDataGridViewTextBoxColumn.Name = "PrixTTCDataGridViewTextBoxColumn"
-        Me.PrixTTCDataGridViewTextBoxColumn.ReadOnly = True
+        Me.rbRecap.AutoSize = True
+        Me.rbRecap.Location = New System.Drawing.Point(80, 9)
+        Me.rbRecap.Name = "rbRecap"
+        Me.rbRecap.Size = New System.Drawing.Size(84, 17)
+        Me.rbRecap.TabIndex = 138
+        Me.rbRecap.Text = "Récapitulatif"
+        Me.rbRecap.UseVisualStyleBackColor = True
         '
         'frmGestFactColisage
         '
@@ -957,7 +970,7 @@ Public Class frmGestFactColisage
         finAffiche()
     End Function ' Affichage de des lignes de commandes
 
-    Private Sub afficherRapport()
+    Private Sub afficherRapportFacture()
         Dim objReport As New ReportDocument()
         Dim tabIds As ArrayList
         Dim strReport As String
@@ -971,7 +984,7 @@ Public Class frmGestFactColisage
         strReport = PATHTOREPORTS & "crFactureColisage.rpt"
         objReport.Load(strReport)
         objReport.SetParameterValue("IdFactures", tabIds.ToArray())
-        objReport.SetParameterValue("bEntete", ckEntete.Checked)
+        objReport.SetParameterValue("bEntete", True)
         'End If
         'If rbReleve.Checked Then
         '    Dim r2 As New crReleveColisage()
@@ -985,6 +998,33 @@ Public Class frmGestFactColisage
 
 
         Persist.setReportConnection(objReport)
+        CrystalReportViewer1.ReportSource = objReport
+        restoreCursor()
+
+    End Sub
+    Private Sub afficherRapportRecap()
+        Dim objReport As New ReportDocument()
+        Dim tabIds As ArrayList
+        Dim strReport As String
+
+
+        Dim r2 As New crRecapColisageJournalier
+        Dim strReportName2 As String = r2.ResourceName
+        r2.Close()
+        objReport = New ReportDocument
+        objReport.Load(PATHTOREPORTS & strReportName2)
+        Dim dDeb As Date
+        Dim dFin As Date
+        dDeb = CDate(getElementCourant().periode)
+        dFin = dDeb.AddMonths(1).AddDays(-1)
+        Dim nCout As Decimal = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
+
+        Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, getElementCourant.oTiers.code, nCout)
+        objReport.SetDataSource(ods)
+
+        objReport.SetParameterValue("Periode", getElementCourant().periode)
+        objReport.SetParameterValue("NbJour", dFin.Day)
+
         CrystalReportViewer1.ReportSource = objReport
         restoreCursor()
 
@@ -1045,7 +1085,11 @@ Public Class frmGestFactColisage
         initFenetre()
     End Sub
     Private Sub dbAfficherEtat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbAfficherEtat.Click
-        afficherRapport()
+        If rbFacture.Checked Then
+            afficherRapportFacture()
+        Else
+            afficherRapportRecap()
+        End If
     End Sub
 
 
@@ -1112,37 +1156,46 @@ Public Class frmGestFactColisage
         Dim diskOpts As DiskFileDestinationOptions
         Try
             setcursorWait()
-            DisplayStatus("Exportation du courrier")
             objReport = New ReportDocument
             diskOpts = New DiskFileDestinationOptions
             DisplayStatus("Exportation de la facture")
             Dim r1 As New crFactureColisage()
             Dim strReportName As String = r1.ResourceName
             objReport.Load(PATHTOREPORTS & strReportName)
-            objReport.SetParameterValue("IDFACT", getElementCourant().id)
-            objReport.SetParameterValue("BENTETE", ckEntete.Checked)
-            objReport.ExportOptions.ExportFormatType = CrystalDecisions.Shared.ExportFormatType.WordForWindows
+            Dim tabIds As ArrayList
+            tabIds = New ArrayList()
+            tabIds.Add(getElementCourant().id)
+            objReport.SetParameterValue("IdFactures", tabIds.ToArray())
+            objReport.SetParameterValue("bEntete", True)
+            objReport.ExportOptions.ExportFormatType = CrystalDecisions.Shared.ExportFormatType.PortableDocFormat
             objReport.ExportOptions.ExportDestinationType = CrystalDecisions.Shared.ExportDestinationType.DiskFile
-            diskOpts.DiskFileName = tbDossierStockage.Text & "\FCOL" & Format(CInt(getElementCourant().code), "000000") & ".doc"
+            diskOpts.DiskFileName = tbDossierStockage.Text & "\FCOL" & Format(CInt(getElementCourant().code), "000000") & ".pdf"
             objReport.ExportOptions.DestinationOptions = diskOpts
             Persist.setReportConnection(objReport)
             objReport.Export()
             objReport.Close()
 
-            DisplayStatus("Exportation du relevé")
-            Dim r2 As New crReleveColisage()
+            DisplayStatus("Exportation du Recapitulatif")
+            Dim r2 As New crRecapColisageJournalier
             Dim strReportName2 As String = r2.ResourceName
             objReport = New ReportDocument
             diskOpts = New DiskFileDestinationOptions
             objReport.Load(PATHTOREPORTS & strReportName2)
-            objReport.SetParameterValue("IDFACT", getElementCourant().id)
-            objReport.SetParameterValue("BENTETE", ckEntete.Checked)
-            objReport.SetParameterValue("BDETAIL", False)
-            objReport.ExportOptions.ExportFormatType = CrystalDecisions.Shared.ExportFormatType.WordForWindows
+            Dim dDeb As Date
+            Dim dFin As Date
+            dDeb = CDate(getElementCourant().periode)
+            dFin = dDeb.AddMonths(1).AddDays(-1)
+            Dim nCout As Decimal = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
+
+            Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, getElementCourant.oTiers.code, nCout)
+            objReport.SetDataSource(ods)
+            objReport.ExportOptions.ExportFormatType = CrystalDecisions.Shared.ExportFormatType.PortableDocFormat
             objReport.ExportOptions.ExportDestinationType = CrystalDecisions.Shared.ExportDestinationType.DiskFile
-            diskOpts.DiskFileName = tbDossierStockage.Text & "\FCOL" & Format(CInt(getElementCourant().code), "000000") & "_ReleveColisage.doc"
+            diskOpts.DiskFileName = tbDossierStockage.Text & "\FCOL" & Format(CInt(getElementCourant().code), "000000") & "_ReleveColisage.pdf"
             objReport.ExportOptions.DestinationOptions = diskOpts
-            Persist.setReportConnection(objReport)
+
+            objReport.SetParameterValue("Periode", getElementCourant().periode)
+            objReport.SetParameterValue("NbJour", dFin.Day)
             objReport.Export()
             objReport.Close()
 
