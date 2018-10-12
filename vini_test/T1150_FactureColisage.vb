@@ -124,35 +124,16 @@ Imports CrystalDecisions.Shared
     ''' Test que les produit hors stock ne sont pas pris dans le colisage
     ''' </summary>
     ''' <remarks></remarks>
-    <TestMethod()> Public Sub T60_GenerationFactureColisage()
+    <TestMethod()> Public Sub T60_GenerationFactureColisagePrdHorsStock()
 
         Dim oCmd As CommandeClient
         Dim oFactCol1 As FactColisageJ
         'Dim oFactcol2 As FactColisage
         'Dim oFactCol3 As FactColisage
-        Dim oLgFactCol As LgFactColisageOLD
+        Dim oLgFactCol As LgFactColisage
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
         Dim objProduit As Produit
-        Dim oParam As ParamModeReglement
-
-        'Création d'un mode de reglement 30 fin de mois
-        oParam = New ParamModeReglement()
-        oParam.code = "TEST30FDM"
-        oParam.dDebutEcheance = "FDM"
-        oParam.valeur2 = 30
-        Assert.IsTrue(oParam.Save())
-        m_objFRN.idModeReglement2 = oParam.id
-        Assert.IsTrue(m_objFRN.Save())
-
-        'Création d'un mode de reglement comptant
-        oParam = New ParamModeReglement()
-        oParam.dDebutEcheance = "FACT"
-        oParam.code = "TESTCOMPTANT"
-        oParam.valeur2 = 0
-        Assert.IsTrue(oParam.Save())
-        m_objFRN2.idModeReglement2 = oParam.id
-        Assert.IsTrue(m_objFRN2.Save())
 
 
         'Ajout de Stockinitial
@@ -160,23 +141,23 @@ Imports CrystalDecisions.Shared
         Persist.shared_connect()
         m_objPRD.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/1964", 120)
         m_objPRD.savecolmvtStock()
-        'm_objPRD2.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
-        'm_objPRD2.savecolmvtStock()
-        'm_objPRD3.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
-        'm_objPRD3.savecolmvtStock()
+
         m_objPRD4HorsStock.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/1964", 100)
         m_objPRD4HorsStock.savecolmvtStock()
-        'Ajout d'un Second Mvt d'inventaire
-        m_objPRD.ajouteLigneMvtStock(CDate("15/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/1964", 60)
-        m_objPRD.savecolmvtStock()
+
+
+        m_objPRD4HorsStock.bStock = False
+        m_objPRD4HorsStock.idFournisseur = m_objFRN.id
+
+        m_objPRD4HorsStock.save()
+
+
         Persist.shared_disconnect()
 
         oCmd = New CommandeClient(m_objCLT)
         oCmd.dateCommande = CDate("01/02/1964")
 
         oCmd.AjouteLigne("10", m_objPRD, 12, 10.5)
-        'oCmd.AjouteLigne("20", m_objPRD2, 24, 10.5)
-        'oCmd.AjouteLigne("30", m_objPRD3, 6, 10.5)
         oCmd.save()
         oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
         ' Livraison de la commande
@@ -203,68 +184,42 @@ Imports CrystalDecisions.Shared
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
-        '' Fournisseur 2
-        'oFactcol2 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN2)
-        '' Fournisseur 3
-        'oFactCol3 = FactColisage.GenereFacture(CDate("1/01/1964"), CDate("29/02/1964"), m_objFRN3)
 
 
         Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
-        Assert.AreEqual(2, oFactCol1.colLignes.Count, "2 ligne par Facture")
-        Assert.AreEqual(m_objFRN.idModeReglement2, oFactCol1.idModeReglement)
-        '        Assert.AreNotEqual(CDate("01/01/2000"), oFactCol1.dEcheance)
+        Assert.AreEqual(1, oFactCol1.colLignes.Count, "1 seule ligne de Facture")
 
         oLgFactCol = oFactCol1.colLignes(1)
-        ' la Ligne pour le Produit 4 ne doit pas être prise en compte
-        'Le Profuit 4 fait partie du fournisseur1
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Premier mois pas de mouvement")
-        Assert.AreEqual(CDate("01/01/1964"), oLgFactCol.dDeb, "Date de debut")
-        Assert.AreEqual(CDate("31/01/1964"), oLgFactCol.dFin, "Date de Fin")
-        oLgFactCol = oFactCol1.colLignes(2)
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
-        Assert.AreEqual(CDate("01/02/1964"), oLgFactCol.dDeb, "Date de debut")
-        Assert.AreEqual(CDate("29/02/1964"), oLgFactCol.dFin, "Date de Fin")
+        Assert.AreEqual(m_objPRD.id, oLgFactCol.oProduit.id)
 
-        'oLgFactCol = oFactcol2.colLignes(1)
-        'oLgFactCol = oFactcol2.colLignes(2)
-        'Assert.AreEqual(m_objPRD2.qteColis(120 - 24), oLgFactCol.qte, "Qte = Stock I - Cmd")
 
-        'oLgFactCol = oFactCol3.colLignes(1)
-        'Assert.AreEqual(m_objPRD3.qteColis(120), oLgFactCol.qte, "Qte = Stock I - Cmd")
-        'oLgFactCol = oFactCol3.colLignes(2)
-        'Assert.AreEqual(m_objPRD3.qteColis(120 - 6), oLgFactCol.qte, "Qte = Stock I - Cmd")
-
-        Assert.IsTrue(oFactCol1.save())
-
+        oFactCol1.save()
 
 
         ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
         Dim ocol As Collection
-        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("01/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
         ' La Liste des Mvts de stocks ne concerne que les produits en stocks
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
         Assert.AreEqual(0, ocol.Count, "Mvt.non facturés")
-        For Each oMvtStk In ocol
-            objProduit = Produit.createandload(oMvtStk.idProduit)
-            Assert.IsFalse(objProduit.bStock, "Produit non stocké")
-        Next
-        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("01/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
-        Assert.IsTrue(ocol.Count > 0, "Mvt facturés")
+
+        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Assert.IsTrue(ocol.Count = 1, "Mvt facturés")
         For Each oMvtStk In ocol
             Assert.AreEqual(oFactCol1.id, oMvtStk.idFactColisage, "ID Facture colisage")
         Next
 
-
+        'La Suppression de la facture libère les mouvements de stocks
         oFactCol1.bDeleted = True
         oFactCol1.save()
-        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("01/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
-        Assert.IsTrue(ocol.Count > 0, "Mvt.non facturés")
+
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
+        Assert.IsTrue(ocol.Count = 1, "Mvt.non facturés")
         For Each oMvtStk In ocol
             Assert.AreEqual(0, oMvtStk.idFactColisage, "ID Facture colisage")
         Next
-        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("01/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        ocol = mvtStock.getListe2(CDate("01/01/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
         Assert.AreEqual(0, ocol.Count, "Mvt facturés")
 
 
@@ -275,137 +230,7 @@ Imports CrystalDecisions.Shared
 
     End Sub
 
-    ''' <summary>
-    ''' Test la génération des factures de colisage sur plusieurs mois
-    ''' </summary>
-    ''' <remarks></remarks>
-    <TestMethod()> Public Sub T70_GenerationFactureColisage2Mois()
-
-        Dim oCmd As CommandeClient
-        Dim oFactCol1 As FactColisageJ
-        Dim oLgFactCol As LgFactColisageOLD
-        Dim oLgCmd As LgCommande
-        Dim oMvtStk As mvtStock
-
-        'Ajout de Stock Initial = 120
-        Persist.shared_connect()
-        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/2000", 120)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un Second Mvt d'inventaire = 60
-        m_objPRD.ajouteLigneMvtStock(CDate("05/02/2000"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/2000", 60)
-        m_objPRD.savecolmvtStock()
-        'Ajout d'un  d'inventaire = 150
-        m_objPRD.ajouteLigneMvtStock(CDate("01/07/2000"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/07/2000", 150)
-        m_objPRD.savecolmvtStock()
-        Persist.shared_disconnect()
-
-        oCmd = New CommandeClient(m_objCLT)
-        oCmd.dateCommande = CDate("03/04/2000")
-
-        oCmd.AjouteLigne("10", m_objPRD, 12, 10.5)
-        oCmd.AjouteLigne("20", m_objPRD, 12, 10.5)
-        oCmd.save()
-        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
-        ' Livraison de la commande
-        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
-        oCmd.dateLivraison = CDate("03/04/2000")
-        For Each oLgCmd In oCmd.colLignes
-            oLgCmd.qteLiv = oLgCmd.qteCommande
-        Next
-        oCmd.save()
-
-
-        ' Fournisseur 1
-        oFactCol1 = FactColisageJ.GenereFacture(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN)
-        Assert.IsNotNull(oFactCol1, "FactCol1 generée")
-
-
-        Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
-        Assert.AreEqual(6, oFactCol1.colLignes.Count, "6 lignes (1 par mois même le permier mois)")
-
-        oLgFactCol = oFactCol1.colLignes(1)
-        ' le mois 1 => Stock initial
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockFinal))
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock F ")
-        Assert.AreEqual(1, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual(1, oLgFactCol.dFin.Month, "Date de Fin")
-        Assert.AreNotEqual(0, oLgFactCol.MontantHT, "Montant HT <> 0")
-
-        oLgFactCol = oFactCol1.colLignes(2)
-        ' le mois 2 
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
-        Assert.AreEqual(2, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual(2, oLgFactCol.dFin.Month, "Date de Fin")
-
-        oLgFactCol = oFactCol1.colLignes(3)
-        ' 1 Sorties pour le mois 3
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.qte), "Qte = Stock I")
-        Assert.AreEqual(3, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual(3, oLgFactCol.dFin.Month, "Date de Fin")
-
-        oLgFactCol = oFactCol1.colLignes(4)
-        ' 1 Sorties pour le mois 4
-        Assert.AreEqual(4, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual(4, oLgFactCol.dFin.Month, "Date de Fin")
-        Assert.AreEqual(m_objPRD.qteColis(120), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
-
-        oLgFactCol = oFactCol1.colLignes(5)
-        ' 1 Sorties pour le mois 5
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
-        Assert.AreEqual(5, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual(5, oLgFactCol.dFin.Month, "Date de Fin")
-
-        oLgFactCol = oFactCol1.colLignes(6)
-        ' 1 Sorties pour le mois 6
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.StockInitial), "Stock initial = PRD1")
-        Assert.AreEqual(m_objPRD.qteColis(120 - 12 - 12), CDec(oLgFactCol.qte), "Qte = Stock I - Cmd")
-        Assert.AreEqual(6, oLgFactCol.dDeb.Month, "Date de debut")
-        Assert.AreEqual("30/06/2000", oLgFactCol.dFin.ToShortDateString(), "Date de Fin")
-
-        oFactCol1.save()
-
-
-
-        ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
-        Dim ocol As Collection
-        ocol = mvtStock.getListe2(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
-        ' La Liste des Mvts de stocks ne concerne que les produits en stocks
-        Assert.AreEqual(0, ocol.Count, "Mvt.non facturés")
-        ocol = mvtStock.getListe2(CDate("01/07/2000"), CDate("31/07/2000"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
-        ' La Liste des Mvts de stocks ne concerne que les produits en stocks
-        Assert.AreEqual(1, ocol.Count, "Le Dernier Mouvemetn d'inventaire ne doit pas être facturé")
-
-        ocol = mvtStock.getListe2(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
-        Assert.IsTrue(ocol.Count > 0, "Mvt facturés")
-        For Each oMvtStk In ocol
-            Assert.AreEqual(oFactCol1.id, oMvtStk.idFactColisage, "ID Facture colisage")
-        Next
-
-
-        'La Suppression de la facture met à jour les mouvements de stocks
-        oFactCol1.bDeleted = True
-        oFactCol1.save()
-        ocol = mvtStock.getListe2(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
-        Assert.IsTrue(ocol.Count > 0, "Mvt.non facturés")
-        For Each oMvtStk In ocol
-            Assert.AreEqual(0, oMvtStk.idFactColisage, "ID Facture colisage")
-        Next
-        ocol = mvtStock.getListe2(CDate("01/01/2000"), CDate("30/06/2000"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
-        Assert.AreEqual(0, ocol.Count, "Mvt facturés")
-
-
-        oCmd.bDeleted = True
-        oCmd.save()
-
-
-
-    End Sub
-
+  
     ''' <summary>
     ''' Test la génération du dataset Colisage
     ''' </summary>
@@ -461,7 +286,7 @@ Imports CrystalDecisions.Shared
         Assert.AreEqual(oRow.RC_S04, oRow.RC_S07)
         Assert.AreEqual(oRow.RC_S04, oRow.RC_S08)
         Assert.AreEqual(oRow.RC_S04, oRow.RC_S09)
-        Assert.AreEqual((36 - 48 - 12 + 48 - 12 + 120 - 36) / 6D, oRow.RC_S10)
+        Assert.AreEqual(oRow.RC_S04 + (240 - 36) / 6D, oRow.RC_S10)
         Assert.AreEqual(oRow.RC_S10, oRow.RC_S11)
         Assert.AreEqual(oRow.RC_S10, oRow.RC_S12)
         Assert.AreEqual(oRow.RC_S10, oRow.RC_S13)
@@ -868,25 +693,7 @@ Imports CrystalDecisions.Shared
         objFact.bDeleted = True
         Assert.IsTrue(objFact.save())
     End Sub
-    <TestMethod()> Public Sub T110_ChampsLongs()
-
-        Dim objFACT As FactColisageJ
-
-        'I - Création d'une Facture 
-        '=========================
-        objFACT = New FactColisageJ(m_objFRN)
-
-        objFACT.periode = "1er Timestre 1964".PadRight(500, "x")
-        'Save
-        Assert.IsTrue(objFACT.save(), "Insert" & objFACT.getErreur)
-
-        objFACT.load()
-
-        Assert.AreEqual(50, objFACT.periode.Length)
-        objFACT.bDeleted = True
-        Assert.IsTrue(objFACT.save())
-    End Sub
-    'Test l'incrémenation des codes
+     'Test l'incrémenation des codes
     <TestMethod()> Public Sub T70_GetNextCode()
 
         Dim obj1 As New FactColisageJ(m_objFRN)
@@ -904,6 +711,409 @@ Imports CrystalDecisions.Shared
 
 
     End Sub
+
+    ''' <summary>
+    ''' Test the factcolisage Object, Insert, Update,Delete
+    ''' </summary>
+    ''' <remarks></remarks>
+
+    <TestMethod()> Public Sub T30_TestFactColisage()
+
+        Dim oFactColisage As FactColisageJ
+        Dim oFactColisage2 As FactColisageJ
+        Dim nId As Integer
+
+        oFactColisage = New FactColisageJ(m_objFRN)
+        Assert.AreEqual(vncEtatCommande.vncFactCOLGeneree, oFactColisage.etat.codeEtat, oFactColisage.etat.codeEtat, "Etat Généréée")
+        Assert.AreEqual(Now.ToString("MMMM yyyy"), oFactColisage.periode, "Période par defaut")
+        Assert.AreEqual(Param.getConstante("CST_FACT_COL_TAXES"), oFactColisage.montantTaxes.ToString(), "Montant des taxes")
+        Assert.AreEqual(m_objFRN.idModeReglement2, oFactColisage.idModeReglement, "Mode de reglemement")
+
+        'La prédio doit être au Format MMMM yyyy
+        oFactColisage.periode = "TEST"
+        Assert.AreEqual(Now.ToString("MMMM yyyy"), oFactColisage.periode)
+
+        oFactColisage.totalHT = 100
+        oFactColisage.periode = "octobre 2018"
+
+        oFactColisage.dateFacture = #1/1/2005#
+        oFactColisage.montantTaxes = 10.5
+        oFactColisage.totalHT = 100
+        oFactColisage.totalTTC = 119.6
+        oFactColisage.CommFacturation.comment = "TEST COM FACT"
+        oFactColisage.montantReglement = 90
+        oFactColisage.dateReglement = #1/2/2005#
+        oFactColisage.refReglement = "CHQ TEST"
+
+        Assert.IsTrue(oFactColisage.save, "FactCol.insert")
+        nId = oFactColisage.id
+
+        oFactColisage2 = FactColisageJ.createandload(nId)
+
+        Assert.IsTrue(oFactColisage.Equals(oFactColisage2), "Equal after create and load")
+        oFactColisage2.periode = "octobre 2017"
+        oFactColisage2.dateFacture = #1/1/2006#
+        oFactColisage2.montantTaxes = 11.5
+        oFactColisage2.totalHT = 110
+        oFactColisage2.totalTTC = 129.6
+        oFactColisage2.CommFacturation.comment = "TEST COM FACT2"
+        oFactColisage2.montantReglement = 91
+        oFactColisage2.dateReglement = #1/2/2006#
+        oFactColisage2.refReglement = "CHQ TEST2"
+        Assert.IsTrue(oFactColisage2.save, "Factcolisage.update")
+
+        oFactColisage = FactColisageJ.createandload(nId)
+
+        Assert.AreEqual("octobre 2017", oFactColisage2.periode)
+        Assert.AreEqual(#1/1/2006#, oFactColisage2.dateFacture)
+        Assert.AreEqual(11.5D, oFactColisage2.montantTaxes)
+        Assert.AreEqual(110D, oFactColisage2.totalHT)
+        Assert.AreEqual(129.6D, oFactColisage2.totalTTC)
+        Assert.AreEqual("TEST COM FACT2", oFactColisage2.CommFacturation.comment)
+        Assert.AreEqual(91D, oFactColisage2.montantReglement)
+        Assert.AreEqual(#1/2/2006#, oFactColisage2.dateReglement)
+        Assert.AreEqual("CHQ TEST2", oFactColisage2.refReglement)
+
+        oFactColisage.bDeleted = True
+        oFactColisage.save()
+
+        oFactColisage = FactColisageJ.createandload(nId)
+        Assert.IsTrue(oFactColisage.id = 0, "After Delete Id = 0")
+
+    End Sub
+
+    ''' <summary>
+    ''' Test the Line factcolisage Object, 
+    ''' </summary>
+    ''' <remarks></remarks>
+
+    <TestMethod()> Public Sub T40_TestLgFactColisage()
+        Dim oFactCol As FactColisageJ
+        Dim oLgFactCol As LgFactColisage
+        Dim nid As Integer
+        Dim strResult As String
+
+        oFactCol = New FactColisageJ(m_objFRN)
+        Assert.IsTrue(oFactCol.save())
+
+
+        oLgFactCol = New LgFactColisage(0)
+        oLgFactCol.oProduit = m_objPRD
+        oLgFactCol.qteCommande = 5
+        oLgFactCol.prixU = 0.15
+        oLgFactCol.calculPrixTotal()
+        Assert.AreEqual(0.75D, oLgFactCol.prixHT, "Montant HT")
+
+        oFactCol.AjouteLigne(oLgFactCol)
+
+        Assert.AreEqual(0.75D + oFactCol.montantTaxes, oFactCol.totalHT)
+        oFactCol.setEtat(vncEtatCommande.vncFactCOLExportee)
+        Assert.IsTrue(oFactCol.save(), "Sauvegarde")
+
+        nid = oFactCol.id
+
+        oFactCol = FactColisageJ.createandload(nid)
+
+        oFactCol.loadcolLignes()
+
+        Assert.IsTrue(oFactCol.colLignes.Count = 1, "1 ligne")
+
+        oLgFactCol = CType(oFactCol.colLignes(1), LgFactColisage)
+        Assert.AreEqual(oLgFactCol.qteCommande, 5D)
+        Assert.AreEqual(oLgFactCol.prixU, 0.15D)
+        Assert.AreEqual(0.75D, oLgFactCol.prixHT, "Montant HT")
+
+        oFactCol.bDeleted = True
+        oFactCol.save()
+
+        strResult = Persist.executeSQLQuery("SELECT COUNT(*) FROM LGFACTCOLISAGE WHERE LGCOL_FACTCOL_ID = " & nid)
+        Assert.AreEqual("0", strResult, "No Lines after delete")
+
+    End Sub
+    ''' <summary>
+    ''' Test la Liste des factures de colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T50_ListeFactColisage()
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactCol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+
+        Dim oCol As Collection = New Collection()
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
+        For Each oFactCol1 In oCol
+            oFactCol1.bDeleted = True
+            oFactCol1.save()
+        Next
+
+
+        oFactCol1 = New FactColisageJ(m_objFRN)
+        oFactCol1.dateFacture = #1/1/2004#
+        oFactCol1.save()
+
+        oFactCol2 = New FactColisageJ(m_objFRN2)
+        oFactCol2.dateFacture = #2/1/2004#
+        oFactCol2.save()
+
+        oFactCol3 = New FactColisageJ(m_objFRN3)
+        oFactCol3.dateFacture = #3/1/2004#
+        oFactCol3.changeEtat(vncActionEtatCommande.vncActionFactCOLExporter)
+        oFactCol3.save()
+
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
+        Assert.AreEqual(3, oCol.Count, "GetListe sur date")
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#, m_objFRN2.code)
+        Assert.AreEqual(1, oCol.Count, "GetListe sur date+Code Fourn")
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#, , vncEtatCommande.vncFactCOLGeneree)
+        Assert.AreEqual(2, oCol.Count, "GetListe sur date+Etat")
+        oCol = FactColisageJ.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLGeneree)
+        Assert.AreEqual(1, oCol.Count, "GetListe sur date+Etat =>1")
+        oCol = FactColisageJ.getListe(#1/1/2004#, #1/1/2004#, , vncEtatCommande.vncFactCOLExportee)
+        Assert.AreEqual(0, oCol.Count, "GetListe sur date+Etat =>0")
+        oCol = FactColisageJ.getListe(#3/1/2004#, #3/1/2004#, , vncEtatCommande.vncFactCOLExportee)
+        Assert.AreEqual(1, oCol.Count, "GetListe sur date+Etat =>1")
+
+        oFactCol1.bDeleted = True
+        oFactCol1.save()
+        oFactCol2.bDeleted = True
+        oFactCol2.save()
+        oFactCol3.bDeleted = True
+        oFactCol3.save()
+
+        oCol = FactColisageJ.getListe(#1/1/2004#, #12/31/2004#)
+        Assert.AreEqual(0, oCol.Count, "GetListe sur date apres delete")
+
+    End Sub
+
+    <TestMethod()> Public Sub T60_GenerationFactureColisage2()
+
+        Dim oCmd As CommandeClient
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisage
+        Dim oLgCmd As LgCommande
+        Dim oMvtStk As mvtStock
+
+        'Ajout de Stockinitial
+
+        Persist.shared_connect()
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD.savecolmvtStock()
+        m_objPRD2.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD2.savecolmvtStock()
+        m_objPRD3.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD3.savecolmvtStock()
+        'Ajout d'un Second Mvt d'inventaire
+        m_objPRD.ajouteLigneMvtStock(CDate("15/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/1964", 60)
+        m_objPRD.savecolmvtStock()
+        Persist.shared_disconnect()
+
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("01/02/1964")
+
+        oCmd.AjouteLigne("10", m_objPRD, 12, 10.5)
+        oCmd.AjouteLigne("20", m_objPRD2, 24, 10.5)
+        oCmd.AjouteLigne("30", m_objPRD3, 6, 10.5)
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("01/02/1964")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        oCmd.save()
+
+        ' Fournisseur 1
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
+        Assert.IsNotNull(oFactCol1, "FactCol1 generée")
+        ' Fournisseur 2
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2)
+        ' Fournisseur 3
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3)
+
+
+        Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
+        Assert.AreEqual(1, oFactCol1.colLignes.Count, "1 ligne par produit")
+
+        oLgFactCol = oFactCol1.colLignes(1)
+        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oLgFactCol = oFactcol2.colLignes(1)
+        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oLgFactCol = oFactCol3.colLignes(1)
+        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oFactCol1.save()
+        ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
+        Dim ocol As Collection
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("29/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
+        Assert.AreEqual(0, ocol.Count, "Mvt.non facturés")
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("29/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Assert.IsTrue(ocol.Count > 0, "Mvt facturés")
+        For Each oMvtStk In ocol
+            Assert.AreEqual(oFactCol1.id, oMvtStk.idFactColisage, "ID Facture colisage")
+        Next
+
+
+        oFactCol1.bDeleted = True
+        oFactCol1.save()
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("29/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
+        Assert.IsTrue(ocol.Count > 0, "Mvt.non facturés")
+        For Each oMvtStk In ocol
+            Assert.AreEqual(0, oMvtStk.idFactColisage, "ID Facture colisage")
+        Next
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("29/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Assert.IsTrue(ocol.Count = 0, "Mvt facturés")
+
+
+        oCmd.bDeleted = True
+        oCmd.save()
+
+
+    End Sub
+    ''' <summary>
+    ''' Test que les produit hors stock ne sont pas pris dans le colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T60_GenerationFactureColisage()
+
+        Dim oCmd As CommandeClient
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisage
+        Dim oLgCmd As LgCommande
+        Dim oMvtStk As mvtStock
+
+        '' Création d'un Produit qui n'est pas géré sur le stock
+
+
+
+        'Ajout de Stockinitial
+
+        Persist.shared_connect()
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
+        m_objPRD.savecolmvtStock()
+        m_objPRD2.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
+        m_objPRD2.savecolmvtStock()
+        m_objPRD3.ajouteLigneMvtStock(CDate("01/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
+        m_objPRD3.savecolmvtStock()
+        'Ajout d'un Second Mvt d'inventaire > le SI est donc de 60 => 10 Colis
+        m_objPRD.ajouteLigneMvtStock(CDate("15/01/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/2005", 60)
+        m_objPRD.savecolmvtStock()
+        Persist.shared_disconnect()
+
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("01/02/1964")
+
+        oCmd.AjouteLigne("10", m_objPRD, 12, 10.5) 'COMMANDE DE 12 Prouit
+        oCmd.AjouteLigne("20", m_objPRD2, 24, 10.5) ' Commande de 24 Produits2
+        oCmd.AjouteLigne("30", m_objPRD3, 6, 10.5) 'Commandede 6 Produits 3
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("01/02/1964")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+        oCmd.save()
+
+       ' Génération de la facture de colisage pour le Fournisseur 1
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
+        Assert.IsNotNull(oFactCol1, "FactCol1 generée")
+        ' Fournisseur 2
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2)
+        ' Fournisseur 3
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3)
+
+        ' Controle de la facture 1 pour le fourisseur 1
+        Assert.AreEqual("février 1964", oFactCol1.periode)
+        Assert.AreEqual(0, oFactCol1.id, "fActure non Sauvegardée")
+        Assert.AreEqual(1, oFactCol1.colLignes.Count, "1 Seul produit Facturé")
+
+        'Nombre de jour du Mois (28 pour Fevrier 1964)
+        Dim njour As Integer = CDate(oFactCol1.periode).AddMonths(1).AddDays(-1).Day
+        oLgFactCol = oFactCol1.colLignes(1)
+        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+
+        Assert.AreEqual("février 1964", oFactcol2.periode)
+        Assert.AreEqual(1, oFactcol2.colLignes.Count, "1 ligne par mois Facturé")
+        oLgFactCol = oFactcol2.colLignes(1)
+        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+
+        Assert.AreEqual("février 1964", oFactCol3.periode)
+        Assert.AreEqual(1, oFactCol3.colLignes.Count, "1 ligne par mois Facturé")
+        oLgFactCol = oFactCol3.colLignes(1)
+        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+
+        'Sauvegarde le la Facture de colisage => mise à jout des mouvements de stock du Fournisseur
+        oFactCol1.save()
+        ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
+        Dim ocol As Collection
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
+        ' La Liste des Mvts de stocks ne concerne que les produits Plateforme
+        Assert.AreEqual(0, ocol.Count, "Mvt.non facturés")
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Assert.IsTrue(ocol.Count > 0, "Mvt facturés")
+        For Each oMvtStk In ocol
+            Assert.AreEqual(oFactCol1.id, oMvtStk.idFactColisage, "ID Facture colisage")
+        Next
+
+
+        oFactCol1.bDeleted = True
+        oFactCol1.save()
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_nFact)
+        Assert.IsTrue(ocol.Count > 0, "Mvt.non facturés")
+        For Each oMvtStk In ocol
+            Assert.AreEqual(0, oMvtStk.idFactColisage, "ID Facture colisage")
+        Next
+        ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("28/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Assert.AreEqual(0, ocol.Count, "Mvt facturés")
+
+
+        oCmd.bDeleted = True
+        oCmd.save()
+
+
+
+    End Sub
+
 End Class
 
 

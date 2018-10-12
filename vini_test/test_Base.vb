@@ -83,7 +83,7 @@ Imports System.Globalization
             m_idLGFactCOL = CInt(Persist.executeSQLQuery("SELECT MAX(LGCOL_ID) FROM LGFACTCOLISAGE"))
             m_idLGFactTRP = CInt(Persist.executeSQLQuery("SELECT MAX(LGTRP_ID) FROM LGFACTTRP"))
             m_idLGCMD = CInt(Persist.executeSQLQuery("SELECT MAX(LGCM_ID) FROM LIGNE_COMMANDE"))
-            m_idMVTStock = CInt(Persist.executeSQLQuery("SELECT MAX(STK_ID) FROM MVT_STOCK"))
+            m_idMVTStock = 0
             m_idPRECOMMANDE = CInt(Persist.executeSQLQuery("SELECT MAX(PCMD_ID) FROM PRECOMMANDE"))
             m_idREGLEMENT = CInt(Persist.executeSQLQuery("SELECT MAX(RGL_ID) FROM REGLEMENT"))
             m_idSCMD = CInt(Persist.executeSQLQuery("SELECT MAX(SCMD_ID) FROM SOUSCOMMANDE"))

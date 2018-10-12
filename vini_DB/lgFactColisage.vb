@@ -40,7 +40,7 @@ Public Class LgFactColisage
 
 End Class
 
-Public Class LgFactColisageOLD
+Public Class LgFactColisageOLDADEL
     Inherits Persist
 
     Private m_num As Integer                'Numéro d'ordre de ligne

@@ -533,7 +533,7 @@ Public Class frmGeneFactColisage
         oFRN = Fournisseur.createandload(tbCodeFournisseur.Text)
         If (Not oFRN Is Nothing) Then
             setcursorWait()
-            oFact = FactColisageJ.GenereFacture(dtDatedeb.Value.ToShortDateString(), dtdateFin.Value.ToShortDateString(), oFRN)
+            oFact = FactColisageJ.GenereFacture(dtDatedeb.Value, oFRN)
             If Not oFact Is Nothing Then
                 oFact.periode = tbPeriode.Text
                 oFact.dateFacture = dtDateFacture.Value.ToShortDateString()

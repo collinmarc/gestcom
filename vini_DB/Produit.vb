@@ -1283,6 +1283,7 @@ Public Class Produit
         Dim nEntree As Decimal
         Dim nSortie As Decimal
         Dim periode As String
+        Dim nJourDansleMois As Integer = pdFin.Day
 
         Dim dDatePrec As Date = DateTime.MinValue
         periode = pdDeb.ToString("MMMM yyyy")
@@ -1314,7 +1315,7 @@ Public Class Produit
                 End If
             Next
             'Boucle pour calculer le stock à la fin de chaque journée
-            For njour As Integer = 1 To 31
+            For njour As Integer = 1 To nJourDansleMois
                 nStockAu(njour) = oStockAu + nmvtDu(njour)
                 oStockAu = nStockAu(njour)
             Next

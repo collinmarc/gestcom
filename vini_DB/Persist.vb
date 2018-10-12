@@ -2733,7 +2733,7 @@ Public MustInherit Class Persist
     'Détails    :  
     'Retour : une collection triée
     '=======================================================================
-    Protected Shared Function ListeMVTSTK2(ByVal pddeb As Date, ByVal pdfin As Date, Optional ByVal pFourn As Fournisseur = Nothing, Optional ByVal pEtat As vncEtatMVTSTK = vncEtatMVTSTK.vncMVTSTK_Tous) As Collection
+    Protected Shared Function ListeMVTSTK2(ByVal pddeb As Date, ByVal pdfin As Date, ByVal pFournisseur As Fournisseur, Optional ByVal pEtat As vncEtatMVTSTK = vncEtatMVTSTK.vncMVTSTK_Tous) As Collection
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
 
         Dim objCommand As OleDbCommand
@@ -2766,9 +2766,7 @@ Public MustInherit Class Persist
             strWhere = strWhere & " AND  MVT_STOCK.STK_ETAT = ? "
         End If
 
-        If pFourn IsNot Nothing Then
-            strWhere = strWhere & " AND PRODUIT.PRD_FRN_ID = ? "
-        End If
+        strWhere = strWhere & " AND PRODUIT.PRD_FRN_ID = ? "
 
 
         sqlString = sqlString & " WHERE " & strWhere & " ORDER BY " & strOrder
@@ -2787,9 +2785,8 @@ Public MustInherit Class Persist
             If pEtat <> vncEtatMVTSTK.vncMVTSTK_Tous Then
                 objParam = objCommand.Parameters.AddWithValue("?", pEtat)
             End If
-            If pFourn IsNot Nothing Then
-                objParam = objCommand.Parameters.AddWithValue("?", pFourn.id)
-            End If
+
+            objParam = objCommand.Parameters.AddWithValue("?", pFournisseur.id)
 
             objRS = objCommand.ExecuteReader()
             colReturn = New Collection
@@ -2817,7 +2814,7 @@ Public MustInherit Class Persist
             objRS.Close()
 
         Catch ex As Exception
-            setError("ListeMVTSTK", ex.ToString())
+            setError("ListeMVTSTK2", ex.ToString())
             Debug.Assert(False, getErreur())
             colReturn = New Collection
         End Try
@@ -12052,7 +12049,7 @@ Public MustInherit Class Persist
         Dim objFACT As FactColisageJ
         bReturn = False
 
-        Debug.Assert(Me.GetType().Name.Equals("FactColisage"), "Objet de Type 'FactColisage' Requis")
+        Debug.Assert(Me.GetType().Name.Equals("FactColisageJ"), "Objet de Type 'FactColisage' Requis")
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id = 0, "ID=0")
         objFACT = CType(Me, FactColisageJ)
@@ -12153,7 +12150,7 @@ Public MustInherit Class Persist
     Protected Function deleteFactColisage() As Boolean
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "Id <> 0")
-        Debug.Assert(Me.GetType().Name.Equals("FactColisage"))
+        Debug.Assert(Me.GetType().Name.Equals("FactColisageJ"))
         Dim bReturn As Boolean = False
 
 
@@ -12333,7 +12330,7 @@ Public MustInherit Class Persist
         Dim objFact As FactColisageJ
         bReturn = False
 
-        Debug.Assert(Me.GetType().Name.Equals("FactColisage"), "Objet de Type FactColisage Requis")
+        Debug.Assert(Me.GetType().Name.Equals("FactColisageJ"), "Objet de Type FactColisage Requis")
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(m_id <> 0, "ID<>0")
         objFact = CType(Me, FactColisageJ)
@@ -12603,7 +12600,6 @@ Public MustInherit Class Persist
         Dim objCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
         Dim objFactColisage As FactColisageJ
-        Dim objLGCOL As LgCommande
 
         Dim sqlString As String = "SELECT " & _
                                     "LGCOL_ID," & _
@@ -12626,7 +12622,7 @@ Public MustInherit Class Persist
         CreateParameterP_ID(objCommand)
 
         Try
-            Dim objLG As LgCommande
+            Dim objLG As LgFactColisage
             Dim oProduit As Produit = Nothing
             Dim lgnum As String
             Dim qtecommande As Double

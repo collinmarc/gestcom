@@ -303,6 +303,7 @@ Public Class Fournisseur
         m_idRegion = Param.regiondefaut.id
         m_libRegion = Param.regiondefaut.valeur
         m_bExportInternet = 1
+        m_dossier = ""
     End Sub
     Public Sub New()
         MyBase.New("", "")
