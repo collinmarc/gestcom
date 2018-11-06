@@ -1091,15 +1091,21 @@ Imports CrystalDecisions.CrystalReports.Engine
 
         objReport.Dispose()
 
-        objCMD.bDeleted = True
-        objCMD.save()
-
-
         For Each oFact In colFact
             oFact.bDeleted = True
             oFact.Save()
 
         Next
+
+        objCMD.LoadColSousCommande()
+        For Each oScmd As SousCommande In objCMD.colSousCommandes
+            oScmd.bDeleted = True
+            oScmd.save()
+        Next
+        objCMD.bDeleted = True
+        objCMD.save()
+
+
 
     End Sub
     ''' <summary>

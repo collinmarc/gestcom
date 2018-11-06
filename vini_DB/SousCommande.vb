@@ -1,6 +1,7 @@
 Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Shared
 Imports System.Collections.Generic
+Imports System.Data.OleDb
 
 
 '===================================================================================================================================
@@ -142,7 +143,7 @@ Public Class SousCommande
 
         bResumeOld = m_bResume
         m_bResume = False
-        bReturn = LoadSCMD(pstrCode)
+        bReturn = loadSCMD(pstrCode)
         If bReturn Then
             'Chargement des caractéristiques du Client
             bReturn = oTiers.load()
@@ -446,7 +447,7 @@ Public Class SousCommande
         Dim breturn As Boolean
 
         shared_connect()
-        ncode = getNumeroSousCommandeClient
+        ncode = getNumeroSousCommandeClient()
         shared_disconnect()
         If ncode = -1 Then
             breturn = False
@@ -472,7 +473,7 @@ Public Class SousCommande
         End If
 
         Debug.Assert(id <> 0, "idSousCommande <> 0")
-        bReturn = LoadSCMD()
+        bReturn = loadSCMD()
         If bReturn Then
             'Chargement des caractéristiques du Client
             bReturn = oTiers.load()
@@ -492,21 +493,30 @@ Public Class SousCommande
     '================================================================================
 
     Friend Overrides Function delete() As Boolean
-        Debug.Assert(id <> 0, "idCommande <> 0")
+        Debug.Assert(id <> 0, "idSCommande <> 0")
         Dim bReturn As Boolean
         Dim objLg As LgCommande
-        'La suppression de la sou-commande n'entraine pas de supresssion des lignes (elles restent rattachées à la commande)
-        'Mais l'id de la sous commande est remis à 0
-        For Each objLg In colLignes
-            objLg.idSCmd = 0
-            objLg.bLigneEclatee = False
-        Next
-        bReturn = UPDATEcolLGCMD()  'Mise à Jour de la collection des lignes de sous-commandes
+        '#857 : Les lignes de sous commandes sont maintenant indépendante des lignes de commandes
+        bReturn = deletecolLgSCMD()  'suppression des lignes de sous-commandes
         Debug.Assert(bReturn, getErreur)
         colLignes.clear()
+        m_bcolLgLoaded = False
+        m_bColLgInsertorDelete = False
 
+        'Suppression de la sousCommande
+        bReturn = deleteSCMD()
+
+        'Suppression du Lien entre la commande et les sous-commandes
         If bReturn Then
-            bReturn = deleteSCMD
+            Dim oCmdCLT As CommandeClient
+            oCmdCLT = CommandeClient.createandload(Me.idCommandeClient)
+            oCmdCLT.loadcolLignes()
+            For Each oLg As LgCommande In oCmdCLT.colLignes
+                If oLg.idSCmd = Me.id Then
+                    oLg.idSCmd = 0
+                End If
+            Next
+            oCmdCLT.savecolLignes()
         End If
 
         Return bReturn
@@ -552,10 +562,11 @@ Public Class SousCommande
             objLg.idSCmd = Me.id
             objLg.bLigneEclatee = True
         Next
-        'Mise à jour des lignes de commandes
+        'Mise à jour des lignes de Sous-commandes
         If bReturn Then
-            bReturn = UPDATEcolLGCMD()
+            bReturn = INSERTcolLGCMD()
         End If
+
         Return bReturn
 
     End Function 'insert
@@ -576,7 +587,7 @@ Public Class SousCommande
         Dim objLG As LgCommande
 
         'Mise à jour de la sous-commande
-        bReturn = UpdateSCMD
+        bReturn = updateSCMD()
         Debug.Assert(bReturn, "sous-commande.update" & getErreur())
         If bReturn Then
             For Each objLG In colLignes
@@ -883,7 +894,7 @@ Public Class SousCommande
     End Function 'faxer
     '=======================================================================
     'Fonction : AjouteLigne()
-    'Description : Ajoute une ligne sur une commandeClient
+    'Description : Ajoute une ligne sur une SousCommande
     'Détails    :  
     'Retour : une ligne de commande ou nothing si l'ajout échoue
     '=======================================================================
@@ -895,19 +906,23 @@ Public Class SousCommande
         Debug.Assert(pobjLgCmd.oProduit.idFournisseur = oFournisseur.id, "Founisseur Différents")
 
         Dim oReturn As LgCommande
-        pobjLgCmd.idSCmd = id()
+
+        oReturn = pobjLgCmd.Clone()
+        oReturn.bLigneEclatee = True
+        '        oReturn = pobjLgCmd
+        oReturn.idSCmd = Me.id
         'Ajout du tiers dans la Ligne de commmande (utile pour touver le Tx de commission)
-        pobjLgCmd.idTiers = oTiers.id
+        oReturn.idTiers = oTiers.id
 
         Try
             If p_bCalculPrix Then
-                pobjLgCmd.calculPrixTotal()
+                oReturn.calculPrixTotal()
             End If
-            m_colLignes.Add(pobjLgCmd, CStr(pobjLgCmd.num))
+            m_colLignes.Add(oReturn, CStr(oReturn.num))
             If p_bCalculPrix Then
                 calculPrixTotal()
             End If
-            oReturn = pobjLgCmd
+            m_bColLgInsertorDelete = True
             m_bcolLgLoaded = True
         Catch ex As Exception
             setError("SousCommande.AjouteLigne", "Ajout de ligne impossible key = " & pobjLgCmd.num)
@@ -1171,6 +1186,353 @@ Public Class SousCommande
             Return oClient.rs
         End Get
     End Property
+
+#End Region
+    Public Overrides Function save() As Boolean
+        Dim bReturn As Boolean
+        shared_connect()
+        bReturn = MyBase.Save()
+        If m_bcolLgLoaded Then
+            bReturn = bReturn And savecolLignes()
+        End If
+        shared_disconnect()
+        Return bReturn
+    End Function ' Save
+    '=======================================================================
+    'Fonction : savecolLignes()
+    'Description : Sauvegarde la collection des lignes
+    '               En fonction du paramètre bDeleteInsert
+    '                   Suppression des lignes pour reinsertion (CommandeClient)
+    '                   Update des lignes
+    'Détails    :  
+    'Retour : Boolean
+    '=======================================================================
+    Public Overrides Function savecolLignes() As Boolean
+        Dim bReturn As Boolean
+
+        Debug.Assert(Not m_colLignes Is Nothing, "m_col <> nothing")
+        Debug.Assert(m_bcolLgLoaded, "La collection  doit être chargée au préalable")
+        Debug.Assert(m_id <> 0, "La commande  doit être sauvegardée au préalable")
+        'En mode commandeClient ilfaut supprimer les lignes avant de les recréer pour gérer les suppressions et ajouts de lignes.
+        If m_bColLgInsertorDelete Then
+            'On Supprime la collection avant de la recréer (Commande)
+            bReturn = deletecolLgSCMD()
+            If bReturn Then
+                bReturn = INSERTcolLGSCMD()
+            End If
+            m_bColLgInsertorDelete = False
+        Else
+            'On Met à jour la collection (SousCommande)
+            bReturn = UPDATEcolLGSCMD()
+        End If
+        Debug.Assert(bReturn, "Commande.savecolLignes:" & getErreur())
+        Return bReturn
+    End Function
+#Region "Methode Persist"
+    Protected Function INSERTcolLGSCMD() As Boolean
+        Dim objCMD As Commande
+        Dim bReturn As Boolean
+        Dim objLgCMD As LgCommande
+
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Le Client doit être Sauvegardé")
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.SSCOMMANDE _
+                        , "Objet de type SousCommande requis")
+        objCMD = Me
+        Debug.Assert(Not objCMD.colLignes Is Nothing, "ColLignes is Nothing")
+
+
+        Dim sqlString As String = "INSERT INTO LIGNE_COMMANDE (" & _
+                                    "LGCM_NUM," & _
+                                    "LGCM_CODE," & _
+                                    "LGCM_CMD_ID," & _
+                                    "LGCM_SCMD_ID," & _
+                                    "LGCM_PRD_ID," & _
+                                    "LGCM_QTE_COMMANDE," & _
+                                    "LGCM_QTE_LIV," & _
+                                    "LGCM_QTE_FACT," & _
+                                    "LGCM_PRIX_UNITAIRE," & _
+                                    "LGCM_PRIX_HT," & _
+                                    "LGCM_PRIX_TTC," & _
+                                    "LGCM_BGRATUIT," & _
+                                    "LGCM_BECLATEE, " & _
+                                    "LGCM_POIDS, " & _
+                                    "LGCM_QTE_COLIS, " & _
+                                    "LGCM_TXCOMM, " & _
+                                    "LGCM_MTCOMM, " & _
+                                    "LGCM_BA_ID " & _
+                                    ") VALUES ( " & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "? ," & _
+                                    "?" & _
+                                  " )"
+        Dim objCommand As OleDbCommand
+        Dim objCommand2 As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        '        Dim objParam As OleDbParameter
+
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+        m_dbconn.BeginTransaction()
+        objCommand.Transaction = m_dbconn.transaction
+        'Commande de lecture de l'id
+        objCommand2 = New OleDbCommand("SELECT MAX(LGCM_ID) FROM LIGNE_COMMANDE", m_dbconn.Connection)
+        objCommand2.Transaction = m_dbconn.transaction
+
+
+        bReturn = True
+        Dim oParam1 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+        Dim oParam2 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.VarChar)
+        Dim oParamIDCmd As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+        oParamIDCmd.IsNullable = True
+        Dim oParamIDSCMD As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+        oParamIDSCMD.IsNullable = True
+        Dim oParam5 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+        Dim oParam6 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam7 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam8 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam9 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam10 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam11 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam12 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Boolean)
+        Dim oParam13 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Boolean)
+        Dim oParam14 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParam15 As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Double)
+        Dim oParamTxComm As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Decimal)
+        Dim oParamMtComm As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Decimal)
+        Dim oParamIDBa As OleDbParameter = objCommand.Parameters.AddWithValue("?", OleDbType.Integer)
+        oParamIDBa.IsNullable = True
+        For Each objLgCMD In objCMD.colLignes
+            Try
+                If m_typedonnee = vncEnums.vncTypeDonnee.SSCOMMANDE Then
+                    objLgCMD.idBA = 0
+                    objLgCMD.idCmd = 0
+                    objLgCMD.idSCmd = id
+                End If
+
+                oParam1.Value = objLgCMD.num
+                oParam2.Value = (objCMD.code & objLgCMD.num)
+                If objLgCMD.idCmd = 0 Or objLgCMD.idCmd = -1 Then
+                    oParamIDCmd.Value = DBNull.Value
+                Else
+                    oParamIDCmd.Value = (objLgCMD.idCmd)
+                End If
+                If objLgCMD.idSCmd = 0 Or objLgCMD.idSCmd = -1 Then
+                    oParamIDSCMD.Value = DBNull.Value
+                Else
+                    oParamIDSCMD.Value = (objLgCMD.idSCmd)
+                End If
+                oParam5.Value = (objLgCMD.oProduit.id)
+                oParam6.Value = (CDbl(objLgCMD.qteCommande))
+                oParam7.Value = (CDbl(objLgCMD.qteLiv))
+                oParam8.Value = (CDbl(objLgCMD.qteFact))
+                oParam9.Value = (CDbl(objLgCMD.prixU))
+                oParam10.Value = (CDbl(objLgCMD.prixHT))
+                oParam11.Value = (CDbl(objLgCMD.prixTTC))
+                oParam12.Value = (objLgCMD.bGratuit)
+                oParam13.Value = (objLgCMD.bLigneEclatee)
+                oParam14.Value = (CDbl(objLgCMD.poids))
+                oParam15.Value = (CDbl(objLgCMD.qteColis))
+                oParamTxComm.Value = objLgCMD.TxComm
+                oParamMtComm.Value = objLgCMD.MtComm
+                If objLgCMD.idBA = 0 Or objLgCMD.idBA = -1 Then
+                    oParamIDBa.Value = DBNull.Value
+                Else
+                    oParamIDBa.Value = (objLgCMD.idBA)
+                End If
+                objCommand.ExecuteNonQuery()
+                objRS = objCommand2.ExecuteReader
+                If objRS.Read() Then
+                    objLgCMD.setid(objRS.GetInt32(0))
+                End If
+                cleanErreur()
+                objRS.Close()
+            Catch ex As Exception
+                setError("InsertcolLGSCmd", ex.ToString())
+                bReturn = False
+                Exit For
+            End Try
+        Next
+        If bReturn Then
+            m_dbconn.transaction.Commit()
+        Else
+            m_dbconn.transaction.Rollback()
+        End If
+
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function ' insertcolLGSCMD
+    Protected Function UPDATEcolLGSCMD() As Boolean
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "La Commande.id  <> 0")
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.SSCOMMANDE, "Objet de type SousCommande requis")
+
+
+        Dim sqlString As String = "UPDATE LIGNE_COMMANDE SET " & _
+                                    " LGCM_CMD_ID = ? ," & _
+                                    " LGCM_SCMD_ID= ? ," & _
+                                    " LGCM_BA_ID= ? ," & _
+                                    " LGCM_NUM= ? ," & _
+                                    " LGCM_PRD_ID = ? ," & _
+                                    " LGCM_QTE_COMMANDE = ? ," & _
+                                    " LGCM_QTE_LIV = ? ," & _
+                                    " LGCM_QTE_FACT = ? ," & _
+                                    " LGCM_PRIX_UNITAIRE = ? ," & _
+                                    " LGCM_PRIX_HT = ? ," & _
+                                    " LGCM_PRIX_TTC= ? ," & _
+                                    " LGCM_POIDS = ? , " & _
+                                    " LGCM_QTE_COLIS = ? , " & _
+                                    " LGCM_TXCOMM = ? , " & _
+                                    " LGCM_MTCOMM = ? , " & _
+                                    " LGCM_BGRATUIT = ? , " & _
+                                    " LGCM_BECLATEE = ?" & _
+                                    " WHERE " & _
+                                    " LGCM_ID = ?"
+        Dim objCommand As OleDbCommand
+        Dim objCMD As Commande
+        '        Dim objParam As OleDbParameter
+        Dim bReturn As Boolean
+        Dim objlgCMD As LgCommande
+
+        objCMD = CType(Me, Commande)
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+        m_dbconn.BeginTransaction()
+        objCommand.Transaction = m_dbconn.transaction
+
+
+
+        bReturn = True
+        Dim oParamIDCMD As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        Dim oParamIDSCMD As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        Dim oParamIDBA As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        Dim oParam4 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        Dim oParam5 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        Dim oParam6 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam7 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam8 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam9 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam10 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam11 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam12 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        Dim oParam13 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        'Taux de commission
+        Dim oParamTxComm As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+        'Montant de commssion
+        Dim oParamMtcomm As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Decimal)
+
+        Dim oParam14 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Boolean)
+        Dim oParam15 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Boolean)
+        Dim oParam16 As System.Data.OleDb.OleDbParameter = objCommand.Parameters.Add("?", OleDbType.Integer)
+        For Each objlgCMD In objCMD.colLignes
+            Try
+                If (objlgCMD.idCmd = 0) Then
+                    oParamIDCMD.Value = DBNull.Value
+                Else
+                    oParamIDCMD.Value = (objlgCMD.idCmd)
+                End If
+                If objlgCMD.idSCmd = 0 Then
+                    oParamIDSCMD.Value = DBNull.Value
+                Else
+                    oParamIDSCMD.Value = (objlgCMD.idSCmd)
+                End If
+                If (objlgCMD.idBA = 0) Then
+                    oParamIDBA.Value = DBNull.Value
+                Else
+                    oParamIDBA.Value = (objlgCMD.idBA)
+                End If
+
+                oParam4.Value = (objlgCMD.num)
+                oParam5.Value = (objlgCMD.oProduit.id)
+                oParam6.Value = (objlgCMD.qteCommande)
+                oParam7.Value = (objlgCMD.qteLiv)
+                oParam8.Value = (objlgCMD.qteFact)
+                oParam9.Value = (objlgCMD.prixU)
+                oParam10.Value = (objlgCMD.prixHT)
+                oParam11.Value = (objlgCMD.prixTTC)
+                oParam12.Value = (objlgCMD.poids)
+                oParam13.Value = (objlgCMD.qteColis)
+                oParam14.Value = (objlgCMD.bGratuit)
+                oParam15.Value = (objlgCMD.bLigneEclatee)
+                oParam16.Value = (objlgCMD.id)
+                oParamTxComm.Value = (objlgCMD.TxComm)
+                oParamMtcomm.Value = (objlgCMD.MtComm)
+                objCommand.ExecuteNonQuery()
+                'objRS.Close()
+            Catch ex As Exception
+                setError("UpdatecolLGSCMD", ex.ToString())
+                bReturn = False
+                Exit For
+            End Try
+        Next objlgCMD
+
+        If bReturn Then
+            m_dbconn.transaction.Commit()
+        Else
+            m_dbconn.transaction.Rollback()
+        End If
+
+        Debug.Assert(bReturn, getErreur())
+        Return bReturn
+    End Function ' UPDATEcolLGCMD
+    '==========================================================================
+    'Methode : deletecolLGCMD
+    'Description : Suppression des lignes d'une commande
+    '               la clé de destrcution est choisie en fonction de la classe de l'objet
+    Protected Function deletecolLgSCMD() As Boolean
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+        Debug.Assert(m_id <> 0, "Id <> 0")
+        Debug.Assert(m_typedonnee = vncEnums.vncTypeDonnee.SSCOMMANDE _
+                        , "Objet de type SousCommande requis")
+
+
+        Dim sqlString As String = "DELETE FROM LIGNE_COMMANDE "
+        Dim strClauseWhereSCMD As String = " WHERE LIGNE_COMMANDE.LGCM_SCMD_ID = ? "
+        Dim objCMD As Commande
+        Dim objCommand As OleDbCommand
+        '        Dim objParam As OleDbParameter
+        Dim bReturn As Boolean
+
+        'Clause where en Fonction du type de l'objet courant
+        sqlString = sqlString & strClauseWhereSCMD
+
+        objCMD = CType(Me, Commande)
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        CreateParameterP_ID(objCommand)
+        Try
+            objCommand.ExecuteNonQuery()
+
+            bReturn = True
+
+        Catch ex As Exception
+            setError("DeletecolLGSCMD", ex.ToString())
+            bReturn = False
+        End Try
+        Debug.Assert(bReturn, "DeletecolLGSCMD" & getErreur())
+        Return bReturn
+    End Function 'DeletecolLGSCMD
 
 #End Region
 

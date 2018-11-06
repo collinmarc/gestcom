@@ -39,7 +39,7 @@ Imports CrystalDecisions.CrystalReports.Engine
 Imports System.Collections.Generic
 Public MustInherit Class Persist
     Inherits racine
-    Private Shared WithEvents m_dbconn As dbConnection = New dbConnection
+    Protected Shared WithEvents m_dbconn As dbConnection = New dbConnection
     Private Shared m_ConnectionString As String
     Private Shared m_ReportCnxUser As String
     Private Shared m_ReportCnxPassword As String
@@ -413,7 +413,7 @@ Public MustInherit Class Persist
             id = m_id
         End Get
     End Property
-    Protected Sub setid(ByVal Value As Integer)
+    Protected Friend Sub setid(ByVal Value As Integer)
         m_id = Value
     End Sub
     Public ReadOnly Property typeDonnee() As vncTypeDonnee
@@ -3617,7 +3617,7 @@ Public MustInherit Class Persist
     '============
     'TABLE CLIENT
     '============
-    Private Sub CreateParameterP_ID(ByVal objCommand As OleDbCommand)
+    Protected Friend Sub CreateParameterP_ID(ByVal objCommand As OleDbCommand)
         '        Dim objParam As OleDbParameter
         objCommand.Parameters.AddWithValue("?", m_id)
     End Sub

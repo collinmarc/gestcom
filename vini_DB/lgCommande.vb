@@ -25,8 +25,11 @@
 '
 '===================================================================================================================================
 Imports System.Collections.Generic
+Imports System.IO
+Imports System.Xml.Serialization
 Public Class LgCommande
     Inherits Persist
+    Implements ICloneable
 
     Private m_num As Integer                'Numéro d'ordre de ligne
     Private m_oProduit As Produit           'Produit Commandé
@@ -51,6 +54,9 @@ Public Class LgCommande
     Private m_idTiers As Integer 'Identifiant du Tiers
 
 #Region "Accesseurs"
+    Protected Sub New()
+
+    End Sub
     Public Sub New(ByVal pidCommande As Integer, Optional ByVal pidScmd As Integer = 0, Optional ByVal pidBA As Integer = 0)
         m_typedonnee = vncEnums.vncTypeDonnee.LGCOMMANDE
         m_idSCmd = 0
@@ -794,7 +800,25 @@ Public Class LgCommande
         Return bReturn
     End Function 'controleStockDispo
 
+    Function Clone() As Object Implements ICloneable.Clone
+        Dim oSer As New XmlSerializer(GetType(LgCommande))
+        Dim ostrW As StringWriter
 
+        ostrW = New StringWriter()
+
+        Me.oProduit.load(oProduit.id)
+        oSer.Serialize(ostrW, Me)
+        ostrW.Close()
+
+        Dim strR As New StringReader(ostrW.ToString())
+
+        Dim oLg As LgCommande
+        oLg = TryCast(oSer.Deserialize(strR), LgCommande)
+        oLg.majBooleenAlaFinDuNew()
+        oLg.setid(0)
+        oLg.oProduit.load(Me.oProduit.id) ' Rechargelment du produit
+        Return oLg
+    End Function
 
 
 End Class

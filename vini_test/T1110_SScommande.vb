@@ -348,6 +348,7 @@ Imports System.IO
 
         ''Ajout d' 1 ligne de SousCommande
         objLgCMD1 = objSCMD.AjouteLigne(objLgCMD1)
+        Assert.AreEqual(objSCMD.colLignes.Count, 1, "colLignes.count ")
         Assert.IsTrue(Not objLgCMD1 Is Nothing, "Ajout OPRD1")
         Assert.AreEqual(objLgCMD1.num, objSCMD.colLignes.Count * 10, "Num1")
         Assert.IsTrue(objSCMD.totalTTC = objLgCMD1.prixTTC, "Calculm du prix Total")
@@ -358,7 +359,7 @@ Imports System.IO
 
         ''Rechargement de la SousCommande et de ses lignes
         nid = objSCMD.id
-        objSCMD = New SousCommande(m_oCmd, m_oFourn)
+        objSCMD = SousCommande.createandload(nid)
         Assert.IsTrue(objSCMD.load(nid), "ObjSCMD.load")
         Assert.IsTrue(objSCMD.loadcolLignes(), "objSCMD.loadColLignes")
         Assert.AreEqual(objSCMD.colLignes.Count, 1, "colLignes.count ")
@@ -522,7 +523,6 @@ Imports System.IO
         '1)dans la Commande (Les lignes sont éclatées et portent la référence de la sous commande
         For Each objLG In oCMD.colLignes
             Assert.IsTrue(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
-            Assert.IsTrue(objLG.idSCmd <> 0, "objLG.idSCMD= 0")
         Next objLG
         '2) dans chaque Sous Commandes
         ' Les Lignes sont éclatées et portent la référence de la sous commande
@@ -541,7 +541,6 @@ Imports System.IO
         '1)dans la Commande
         For Each objLG In oCMD.colLignes
             Assert.IsTrue(objLG.bLigneEclatee, "objLG.bLigneEclatee = False")
-            Assert.IsTrue(objLG.idSCmd <> 0, "objLG.idSCMD= 0")
         Next objLG
         '2) dans chaque Sous Commandes
         For Each objSCMD In oCMD.colSousCommandes
@@ -915,11 +914,17 @@ Imports System.IO
         Dim oIntermediaire As Client
 
         oIntermediaire = New Client("INTER", "Intermediaire")
+        oIntermediaire.CodeTarif = "A"
         oIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
         oIntermediaire.save()
 
-        'Ajout de 2 Lignes à la commande
+        m_oProduit.TarifA = 10.2
+        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.save()
+
+        'Ajout d'une Ligne à la commande
         m_oCmd.Origine = Dossier.HOBIVIN
+
         oLgCmd = m_oCmd.AjouteLigne("10", m_oProduit, 10, 15.55)
         oLgCmd.qteLiv = 9
         Assert.IsTrue(m_oCmd.save, "Sauvegarde de la commande client Etat = Eclater")
@@ -1086,7 +1091,7 @@ Imports System.IO
                 n = n + 1
                 Assert.AreEqual(Trim(m_oProduit.libContenant), tabCSV(n))
                 n = n + 1
-                Assert.AreEqual(CDec(15.55), CDec(tabCSV(n)))
+                Assert.AreEqual(m_oProduit.TarifA, CDec(tabCSV(n)))
                 n = n + 1
                 Assert.AreEqual("", tabCSV(n))
                 n = n + 1
@@ -1812,6 +1817,89 @@ Imports System.IO
         oFRN2.bDeleted = True
         oFRN2.Save()
 
+
+    End Sub
+
+    ''' <summary>
+    ''' #857: les BAF des commandes HBV avec ds produits VNC doivent être générés avec le tarif GESTCOM et non le tarif de la commande
+    ''' car ce tarif est issu du site internet
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestCategory("V5.9.6")>
+    <TestMethod()> Public Sub T593_TarifBAFCmdHBVPRDVNC()
+        Dim objSCMD As SousCommande
+        Dim oFRNVNC As Fournisseur
+        Dim oPRDVNC As Produit
+        Dim oCMD As CommandeClient
+
+        Dim oCltIntermediaire As Client
+        oCltIntermediaire = New Client("CLTINTER", "ClientIntermédiaire")
+        oCltIntermediaire.setTypeIntermediaire(Dossier.HOBIVIN)
+        oCltIntermediaire.CodeTarif = "A"
+        oCltIntermediaire.save()
+
+
+        oFRNVNC = New Fournisseur("FRNVNC" & Now(), "Fournisseur Vinicom")
+        oFRNVNC.bExportInternet = vncTypeExportScmd.vncExportInternet
+        Assert.IsTrue(oFRNVNC.Save())
+
+        Dim oTx As New TauxComm(oFRNVNC, m_oClient.codeTypeClient, 12.0)
+        Assert.IsTrue(oTx.save())
+        oTx = New TauxComm(oFRNVNC, oCltIntermediaire.codeTypeClient, 25.0)
+        Assert.IsTrue(oTx.save())
+
+        oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
+        oPRDVNC.Dossier = Dossier.VINICOM
+        oPRDVNC.TarifA = 10
+        oPRDVNC.TarifB = 11
+        oPRDVNC.TarifC = 12
+        Assert.IsTrue(oPRDVNC.save())
+
+        'Création d'une commande client origine "HOBIVIN" 
+        oCMD = New CommandeClient(m_oClient)
+        oCMD.Origine = Dossier.HOBIVIN
+        oCMD.save()
+        'Ajout de 20 produits VINICOM a 22 € (prix public)
+        oCMD.AjouteLigne("20", oPRDVNC, 20, 22)
+
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        'Génération des sous-commandes avec un intermédiaire
+        Assert.IsTrue(oCMD.generationSousCommande(), "OCMD.EclatementCommande()" & racine.getErreur())
+        Assert.IsTrue(oCMD.save(), "Sauvegarde de la Commande" & racine.getErreur())
+
+        Assert.AreEqual(oCMD.colSousCommandes.Count, 1, "OCMD.colSousCommande.Count" & oCMD.colSousCommandes.toString())
+
+        'Vérification de la sous-commande 
+        objSCMD = oCMD.colSousCommandes.Item(1)
+        Assert.IsTrue(objSCMD.Save(), "Sauvegarde de la Sous-Commande" & racine.getErreur())
+
+        'Rechargement des Objets
+        oCMD = CommandeClient.createandload(oCMD.id)
+        oCMD.loadcolLignes()
+
+        objSCMD = SousCommande.createandload(objSCMD.id)
+        objSCMD.loadcolLignes()
+
+        Assert.AreEqual(1, objSCMD.colLignes.Count)
+        Dim olg As LgCommande
+        olg = objSCMD.colLignes(1)
+        'Tarif de la sousCommande
+        Assert.AreEqual(oPRDVNC.TarifA, olg.prixU)
+        'Tarif de la commande
+        olg = oCMD.colLignes(1)
+        Assert.AreEqual(22D, olg.prixU)
+
+        oCMD.bDeleted = True
+        oCMD.save()
+
+
+
+        oPRDVNC.bDeleted = True
+        oFRNVNC.Save()
+
+        oFRNVNC.bDeleted = True
+        oFRNVNC.Save()
 
     End Sub
 

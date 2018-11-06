@@ -662,7 +662,13 @@ Public Class CommandeClient
                     If objLGCMD.oProduit.idFournisseur = idFRN And objLGCMD.oProduit.Dossier = strDossierProduit Then
                         'La Ligne correspond au fournisseur courant et au dossier courant
                         ' On l'ajoute à la sous-commande courante 
-                        oSCMD.AjouteLigne(objLGCMD, True)
+                        Dim LgSCMD As LgCommande = oSCMD.AjouteLigne(objLGCMD, True)
+                        If Me.Origine = Dossier.HOBIVIN And LgSCMD.oProduit.Dossier = Dossier.VINICOM And pIntermediaire IsNot Nothing Then
+                            '#857 : Modification du prix on prend le prix GESTCOM et non celui de la commande
+                            LgSCMD.prixU = objLGCMD.oProduit.Tarif(pIntermediaire.CodeTarif)
+                            LgSCMD.calculPrixTotal()
+                            oSCMD.calculPrixTotal()
+                        End If
                         'On la marque comme traitée
                         objLGCMD.bLigneEclatee = True
                         objLGCMD.idSCmd = oSCMD.id ' 0 car la sous commande n'est pas encore sauvegardée

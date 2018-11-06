@@ -524,7 +524,6 @@ Public Class Produit
     End Property
     Public Property nomFournisseur() As String
         Get
-            Debug.Assert(Not m_bResume, "Objet de type resumé")
             Return m_nomFournisseur
         End Get
         Set(ByVal Value As String)

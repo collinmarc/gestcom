@@ -1408,6 +1408,36 @@ Imports System.IO
         Next
 
     End Sub
+    ''' <summary>
+    ''' Test Methode Clone sur la Ligne de commande
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestCategory("5.9.6")>
+    <TestMethod()>
+    Public Sub TCloneLgCommande()
+        Dim objLg As LgCommande
+
+        objLg = New LgCommande(10)
+        objLg.oProduit = m_oProduit
+        objLg.prixU = 40
+        objLg.qteCommande = 50
+
+        Dim objLg2 As LgCommande
+        objLg2 = objLg.Clone()
+
+        Assert.AreEqual(objLg.idCmd, objLg2.idCmd)
+        Assert.AreEqual(objLg.oProduit.code, objLg2.oProduit.code)
+        Assert.AreEqual(objLg.idCmd, objLg2.idCmd)
+        Assert.AreEqual(objLg.prixU, objLg2.prixU)
+        Assert.AreEqual(objLg.qteCommande, objLg2.qteCommande)
+
+        objLg2.prixU = 20
+        Assert.AreNotEqual(objLg.prixU, objLg2.prixU)
+        Assert.AreEqual(40D, objLg.prixU)
+        Assert.AreEqual(20D, objLg2.prixU)
+
+
+    End Sub
 
 End Class
 

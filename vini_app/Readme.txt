@@ -1,4 +1,8 @@
-﻿Version 5.9.6.2
+﻿Version 5.9.6.3
+Date 
+#857 : 	Commande HBV : les BAF sont à générer avec les prix Gestcom
+
+Version 5.9.6.2
 date 
 #xxx : RecapColisage par jour
 
