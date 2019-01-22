@@ -438,6 +438,10 @@ Public Class frmGeneFactColisage
         Dim col As Collection
         Dim bReturn As Boolean
         Dim oFRN As Fournisseur
+        If tbCodeFournisseur.Text = "" Then
+            MsgBox("Saisie d'un code fournisseur Obligatoire")
+            Return False
+        End If
 
         debAffiche()
         setcursorWait()

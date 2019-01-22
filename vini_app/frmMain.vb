@@ -212,10 +212,10 @@ Friend Class frmMain
         Me.mnuGC_LstBonAppro = New System.Windows.Forms.MenuItem()
         Me.mnuGC_importCmd = New System.Windows.Forms.MenuItem()
         Me.MenuItem7 = New System.Windows.Forms.MenuItem()
-        Me.mnuEclatementCommandes = New System.Windows.Forms.MenuItem()
-        Me.mnuMAJLivraisonCommande = New System.Windows.Forms.MenuItem()
         Me.mnuVerifInfosLivraisons = New System.Windows.Forms.MenuItem()
+        Me.mnuEclatementCommandes = New System.Windows.Forms.MenuItem()
         Me.mnuExportQuadra = New System.Windows.Forms.MenuItem()
+        Me.mnuMAJLivraisonCommande = New System.Windows.Forms.MenuItem()
         Me.MenuItem10 = New System.Windows.Forms.MenuItem()
         Me.mnuGC_EtatStock = New System.Windows.Forms.MenuItem()
         Me.mnuGC_MouvementArticle = New System.Windows.Forms.MenuItem()
@@ -538,25 +538,25 @@ Friend Class frmMain
         Me.MenuItem7.Index = 5
         Me.MenuItem7.Text = "-"
         '
-        'mnuEclatementCommandes
-        '
-        Me.mnuEclatementCommandes.Index = 7
-        Me.mnuEclatementCommandes.Text = "Eclatement des Commandes"
-        '
-        'mnuMAJLivraisonCommande
-        '
-        Me.mnuMAJLivraisonCommande.Index = 9
-        Me.mnuMAJLivraisonCommande.Text = "Mise à jour Infos livaison"
-        '
         'mnuVerifInfosLivraisons
         '
         Me.mnuVerifInfosLivraisons.Index = 6
         Me.mnuVerifInfosLivraisons.Text = "Vérification des informations de livraisons"
         '
+        'mnuEclatementCommandes
+        '
+        Me.mnuEclatementCommandes.Index = 7
+        Me.mnuEclatementCommandes.Text = "Eclatement des Commandes"
+        '
         'mnuExportQuadra
         '
         Me.mnuExportQuadra.Index = 8
         Me.mnuExportQuadra.Text = "ExportQuadra"
+        '
+        'mnuMAJLivraisonCommande
+        '
+        Me.mnuMAJLivraisonCommande.Index = 9
+        Me.mnuMAJLivraisonCommande.Text = "Mise à jour Infos livaison"
         '
         'MenuItem10
         '
@@ -1151,7 +1151,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 528)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 508)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1178,7 +1178,7 @@ Friend Class frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(890, 550)
+        Me.ClientSize = New System.Drawing.Size(890, 530)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default

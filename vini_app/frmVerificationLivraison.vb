@@ -1,10 +1,7 @@
 Imports vini_DB
 Imports System.ComponentModel
 
-Public Class UserState
-    Public nNum As Integer
-    Public strMsg As String
-End Class
+
 Public Class frmVerificationLivraison
     Inherits FrmDonBase
     Protected m_lstCommandes As List(Of CommandeClient)
@@ -521,4 +518,8 @@ Public Class frmVerificationLivraison
         '        Me.Cursor = Cursors.WaitCursor
         VerificationInfosLivraison(Me.BackgroundWorker1, rbFTP.Checked, ckAfficherCmdOK.Checked, tbFilePath.Text)
     End Sub
+End Class
+Public Class UserState
+    Public nNum As Integer
+    Public strMsg As String
 End Class

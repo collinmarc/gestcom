@@ -32,6 +32,10 @@ Public Class frmProduit
     Friend WithEvents m_bsrcDossier As BindingSource
     Friend WithEvents LogoList As ImageList
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents dtpStockAu As System.Windows.Forms.DateTimePicker
+    Friend WithEvents btnCalcStockAu As System.Windows.Forms.Button
+    Friend WithEvents Label25 As System.Windows.Forms.Label
+    Friend WithEvents tbStockAu As System.Windows.Forms.TextBox
     Private m_bAjoutmvt As Boolean
 
 #Region "Code généré par le Concepteur Windows Form "
@@ -107,8 +111,8 @@ Public Class frmProduit
     Friend WithEvents tbmvtCommentaiire As System.Windows.Forms.RichTextBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProduit))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tbDesignation = New System.Windows.Forms.TextBox()
         Me.m_bsrcProduit = New System.Windows.Forms.BindingSource(Me.components)
         Me.tbCode = New System.Windows.Forms.TextBox()
@@ -182,6 +186,10 @@ Public Class frmProduit
         Me.m_bsrcDossier = New System.Windows.Forms.BindingSource(Me.components)
         Me.LogoList = New System.Windows.Forms.ImageList(Me.components)
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.dtpStockAu = New System.Windows.Forms.DateTimePicker()
+        Me.btnCalcStockAu = New System.Windows.Forms.Button()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.tbStockAu = New System.Windows.Forms.TextBox()
         CType(Me.m_bsrcProduit, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcCouleur, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcRegion, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -198,18 +206,12 @@ Public Class frmProduit
         'tbDesignation
         '
         Me.tbDesignation.AcceptsReturn = True
-        Me.tbDesignation.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbDesignation, "tbDesignation")
         Me.tbDesignation.BackColor = System.Drawing.SystemColors.Window
         Me.tbDesignation.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbDesignation.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "nom", True))
         Me.tbDesignation.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.tbDesignation.Location = New System.Drawing.Point(104, 56)
-        Me.tbDesignation.MaxLength = 0
         Me.tbDesignation.Name = "tbDesignation"
-        Me.tbDesignation.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.tbDesignation.Size = New System.Drawing.Size(590, 20)
-        Me.tbDesignation.TabIndex = 7
         '
         'm_bsrcProduit
         '
@@ -222,36 +224,24 @@ Public Class frmProduit
         Me.tbCode.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbCode.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "code", True))
         Me.tbCode.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.tbCode.Location = New System.Drawing.Point(104, 8)
-        Me.tbCode.MaxLength = 0
+        resources.ApplyResources(Me.tbCode, "tbCode")
         Me.tbCode.Name = "tbCode"
-        Me.tbCode.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.tbCode.Size = New System.Drawing.Size(128, 20)
-        Me.tbCode.TabIndex = 0
         '
         'Label6
         '
         Me.Label6.BackColor = System.Drawing.SystemColors.Control
         Me.Label6.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label6.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label6.Location = New System.Drawing.Point(8, 56)
+        resources.ApplyResources(Me.Label6, "Label6")
         Me.Label6.Name = "Label6"
-        Me.Label6.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label6.Size = New System.Drawing.Size(81, 17)
-        Me.Label6.TabIndex = 16
-        Me.Label6.Text = "Désignation"
         '
         'Label2
         '
         Me.Label2.BackColor = System.Drawing.SystemColors.Control
         Me.Label2.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label2.Location = New System.Drawing.Point(8, 8)
+        resources.ApplyResources(Me.Label2, "Label2")
         Me.Label2.Name = "Label2"
-        Me.Label2.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label2.Size = New System.Drawing.Size(57, 17)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Code"
         '
         'tbMotDirecteur
         '
@@ -260,53 +250,34 @@ Public Class frmProduit
         Me.tbMotDirecteur.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbMotDirecteur.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "motcle", True))
         Me.tbMotDirecteur.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.tbMotDirecteur.Location = New System.Drawing.Point(312, 8)
-        Me.tbMotDirecteur.MaxLength = 0
+        resources.ApplyResources(Me.tbMotDirecteur, "tbMotDirecteur")
         Me.tbMotDirecteur.Name = "tbMotDirecteur"
-        Me.tbMotDirecteur.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.tbMotDirecteur.Size = New System.Drawing.Size(104, 20)
-        Me.tbMotDirecteur.TabIndex = 1
         '
         'Label5
         '
         Me.Label5.BackColor = System.Drawing.SystemColors.Control
         Me.Label5.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label5.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label5.Location = New System.Drawing.Point(240, 8)
+        resources.ApplyResources(Me.Label5, "Label5")
         Me.Label5.Name = "Label5"
-        Me.Label5.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label5.Size = New System.Drawing.Size(64, 17)
-        Me.Label5.TabIndex = 19
-        Me.Label5.Text = "Mot clé"
         '
         'tbMillesime
         '
         Me.tbMillesime.AcceptsReturn = True
-        Me.tbMillesime.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbMillesime, "tbMillesime")
         Me.tbMillesime.BackColor = System.Drawing.SystemColors.Window
         Me.tbMillesime.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbMillesime.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "millesime", True))
         Me.tbMillesime.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.tbMillesime.Location = New System.Drawing.Point(854, 56)
-        Me.tbMillesime.MaxLength = 0
         Me.tbMillesime.Name = "tbMillesime"
-        Me.tbMillesime.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.tbMillesime.Size = New System.Drawing.Size(48, 20)
-        Me.tbMillesime.TabIndex = 8
-        Me.tbMillesime.Text = "0"
         '
         'Label7
         '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.Label7, "Label7")
         Me.Label7.BackColor = System.Drawing.SystemColors.Control
         Me.Label7.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label7.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label7.Location = New System.Drawing.Point(710, 56)
         Me.Label7.Name = "Label7"
-        Me.Label7.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label7.Size = New System.Drawing.Size(56, 17)
-        Me.Label7.TabIndex = 23
-        Me.Label7.Text = "Millésime"
         '
         'cboCouleur
         '
@@ -317,11 +288,8 @@ Public Class frmProduit
         Me.cboCouleur.DisplayMember = "valeur"
         Me.cboCouleur.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboCouleur.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.cboCouleur.Location = New System.Drawing.Point(312, 32)
+        resources.ApplyResources(Me.cboCouleur, "cboCouleur")
         Me.cboCouleur.Name = "cboCouleur"
-        Me.cboCouleur.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cboCouleur.Size = New System.Drawing.Size(104, 21)
-        Me.cboCouleur.TabIndex = 4
         Me.cboCouleur.ValueMember = "id"
         '
         'm_bsrcCouleur
@@ -337,11 +305,8 @@ Public Class frmProduit
         Me.cboRegion.DisplayMember = "valeur"
         Me.cboRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboRegion.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.cboRegion.Location = New System.Drawing.Point(104, 32)
+        resources.ApplyResources(Me.cboRegion, "cboRegion")
         Me.cboRegion.Name = "cboRegion"
-        Me.cboRegion.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cboRegion.Size = New System.Drawing.Size(129, 21)
-        Me.cboRegion.TabIndex = 3
         Me.cboRegion.ValueMember = "id"
         '
         'm_bsrcRegion
@@ -353,24 +318,16 @@ Public Class frmProduit
         Me.Label4.BackColor = System.Drawing.SystemColors.Control
         Me.Label4.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label4.Location = New System.Drawing.Point(240, 32)
+        resources.ApplyResources(Me.Label4, "Label4")
         Me.Label4.Name = "Label4"
-        Me.Label4.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label4.Size = New System.Drawing.Size(64, 17)
-        Me.Label4.TabIndex = 32
-        Me.Label4.Text = "Couleur"
         '
         'Label3
         '
         Me.Label3.BackColor = System.Drawing.SystemColors.Control
         Me.Label3.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label3.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label3.Location = New System.Drawing.Point(8, 32)
+        resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
-        Me.Label3.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label3.Size = New System.Drawing.Size(64, 17)
-        Me.Label3.TabIndex = 30
-        Me.Label3.Text = "Région"
         '
         'cboContenant
         '
@@ -381,11 +338,8 @@ Public Class frmProduit
         Me.cboContenant.DisplayMember = "libelle"
         Me.cboContenant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboContenant.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.cboContenant.Location = New System.Drawing.Point(464, 32)
+        resources.ApplyResources(Me.cboContenant, "cboContenant")
         Me.cboContenant.Name = "cboContenant"
-        Me.cboContenant.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.cboContenant.Size = New System.Drawing.Size(200, 21)
-        Me.cboContenant.TabIndex = 5
         Me.cboContenant.ValueMember = "id"
         '
         'm_bsrcContenant
@@ -397,96 +351,61 @@ Public Class frmProduit
         Me.Label8.BackColor = System.Drawing.SystemColors.Control
         Me.Label8.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label8.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label8.Location = New System.Drawing.Point(424, 32)
+        resources.ApplyResources(Me.Label8, "Label8")
         Me.Label8.Name = "Label8"
-        Me.Label8.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Label8.Size = New System.Drawing.Size(32, 17)
-        Me.Label8.TabIndex = 35
-        Me.Label8.Text = "Cont"
         '
         'liNomFournisseur
         '
-        Me.liNomFournisseur.Location = New System.Drawing.Point(400, 88)
+        resources.ApplyResources(Me.liNomFournisseur, "liNomFournisseur")
         Me.liNomFournisseur.Name = "liNomFournisseur"
-        Me.liNomFournisseur.Size = New System.Drawing.Size(264, 52)
-        Me.liNomFournisseur.TabIndex = 11
         Me.liNomFournisseur.TabStop = True
-        Me.liNomFournisseur.Text = "NomFournisseur"
         '
         'cbRechercher
         '
-        Me.cbRechercher.Location = New System.Drawing.Point(216, 88)
+        resources.ApplyResources(Me.cbRechercher, "cbRechercher")
         Me.cbRechercher.Name = "cbRechercher"
-        Me.cbRechercher.Size = New System.Drawing.Size(72, 24)
-        Me.cbRechercher.TabIndex = 10
-        Me.cbRechercher.Text = "Rechercher"
         '
         'tbCodeFourn
         '
-        Me.tbCodeFourn.Location = New System.Drawing.Point(104, 88)
+        resources.ApplyResources(Me.tbCodeFourn, "tbCodeFourn")
         Me.tbCodeFourn.Name = "tbCodeFourn"
-        Me.tbCodeFourn.Size = New System.Drawing.Size(104, 20)
-        Me.tbCodeFourn.TabIndex = 9
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(8, 88)
+        resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(72, 16)
-        Me.Label1.TabIndex = 36
-        Me.Label1.Text = "Fournisseur"
         '
         'ckStock
         '
-        Me.ckStock.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.ckStock, "ckStock")
         Me.ckStock.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcProduit, "bStock", True))
-        Me.ckStock.Location = New System.Drawing.Point(8, 120)
         Me.ckStock.Name = "ckStock"
-        Me.ckStock.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ckStock.Size = New System.Drawing.Size(176, 24)
-        Me.ckStock.TabIndex = 12
-        Me.ckStock.Text = "Produit Plateforme"
         '
         'Label15
         '
-        Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label15.Location = New System.Drawing.Point(454, 9)
+        resources.ApplyResources(Me.Label15, "Label15")
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(88, 16)
-        Me.Label15.TabIndex = 43
-        Me.Label15.Text = "Code Statistique"
         '
         'tbCodeStat
         '
-        Me.tbCodeStat.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbCodeStat, "tbCodeStat")
         Me.tbCodeStat.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "codeStat", True))
-        Me.tbCodeStat.Location = New System.Drawing.Point(558, 6)
         Me.tbCodeStat.Name = "tbCodeStat"
-        Me.tbCodeStat.Size = New System.Drawing.Size(136, 20)
-        Me.tbCodeStat.TabIndex = 2
         '
         'laDateDernInventaire
         '
-        Me.laDateDernInventaire.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.laDateDernInventaire, "laDateDernInventaire")
         Me.laDateDernInventaire.ForeColor = System.Drawing.Color.Red
-        Me.laDateDernInventaire.Location = New System.Drawing.Point(566, 152)
         Me.laDateDernInventaire.Name = "laDateDernInventaire"
-        Me.laDateDernInventaire.Size = New System.Drawing.Size(128, 16)
-        Me.laDateDernInventaire.TabIndex = 53
-        Me.laDateDernInventaire.Text = "Date_dern_inventaire"
         '
         'Label13
         '
-        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.Location = New System.Drawing.Point(398, 152)
+        resources.ApplyResources(Me.Label13, "Label13")
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(160, 16)
-        Me.Label13.TabIndex = 52
-        Me.Label13.Text = "Date dernier inventaire"
         '
         'GroupBox1
         '
-        Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.tbmvtLibelle)
         Me.GroupBox1.Controls.Add(Me.Label18)
         Me.GroupBox1.Controls.Add(Me.Label14)
@@ -498,19 +417,14 @@ Public Class frmProduit
         Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.dtmvtDate)
         Me.GroupBox1.Controls.Add(Me.Label10)
-        Me.GroupBox1.Location = New System.Drawing.Point(550, 280)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(376, 248)
-        Me.GroupBox1.TabIndex = 18
         Me.GroupBox1.TabStop = False
         '
         'tbmvtLibelle
         '
         Me.tbmvtLibelle.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcMvtStock, "libelle", True))
-        Me.tbmvtLibelle.Location = New System.Drawing.Point(80, 80)
+        resources.ApplyResources(Me.tbmvtLibelle, "tbmvtLibelle")
         Me.tbmvtLibelle.Name = "tbmvtLibelle"
-        Me.tbmvtLibelle.Size = New System.Drawing.Size(288, 20)
-        Me.tbmvtLibelle.TabIndex = 2
         '
         'm_bsrcMvtStock
         '
@@ -518,19 +432,13 @@ Public Class frmProduit
         '
         'Label18
         '
-        Me.Label18.Location = New System.Drawing.Point(8, 80)
+        resources.ApplyResources(Me.Label18, "Label18")
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(56, 23)
-        Me.Label18.TabIndex = 22
-        Me.Label18.Text = "Libellé"
         '
         'Label14
         '
-        Me.Label14.Location = New System.Drawing.Point(8, 48)
+        resources.ApplyResources(Me.Label14, "Label14")
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(56, 24)
-        Me.Label14.TabIndex = 21
-        Me.Label14.Text = "Type"
         '
         'cbomvtType
         '
@@ -538,10 +446,8 @@ Public Class frmProduit
         Me.cbomvtType.DataSource = Me.m_bsrcTypeMvt
         Me.cbomvtType.DisplayMember = "valeur"
         Me.cbomvtType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbomvtType.Location = New System.Drawing.Point(80, 48)
+        resources.ApplyResources(Me.cbomvtType, "cbomvtType")
         Me.cbomvtType.Name = "cbomvtType"
-        Me.cbomvtType.Size = New System.Drawing.Size(288, 21)
-        Me.cbomvtType.TabIndex = 1
         Me.cbomvtType.ValueMember = "code"
         '
         'm_bsrcTypeMvt
@@ -551,137 +457,86 @@ Public Class frmProduit
         'tbmvtCommentaiire
         '
         Me.tbmvtCommentaiire.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcMvtStock, "Commentaire", True))
-        Me.tbmvtCommentaiire.Location = New System.Drawing.Point(80, 144)
+        resources.ApplyResources(Me.tbmvtCommentaiire, "tbmvtCommentaiire")
         Me.tbmvtCommentaiire.Name = "tbmvtCommentaiire"
-        Me.tbmvtCommentaiire.Size = New System.Drawing.Size(240, 56)
-        Me.tbmvtCommentaiire.TabIndex = 4
-        Me.tbmvtCommentaiire.Text = ""
         '
         'cbAppliquer
         '
-        Me.cbAppliquer.Location = New System.Drawing.Point(288, 208)
+        resources.ApplyResources(Me.cbAppliquer, "cbAppliquer")
         Me.cbAppliquer.Name = "cbAppliquer"
-        Me.cbAppliquer.Size = New System.Drawing.Size(80, 24)
-        Me.cbAppliquer.TabIndex = 5
-        Me.cbAppliquer.Text = "Appliquer"
         '
         'Label12
         '
-        Me.Label12.Location = New System.Drawing.Point(8, 144)
+        resources.ApplyResources(Me.Label12, "Label12")
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(72, 16)
-        Me.Label12.TabIndex = 13
-        Me.Label12.Text = "Commentaire"
         '
         'tbmvtQuantite
         '
         Me.tbmvtQuantite.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcMvtStock, "qte", True))
-        Me.tbmvtQuantite.Location = New System.Drawing.Point(80, 112)
+        resources.ApplyResources(Me.tbmvtQuantite, "tbmvtQuantite")
         Me.tbmvtQuantite.Name = "tbmvtQuantite"
-        Me.tbmvtQuantite.Size = New System.Drawing.Size(104, 20)
-        Me.tbmvtQuantite.TabIndex = 3
-        Me.tbmvtQuantite.Text = "0"
         '
         'Label11
         '
-        Me.Label11.Location = New System.Drawing.Point(8, 112)
+        resources.ApplyResources(Me.Label11, "Label11")
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(56, 24)
-        Me.Label11.TabIndex = 11
-        Me.Label11.Text = "Quantité"
         '
         'dtmvtDate
         '
         Me.dtmvtDate.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcMvtStock, "datemvt", True))
         Me.dtmvtDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtmvtDate.Location = New System.Drawing.Point(80, 16)
+        resources.ApplyResources(Me.dtmvtDate, "dtmvtDate")
         Me.dtmvtDate.Name = "dtmvtDate"
-        Me.dtmvtDate.Size = New System.Drawing.Size(104, 20)
-        Me.dtmvtDate.TabIndex = 0
         '
         'Label10
         '
-        Me.Label10.Location = New System.Drawing.Point(8, 16)
+        resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(56, 24)
-        Me.Label10.TabIndex = 9
-        Me.Label10.Text = "Date"
         '
         'cbSTKSupprimer
         '
-        Me.cbSTKSupprimer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbSTKSupprimer.Location = New System.Drawing.Point(446, 360)
+        resources.ApplyResources(Me.cbSTKSupprimer, "cbSTKSupprimer")
         Me.cbSTKSupprimer.Name = "cbSTKSupprimer"
-        Me.cbSTKSupprimer.Size = New System.Drawing.Size(96, 24)
-        Me.cbSTKSupprimer.TabIndex = 17
-        Me.cbSTKSupprimer.Text = "Suppprimer"
         '
         'cbStkModifier
         '
-        Me.cbStkModifier.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbStkModifier.Location = New System.Drawing.Point(446, 328)
+        resources.ApplyResources(Me.cbStkModifier, "cbStkModifier")
         Me.cbStkModifier.Name = "cbStkModifier"
-        Me.cbStkModifier.Size = New System.Drawing.Size(96, 24)
-        Me.cbStkModifier.TabIndex = 16
-        Me.cbStkModifier.Text = "Modifier"
         '
         'cbAjouter
         '
-        Me.cbAjouter.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbAjouter.Location = New System.Drawing.Point(446, 296)
+        resources.ApplyResources(Me.cbAjouter, "cbAjouter")
         Me.cbAjouter.Name = "cbAjouter"
-        Me.cbAjouter.Size = New System.Drawing.Size(96, 24)
-        Me.cbAjouter.TabIndex = 15
-        Me.cbAjouter.Text = "Ajouter"
         '
         'laQteStock
         '
-        Me.laQteStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.laQteStock, "laQteStock")
         Me.laQteStock.ForeColor = System.Drawing.Color.Red
-        Me.laQteStock.Location = New System.Drawing.Point(566, 192)
         Me.laQteStock.Name = "laQteStock"
-        Me.laQteStock.Size = New System.Drawing.Size(128, 16)
-        Me.laQteStock.TabIndex = 46
-        Me.laQteStock.Text = "Qte_en_stock"
         '
         'Label9
         '
-        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.Location = New System.Drawing.Point(398, 192)
+        resources.ApplyResources(Me.Label9, "Label9")
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(160, 16)
-        Me.Label9.TabIndex = 45
-        Me.Label9.Text = "Stock Réel"
         '
         'cbCalculStock
         '
-        Me.cbCalculStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbCalculStock.Location = New System.Drawing.Point(726, 208)
+        resources.ApplyResources(Me.cbCalculStock, "cbCalculStock")
         Me.cbCalculStock.Name = "cbCalculStock"
-        Me.cbCalculStock.Size = New System.Drawing.Size(80, 24)
-        Me.cbCalculStock.TabIndex = 19
-        Me.cbCalculStock.Text = "Recalculer"
         '
         'Label16
         '
-        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label16.Location = New System.Drawing.Point(710, 32)
+        resources.ApplyResources(Me.Label16, "Label16")
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(40, 23)
-        Me.Label16.TabIndex = 56
-        Me.Label16.Text = "Cond"
         '
         'cboConditionnement
         '
-        Me.cboConditionnement.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.cboConditionnement, "cboConditionnement")
         Me.cboConditionnement.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.m_bsrcProduit, "idConditionnement", True))
         Me.cboConditionnement.DataSource = Me.m_bsrcConditionnement
         Me.cboConditionnement.DisplayMember = "valeur"
         Me.cboConditionnement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboConditionnement.Location = New System.Drawing.Point(766, 32)
         Me.cboConditionnement.Name = "cboConditionnement"
-        Me.cboConditionnement.Size = New System.Drawing.Size(136, 21)
-        Me.cboConditionnement.TabIndex = 6
         Me.cboConditionnement.ValueMember = "id"
         '
         'm_bsrcConditionnement
@@ -690,159 +545,98 @@ Public Class frmProduit
         '
         'Label17
         '
-        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label17.Location = New System.Drawing.Point(398, 168)
+        resources.ApplyResources(Me.Label17, "Label17")
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(160, 16)
-        Me.Label17.TabIndex = 58
-        Me.Label17.Text = "Qte au dernier inventaire"
         '
         'laQteDernierInventaire
         '
-        Me.laQteDernierInventaire.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.laQteDernierInventaire, "laQteDernierInventaire")
         Me.laQteDernierInventaire.ForeColor = System.Drawing.Color.Red
-        Me.laQteDernierInventaire.Location = New System.Drawing.Point(566, 168)
         Me.laQteDernierInventaire.Name = "laQteDernierInventaire"
-        Me.laQteDernierInventaire.Size = New System.Drawing.Size(100, 23)
-        Me.laQteDernierInventaire.TabIndex = 59
-        Me.laQteDernierInventaire.Text = "qte_dern_invent"
         '
         'Label19
         '
-        Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label19.Location = New System.Drawing.Point(398, 216)
+        resources.ApplyResources(Me.Label19, "Label19")
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(160, 23)
-        Me.Label19.TabIndex = 60
-        Me.Label19.Text = "Quantité commandée"
         '
         'laQteCommande
         '
-        Me.laQteCommande.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.laQteCommande, "laQteCommande")
         Me.laQteCommande.ForeColor = System.Drawing.Color.Green
-        Me.laQteCommande.Location = New System.Drawing.Point(566, 216)
         Me.laQteCommande.Name = "laQteCommande"
-        Me.laQteCommande.Size = New System.Drawing.Size(100, 16)
-        Me.laQteCommande.TabIndex = 61
-        Me.laQteCommande.Text = "Qte_commandée"
         '
         'Label21
         '
-        Me.Label21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label21.Location = New System.Drawing.Point(398, 248)
+        resources.ApplyResources(Me.Label21, "Label21")
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(160, 16)
-        Me.Label21.TabIndex = 62
-        Me.Label21.Text = "Stock Théorique"
         '
         'laQteStockTheorique
         '
-        Me.laQteStockTheorique.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.laQteStockTheorique, "laQteStockTheorique")
         Me.laQteStockTheorique.ForeColor = System.Drawing.Color.Red
-        Me.laQteStockTheorique.Location = New System.Drawing.Point(566, 248)
         Me.laQteStockTheorique.Name = "laQteStockTheorique"
-        Me.laQteStockTheorique.Size = New System.Drawing.Size(128, 16)
-        Me.laQteStockTheorique.TabIndex = 63
-        Me.laQteStockTheorique.Text = "qte_stock_theorique"
         '
         'ckDispo
         '
-        Me.ckDispo.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        resources.ApplyResources(Me.ckDispo, "ckDispo")
         Me.ckDispo.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.m_bsrcProduit, "bDisponible", True))
-        Me.ckDispo.Location = New System.Drawing.Point(224, 120)
         Me.ckDispo.Name = "ckDispo"
-        Me.ckDispo.Size = New System.Drawing.Size(128, 24)
-        Me.ckDispo.TabIndex = 13
-        Me.ckDispo.Text = "Produit Disponible"
         '
         'Label20
         '
-        Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(713, 101)
+        resources.ApplyResources(Me.Label20, "Label20")
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(38, 13)
-        Me.Label20.TabIndex = 64
-        Me.Label20.Text = "Tarif A"
         '
         'tbTarifA
         '
-        Me.tbTarifA.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbTarifA, "tbTarifA")
         Me.tbTarifA.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "TarifA", True))
-        Me.tbTarifA.Location = New System.Drawing.Point(766, 98)
         Me.tbTarifA.Name = "tbTarifA"
-        Me.tbTarifA.Size = New System.Drawing.Size(136, 20)
-        Me.tbTarifA.TabIndex = 65
-        Me.tbTarifA.Text = "0"
         '
         'tbTarifB
         '
-        Me.tbTarifB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbTarifB, "tbTarifB")
         Me.tbTarifB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "TarifB", True))
-        Me.tbTarifB.Location = New System.Drawing.Point(766, 124)
         Me.tbTarifB.Name = "tbTarifB"
-        Me.tbTarifB.Size = New System.Drawing.Size(136, 20)
-        Me.tbTarifB.TabIndex = 66
-        Me.tbTarifB.Text = "0"
         '
         'tbTarifC
         '
-        Me.tbTarifC.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.tbTarifC, "tbTarifC")
         Me.tbTarifC.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "TarifC", True))
-        Me.tbTarifC.Location = New System.Drawing.Point(766, 149)
         Me.tbTarifC.Name = "tbTarifC"
-        Me.tbTarifC.Size = New System.Drawing.Size(136, 20)
-        Me.tbTarifC.TabIndex = 67
-        Me.tbTarifC.Text = "0"
         '
         'Label22
         '
-        Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(713, 127)
+        resources.ApplyResources(Me.Label22, "Label22")
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(38, 13)
-        Me.Label22.TabIndex = 68
-        Me.Label22.Text = "Tarif B"
         '
         'Label23
         '
-        Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(713, 152)
+        resources.ApplyResources(Me.Label23, "Label23")
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(38, 13)
-        Me.Label23.TabIndex = 69
-        Me.Label23.Text = "Tarif C"
         '
         'DataGridView1
         '
-        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AutoGenerateColumns = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DatemvtDataGridViewTextBoxColumn, Me.typeMvt, Me.QteDataGridViewTextBoxColumn, Me.LibelleDataGridViewTextBoxColumn})
         Me.DataGridView1.DataSource = Me.m_bsrcMvtStock
-        Me.DataGridView1.Location = New System.Drawing.Point(11, 151)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.RowHeadersWidth = 10
-        Me.DataGridView1.Size = New System.Drawing.Size(381, 377)
-        Me.DataGridView1.TabIndex = 70
         '
         'DatemvtDataGridViewTextBoxColumn
         '
         Me.DatemvtDataGridViewTextBoxColumn.DataPropertyName = "datemvt"
         Me.DatemvtDataGridViewTextBoxColumn.FillWeight = 4.0!
-        Me.DatemvtDataGridViewTextBoxColumn.HeaderText = "Date"
+        resources.ApplyResources(Me.DatemvtDataGridViewTextBoxColumn, "DatemvtDataGridViewTextBoxColumn")
         Me.DatemvtDataGridViewTextBoxColumn.Name = "DatemvtDataGridViewTextBoxColumn"
         '
         'typeMvt
         '
         Me.typeMvt.DataPropertyName = "typeMvtSTR"
         Me.typeMvt.FillWeight = 1.0!
-        Me.typeMvt.HeaderText = "T"
+        resources.ApplyResources(Me.typeMvt, "typeMvt")
         Me.typeMvt.Name = "typeMvt"
         '
         'QteDataGridViewTextBoxColumn
@@ -853,35 +647,28 @@ Public Class frmProduit
         DataGridViewCellStyle1.NullValue = Nothing
         Me.QteDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
         Me.QteDataGridViewTextBoxColumn.FillWeight = 4.0!
-        Me.QteDataGridViewTextBoxColumn.HeaderText = "Qte"
+        resources.ApplyResources(Me.QteDataGridViewTextBoxColumn, "QteDataGridViewTextBoxColumn")
         Me.QteDataGridViewTextBoxColumn.Name = "QteDataGridViewTextBoxColumn"
         '
         'LibelleDataGridViewTextBoxColumn
         '
         Me.LibelleDataGridViewTextBoxColumn.DataPropertyName = "libelle"
         Me.LibelleDataGridViewTextBoxColumn.FillWeight = 10.0!
-        Me.LibelleDataGridViewTextBoxColumn.HeaderText = "Designation"
+        resources.ApplyResources(Me.LibelleDataGridViewTextBoxColumn, "LibelleDataGridViewTextBoxColumn")
         Me.LibelleDataGridViewTextBoxColumn.Name = "LibelleDataGridViewTextBoxColumn"
         '
         'Label24
         '
-        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label24.Location = New System.Drawing.Point(710, 8)
+        resources.ApplyResources(Me.Label24, "Label24")
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(88, 16)
-        Me.Label24.TabIndex = 71
-        Me.Label24.Text = "Dossier"
         '
         'ComboBox1
         '
-        Me.ComboBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "Dossier", True))
         Me.ComboBox1.DataSource = Me.m_bsrcDossier
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(766, 6)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(107, 21)
-        Me.ComboBox1.TabIndex = 72
         '
         'm_bsrcDossier
         '
@@ -896,18 +683,41 @@ Public Class frmProduit
         '
         'PictureBox1
         '
-        Me.PictureBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox1.Location = New System.Drawing.Point(879, 6)
+        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(23, 22)
-        Me.PictureBox1.TabIndex = 73
         Me.PictureBox1.TabStop = False
+        '
+        'dtpStockAu
+        '
+        resources.ApplyResources(Me.dtpStockAu, "dtpStockAu")
+        Me.dtpStockAu.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpStockAu.Name = "dtpStockAu"
+        '
+        'btnCalcStockAu
+        '
+        resources.ApplyResources(Me.btnCalcStockAu, "btnCalcStockAu")
+        Me.btnCalcStockAu.Name = "btnCalcStockAu"
+        Me.btnCalcStockAu.UseVisualStyleBackColor = True
+        '
+        'Label25
+        '
+        resources.ApplyResources(Me.Label25, "Label25")
+        Me.Label25.Name = "Label25"
+        '
+        'tbStockAu
+        '
+        resources.ApplyResources(Me.tbStockAu, "tbStockAu")
+        Me.tbStockAu.Name = "tbStockAu"
+        Me.tbStockAu.ReadOnly = True
         '
         'frmProduit
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
+        resources.ApplyResources(Me, "$this")
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(945, 546)
+        Me.Controls.Add(Me.tbStockAu)
+        Me.Controls.Add(Me.Label25)
+        Me.Controls.Add(Me.btnCalcStockAu)
+        Me.Controls.Add(Me.dtpStockAu)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.Label24)
@@ -958,11 +768,7 @@ Public Class frmProduit
         Me.Controls.Add(Me.cbRechercher)
         Me.Controls.Add(Me.Label1)
         Me.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Location = New System.Drawing.Point(4, 23)
         Me.Name = "frmProduit"
-        Me.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds
-        Me.Text = "Type"
         CType(Me.m_bsrcProduit, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.m_bsrcCouleur, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.m_bsrcRegion, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1436,4 +1242,16 @@ Public Class frmProduit
             PictureBox1.Image = LogoList.Images(ComboBox1.SelectedIndex)
         End If
     End Sub
+
+    Private Sub btnCalcStockAu_Click(sender As Object, e As EventArgs) Handles btnCalcStockAu.Click
+        Dim dStockAu As Date
+        dStockAu = dtpStockAu.Value
+        tbStockAu.Text = CalculStockAu(dStockAu)
+    End Sub
+
+    Public Function CalculStockAu(pDate As Date) As Decimal
+        Dim nReturn As Decimal
+        nReturn = m_objProduitCourant.CalculeStockAu(pDate.AddDays(-1))
+        Return nReturn
+    End Function
 End Class
