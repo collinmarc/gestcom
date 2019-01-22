@@ -1101,7 +1101,7 @@ Imports System.IO
         m_oClient.idTypeClient = oParam.id
         Assert.IsTrue(m_oClient.save())
 
-        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(m_oProduit.save())
 
         'Ajout du Tx de commission 
@@ -1126,14 +1126,14 @@ Imports System.IO
 
         'Command HOBIVIN Produit VINCOM
         objCMD.Origine = Dossier.HOBIVIN
-        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(m_oProduit.save())
         objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
         'Le Tx Est Celui du client intermédiaire
         Assert.AreEqual(10D, objLg.TxComm)
 
         'Command HOBIVIN Produit HOBIVIN
-        m_oProduit.Dossier = Dossier.HOBIVIN
+        m_oProduit.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(m_oProduit.save())
         objLg = objCMD.AjouteLigne("20", m_oProduit, 10, 15.5)
         'Produit HOBIVIN ur Comomande HOBIVIN => 0
@@ -1151,7 +1151,7 @@ Imports System.IO
         m_oClient.idTypeClient = oParam.id
         Assert.IsTrue(m_oClient.save())
 
-        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(m_oProduit.save())
 
         'Ajout du Tx de commission 
@@ -1166,14 +1166,14 @@ Imports System.IO
 
         'Command Vinicom Produit VINCOM
         objCMD.Origine = Dossier.VINICOM
-        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(m_oProduit.save())
         objLg = objCMD.AjouteLigne("10", m_oProduit, 10, 15.0)
         'Commande VINICOM, Produit VINICOM => Tx = Client
         Assert.AreEqual(15D, objLg.TxComm)
 
         'Command VINICOM Produit HOBIVIN
-        m_oProduit.Dossier = Dossier.HOBIVIN
+        m_oProduit.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(m_oProduit.save())
         objLg = objCMD.AjouteLigne("20", m_oProduit, 10, 15.5)
         'Produit HOBIVIN ur Comomande VINICOM=> 0

@@ -2143,14 +2143,14 @@ Public MustInherit Class Persist
     'Détails    :  
     'Retour : une collection
     '=======================================================================
-    Protected Shared Function ListePRD(ByVal pTypeProduit As vncTypeProduit, Optional ByVal strCode As String = "", Optional ByVal strLibelle As String = "", Optional ByVal strMotCle As String = "", Optional ByVal idFournisseur As Integer = 0, Optional ByVal idClient As Integer = 0) As Collection
+    Protected Shared Function ListePRD(ByVal pTypeProduit As vncTypeProduit, Optional ByVal strCode As String = "", Optional ByVal strLibelle As String = "", Optional ByVal strMotCle As String = "", Optional ByVal idFournisseur As Integer = 0, Optional ByVal idClient As Integer = 0, Optional pdossier As String = "") As Collection
         Dim colReturn As New Collection
         Dim strWhere As String = ""
         Dim nId As Integer
 
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
 
-        Dim sqlString As String = " SELECT PRODUIT.PRD_ID, PRODUIT.PRD_CODE, PRODUIT.PRD_LIBELLE, CONTENANT.CONT_LIBELLE, CONTENANT.CONT_ID, PRODUIT.PRD_MIL, RQ_Couleur.PAR_VALUE, produit.PRD_coul_Id, produit.PRD_cont_id " &
+        Dim sqlString As String = " SELECT PRODUIT.PRD_ID, PRODUIT.PRD_CODE, PRODUIT.PRD_LIBELLE, CONTENANT.CONT_LIBELLE, CONTENANT.CONT_ID, PRODUIT.PRD_MIL, RQ_Couleur.PAR_VALUE, produit.PRD_coul_Id, produit.PRD_cont_id, PRD_DISPO " &
                                     " FROM (CONTENANT INNER JOIN PRODUIT ON CONTENANT.CONT_ID = PRODUIT.PRD_CONT_ID) INNER JOIN RQ_Couleur ON PRODUIT.PRD_COUL_ID = RQ_Couleur.PAR_ID"
 
         Dim objOLeDBCommand As OleDbCommand
@@ -2171,7 +2171,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & " PRD_CODE LIKE ?"
-            objOLeDBCommand.Parameters.AddWithValue("?" , strCode)
+            objOLeDBCommand.Parameters.AddWithValue("?", strCode)
 
         End If
         If strLibelle <> "" Then
@@ -2179,7 +2179,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "PRD_LIBELLE LIKE ?"
-            objOLeDBCommand.Parameters.AddWithValue("?" , strLibelle)
+            objOLeDBCommand.Parameters.AddWithValue("?", strLibelle)
 
         End If
 
@@ -2188,7 +2188,7 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "PRD_MOT_CLE LIKE ?"
-            objOLeDBCommand.Parameters.AddWithValue("?" , strMotCle)
+            objOLeDBCommand.Parameters.AddWithValue("?", strMotCle)
 
         End If
 
@@ -2197,9 +2197,18 @@ Public MustInherit Class Persist
                 strWhere = strWhere & " AND "
             End If
             strWhere = strWhere & "PRD_FRN_ID =  ?"
-            objOLeDBCommand.Parameters.AddWithValue("?" , idFournisseur)
+            objOLeDBCommand.Parameters.AddWithValue("?", idFournisseur)
 
         End If
+        If pdossier <> "" Then
+            If strWhere <> "" Then
+                strWhere = strWhere & " AND "
+            End If
+            strWhere = strWhere & "PRD_DOSSIER =  ?"
+            objOLeDBCommand.Parameters.AddWithValue("?", pdossier)
+
+        End If
+
 
         If idClient <> 0 Then
             sqlString = "SELECT PRODUIT.PRD_ID, " &
@@ -2787,6 +2796,102 @@ Public MustInherit Class Persist
             End If
 
             objParam = objCommand.Parameters.AddWithValue("?", pFournisseur.id)
+
+            objRS = objCommand.ExecuteReader()
+            colReturn = New Collection
+            While (objRS.Read())
+                idMvt = GetString(objRS, "STK_ID")
+                idPRDmvt = GetString(objRS, "STK_PRD_ID")
+                datemvt = GetString(objRS, "STK_DATE")
+                typemvt = GetString(objRS, "STK_TYPE")
+                refidmvt = GetString(objRS, "STK_REF_ID")
+                libmvt = GetString(objRS, "STK_LIB")
+                qtemvt = GetString(objRS, "STK_QTE")
+                commvt = GetString(objRS, "STK_COMM")
+                etat = GetString(objRS, "STK_ETAT")
+                idFactColisage = GetString(objRS, "STK_IDFACTCOLISAGE")
+                'Ajout de la ligne dans la collection
+                objmvt = New mvtStock(datemvt, idPRDmvt, typemvt, qtemvt, libmvt)
+                objmvt.setid(idMvt)
+                objmvt.Commentaire = commvt
+                objmvt.idReference = refidmvt
+                objmvt.Etat = EtatMvtStock.createEtat(etat)
+                objmvt.idFactColisage = idFactColisage
+                objmvt.resetBooleans()
+                colReturn.Add(objmvt)
+            End While
+            objRS.Close()
+
+        Catch ex As Exception
+            setError("ListeMVTSTK2", ex.ToString())
+            Debug.Assert(False, getErreur())
+            colReturn = New Collection
+        End Try
+
+        Return colReturn
+
+    End Function 'ListeMVTSTK
+    ''' <summary>
+    ''' Rend la liste ds mouvements de Stock à facturer pour un dossier
+    ''' </summary>
+    ''' <param name="pDossier"> Dossier du produit</param>
+    ''' <param name="pddeb">Date de début</param>
+    ''' <param name="pdfin">Date de Fin</param>
+    ''' <param name="pEtat">Etat des Mouvement de Stock</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Shared Function ListeMVTSTKDossier(pdossier As String, ByVal pddeb As Date, ByVal pdfin As Date, pEtat As vncEtatMVTSTK) As Collection
+        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+
+        Dim objCommand As OleDbCommand
+        Dim objRS As OleDbDataReader = Nothing
+        Dim colReturn As New Collection
+
+        Dim idMvt As Integer
+        Dim idPRDmvt As Integer
+        Dim datemvt As Date
+        Dim typemvt As vncTypeMvt
+        Dim refidmvt As Integer
+        Dim libmvt As String
+        Dim qtemvt As Decimal
+        Dim commvt As String
+        Dim objmvt As mvtStock
+        Dim etat As Integer
+        Dim idFactColisage As Integer
+
+
+
+        Dim sqlString As String = " SELECT [STK_ID], [STK_PRD_ID], [STK_DATE], [STK_TYPE], [STK_REF_ID], [STK_LIB], [STK_QTE], [STK_COMM]," & _
+                                  " STK_ETAT, STK_IDFACTCOLISAGE " & _
+                                  " FROM MVT_STOCK  INNER JOIN PRODUIT ON MVT_STOCK.STK_PRD_ID = PRODUIT.PRD_ID"
+        Dim strOrder As String = " STK_DATE ASC, MVT_STOCK.STK_TYPE DESC"
+        Dim strWhere As String = " MVT_STOCK.STK_DATE >= ? AND  " _
+                                    & " MVT_STOCK.STK_DATE <= ? AND " _
+                                    & " PRODUIT.PRD_STOCK = 1"
+
+        If pEtat <> vncEtatMVTSTK.vncMVTSTK_Tous Then
+            strWhere = strWhere & " AND  MVT_STOCK.STK_ETAT = ? "
+        End If
+
+        strWhere = strWhere & " AND PRODUIT.PRD_DOSSIER = ? "
+
+        sqlString = sqlString & " WHERE " & strWhere & " ORDER BY " & strOrder
+        objCommand = New OleDbCommand
+        objCommand.Connection = m_dbconn.Connection
+        objCommand.CommandText = sqlString
+
+
+
+        'Paramétre ProduitID 
+
+        Try
+            Dim objParam As OleDbParameter
+            objParam = objCommand.Parameters.AddWithValue("?", pddeb)
+            objParam = objCommand.Parameters.AddWithValue("?", pdfin)
+            If pEtat <> vncEtatMVTSTK.vncMVTSTK_Tous Then
+                objParam = objCommand.Parameters.AddWithValue("?", pEtat)
+            End If
+            objParam = objCommand.Parameters.AddWithValue("?", pdossier)
 
             objRS = objCommand.ExecuteReader()
             colReturn = New Collection
@@ -3985,7 +4090,7 @@ Public MustInherit Class Persist
         '        Dim objParam As OleDbParameter
         Dim objPRD As Produit
         objPRD = Me
-        objCommand.Parameters.AddWithValue("?", truncate(objPRD.Dossier, 50))
+        objCommand.Parameters.AddWithValue("?", truncate(objPRD.DossierProduit, 50))
     End Sub
     Private Sub CreateParamP_PRD_TARIFA(ByVal objCommand As OleDbCommand)
         Dim objPRD As Produit
@@ -12069,8 +12174,10 @@ Public MustInherit Class Persist
                                     "FCOL_REF_REGLEMENT," & _
                                     "FCOL_IDMODEREGLEMENT," & _
                                     "FCOL_DECHEANCE," & _
-                                    "FCOL_BINTERNET" & _
+                                    "FCOL_BINTERNET," & _
+                                    "FCOL_DOSSIER" & _
                                   " ) VALUES ( " & _
+                                    "? ," & _
                                     "? ," & _
                                     "? ," & _
                                     "? ," & _
@@ -12114,6 +12221,7 @@ Public MustInherit Class Persist
         CreateParameterP_FCOL_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FCOL_DECHEANCE(objCommand)
         CreateParameterP_FCOL_BINTERNET(objCommand)
+        CreateParameterP_FCOL_DOSSIER(objCommand)
         Try
             objCommand.ExecuteNonQuery()
             objCommand = New OleDbCommand("SELECT MAX(FCOL_ID) FROM FACTCOLISAGE", m_dbconn.Connection)
@@ -12201,7 +12309,8 @@ Public MustInherit Class Persist
                                     "FCOL_REF_REGLEMENT," & _
                                     "FCOL_IDMODEREGLEMENT," & _
                                     "FCOL_DECHEANCE," & _
-                                    "FCOL_BINTERNET" & _
+                                    "FCOL_BINTERNET," & _
+                                    "FCOL_DOSSIER " & _
                                     " FROM FactColisage WHERE " & _
                                    " FCOL_ID = ?"
 
@@ -12306,6 +12415,11 @@ Public MustInherit Class Persist
             Catch ex As InvalidCastException
                 objFCOL.CommFacturation.comment = ""
             End Try
+            Try
+                objFCOL.dossierFact = GetString(objRS, "FCOL_DOSSIER")
+            Catch ex As InvalidCastException
+                objFCOL.dossierFact = Dossier.VINICOM
+            End Try
 
             cleanErreur()
             bReturn = True
@@ -12350,7 +12464,8 @@ Public MustInherit Class Persist
                                     "FCOL_REF_REGLEMENT = ? , " & _
                                     "FCOL_IDMODEREGLEMENT = ?, " & _
                                     "FCOL_DECHEANCE = ?, " & _
-                                    "FCOL_BINTERNET = ? " & _
+                                    "FCOL_BINTERNET = ?, " & _
+                                    "FCOL_DOSSIER = ? " & _
                                     " WHERE FCOL_ID = ?"
 
         Dim objCommand As OleDbCommand
@@ -12380,6 +12495,7 @@ Public MustInherit Class Persist
         CreateParameterP_FCOL_IDMODEREGLEMENT(objCommand)
         CreateParameterP_FCOL_DECHEANCE(objCommand)
         CreateParameterP_FCOL_BINTERNET(objCommand)
+        CreateParameterP_FCOL_DOSSIER(objCommand)
         CreateParameterP_ID(objCommand)
         Try
             objCommand.ExecuteNonQuery()
@@ -13076,6 +13192,11 @@ Public MustInherit Class Persist
         Dim objCMD As FactColisageJ
         objCMD = Me
         objCommand.Parameters.AddWithValue("?", truncate(objCMD.periode, 50))
+    End Sub
+    Private Sub CreateParameterP_FCOL_DOSSIER(ByVal objCommand As OleDbCommand)
+        Dim objCMD As FactColisageJ
+        objCMD = Me
+        objCommand.Parameters.AddWithValue("?", truncate(objCMD.dossierFact, 50))
     End Sub
     Private Sub CreateParameterP_FCOL_MONTANT_REGLEMENT(ByVal objCommand As OleDbCommand)
         Dim objCMD As FactColisageJ

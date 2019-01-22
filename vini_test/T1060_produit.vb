@@ -433,19 +433,19 @@ Imports vini_DB
         Dim nid As Integer
 
         obj = New Produit("T60", m_oFRN, 1990)
-        Assert.AreEqual(Dossier.VINICOM, obj.Dossier)
-        obj.Dossier = Dossier.HOBIVIN
+        Assert.AreEqual(Dossier.VINICOM, obj.DossierProduit)
+        obj.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(obj.save())
         nid = obj.id
         obj = Produit.createandload(nid)
 
-        Assert.AreEqual(Dossier.HOBIVIN, obj.Dossier)
+        Assert.AreEqual(Dossier.HOBIVIN, obj.DossierProduit)
 
-        obj.Dossier = Dossier.VINICOM
+        obj.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(obj.save())
         obj = Produit.createandload(nid)
 
-        Assert.AreEqual(Dossier.VINICOM, obj.Dossier)
+        Assert.AreEqual(Dossier.VINICOM, obj.DossierProduit)
 
 
         obj.bDeleted = True

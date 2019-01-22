@@ -589,20 +589,6 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="crRecapColisage.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>crRecapColisage.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="crRecapColisage_old.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>crRecapColisage_old.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="crReferences.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -628,13 +614,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crRegistreLivraison.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="crReleveColisage.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>crReleveColisage.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -1275,16 +1254,6 @@
       <LastGenOutput>crRecapAnnoncesAppro.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="crRecapColisage.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>crRecapColisage.vb</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="crRecapColisage_old.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>crRecapColisage_old.vb</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="crReferences.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crReferences.vb</LastGenOutput>
@@ -1303,11 +1272,6 @@
     <Content Include="crRegistreLivraison.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crRegistreLivraison.vb</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="crReleveColisage.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>crReleveColisage.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="crStatBilanClient.rpt">

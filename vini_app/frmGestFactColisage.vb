@@ -1004,8 +1004,6 @@ Public Class frmGestFactColisage
     End Sub
     Private Sub afficherRapportRecap()
         Dim objReport As New ReportDocument()
-        Dim tabIds As ArrayList
-        Dim strReport As String
 
 
         Dim r2 As New crRecapColisageJournalier
@@ -1017,9 +1015,12 @@ Public Class frmGestFactColisage
         Dim dFin As Date
         dDeb = CDate(getElementCourant().periode)
         dFin = dDeb.AddMonths(1).AddDays(-1)
+
+        'Pour l 'affichage du Recap on utilise les lignes de la facture pour touver les articles
+
         Dim nCout As Decimal = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
 
-        Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, getElementCourant.oTiers.code, nCout)
+        Dim ods As dsVinicom = getElementCourant().GenereDataSetRecapColisage()
         objReport.SetDataSource(ods)
 
         objReport.SetParameterValue("Periode", getElementCourant().periode)
@@ -1187,7 +1188,7 @@ Public Class frmGestFactColisage
             dFin = dDeb.AddMonths(1).AddDays(-1)
             Dim nCout As Decimal = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
 
-            Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, getElementCourant.oTiers.code, nCout)
+            Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, getElementCourant.oTiers.code, nCout, Dossier.VINICOM)
             objReport.SetDataSource(ods)
             objReport.ExportOptions.ExportFormatType = CrystalDecisions.Shared.ExportFormatType.PortableDocFormat
             objReport.ExportOptions.ExportDestinationType = CrystalDecisions.Shared.ExportDestinationType.DiskFile

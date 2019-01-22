@@ -919,7 +919,7 @@ Imports System.IO
         oIntermediaire.save()
 
         m_oProduit.TarifA = 10.2
-        m_oProduit.Dossier = Dossier.VINICOM
+        m_oProduit.DossierProduit = Dossier.VINICOM
         m_oProduit.save()
 
         'Ajout d'une Ligne à la commande
@@ -1344,7 +1344,7 @@ Imports System.IO
         Assert.IsTrue(oFRNVnc.Save(), "FRN2.save")
 
         oPRDVNC = New Produit("PRDVNC20" & Now(), oFRNVnc, 1990)
-        oPRDVNC.Dossier = Dossier.VINICOM
+        oPRDVNC.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(oPRDVNC.save(), "OPRD2.Save")
 
         oFRNHBV = New Fournisseur("FRNHBV30" & Now(), "Fournisseur3")
@@ -1353,7 +1353,7 @@ Imports System.IO
 
 
         oPRDHBV = New Produit("PRDT30" & Now(), oFRNHBV, 1990)
-        oPRDHBV.Dossier = Dossier.HOBIVIN
+        oPRDHBV.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(oPRDHBV.save(), "OPRD3.Save")
 
 
@@ -1542,7 +1542,7 @@ Imports System.IO
         Assert.IsTrue(oTx.save())
 
         oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
-        oPRDVNC.Dossier = Dossier.VINICOM
+        oPRDVNC.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(oPRDVNC.save())
 
         'Création d'une commande client origine "HOBIVIN" 
@@ -1602,7 +1602,7 @@ Imports System.IO
         Assert.IsTrue(oTx.save())
 
         oPRDHBV = New Produit("PRDHBV" & Now(), oFRNHBV, 1990)
-        oPRDHBV.Dossier = Dossier.HOBIVIN
+        oPRDHBV.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(oPRDHBV.save())
 
         'Création d'une commande client origine "HOBIVIN" 
@@ -1663,7 +1663,7 @@ Imports System.IO
         Assert.IsTrue(oTx.save())
 
         oPRDHBV = New Produit("PRDHBV" & Now(), oFRNHBV, 1990)
-        oPRDHBV.Dossier = Dossier.HOBIVIN
+        oPRDHBV.DossierProduit = Dossier.HOBIVIN
         Assert.IsTrue(oPRDHBV.save())
 
         'Création d'une commande client origine "VINICOM" 
@@ -1725,7 +1725,7 @@ Imports System.IO
         Assert.IsTrue(oTx.save())
 
         oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
-        oPRDVNC.Dossier = Dossier.VINICOM
+        oPRDVNC.DossierProduit = Dossier.VINICOM
         Assert.IsTrue(oPRDVNC.save())
 
         'Création d'une commande client origine "VINICOM" 
@@ -1849,7 +1849,7 @@ Imports System.IO
         Assert.IsTrue(oTx.save())
 
         oPRDVNC = New Produit("PRDVNC" & Now(), oFRNVNC, 1990)
-        oPRDVNC.Dossier = Dossier.VINICOM
+        oPRDVNC.DossierProduit = Dossier.VINICOM
         oPRDVNC.TarifA = 10
         oPRDVNC.TarifB = 11
         oPRDVNC.TarifC = 12

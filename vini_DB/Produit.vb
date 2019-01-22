@@ -63,10 +63,10 @@ Public Class Produit
     'Description : Liste des Produits
     'Retour : Rend une collection de fournisseurs
     '=======================================================================
-    Public Shared Function getListe(ByVal pTypeProduit As vncTypeProduit, Optional ByVal strCode As String = "", Optional ByVal strlibelle As String = "", Optional ByVal strMotCle As String = "", Optional ByVal idFournisseur As Integer = 0, Optional ByVal idClient As Integer = 0) As Collection
+    Public Shared Function getListe(ByVal pTypeProduit As vncTypeProduit, Optional ByVal strCode As String = "", Optional ByVal strlibelle As String = "", Optional ByVal strMotCle As String = "", Optional ByVal idFournisseur As Integer = 0, Optional ByVal idClient As Integer = 0, Optional pdossier As String = "") As Collection
         Dim colReturn As Collection
         shared_connect()
-        colReturn = ListePRD(pTypeProduit, strCode, strlibelle, strMotCle, idFournisseur, idClient)
+        colReturn = ListePRD(pTypeProduit, strCode, strlibelle, strMotCle, idFournisseur, idClient, pdossier)
         shared_disconnect()
         Return colReturn
     End Function
@@ -594,7 +594,7 @@ Public Class Produit
 
         End Get
     End Property
-    Public Property Dossier() As String
+    Public Property DossierProduit() As String
         Get
             Return m_Dossier
         End Get
@@ -1261,7 +1261,7 @@ Public Class Produit
                 Case "PRD_TARIFC"
                     Me.TarifC = Convert.ToString(pColValue)
                 Case "PRD_DOSSIER"
-                    Me.Dossier = Convert.ToString(pColValue)
+                    Me.DossierProduit = Convert.ToString(pColValue)
                 Case "PRD_QTE_COMMANDE"
                     Me.setQteCommande(Convert.ToInt32(pColValue))
             End Select
@@ -1319,8 +1319,13 @@ Public Class Produit
                 oStockAu = nStockAu(njour)
             Next
 
-            Dim oFournisseur As New Fournisseur()
-            oFournisseur.load(oPRD.idFournisseur)
+            Dim oFournisseur As Fournisseur
+            If oPRD.DossierProduit = Dossier.VINICOM Then
+                oFournisseur = Fournisseur.createandload(oPRD.idFournisseur)
+            End If
+            If oPRD.DossierProduit = Dossier.HOBIVIN Then
+                oFournisseur = Fournisseur.getIntermediairePourUnDossier(oPRD.DossierProduit)
+            End If
             pDs.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=oPRD.code, RC_PRD_LIBELLE:=oPRD.nom,
                                                             RC_FRN_CODE:=oFournisseur.code,
                                                             RC_FRN_NOM:=oFournisseur.nom,
@@ -1357,7 +1362,7 @@ Public Class Produit
                                                             RC_S29:=nStockAu(29),
                                                             RC_S30:=nStockAu(30),
                                                             RC_S31:=nStockAu(31),
-                                                            PERIODE:=periode,
+                                                            periode:=periode,
                                                             RC_IDPRODUIT:=oPRD.id
                                                             )
 

@@ -342,6 +342,33 @@ Public Class mvtStock
         Persist.shared_disconnect()
         Return colReturn
     End Function 'getListe
+    ''' <summary>
+    ''' Rend la lmiste des Mouvements de stock non facture pour un Dossier
+    ''' </summary>
+    ''' <param name="pDossier"></param>
+    ''' <param name="pDateDebut"></param>
+    ''' <param name="pDateFin"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function getListeDossierNonFacture(pDossier As String, ByVal pDateDebut As Date, ByVal pDateFin As Date) As Collection
+
+        Dim colReturn As Collection
+
+        Persist.shared_connect()
+        colReturn = Persist.ListeMVTSTKDossier(pDossier, pDateDebut, pDateFin, vncEtatMVTSTK.vncMVTSTK_nFact)
+        Persist.shared_disconnect()
+        Return colReturn
+    End Function 'getListe
+    Public Shared Function getListeDossierFacture(pDossier As String, ByVal pDateDebut As Date, ByVal pDateFin As Date) As Collection
+
+        Dim colReturn As Collection
+
+        Persist.shared_connect()
+        colReturn = Persist.ListeMVTSTKDossier(pDossier, pDateDebut, pDateFin, vncEtatMVTSTK.vncMVTSTK_Fact)
+        Persist.shared_disconnect()
+        Return colReturn
+    End Function 'getListe
+
 #End Region
 
     '=======================================================================
@@ -401,6 +428,23 @@ Public Class mvtStock
         m_Etat = m_Etat.changeEtat(pEtat)
     End Sub
 
+    Private m_oProduit As Produit = Nothing
+    Public ReadOnly Property CodeProduit() As String
+        Get
+            If m_oProduit Is Nothing Then
+                m_oProduit = Produit.createandload(idProduit)
+            End If
+            Return m_oProduit.code
+        End Get
+    End Property
+    Public ReadOnly Property NomProduit() As String
+        Get
+            If m_oProduit Is Nothing Then
+                m_oProduit = Produit.createandload(idProduit)
+            End If
+            Return m_oProduit.nom
+        End Get
+    End Property
 
 
 End Class

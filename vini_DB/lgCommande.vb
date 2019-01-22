@@ -731,7 +731,7 @@ Public Class LgCommande
         Select Case pstrOrigine
             Case Dossier.VINICOM
                 'COMMANDE VINICOM
-                Select Case m_oProduit.Dossier
+                Select Case m_oProduit.DossierProduit
                     Case Dossier.VINICOM
                         'un Produit Vinicom sur une Commande Vinicom
                         'On prend le type du client Final
@@ -752,7 +752,7 @@ Public Class LgCommande
                 End Select
             Case Else
                 'Commande HOBIVIN
-                Select Case m_oProduit.Dossier
+                Select Case m_oProduit.DossierProduit
                     Case Dossier.VINICOM
                         'un Produit Vinicom sur une Commande HOBIVIN
                         'On prend le type du client Intermédiare

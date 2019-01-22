@@ -645,13 +645,13 @@ Public Class CommandeClient
                         'S'il n'y a pas de fournisseur courant on prend celui là et le Dossier concerné
                         idFRN = objLGCMD.oProduit.idFournisseur
                         oFRN = Fournisseur.createandload(idFRN)
-                        strDossierProduit = objLGCMD.oProduit.Dossier
+                        strDossierProduit = objLGCMD.oProduit.DossierProduit
                         ' et on crée la sous-commande avec ce fournisseur
                         oSCMD = New SousCommande(Me, oFRN)
                         oSCMD.setNewcode()
                         'Si le Produit est un Produit Vinicom et la Commande est HOBIVIN
                         'Alors on remplace le client par l'intermédaire
-                        If Me.Origine = Dossier.HOBIVIN And objLGCMD.oProduit.Dossier = Dossier.VINICOM Then
+                        If Me.Origine = Dossier.HOBIVIN And objLGCMD.oProduit.DossierProduit = Dossier.VINICOM Then
                             If pIntermediaire IsNot Nothing Then
                                 oSCMD.setTiers(pIntermediaire)
                             End If
@@ -659,11 +659,11 @@ Public Class CommandeClient
                         'on ajoute la sous-commande à la collection
                         Me.colSousCommandes.Add(oSCMD, oSCMD.code)
                     End If
-                    If objLGCMD.oProduit.idFournisseur = idFRN And objLGCMD.oProduit.Dossier = strDossierProduit Then
+                    If objLGCMD.oProduit.idFournisseur = idFRN And objLGCMD.oProduit.DossierProduit = strDossierProduit Then
                         'La Ligne correspond au fournisseur courant et au dossier courant
                         ' On l'ajoute à la sous-commande courante 
                         Dim LgSCMD As LgCommande = oSCMD.AjouteLigne(objLGCMD, True)
-                        If Me.Origine = Dossier.HOBIVIN And LgSCMD.oProduit.Dossier = Dossier.VINICOM And pIntermediaire IsNot Nothing Then
+                        If Me.Origine = Dossier.HOBIVIN And LgSCMD.oProduit.DossierProduit = Dossier.VINICOM And pIntermediaire IsNot Nothing Then
                             '#857 : Modification du prix on prend le prix GESTCOM et non celui de la commande
                             LgSCMD.prixU = objLGCMD.oProduit.Tarif(pIntermediaire.CodeTarif)
                             LgSCMD.calculPrixTotal()

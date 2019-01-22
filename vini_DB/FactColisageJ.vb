@@ -7,6 +7,7 @@ Public Class FactColisageJ
     Private m_montantReglement As Decimal
     Private m_refReglement As String
     Private m_dateReglement As Date
+    Private m_dossier As String
     '    Private m_idModeRegelement As Long
 
 #Region "Accesseurs"
@@ -22,6 +23,8 @@ Public Class FactColisageJ
         m_TotalHT = 0
         m_TotalTTC = 0
         m_IDModeReglement = poFournisseur.idModeReglement2 'utilisation du mode de reglement du Tiers
+        m_dossier = Dossier.VINICOM
+
     End Sub
     Public Shared Function createandload(ByVal pid As Long) As FactColisageJ
         '=======================================================================
@@ -59,6 +62,7 @@ Public Class FactColisageJ
     End Function 'createandload
     Friend Sub New()
         Me.New(New Fournisseur())
+        m_dossier = Dossier.VINICOM
     End Sub
     'Public Property idModeReglement() As Long
     '    Get
@@ -98,6 +102,19 @@ Public Class FactColisageJ
                 Catch ex As Exception
 
                 End Try
+            End If
+        End Set
+
+    End Property
+    Public Property dossierFact() As String
+        Get
+            Debug.Assert(Not bResume, "Objet Résumé")
+            Return m_dossier
+        End Get
+        Set(ByVal Value As String)
+            If Value <> m_dossier Then
+                RaiseUpdated()
+                m_dossier = Value
             End If
         End Set
 
@@ -230,15 +247,15 @@ Public Class FactColisageJ
     Public Overrides Function save() As Boolean
         Dim bReturn As Boolean
         shared_connect()
+        If bDeleted Then
+
+            bReturn = supprimeMvtStock()
+        End If
         bReturn = MyBase.Save()
         If m_id > 0 Then
             'MVTS STOCKS
             If getActionMvtStock() = vncEnums.vncGenererSupprimer.vncGenerer Then
                 bReturn = bReturn And genereMvtStock()
-                Debug.Assert(bReturn, "Erreur en generemvtStock" & getErreur())
-            End If
-            If getActionMvtStock() = vncEnums.vncGenererSupprimer.vncSupprimer Then
-                bReturn = bReturn And supprimeMvtStock()
                 Debug.Assert(bReturn, "Erreur en generemvtStock" & getErreur())
             End If
         End If
@@ -310,7 +327,7 @@ Public Class FactColisageJ
     Public Overrides Function genereMvtStock() As Boolean
 
         Dim olgFactCol As LgFactColisage
-        Dim oColmvt As Collection
+        Dim oColmvt As New Collection()
         Dim oFournisseur As Fournisseur
         Dim omvtStock As mvtStock
         Dim objPRD As Produit
@@ -321,13 +338,17 @@ Public Class FactColisageJ
             loadcolLignes()
         End If
 
-        oFournisseur = CType(Me.oTiers, Fournisseur)
+
 
         'Pour chaque liggne d'une facture de colisage (Normalement 1 seule
         For Each olgFactCol In colLignes
             'Recupération de la Liste des mouvements de stocks
-            oColmvt = mvtStock.getListe2(dateDebut, dateFin, oFournisseur, vncEtatMVTSTK.vncMVTSTK_nFact)
-
+            If dossierFact = Dossier.VINICOM Then
+                oColmvt = mvtStock.getListe2(dateDebut, dateFin, oFournisseur, vncEtatMVTSTK.vncMVTSTK_nFact)
+            End If
+            If dossierFact = Dossier.HOBIVIN Then
+                oColmvt = mvtStock.getListeDossierNonFacture(dossierFact, dateDebut, dateFin)
+            End If
 
             For Each omvtStock In oColmvt
                 objPRD = New Produit()
@@ -379,7 +400,7 @@ Public Class FactColisageJ
     ''' <remarks></remarks>
     Public Overrides Function supprimeMvtStock() As Boolean
         Dim olgFactCol As LgFactColisage
-        Dim oColmvt As Collection
+        Dim oColmvt As New Collection()
         Dim oFournisseur As Fournisseur
         Dim omvtStock As mvtStock
 
@@ -392,8 +413,12 @@ Public Class FactColisageJ
         'Pour chaque liggne d'une facture de colisage (Normalement 1 seule
         For Each olgFactCol In colLignes
             'Recupération de la Liste des mouvements de stocks
-
-            oColmvt = mvtStock.getListe2(dateDebut, dateFin, oFournisseur, vncEtatMVTSTK.vncMVTSTK_Fact)
+            If dossierFact = Dossier.VINICOM Then
+                oColmvt = mvtStock.getListe2(dateDebut, dateFin, oFournisseur, vncEtatMVTSTK.vncMVTSTK_Fact)
+            End If
+            If dossierFact = Dossier.HOBIVIN Then
+                oColmvt = mvtStock.getListeDossierFacture(dossierFact, dateDebut, dateFin)
+            End If
             For Each omvtStock In oColmvt
                 omvtStock.idFactColisage = 0
                 omvtStock.changeEtat(vncActionFactColisage.vncActionAnnFacturer)
@@ -672,7 +697,7 @@ Public Class FactColisageJ
         Return bReturn
     End Function 'SupprimeLigneCol
 
-    Public Shared Function GenereFacture(ByVal pDate As Date, ByVal pFourn As Fournisseur) As FactColisageJ
+    Public Shared Function GenereFacture(ByVal pDate As Date, ByVal pFourn As Fournisseur, pDossier As String) As FactColisageJ
 
         Dim oFactCol As FactColisageJ = Nothing
         Dim oLgFactCol As LgFactColisage = Nothing
@@ -685,7 +710,7 @@ Public Class FactColisageJ
         pfin = pDeb.AddMonths(1).AddDays(-1)
 
         ' Recupère la liste des mouvements de stocks non facturé
-        oDS = GenereDataSetRecapColisage(pDeb, pfin, pFourn.code, Param.getConstante("CST_FACT_COL_PU_COLIS"))
+        oDS = GenereDataSetRecapColisage(pDeb, pfin, pFourn.code, Param.getConstante("CST_FACT_COL_PU_COLIS"), pDossier)
         'Dim oRECAPRow As dsVinicom.RECAP_COLISAGERow
 
         'For Each oRECAPRow In oDS.RECAP_COLISAGE
@@ -693,6 +718,7 @@ Public Class FactColisageJ
         'Next
 
         oFactCol = New FactColisageJ(pFourn)
+        oFactCol.dossierFact = pDossier
         oFactCol.periode = pDeb.ToString("MMMM yyyy")
 
         For Each oRow In oDS.RECAPCOLISAGEJOURN
@@ -703,46 +729,92 @@ Public Class FactColisageJ
             oProduit = New Produit()
             oProduit.load(oRow.RC_IDPRODUIT)
             If oProduit.id <> 0 Then
-                Dim nNum As Integer = oFactCol.getNextNumLg()
-                oFactCol.AjouteLigne(nNum, p_oProduit:=oProduit, p_qteCmd:=qte, p_prixU:=oRow.RC_COUT_U)
+                If qte <> 0 Then
+                    Dim nNum As Integer = oFactCol.getNextNumLg()
+                    oFactCol.AjouteLigne(nNum, p_oProduit:=oProduit, p_qteCmd:=qte, p_prixU:=oRow.RC_COUT_U)
+                End If
             End If
         Next
         Return oFactCol
 
     End Function 'GenereFacture
 
-    Public Shared Function GenereDataSetRecapColisage(ByVal pdDeb As Date, ByVal pdFin As Date, ByVal pCodeFourn As String, ByVal pCout As Decimal) As dsVinicom
+    Public Shared Function GenereDataSetRecapColisage(ByVal pdDeb As Date, ByVal pdFin As Date, ByVal pCodeFourn As String, ByVal pCout As Decimal, pdossier As String) As dsVinicom
 
-        'Debug.Assert(Not String.IsNullOrEmpty(pCodeFourn), "Le Code Fournisseur doit être spécifié")
 
 
         Dim dDatePrec As Date = DateTime.MinValue
         Dim pDS As dsVinicom
-        Dim colPRD As Collection
+        Dim colPRD As New Collection()
 
 
         pDS = New dsVinicom()
 
-        Dim ocol As Collection
+
         Dim idFourn As Integer = 0
-        If Not String.IsNullOrEmpty(pCodeFourn) Then
-            ocol = Fournisseur.getListe(strCode:=pCodeFourn)
-            If ocol.Count <> 1 Then
-                Return pDS
-            End If
+        If Not String.IsNullOrEmpty(pCodeFourn) And pdossier = Dossier.VINICOM Then
             Dim ofrn As Fournisseur
-            ofrn = ocol(1)
-            '            ofrn.load()
+            ofrn = Fournisseur.createandload(pCodeFourn)
             idFourn = ofrn.id
         End If
+
+
         Try
-            'Charegement de la Liste des produits Plateformes
-            colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn)
+            If pdossier = Dossier.VINICOM Then
+                'Charegement de la Liste des produits Plateformes
+                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn)
+            End If
+            If pdossier = Dossier.HOBIVIN Then
+                'Charegement de la Liste des produits Plateformes
+                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, pdossier:=pdossier)
+            End If
             'chargement des Mouvements de Stocks depuis le dernier inventaire et Calcul du Stock initial
             For Each oPRD As Produit In colPRD
-                oPRD.load()
-                oPRD.loadcolmvtStockDepuisLeDernierMouvementInventaire()
-                oPRD.GenereDataSetRecapColisage(pdDeb, pdFin, pCout, pDS)
+                If oPRD.bDisponible Then
+                    oPRD.load()
+                    oPRD.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+                    oPRD.GenereDataSetRecapColisage(pdDeb, pdFin, pCout, pDS)
+                End If
+            Next
+
+            Dim oRow As dsVinicom.CONSTANTESRow
+            oRow = pDS.CONSTANTES.NewCONSTANTESRow()
+            oRow.CST_SOC2_ADRESSE_RUE1 = Param.getConstante("CST_SOC2_ADRESSE_RUE1")
+            oRow.CST_SOC2_ADRESSE_RUE2 = Param.getConstante("CST_SOC2_ADRESSE_RUE2")
+            oRow.CST_SOC2_ADRESSE_CP = Param.getConstante("CST_SOC2_ADRESSE_CP")
+            oRow.CST_SOC2_ADRESSE_VILLE = Param.getConstante("CST_SOC2_ADRESSE_VILLE")
+            oRow.CST_SOC2_TEL = Param.getConstante("CST_SOC2_TEL")
+            oRow.CST_SOC2_FAX = Param.getConstante("CST_SOC2_FAX")
+            oRow.CST_SOC2_EMAIL = Param.getConstante("CST_SOC2_EMAIL")
+
+            pDS.CONSTANTES.AddCONSTANTESRow(oRow)
+        Catch ex As Exception
+            setError(ex.StackTrace, ex.Message)
+            pDS = New dsVinicom()
+        End Try
+
+
+        Return pDS
+
+    End Function
+    Public Function GenereDataSetRecapColisage() As dsVinicom
+
+        Dim dDatePrec As Date = DateTime.MinValue
+        Dim pDS As dsVinicom
+        Dim colPRD As New Collection()
+
+
+        pDS = New dsVinicom()
+
+
+        Try
+            For Each oLg As LgFactColisage In colLignes
+                Dim oPrd As Produit
+                oPrd = oLg.oProduit
+                oPrd.load()
+
+                oPrd.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+                oPrd.GenereDataSetRecapColisage(dateDebut, dateFin, oLg.prixU, pDS)
             Next
 
             Dim oRow As dsVinicom.CONSTANTESRow

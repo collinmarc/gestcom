@@ -665,7 +665,8 @@ Public Class frmProduit
         'ComboBox1
         '
         resources.ApplyResources(Me.ComboBox1, "ComboBox1")
-        Me.ComboBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "Dossier", True))
+        Me.ComboBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.m_bsrcProduit, "DossierProduit", True))
+        Me.ComboBox1.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.m_bsrcProduit, "DossierProduit", True))
         Me.ComboBox1.DataSource = Me.m_bsrcDossier
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Name = "ComboBox1"

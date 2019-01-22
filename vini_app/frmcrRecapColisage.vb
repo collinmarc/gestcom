@@ -36,18 +36,22 @@ Public Class frmcrRecapColisage
     Friend WithEvents cbAfficher As System.Windows.Forms.Button
     Friend WithEvents dtMois As System.Windows.Forms.DateTimePicker
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents cbxDossier As System.Windows.Forms.ComboBox
+    Friend WithEvents lblFournisseur As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtMois = New System.Windows.Forms.DateTimePicker()
         Me.cbAfficher = New System.Windows.Forms.Button()
         Me.tbCodeFourn = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblFournisseur = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbxDossier = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(9, 12)
+        Me.Label1.Location = New System.Drawing.Point(202, 11)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(84, 20)
         Me.Label1.TabIndex = 1
@@ -57,10 +61,10 @@ Public Class frmcrRecapColisage
         '
         Me.dtMois.CustomFormat = "MMMM yyyy"
         Me.dtMois.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtMois.Location = New System.Drawing.Point(99, 8)
+        Me.dtMois.Location = New System.Drawing.Point(292, 7)
         Me.dtMois.Name = "dtMois"
         Me.dtMois.Size = New System.Drawing.Size(130, 20)
-        Me.dtMois.TabIndex = 0
+        Me.dtMois.TabIndex = 1
         '
         'cbAfficher
         '
@@ -68,30 +72,49 @@ Public Class frmcrRecapColisage
         Me.cbAfficher.Location = New System.Drawing.Point(820, 6)
         Me.cbAfficher.Name = "cbAfficher"
         Me.cbAfficher.Size = New System.Drawing.Size(120, 23)
-        Me.cbAfficher.TabIndex = 4
+        Me.cbAfficher.TabIndex = 3
         Me.cbAfficher.Text = "Afficher"
         '
         'tbCodeFourn
         '
-        Me.tbCodeFourn.Location = New System.Drawing.Point(401, 8)
+        Me.tbCodeFourn.Location = New System.Drawing.Point(558, 7)
         Me.tbCodeFourn.Name = "tbCodeFourn"
         Me.tbCodeFourn.Size = New System.Drawing.Size(100, 20)
         Me.tbCodeFourn.TabIndex = 2
         '
-        'Label3
+        'lblFournisseur
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(306, 12)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(89, 13)
-        Me.Label3.TabIndex = 8
-        Me.Label3.Text = "Code Fournisseur"
+        Me.lblFournisseur.AutoSize = True
+        Me.lblFournisseur.Location = New System.Drawing.Point(463, 9)
+        Me.lblFournisseur.Name = "lblFournisseur"
+        Me.lblFournisseur.Size = New System.Drawing.Size(89, 13)
+        Me.lblFournisseur.TabIndex = 8
+        Me.lblFournisseur.Text = "Code Fournisseur"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(14, 9)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(48, 13)
+        Me.Label2.TabIndex = 9
+        Me.Label2.Text = "Dossier :"
+        '
+        'cbxDossier
+        '
+        Me.cbxDossier.FormattingEnabled = True
+        Me.cbxDossier.Location = New System.Drawing.Point(68, 6)
+        Me.cbxDossier.Name = "cbxDossier"
+        Me.cbxDossier.Size = New System.Drawing.Size(121, 21)
+        Me.cbxDossier.TabIndex = 0
         '
         'frmcrRecapColisage
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
-        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.cbxDossier)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblFournisseur)
         Me.Controls.Add(Me.tbCodeFourn)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cbAfficher)
@@ -102,7 +125,9 @@ Public Class frmcrRecapColisage
         Me.Controls.SetChildIndex(Me.cbAfficher, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.Controls.SetChildIndex(Me.tbCodeFourn, 0)
-        Me.Controls.SetChildIndex(Me.Label3, 0)
+        Me.Controls.SetChildIndex(Me.lblFournisseur, 0)
+        Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.cbxDossier, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -134,7 +159,7 @@ Public Class frmcrRecapColisage
         debAffiche()
         Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
         Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
-        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout, cbxDossier.Text)
 
         setReportConnection(objReport)
         objReport.SetDataSource(oDS)
@@ -178,8 +203,23 @@ Public Class frmcrRecapColisage
     End Sub
 
     Private Sub frmcrRecapColisage_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        cbxDossier.Items.Add(Dossier.VINICOM)
+        cbxDossier.Items.Add(Dossier.HOBIVIN)
+        cbxDossier.Text = Dossier.VINICOM
         dtMois.Value = DateTime.Now
 
 
+    End Sub
+
+    Private Sub cbxDossier_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDossier.SelectedIndexChanged
+        If cbxDossier.Text = Dossier.VINICOM Then
+            lblFournisseur.Visible = True
+            tbCodeFourn.Visible = True
+        End If
+        If cbxDossier.Text = Dossier.HOBIVIN Then
+            lblFournisseur.Visible = False
+            tbCodeFourn.Visible = False
+        End If
     End Sub
 End Class

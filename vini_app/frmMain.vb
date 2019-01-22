@@ -1151,7 +1151,7 @@ Friend Class frmMain
         '
         'StatusBar1
         '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 508)
+        Me.StatusBar1.Location = New System.Drawing.Point(0, 488)
         Me.StatusBar1.Name = "StatusBar1"
         Me.StatusBar1.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.StatusBarDB, Me.StatusBarError, Me.StatusBarEtat})
         Me.StatusBar1.ShowPanels = True
@@ -1178,7 +1178,7 @@ Friend Class frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.ClientSize = New System.Drawing.Size(890, 530)
+        Me.ClientSize = New System.Drawing.Size(890, 510)
         Me.Controls.Add(Me.StatusBar1)
         Me.Controls.Add(Me.mnuToolBar)
         Me.Cursor = System.Windows.Forms.Cursors.Default

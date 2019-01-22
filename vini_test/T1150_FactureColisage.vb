@@ -184,7 +184,7 @@ Imports CrystalDecisions.Shared
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN, Dossier.VINICOM)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
 
 
@@ -269,7 +269,7 @@ Imports CrystalDecisions.Shared
 
 
         Dim oDS As dsVinicom
-        oDS = FactColisageJ.GenereDataSetRecapColisage("01/01/2000", "31/01/2000", m_objFRN.code, 0.1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage("01/01/2000", "31/01/2000", m_objFRN.code, 0.1, Dossier.VINICOM)
 
         Assert.AreEqual(1, oDS.RECAPCOLISAGEJOURN.Count, "1 ligne générée dans le dataset")
 
@@ -430,7 +430,7 @@ Imports CrystalDecisions.Shared
         Dim oDS As dsVinicom
         Dim dDeb As Date = CDate("01/01/2000")
         Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
-        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1, Dossier.VINICOM)
 
         Dim objReport As ReportDocument
 
@@ -567,7 +567,7 @@ Imports CrystalDecisions.Shared
         Dim oDS As dsVinicom
         Dim dDeb As Date = CDate("01/02/1999")
         Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
-        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1)
+        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, m_objFRN.code, 0.1, Dossier.VINICOM)
 
         Dim objReport As ReportDocument
 
@@ -1096,12 +1096,12 @@ Imports CrystalDecisions.Shared
         oCmd.save()
 
         ' Fournisseur 1
-        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN, Dossier.VINICOM)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         ' Fournisseur 2
-        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2)
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2, Dossier.VINICOM)
         ' Fournisseur 3
-        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3)
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3, Dossier.VINICOM)
 
 
         Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
@@ -1193,12 +1193,12 @@ Imports CrystalDecisions.Shared
         oCmd.save()
 
        ' Génération de la facture de colisage pour le Fournisseur 1
-        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN)
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN, Dossier.VINICOM)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         ' Fournisseur 2
-        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2)
+        oFactcol2 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN2, Dossier.VINICOM)
         ' Fournisseur 3
-        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3)
+        oFactCol3 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN3, Dossier.VINICOM)
 
         ' Controle de la facture 1 pour le fourisseur 1
         Assert.AreEqual("février 1964", oFactCol1.periode)
@@ -1251,6 +1251,120 @@ Imports CrystalDecisions.Shared
 
 
     End Sub
+    ''' <summary>
+    ''' test la génération de facture de colisage pour HOBIVIN
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T70_GenerationFactureColisageHOBIVIN()
+
+        Dim oCmd As CommandeClient
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisage
+        Dim oLgCmd As LgCommande
+        Dim oMvtStk As mvtStock
+        Dim oFRNHBV As Fournisseur
+
+        oFRNHBV = New Fournisseur("HBV", "HOBIVIN")
+        oFRNHBV.bIntermdiaire = True
+        oFRNHBV.Dossier = Dossier.HOBIVIN
+        oFRNHBV.Save()
+
+        'Déclartion des produit comme étant des produit HOBIVIN
+
+        m_objPRD.DossierProduit = Dossier.HOBIVIN
+        m_objPRD.save()
+        m_objPRD2.DossierProduit = Dossier.HOBIVIN
+        m_objPRD2.save()
+        m_objPRD3.DossierProduit = Dossier.HOBIVIN
+        m_objPRD3.save()
+
+        'Ajout de Stockinitial
+
+        Persist.shared_connect()
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2019"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD.savecolmvtStock()
+        m_objPRD2.ajouteLigneMvtStock(CDate("01/01/2019"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD2.savecolmvtStock()
+        m_objPRD3.ajouteLigneMvtStock(CDate("01/01/2019"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 01/01/1964", 120)
+        m_objPRD3.savecolmvtStock()
+        'Ajout d'un Second Mvt d'inventaire
+        m_objPRD.ajouteLigneMvtStock(CDate("15/01/2019"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 15/01/1964", 60)
+        m_objPRD.savecolmvtStock()
+        Persist.shared_disconnect()
+
+
+        'Création d'une commande Client avec les 3 produits
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("01/02/2019")
+
+        oCmd.AjouteLigne("10", m_objPRD, 12, 10.5)
+        oCmd.AjouteLigne("20", m_objPRD2, 24, 10.5)
+        oCmd.AjouteLigne("30", m_objPRD3, 6, 10.5)
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("01/02/2019")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+
+
+
+        oCmd.save()
+
+        ' Fournisseur 1
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/2019"), oFRNHBV, Dossier.HOBIVIN)
+        Assert.IsNotNull(oFactCol1, "FactCol1 generée")
+
+        Dim nLignesNonVides As Integer = 0
+        For Each oLgFactCol In oFactCol1.colLignes
+            If oLgFactCol.qteCommande > 0 Then
+                nLignesNonVides = nLignesNonVides + 1
+            End If
+        Next
+
+
+        Assert.IsTrue(oFactCol1.id = 0, "fActure non Sauvegardée")
+        Assert.AreEqual(3, nLignesNonVides, "3 lignes ")
+
+        oLgFactCol = oFactCol1.colLignes(1)
+        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oLgFactCol = oFactCol1.colLignes(2)
+        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oLgFactCol = oFactCol1.colLignes(3)
+        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+
+        oFactCol1.save()
+
+        ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
+        Dim ocol As Collection
+        ocol = mvtStock.getListeDossierNonFacture(Dossier.HOBIVIN, CDate("01/02/2019"), CDate("28/02/2019"))
+        Assert.AreEqual(0, ocol.Count, "Mvt.non facturés")
+
+        oFactCol1.bDeleted = True
+        oFactCol1.save()
+        ocol = mvtStock.getListeDossierNonFacture(Dossier.HOBIVIN, CDate("01/02/2019"), CDate("28/02/2019"))
+        Assert.IsTrue(ocol.Count > 0, "Mvt.non facturés")
+        For Each oMvtStk In ocol
+            Assert.AreEqual(0, oMvtStk.idFactColisage, "ID Facture colisage")
+        Next
+        'ocol = mvtStock.getListe2(CDate("01/02/1964"), CDate("29/02/1964"), m_objFRN, vncEtatMVTSTK.vncMVTSTK_Fact)
+        'Assert.IsTrue(ocol.Count = 0, "Mvt facturés")
+
+
+        oCmd.bDeleted = True
+        oCmd.save()
+
+        oFRNHBV.bDeleted = True
+        oFRNHBV.Save()
+
+    End Sub
+
 
 End Class
 

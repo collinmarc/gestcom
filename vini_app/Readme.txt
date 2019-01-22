@@ -2,6 +2,7 @@
 Date : 12/11/2018
 #857 : 	Commande HBV : les BAF sont à générer avec les prix Gestcom
 #874 : RecapColisage par jour
+#877 : Recap Colisage HOBIVIN
 
 
 Version 5.9.6.1a

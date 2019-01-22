@@ -332,4 +332,34 @@ Public Class Fournisseur
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Renvoie le Fournuisseur qui a été identifié comme intermédiaire pour un Dossier
+    ''' </summary>
+    ''' <param name="pDossier">Dossier de reference</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function getIntermediairePourUnDossier(pDossier As String) As Fournisseur
+        Dim oReturn As Fournisseur = Nothing
+        Try
+            Dim idTypeClient As Integer
+            For Each oParam As Param In Param.colTypeClient
+                If oParam.code.ToUpper() = "INT" Then
+                    idTypeClient = oParam.id
+                End If
+            Next
+
+            Dim strSQL As String
+            strSQL = "SELECT FRN_ID FROM Fournisseur where FRN_BINTERMEDIAIRE = 1 and FRN_DOSSIER = '" & pDossier & "'"
+            Dim strResultat As String = Persist.executeSQLQuery(strSQL)
+
+            If Not String.IsNullOrEmpty(strResultat) Then
+                oReturn = Fournisseur.createandload(CInt(strResultat))
+            End If
+
+        Catch ex As Exception
+            oReturn = Nothing
+        End Try
+        Return oReturn
+    End Function
+
 End Class
