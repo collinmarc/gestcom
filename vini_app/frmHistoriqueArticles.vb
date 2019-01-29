@@ -64,7 +64,7 @@ Public Class frmHistoriqueArticles
         Me.dtdeb.Location = New System.Drawing.Point(128, 8)
         Me.dtdeb.Name = "dtdeb"
         Me.dtdeb.Size = New System.Drawing.Size(136, 20)
-        Me.dtdeb.TabIndex = 2
+        Me.dtdeb.TabIndex = 0
         '
         'Label2
         '
@@ -80,14 +80,14 @@ Public Class frmHistoriqueArticles
         Me.dtFin.Location = New System.Drawing.Point(360, 8)
         Me.dtFin.Name = "dtFin"
         Me.dtFin.Size = New System.Drawing.Size(104, 20)
-        Me.dtFin.TabIndex = 4
+        Me.dtFin.TabIndex = 1
         '
         'cbAfficher
         '
         Me.cbAfficher.Location = New System.Drawing.Point(656, 8)
         Me.cbAfficher.Name = "cbAfficher"
         Me.cbAfficher.Size = New System.Drawing.Size(120, 23)
-        Me.cbAfficher.TabIndex = 6
+        Me.cbAfficher.TabIndex = 3
         Me.cbAfficher.Text = "Afficher"
         '
         'Label3
@@ -103,7 +103,7 @@ Public Class frmHistoriqueArticles
         Me.tbCodeArticle.Location = New System.Drawing.Point(560, 8)
         Me.tbCodeArticle.Name = "tbCodeArticle"
         Me.tbCodeArticle.Size = New System.Drawing.Size(72, 20)
-        Me.tbCodeArticle.TabIndex = 5
+        Me.tbCodeArticle.TabIndex = 2
         '
         'frmHistoriqueArticles
         '

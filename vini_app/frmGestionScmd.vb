@@ -74,7 +74,7 @@ Public Class frmGestionSCMD
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents cbCalc As System.Windows.Forms.Button
     Public WithEvents tbMontantCommision As vini_app.textBoxCurrency
-    Public WithEvents tbTxCommision As vini_app.textBoxNumeric
+    Public WithEvents tbTxCommision As TextBox
     Public WithEvents Label5 As System.Windows.Forms.Label
     Public WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
@@ -110,7 +110,7 @@ Public Class frmGestionSCMD
         Me.Label15 = New System.Windows.Forms.Label()
         Me.cbCalc = New System.Windows.Forms.Button()
         Me.tbMontantCommision = New vini_app.textBoxCurrency()
-        Me.tbTxCommision = New vini_app.textBoxNumeric()
+        Me.tbTxCommision = New TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ckImporteeInternet = New System.Windows.Forms.CheckBox()

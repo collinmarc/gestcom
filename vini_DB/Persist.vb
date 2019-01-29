@@ -2253,7 +2253,6 @@ Public MustInherit Class Persist
             Dim Temp As Date = DateTime.Now
             objRS = objOLeDBCommand.ExecuteReader()
             Dim oTimeSpan As TimeSpan = DateTime.Now - Temp
-            Debug.WriteLine("ListPrd Time = " & oTimeSpan.TotalMilliseconds())
             While (objRS.Read())
                 nId = getInteger(objRS, "PRD_ID")
                 objPRD = New Produit()
@@ -2264,7 +2263,6 @@ Public MustInherit Class Persist
             objRS.Close()
             objRS = Nothing
             oTimeSpan = DateTime.Now - Temp
-            Debug.WriteLine("ListPrd Time = " & oTimeSpan.TotalMilliseconds())
             Return colReturn
         Catch ex As Exception
             setError("ListPRD", ex.ToString())
@@ -15061,7 +15059,6 @@ Public MustInherit Class Persist
         myConnectionInfo.DatabaseName = Persist.oleDBConnection.Database
         myConnectionInfo.UserID = m_ReportCnxUser
         myConnectionInfo.Password = m_ReportCnxPassword
-        Trace.WriteLine("setReportconnection,ServerName=" + myConnectionInfo.ServerName + ",DBNAme=" + myConnectionInfo.DatabaseName + "User=" + myConnectionInfo.UserID + ",Password=" + myConnectionInfo.Password)
 
 
         Dim mySections As Sections = objReport.ReportDefinition.Sections

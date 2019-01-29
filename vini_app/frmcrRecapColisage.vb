@@ -150,6 +150,7 @@ Public Class frmcrRecapColisage
         Dim strCodeFourn As String
         Dim nCout As Decimal
 
+        Me.Cursor = Cursors.WaitCursor
         objReport = New ReportDocument
         objReport.Load(PATHTOREPORTS & strReportName)
         strCodeFourn = tbCodeFourn.Text.Replace("*", "%")
@@ -170,6 +171,8 @@ Public Class frmcrRecapColisage
 
         CrystalReportViewer1.ReportSource = objReport
         finAffiche()
+        Me.Cursor = Cursors.Default
+
     End Sub
 
     Private Sub setReportConnection(ByVal objReport As ReportDocument)

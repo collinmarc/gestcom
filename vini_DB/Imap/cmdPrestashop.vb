@@ -54,6 +54,7 @@ Public Class cmdprestashop
             strXMl = strXMl.Replace("[", "<")
             strXMl = strXMl.Replace("]", ">")
             strXMl = strXMl.Replace("#", "=")
+            strXMl = strXMl.Replace("&", ".")
 
             Dim oImap As New ImapVB.Imap
             Dim strOut As String = ""
@@ -69,12 +70,12 @@ Public Class cmdprestashop
             Next
             '"           objStreamReader.Close()
         Catch ex As Exception
-            Debug.Print("cmdPrestashop.readXML: " & ex.Message)
+            setError("cmdPrestashop.readXML: " & ex.Message)
             If ex.InnerException IsNot Nothing Then
-                Debug.Print("cmdPrestashop.readXML: " & ex.InnerException.Message)
+                setError("cmdPrestashop.readXML: " & ex.InnerException.Message)
             End If
-            Debug.Print("cmdPrestashop.readXML: " & pXmlString)
-            Debug.Print("cmdPrestashop.readXML: " & strXMl)
+            setError("cmdPrestashop.readXML: " & pXmlString)
+            setError("cmdPrestashop.readXML: " & strXMl)
 
         End Try
         Return oReturn
@@ -211,6 +212,29 @@ Public Class cmdprestashop
         End Try
         Return oReturn
     End Function
+    Protected Shared Sub setError(ByVal strSource As String, ByVal strMessage As String)
+        '       m_ErreurSource = strSource
+        '     m_ErreurMessage = strMessage
+        '      If (m_ErreurMessage <> "") Then
+        Trace.WriteLine(strSource & ":" & strMessage)
+        '    End If
+    End Sub
+    Protected Shared Sub setError(ByVal strMessage As String)
+        Try
+
+            '   m_ErreurSource = ""
+            '   m_ErreurMessage = strMessage
+            '  If (m_ErreurMessage <> "") Then
+            Trace.WriteLine(strMessage)
+            'End If
+        Catch ex As Exception
+            '            If (m_ErreurMessage <> "") Then
+            ' Trace.WriteLine("???:" & m_ErreurMessage)
+            ' End If
+
+        End Try
+    End Sub
+
 End Class
 Public Class ligneprestashop
     Public reference As String

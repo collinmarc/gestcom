@@ -9,6 +9,7 @@ Imports System.Text.RegularExpressions
 ''' <summary>
 ''' Classe de test à reactiver 
 ''' </summary>
+''' 
 <TestClass()> Public Class TestImap
     Inherits test_Base
     Private Sub CleanImap()
@@ -105,7 +106,7 @@ Imports System.Text.RegularExpressions
             bMsgTraite = False
             oImap.SelectFolder("INBOX")
             For nmsg As Integer = 1 To oImap.nNbreMsgTotal
-                oMsg = oImap.GetMessage(nmsg)
+                oMsg = oImap.getMessage(nmsg)
 
             Next
         End While
@@ -509,15 +510,15 @@ Imports System.Text.RegularExpressions
         oClient.code = "CLTTST"
         oClient.idPrestashop = 2
         oClient.idModeReglement = oParam.id
-        Assert.IsTrue(oClient.Save())
+        Assert.IsTrue(oClient.save())
         'On Créé le produit
         Dim obj As Fournisseur
         obj = New Fournisseur("TST", "nom")
         Assert.IsTrue(obj.Save)
         Dim oProduit As New Produit("demo_3", obj, 2010)
-        Assert.IsTrue(oProduit.Save())
+        Assert.IsTrue(oProduit.save())
         oProduit = New Produit("demo_1", obj, 2010)
-        Assert.IsTrue(oProduit.Save())
+        Assert.IsTrue(oProduit.save())
 
 
         EnvoiMailCmd()
@@ -660,6 +661,31 @@ Imports System.Text.RegularExpressions
         Assert.AreEqual(ocmd.lignes(1).quantite, 15)
 
     End Sub
+    ''' <summary>
+    ''' Test Lecture d'un Flux XML avec un &
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub testReadXMLFileavecAmp()
+        Dim ocmd As cmdprestashop
+        Assert.IsTrue(System.IO.File.Exists("./CmdPrestashopTest.xml"))
+
+        Dim strIn As String = System.IO.File.ReadAllText("./CmdPrestashopTest.xml")
+
+        ocmd = cmdprestashop.readXML(strIn)
+        Assert.AreEqual(ocmd.id, "288")
+        Assert.AreEqual(ocmd.name, "JFMZPIJJQ")
+        Assert.AreEqual(ocmd.origine, Dossier.HOBIVIN)
+        Assert.AreEqual(ocmd.livraison_company, "LE RIALTO")
+        Assert.AreEqual(ocmd.livraison_adress1, "40 AVENUE E. . M. PINAULT")
+        Assert.AreEqual(ocmd.lignes.Count, 3)
+        Assert.AreEqual(ocmd.lignes(0).reference, "051000")
+        Assert.AreEqual(ocmd.lignes(0).quantite, 12)
+        Assert.AreEqual(ocmd.lignes(1).reference, "174003")
+        Assert.AreEqual(ocmd.lignes(1).quantite, 12)
+        Assert.AreEqual(ocmd.lignes(2).reference, "178001H")
+        Assert.AreEqual(ocmd.lignes(2).quantite, 12)
+
+    End Sub
 
     ''' <summary>
     ''' Chargement de la commande prestashop à partir d'une chaine
@@ -716,7 +742,7 @@ Imports System.Text.RegularExpressions
 
         oClient = New Client("TESTIMAP", "Client de test")
         oClient.idPrestashop = 99
-        Assert.IsTrue(oClient.Save())
+        Assert.IsTrue(oClient.save())
         oClient = Client.createandloadPrestashop(99)
         Assert.IsNotNull(oClient)
         Assert.AreEqual(99L, oClient.idPrestashop)
@@ -726,7 +752,7 @@ Imports System.Text.RegularExpressions
     <TestMethod()> Public Sub testCmdPrestashopCheckClient()
         Dim oClient As New Client()
         oClient.idPrestashop = 99
-        Assert.IsTrue(oClient.Save())
+        Assert.IsTrue(oClient.save())
 
 
         Dim oCmd As New cmdprestashop()
@@ -744,7 +770,7 @@ Imports System.Text.RegularExpressions
         Dim oClient As New Client()
         oClient.idPrestashop = 99
 
-        Assert.IsTrue(oClient.Save())
+        Assert.IsTrue(oClient.save())
 
 
         Dim oCmd As New cmdprestashop()
@@ -760,7 +786,7 @@ Imports System.Text.RegularExpressions
         obj = New Fournisseur("TST", "nom")
         Assert.IsTrue(obj.Save)
         Dim oProduit As New Produit("PRD1", obj, 2010)
-        Assert.IsTrue(oProduit.Save())
+        Assert.IsTrue(oProduit.save())
 
         'Reteste de la commande
         Assert.IsTrue(oCmd.check)
@@ -777,7 +803,7 @@ Imports System.Text.RegularExpressions
         oClient.idPrestashop = Now().Hour() & Now.Minute & Now().Second()
 
 
-        Assert.IsTrue(oClient.Save())
+        Assert.IsTrue(oClient.save())
         'On Créé le produit
         Dim objFRN As Fournisseur
         objFRN = New Fournisseur("TST", "nom")
@@ -785,7 +811,7 @@ Imports System.Text.RegularExpressions
         Dim oProduit As New Produit("PRD1", objFRN, 2010)
         Assert.IsTrue(oProduit.save())
         oProduit = New Produit("PRD2", objFRN, 2010)
-        Assert.IsTrue(oProduit.Save())
+        Assert.IsTrue(oProduit.save())
 
         'Création de la Commande D'import Prestashop (simulation de la lecture du XML)
         Dim oCmd As New cmdprestashop()
@@ -804,7 +830,7 @@ Imports System.Text.RegularExpressions
 
         oCmdClt = oCmd.createCommandeClient()
         Assert.IsNotNull(oCmdClt)
-        Assert.IsTrue(oCmdClt.Save())
+        Assert.IsTrue(oCmdClt.save())
 
         Assert.AreEqual(CLng(oCmd.id), oCmdClt.IDPrestashop)
         Assert.AreEqual(oCmd.name, oCmdClt.NamePrestashop)

@@ -185,6 +185,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="CmdPrestashopTest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DATATEST\Image2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

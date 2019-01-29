@@ -4618,7 +4618,6 @@ Public Class frmSaisieCommande
         'Dim nMontant As Decimal
 
         Try
-            Trace.WriteLine("calculMontantTransport")
             getCommandeCourante.CalcMontantTransport()
             m_bsrcCommande.ResetCurrentItem()
             'nQtePalPrep = tbQtePallPrep.Text

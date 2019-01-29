@@ -25,6 +25,7 @@ Public Class frmVerificationLivraison
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents lblMessage As System.Windows.Forms.Label
+    Friend WithEvents lblNbFichiersATraiter As System.Windows.Forms.Label
     Protected m_colFact As ColEvent
     'Protected getElementCourant() As FactTRP
 
@@ -79,6 +80,7 @@ Public Class frmVerificationLivraison
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.lblMessage = New System.Windows.Forms.Label()
+        Me.lblNbFichiersATraiter = New System.Windows.Forms.Label()
         Me.pnlFichierATraiter.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.m_bsrcMsgLivraison, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -263,10 +265,21 @@ Public Class frmVerificationLivraison
         Me.lblMessage.TabIndex = 16
         Me.lblMessage.Text = "Label2"
         '
+        'lblNbFichiersATraiter
+        '
+        Me.lblNbFichiersATraiter.AutoSize = True
+        Me.lblNbFichiersATraiter.ForeColor = System.Drawing.Color.Red
+        Me.lblNbFichiersATraiter.Location = New System.Drawing.Point(208, 12)
+        Me.lblNbFichiersATraiter.Name = "lblNbFichiersATraiter"
+        Me.lblNbFichiersATraiter.Size = New System.Drawing.Size(104, 13)
+        Me.lblNbFichiersATraiter.TabIndex = 17
+        Me.lblNbFichiersATraiter.Text = "lblNbFichiersATraiter"
+        '
         'frmVerificationLivraison
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1011, 633)
+        Me.Controls.Add(Me.lblNbFichiersATraiter)
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.pnlFichierATraiter)
@@ -334,7 +347,7 @@ Public Class frmVerificationLivraison
 
 #Region "Methodes privées"
     Private Sub initFenetre()
-
+        DisplayNbFichierAtraiter()
     End Sub
     Private Sub afficheListeCommande()
 
@@ -400,10 +413,12 @@ Public Class frmVerificationLivraison
 
     Private Sub rbFTP_CheckedChanged(sender As Object, e As EventArgs) Handles rbFTP.CheckedChanged
         pnlFichierATraiter.Visible = rbManuel.Checked
+        lblNbFichiersATraiter.Visible = rbFTP.Checked
     End Sub
 
     Private Sub rbManuel_CheckedChanged(sender As Object, e As EventArgs) Handles rbManuel.CheckedChanged
         pnlFichierATraiter.Visible = rbManuel.Checked
+        lblNbFichiersATraiter.Visible = rbFTP.Checked
     End Sub
 
     Private Sub btnTraiter_Click(sender As Object, e As EventArgs) Handles btnTraiter.Click
@@ -424,7 +439,7 @@ Public Class frmVerificationLivraison
             Dim strPort As String = Param.getConstante("CST_FTPEDI_PORT")
             Dim strRepDistant As String = Param.getConstante("CST_FTPEDI_REP")
             Dim strRepLocal As String = Param.getConstante("CST_FTPEDI_REPLOCAL")
-            Dim nFiles As Integer
+            'Dim nFiles As Integer
 
 
             If Not System.IO.Directory.Exists(strRepLocal) Then
@@ -432,7 +447,7 @@ Public Class frmVerificationLivraison
             End If
             bgw.ReportProgress(10, "Récupération des fichiers sur le serveur")
             '            DisplayStatus("Récupération des fichiers sur le serveur")
-            nFiles = mvtEDI.getFilesCount(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
+            'nFiles = mvtEDI.getFilesCount(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
             mvtEDI.getFilesFromFTP(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
 
 
@@ -442,6 +457,9 @@ Public Class frmVerificationLivraison
             Dim nCount As Integer = 0
             For Each strFile As String In tabFiles
                 nCount = nCount + 1
+                Dim oMsg As New MsgLivraison()
+                oMsg.Message = "Traietement du fichier " & strFile
+                olst.Add(oMsg)
                 bgw.ReportProgress((nCount / tabFiles.Length) * 90, "Traitement des fichiers")
                 Dim olst1 As List(Of MsgLivraison)
                 olst1 = mvtEDI.VerificationCommandes(strFile)
@@ -518,6 +536,31 @@ Public Class frmVerificationLivraison
         '        Me.Cursor = Cursors.WaitCursor
         VerificationInfosLivraison(Me.BackgroundWorker1, rbFTP.Checked, ckAfficherCmdOK.Checked, tbFilePath.Text)
     End Sub
+
+    Private Sub DisplayNbFichierAtraiter()
+        '        Récupération du fichier FTP
+        Dim strSRV As String = Param.getConstante("CST_FTPEDI_SRV")
+        Dim strUser As String = Param.getConstante("CST_FTPEDI_USER")
+        Dim strpwd As String = Param.getConstante("CST_FTPEDI_PWD")
+        Dim strPort As String = Param.getConstante("CST_FTPEDI_PORT")
+        Dim strRepDistant As String = Param.getConstante("CST_FTPEDI_REP")
+        Dim strRepLocal As String = Param.getConstante("CST_FTPEDI_REPLOCAL")
+        Dim nFiles As Integer
+
+
+        nFiles = mvtEDI.getFilesCount(strSRV, strPort, strUser, strpwd, strRepDistant, strRepLocal)
+        If nFiles = 0 Then
+            lblNbFichiersATraiter.Text = "IL N'Y A PAS DE FICHIERS A TRAITER"
+        End If
+        If nFiles = 1 Then
+            lblNbFichiersATraiter.Text = " 1 FICHIER A TRAITER"
+        End If
+        If nFiles > 1 Then
+            lblNbFichiersATraiter.Text = "" + CStr(nFiles) + " FICHIERS A TRAITER"
+        End If
+
+    End Sub
+
 End Class
 Public Class UserState
     Public nNum As Integer

@@ -406,12 +406,12 @@ Public Class clsFTPVinicom
 
             nReturn = 0
             Dim lstFile As List(Of String) = m_FTP.ListDirectory("/" & m_RemoteDir)
-            nReturn = lstFile.Count
+            nReturn = lstFile.Count - 2
         Catch ex As Exception
             nReturn = 0
         End Try
 
-        Return 0
+        Return nReturn
     End Function ' getRemoteFileCount
     '=======================================================================
     'Fonction : shortResume()

@@ -1069,9 +1069,9 @@ Imports System.IO
                 n = n + 1
                 Assert.AreEqual(Trim(Format(oSCmd.dateEnlevement, "ddMMyyyy")), tabCSV(n))
                 n = n + 1
-                Assert.AreEqual(CDec(139.95), CDec(tabCSV(n)))
+                Assert.AreEqual(CDec(9 * 10.2), CDec(tabCSV(n))) 'comme c'est une commande HOBIVIN, on prend le tarif dans la fiche produit et non dans la commande
                 n = n + 1
-                Assert.AreEqual(CDec(167.94), CDec(tabCSV(n)))
+                Assert.AreEqual(CDec((9 * 10.2) * 1.2), CDec(tabCSV(n)))
                 n = n + 1
                 Assert.AreEqual(Trim(oSCmd.CommFacturation.comment), tabCSV(n))
                 n = n + 1

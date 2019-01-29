@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<cmdprestashop>
+<id>288</id>
+<origine>HOBIVIN</origine>
+<name>JFMZPIJJQ</name>
+<customer_id>10027</customer_id>
+		<livraison_company>LE RIALTO</livraison_company>
+		<livraison_name>.</livraison_name>
+		<livraison_firstname>.</livraison_firstname>
+		<livraison_adress1>40 AVENUE E. & M. PINAULT</livraison_adress1>
+		<livraison_adress2></livraison_adress2>	
+		<livraison_postalcode>35740</livraison_postalcode>
+		<livraison_city>PACE</livraison_city>
+<lignes>
+		<ligneprestashop>
+			<reference>051000</reference>
+			<quantite>12</quantite>
+			<prixunitaire>8.57</prixunitaire>
+		</ligneprestashop>
+		<ligneprestashop>
+			<reference>174003</reference>
+			<quantite>12</quantite>
+			<prixunitaire>3.64</prixunitaire>
+			</ligneprestashop><ligneprestashop>
+			<reference>178001H</reference>
+			<quantite>12</quantite>
+			<prixunitaire>3.18</prixunitaire>
+		</ligneprestashop>
+</lignes>
+</cmdprestashop>

@@ -195,7 +195,7 @@ Public Class ImportPrestashop
                     setError("  Commande N° " & oCmd.id & "(" & oCmd.name & ") importée")
                 Else
                     setError("==Commande N° " & oCmd.id & "(" & oCmd.name & ") refusée : Motif " & oCmd.motif)
-                    Dim oSmtp As New SmtpClient()
+                    setError("==CODE XML" & pMsg.Body)
                 End If
             End If
         Catch ex As Exception

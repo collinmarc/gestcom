@@ -29,7 +29,7 @@ Public Class dlgVisuBonFournisseur
                 components.Dispose()
             End If
         End If
-        crwPrecommande.Dispose()
+        'crwPrecommande.Dispose()
 
         MyBase.Dispose(disposing)
     End Sub

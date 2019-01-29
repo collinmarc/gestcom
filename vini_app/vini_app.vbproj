@@ -1377,9 +1377,6 @@
     <Content Include="Requetes\V5.9.003ToV5.9.004.SQL">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Requetes\TOV5.9.6.SQL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Requetes\V5.9.004b.SQL" />
     <Content Include="Requetes\VxxTOV5.6.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1409,11 +1406,11 @@
       <LastGenOutput>crListeFactColisageParNumero.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="crRecapColisageJournalier.rpt">
+    <Content Include="crRecapColisageJournalier.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crRecapColisageJournalier.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.vb</LastGenOutput>

@@ -576,7 +576,6 @@ Public MustInherit Class Commande
             Return m_qtePalettesPreparees
         End Get
         Set(ByVal Value As Decimal)
-            Trace.WriteLine("SetqtePalettesPreparees")
             If Value <> m_qtePalettesPreparees Then
                 m_qtePalettesPreparees = Value
                 RaiseUpdated()
@@ -589,7 +588,6 @@ Public MustInherit Class Commande
             Return m_qtePalettesNonPreparees
         End Get
         Set(ByVal Value As Decimal)
-            Trace.WriteLine("SetqtePalettesNonPreparees")
             If Value <> m_qtePalettesNonPreparees Then
                 m_qtePalettesNonPreparees = Value
                 RaiseUpdated()
@@ -614,7 +612,6 @@ Public MustInherit Class Commande
             Return m_puPalettesPreparees
         End Get
         Set(ByVal Value As Decimal)
-            Trace.WriteLine("SetpuPalettesPreparees")
             If Value <> m_puPalettesPreparees Then
                 m_puPalettesPreparees = Value
                 RaiseUpdated()
@@ -627,7 +624,6 @@ Public MustInherit Class Commande
             Return m_puPalettesNonPreparees
         End Get
         Set(ByVal Value As Decimal)
-            Trace.WriteLine("SetpuPalettesNonPreparees")
             If Value <> m_puPalettesNonPreparees Then
                 m_puPalettesNonPreparees = Value
                 RaiseUpdated()
@@ -1040,7 +1036,6 @@ Public MustInherit Class Commande
     Public Function CalcMontantTransport() As Boolean
         Dim bReturn As Boolean
         Try
-            Trace.WriteLine("CalcMontantTransport")
             montantTransport = (qtePalettesPreparees * puPalettesPreparees) + (qtePalettesNonPreparees * puPalettesNonPreparees)
             bReturn = True
         Catch ex As Exception

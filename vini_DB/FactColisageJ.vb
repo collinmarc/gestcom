@@ -762,7 +762,7 @@ Public Class FactColisageJ
         Try
             If pdossier = Dossier.VINICOM Then
                 'Charegement de la Liste des produits Plateformes
-                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn)
+                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn, pdossier:=pdossier)
             End If
             If pdossier = Dossier.HOBIVIN Then
                 'Charegement de la Liste des produits Plateformes

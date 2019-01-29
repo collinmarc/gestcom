@@ -1,4 +1,11 @@
-﻿Version 5.9.7
+﻿Version 5.9.7.1
+Date : 12/11/2018
+#892 : Import de commandes Prestashop avec &
+#874 : RecapColisage par jour
+#893 : Vérification des infos d livraison: Fichiers manquants
+
+
+Version 5.9.7
 Date : 12/11/2018
 #857 : 	Commande HBV : les BAF sont à générer avec les prix Gestcom
 #874 : RecapColisage par jour
