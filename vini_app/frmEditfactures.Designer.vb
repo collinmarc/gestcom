@@ -50,6 +50,7 @@ Partial Class frmEditfactures
         Me.laTiers = New System.Windows.Forms.Label()
         Me.tbCodeTiers = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rbFactColAnc = New System.Windows.Forms.RadioButton()
         Me.grpTypeEditFactcom = New System.Windows.Forms.GroupBox()
         Me.CrystalReportViewer1 = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.GroupBox1.SuspendLayout()
@@ -194,15 +195,27 @@ Partial Class frmEditfactures
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.rbFactColAnc)
         Me.GroupBox1.Controls.Add(Me.rbFactcom)
         Me.GroupBox1.Controls.Add(Me.rbFactTRP)
         Me.GroupBox1.Controls.Add(Me.rbFactCol)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 0)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(188, 87)
+        Me.GroupBox1.Size = New System.Drawing.Size(188, 122)
         Me.GroupBox1.TabIndex = 15
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Type de factures"
+        '
+        'rbFactColAnc
+        '
+        Me.rbFactColAnc.AutoSize = True
+        Me.rbFactColAnc.Location = New System.Drawing.Point(6, 85)
+        Me.rbFactColAnc.Name = "rbFactColAnc"
+        Me.rbFactColAnc.Size = New System.Drawing.Size(177, 17)
+        Me.rbFactColAnc.TabIndex = 3
+        Me.rbFactColAnc.TabStop = True
+        Me.rbFactColAnc.Text = "Factures de colisage (Ancienne)"
+        Me.rbFactColAnc.UseVisualStyleBackColor = True
         '
         'grpTypeEditFactcom
         '
@@ -224,13 +237,13 @@ Partial Class frmEditfactures
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CrystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.CrystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default
-        Me.CrystalReportViewer1.Location = New System.Drawing.Point(13, 94)
+        Me.CrystalReportViewer1.Location = New System.Drawing.Point(13, 172)
         Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
         Me.CrystalReportViewer1.ShowCloseButton = False
         Me.CrystalReportViewer1.ShowCopyButton = False
         Me.CrystalReportViewer1.ShowLogo = False
         Me.CrystalReportViewer1.ShowParameterPanelButton = False
-        Me.CrystalReportViewer1.Size = New System.Drawing.Size(975, 572)
+        Me.CrystalReportViewer1.Size = New System.Drawing.Size(975, 494)
         Me.CrystalReportViewer1.TabIndex = 17
         '
         'frmEditfactures
@@ -276,4 +289,5 @@ Partial Class frmEditfactures
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents grpTypeEditFactcom As System.Windows.Forms.GroupBox
     Friend WithEvents CrystalReportViewer1 As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Friend WithEvents rbFactColAnc As System.Windows.Forms.RadioButton
 End Class

@@ -48,6 +48,9 @@ Public Class frmEditfactures
         If rbFactCol.Checked Then
             strReport = "crFactureColisage.rpt"
         End If
+        If rbFactColAnc.Checked Then
+            strReport = "crFactureColisageOLD.rpt"
+        End If
         objReport = New ReportDocument
         objReport.Load(strReport)
 
@@ -67,7 +70,7 @@ Public Class frmEditfactures
         If rbFactTRP.Checked Then
             oCol = FactTRP.getListe(ddeb, dfin, tbCodeTiers.Text)
         End If
-        If rbFactCol.Checked Then
+        If rbFactCol.Checked Or rbFactColAnc.Checked Then
             oCol = FactColisageJ.getListe(ddeb, dfin, tbCodeTiers.Text)
         End If
         tabIds = New ArrayList()
@@ -87,7 +90,7 @@ Public Class frmEditfactures
                 objReport.SetParameterValue("bEntete", ckEntete.Checked)
                 objReport.SetParameterValue("LGNUMGAZOLE", Param.LGNUM_GAZOLE)
             End If
-            If rbFactCol.Checked Then
+            If rbFactCol.Checked Or rbFactColAnc.Checked Then
                 objReport.SetParameterValue("IdFactures", tabIds.ToArray())
                 objReport.SetParameterValue("bEntete", ckEntete.Checked)
             End If
@@ -109,6 +112,10 @@ Public Class frmEditfactures
     End Sub
 
     Private Sub CrystalReportViewer1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+    End Sub
+
+    Private Sub rbFactColAnc_CheckedChanged(sender As Object, e As EventArgs) Handles rbFactColAnc.CheckedChanged
 
     End Sub
 End Class

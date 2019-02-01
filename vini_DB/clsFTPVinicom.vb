@@ -406,7 +406,12 @@ Public Class clsFTPVinicom
 
             nReturn = 0
             Dim lstFile As List(Of String) = m_FTP.ListDirectory("/" & m_RemoteDir)
-            nReturn = lstFile.Count - 2
+            nReturn = lstFile.Count
+            For Each Str As String In lstFile
+                If Str = "." Or Str = ".." Then
+                    nReturn = nReturn - 1
+                End If
+            Next
         Catch ex As Exception
             nReturn = 0
         End Try

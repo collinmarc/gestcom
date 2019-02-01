@@ -570,10 +570,15 @@ Namespace ImapVB
         ''' <param name="sUid">UID of the message</param>
         ''' <param name="sFolderName"> Folder where you want to move the message</param>
         Public Sub MoveMessage(sUid As String, sFolderName As String)
-            CopyMessage(sUid, sFolderName)
-            Expunge()
-            SetFlag(sUid, "\Answered")
-            Expunge()
+            Try
+                CopyMessage(sUid, sFolderName)
+                Expunge()
+                SetFlag(sUid, "\Answered")
+                Expunge()
+
+            Catch ex As Exception
+                Trace.WriteLine("Image.MoveMessage ERR:" & ex.Message)
+            End Try
         End Sub
         Public Sub DeleteMessage2(sUid As String)
             SetFlag(sUid, "\Deleted")

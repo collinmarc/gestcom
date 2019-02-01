@@ -1,5 +1,10 @@
-﻿Version 5.9.7.1
-Date : 12/11/2018
+﻿Version 5.9.7.2
+Date : 01/20/2019
+#908: Edition des factures de colisage Ancienne Version
+#909: Verif des infos de Livraisons : Calcul du nombre de fichiers incorrect
+
+Version 5.9.7.1
+Date : 20/01/2019
 #892 : Import de commandes Prestashop avec &
 #874 : RecapColisage par jour
 #893 : Vérification des infos d livraison: Fichiers manquants
