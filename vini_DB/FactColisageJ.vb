@@ -797,6 +797,59 @@ Public Class FactColisageJ
         Return pDS
 
     End Function
+    Public Shared Function GenereDataSetRecapColisage(ByVal pIdFactCol As Integer, ByVal pCout As Decimal, pdossier As String) As dsVinicom
+
+
+
+        Dim dDatePrec As Date = DateTime.MinValue
+        Dim pDS As dsVinicom
+        Dim colPRD As New Collection()
+        Dim idFourn As Integer = 0
+
+
+        pDS = New dsVinicom()
+        Dim oFactCol As FactColisageJ
+        oFactCol = FactColisageJ.createandload(pIdFactCol)
+        idFourn = oFactCol.oTiers.id
+
+        Try
+            If pdossier = Dossier.VINICOM Then
+                'Charegement de la Liste des produits Plateformes
+                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, idFournisseur:=idFourn, pdossier:=pdossier)
+            End If
+            If pdossier = Dossier.HOBIVIN Then
+                'Chargement de la Liste des produits Plateformes
+                colPRD = Produit.getListe(vncTypeProduit.vncPlateforme, pdossier:=pdossier)
+            End If
+            'chargement des Mouvements de Stocks depuis le dernier inventaire et Calcul du Stock initial
+            For Each oPRD As Produit In colPRD
+                If oPRD.bDisponible Then
+                    oPRD.load()
+                    oPRD.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+                    oPRD.GenereDataSetRecapColisage(pIdFactCol, pCout, pDS)
+                End If
+            Next
+
+            Dim oRow As dsVinicom.CONSTANTESRow
+            oRow = pDS.CONSTANTES.NewCONSTANTESRow()
+            oRow.CST_SOC2_ADRESSE_RUE1 = Param.getConstante("CST_SOC2_ADRESSE_RUE1")
+            oRow.CST_SOC2_ADRESSE_RUE2 = Param.getConstante("CST_SOC2_ADRESSE_RUE2")
+            oRow.CST_SOC2_ADRESSE_CP = Param.getConstante("CST_SOC2_ADRESSE_CP")
+            oRow.CST_SOC2_ADRESSE_VILLE = Param.getConstante("CST_SOC2_ADRESSE_VILLE")
+            oRow.CST_SOC2_TEL = Param.getConstante("CST_SOC2_TEL")
+            oRow.CST_SOC2_FAX = Param.getConstante("CST_SOC2_FAX")
+            oRow.CST_SOC2_EMAIL = Param.getConstante("CST_SOC2_EMAIL")
+
+            pDS.CONSTANTES.AddCONSTANTESRow(oRow)
+        Catch ex As Exception
+            setError(ex.StackTrace, ex.Message)
+            pDS = New dsVinicom()
+        End Try
+
+
+        Return pDS
+
+    End Function
     Public Function GenereDataSetRecapColisage() As dsVinicom
 
         Dim dDatePrec As Date = DateTime.MinValue

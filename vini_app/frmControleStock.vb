@@ -256,9 +256,9 @@ Public Class frmControleStock
             Case vncCheckStock.checkStockparDate
                 DisplayStatus("Lectures des Commandes Livrées")
                 'Conacténation des commandes
-                colToutesCommandes = CommandeClient.getListe(dtdateDeb.Value.ToShortDateString, dtdatefin.Value.ToShortDateString, vncEnums.vncEtatCommande.vncLivree, "")
+                colToutesCommandes = CommandeClient.getListe(dtdateDeb.Value, dtdatefin.Value, "", vncEnums.vncEtatCommande.vncLivree, "")
                 DisplayStatus("Lectures des Commandes Eclatées")
-                colCommandes = CommandeClient.getListe(dtdateDeb.Value.ToShortDateString, dtdatefin.Value.ToShortDateString, vncEnums.vncEtatCommande.vncEclatee, "")
+                colCommandes = CommandeClient.getListe(dtdateDeb.Value, dtdatefin.Value, "", vncEnums.vncEtatCommande.vncEclatee, "")
                 'Conacténation des commandes
                 DisplayStatus("Concaténation des commandes")
                 For Each objCommande In colCommandes

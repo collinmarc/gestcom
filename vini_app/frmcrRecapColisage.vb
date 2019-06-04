@@ -38,6 +38,8 @@ Public Class frmcrRecapColisage
     Friend WithEvents tbCodeFourn As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents cbxDossier As System.Windows.Forms.ComboBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents tbIdFacture As System.Windows.Forms.TextBox
     Friend WithEvents lblFournisseur As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -47,6 +49,8 @@ Public Class frmcrRecapColisage
         Me.lblFournisseur = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbxDossier = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbIdFacture = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -108,10 +112,27 @@ Public Class frmcrRecapColisage
         Me.cbxDossier.Size = New System.Drawing.Size(121, 21)
         Me.cbxDossier.TabIndex = 0
         '
+        'Label3
+        '
+        Me.Label3.Location = New System.Drawing.Point(202, 31)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(84, 20)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "Id Facture : "
+        '
+        'tbIdFacture
+        '
+        Me.tbIdFacture.Location = New System.Drawing.Point(292, 31)
+        Me.tbIdFacture.Name = "tbIdFacture"
+        Me.tbIdFacture.Size = New System.Drawing.Size(130, 20)
+        Me.tbIdFacture.TabIndex = 11
+        '
         'frmcrRecapColisage
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1000, 678)
+        Me.Controls.Add(Me.tbIdFacture)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cbxDossier)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lblFournisseur)
@@ -128,6 +149,8 @@ Public Class frmcrRecapColisage
         Me.Controls.SetChildIndex(Me.lblFournisseur, 0)
         Me.Controls.SetChildIndex(Me.Label2, 0)
         Me.Controls.SetChildIndex(Me.cbxDossier, 0)
+        Me.Controls.SetChildIndex(Me.Label3, 0)
+        Me.Controls.SetChildIndex(Me.tbIdFacture, 0)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -149,25 +172,40 @@ Public Class frmcrRecapColisage
         Dim strReportName As String = r1.ResourceName
         Dim strCodeFourn As String
         Dim nCout As Decimal
+        Dim pidFacCol As Integer = -1
+        Dim oFacCol As FactColisageJ
+        Dim periode As String
+        Dim nbJour As Integer
 
         Me.Cursor = Cursors.WaitCursor
         objReport = New ReportDocument
         objReport.Load(PATHTOREPORTS & strReportName)
         strCodeFourn = tbCodeFourn.Text.Replace("*", "%")
         nCout = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
-
+        If tbIdFacture.Text <> "" Then
+            pidFacCol = CInt(tbIdFacture.Text)
+        End If
 
         debAffiche()
-        Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
-        Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
-        oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout, cbxDossier.Text)
+        If pidFacCol = -1 Then
+            Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
+            periode = dDeb.ToString("MMMM yyyy")
+            Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
+            nbJour = dFin.Day
 
+            oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout, cbxDossier.Text)
+        Else
+            oFacCol = FactColisageJ.createandload(pidFacCol)
+            periode = oFacCol.periode
+            nbJour = CDate(periode).AddMonths(1).AddDays(-1).Day
+            oDS = FactColisageJ.GenereDataSetRecapColisage(pidFacCol, nCout, cbxDossier.Text)
+        End If
         setReportConnection(objReport)
         objReport.SetDataSource(oDS)
         'Les paramètres sont passé juste pour informations car ils ne sont pas utilisé
 
-        objReport.SetParameterValue("Periode", dDeb.ToString("MMMM yyyy"))
-        objReport.SetParameterValue("NbJour", dFin.Day)
+        objReport.SetParameterValue("Periode", periode)
+        objReport.SetParameterValue("NbJour", nbJour)
 
         CrystalReportViewer1.ReportSource = objReport
         finAffiche()

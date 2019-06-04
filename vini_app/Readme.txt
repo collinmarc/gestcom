@@ -1,4 +1,8 @@
-﻿Version 5.9.7.2
+﻿Version 5.9.7.3
+Date : 01/20/2019
+0001001: frmControle des mouvements de stocks : ne fonctionne pas de date à date
+
+Version 5.9.7.2
 Date : 01/20/2019
 #908: Edition des factures de colisage Ancienne Version
 #909: Verif des infos de Livraisons : Calcul du nombre de fichiers incorrect

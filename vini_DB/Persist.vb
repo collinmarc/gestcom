@@ -2679,10 +2679,11 @@ Public MustInherit Class Persist
         Dim qtemvt As Decimal
         Dim commvt As String
         Dim objmvt As mvtStock
+        Dim idFactCol As Integer
 
 
 
-        Dim sqlString As String = " SELECT [STK_ID], [STK_PRD_ID], [STK_DATE], [STK_TYPE], [STK_REF_ID], [STK_LIB], [STK_QTE], [STK_COMM]" & _
+        Dim sqlString As String = " SELECT [STK_ID], [STK_PRD_ID], [STK_DATE], [STK_TYPE], [STK_REF_ID], [STK_LIB], [STK_QTE], [STK_COMM], STK_IDFACTCOLISAGE" & _
                                   " FROM MVT_STOCK AS MVT1"
         Dim strWhere As String = " STK_PRD_ID = ? "
         strWhere = strWhere & "AND STK_DATE >= (SELECT Max(STK_DATE) FROM MVT_STOCK AS MVT2 WHERE MVT2.STK_PRD_ID= MVT1.STK_PRD_ID and MVT2.STK_TYPE = " & vncTypeMvt.vncMvtInventaire & ")"
@@ -2715,11 +2716,14 @@ Public MustInherit Class Persist
                 libmvt = GetString(objRS, "STK_LIB")
                 qtemvt = GetString(objRS, "STK_QTE")
                 commvt = GetString(objRS, "STK_COMM")
+                idFactCol = getInteger(objRS, "STK_IDFACTCOLISAGE")
+
                 'Ajout de la ligne dans le produit
                 objmvt = New mvtStock(datemvt, idPRDmvt, typemvt, qtemvt, libmvt)
                 objmvt.setid(idMvt)
                 objmvt.Commentaire = commvt
                 objmvt.idReference = refidmvt
+                objmvt.idFactColisage = idFactCol
                 objmvt.resetBooleans()
                 colReturn.Add(objmvt)
             End While
