@@ -265,7 +265,7 @@ Public Class mvtStock
 
     End Function 'Update
 
-    Public Shared Function getListeColisage(ByVal pidFactColisage As Integer) As ColEventSorted
+    Public Shared Function getListeColisage(ByVal pidProduit As Integer, ByVal pidFactColisage As Integer) As List(Of mvtStock)
         '=======================================================================
         'Fonction : getListe()
         'Description : Rend une liste des mvt de stocks pour un facture de colisage
@@ -274,10 +274,10 @@ Public Class mvtStock
         '               Sinon on retourne tous les mvts de stocks
         'Retour : collection des mouvements de stock
         '=======================================================================
-        Dim colReturn As ColEventSorted
+        Dim colReturn As New List(Of mvtStock)
 
         Persist.shared_connect()
-        colReturn = Persist.ListeMVTSTK_FACTCOL(pidFactColisage)
+        colReturn = Persist.ListeMVTSTK_FACTCOL(pidProduit, pidFactColisage)
         Persist.shared_disconnect()
         Return colReturn
     End Function 'getListeColisage

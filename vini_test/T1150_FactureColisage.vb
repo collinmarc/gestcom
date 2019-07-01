@@ -589,6 +589,103 @@ Imports CrystalDecisions.Shared
 
 
     End Sub 'T80_GenereEtatRecapColisage
+
+    ''' <summary>
+    ''' Test la génération du relelevé de colisage associé à une facture de colisage
+    ''' </summary>
+    ''' <remarks></remarks>
+    <TestMethod()> Public Sub T80_GenerationReleveColisageFacCol()
+
+        Dim oCmd As CommandeClient
+        Dim oFactCol1 As FactColisageJ
+        Dim oFactcol2 As FactColisageJ
+        Dim oFactCol3 As FactColisageJ
+        Dim oLgFactCol As LgFactColisage
+        Dim oLgCmd As LgCommande
+        Dim oMvtStk As mvtStock
+
+        'Ajout de Stockinitial
+
+        Persist.shared_connect()
+        m_objPRD.ajouteLigneMvtStock(CDate("01/02/1964"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 31/01/2005", 120)
+        m_objPRD.savecolmvtStock()
+
+        Persist.shared_disconnect()
+
+        'Commande du mois de Février
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("02/02/1964")
+
+        oCmd.AjouteLigne("10", m_objPRD, 12, 10.5) 'COMMANDE DE 12 Prouit
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("02/02/1964")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+        oCmd.save()
+
+        'Commande du mois de Mars
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("01/03/1964")
+
+        oCmd.AjouteLigne("10", m_objPRD, 24, 10.5) 'COMMANDE DE 24 Prouit
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("01/03/1964")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+        oCmd.save()
+
+        ' Génération de la facture de colisage pour le Fournisseur 1 Mois de Février
+        oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN, Dossier.VINICOM)
+        Assert.IsNotNull(oFactCol1, "FactCol1 generée")
+        'Sauvegarde le la Facture de colisage => mise à jout des mouvements de stock du Fournisseur
+        oFactCol1.save()
+
+
+        Dim ods As vini_DB.dsVinicom
+        ods = FactColisageJ.GenereDataSetRecapColisage(oFactCol1.id, 0.007D, oFactCol1.dossierFact)
+        Assert.AreEqual(1, ods.RECAPCOLISAGEJOURN.Count)
+
+        Assert.AreEqual(ods.RECAPCOLISAGEJOURN(0).RC_S01, 20D) 'Stock initial = 120/6
+        Assert.AreEqual(ods.RECAPCOLISAGEJOURN(0).RC_S28, 18D) 'Stock final = (120-12)/6
+
+        'J'ajoute une commande du mois de Février mais qui n'est pas incluse dans la facture de colisage
+        'Commande du mois de Février
+        oCmd = New CommandeClient(m_objCLT)
+        oCmd.dateCommande = CDate("02/02/1964")
+
+        oCmd.AjouteLigne("10", m_objPRD, 6, 10.5) 'COMMANDE DE 6 Produit
+        oCmd.save()
+        oCmd.changeEtat(vncActionEtatCommande.vncActionValider)
+        ' Livraison de la commande
+        oCmd.changeEtat(vncActionEtatCommande.vncActionLivrer)
+        oCmd.dateLivraison = CDate("02/02/1964")
+        For Each oLgCmd In oCmd.colLignes
+            oLgCmd.qteLiv = oLgCmd.qteCommande
+        Next
+        oCmd.save()
+
+        ' La Commande n'est pas prise en compte dans le relevé de colisage associé à la facture
+        ods = FactColisageJ.GenereDataSetRecapColisage(oFactCol1.id, 0.007D, oFactCol1.dossierFact)
+        Assert.AreEqual(1, ods.RECAPCOLISAGEJOURN.Count)
+
+        Assert.AreEqual(ods.RECAPCOLISAGEJOURN(0).RC_S01, 20D) 'Stock initial = 120/6
+        Assert.AreEqual(ods.RECAPCOLISAGEJOURN(0).RC_S28, 18D) 'Stock final = (120-12)/6
+
+        oCmd.bDeleted = True
+        oCmd.save()
+
+
+
+    End Sub
+
     Private Sub setReportConnection(ByVal objReport As ReportDocument)
 
         Dim myConnectionInfo As ConnectionInfo = New ConnectionInfo()
@@ -1063,36 +1160,6 @@ Imports CrystalDecisions.Shared
         Next
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         oCmd.save()
 
         ' Fournisseur 1
@@ -1144,10 +1211,6 @@ Imports CrystalDecisions.Shared
 
 
     End Sub
-    ''' <summary>
-    ''' Test que les produit hors stock ne sont pas pris dans le colisage
-    ''' </summary>
-    ''' <remarks></remarks>
     <TestMethod()> Public Sub T60_GenerationFactureColisage()
 
         Dim oCmd As CommandeClient
@@ -1157,10 +1220,6 @@ Imports CrystalDecisions.Shared
         Dim oLgFactCol As LgFactColisage
         Dim oLgCmd As LgCommande
         Dim oMvtStk As mvtStock
-
-        '' Création d'un Produit qui n'est pas géré sur le stock
-
-
 
         'Ajout de Stockinitial
 
@@ -1192,7 +1251,7 @@ Imports CrystalDecisions.Shared
         Next
         oCmd.save()
 
-       ' Génération de la facture de colisage pour le Fournisseur 1
+        ' Génération de la facture de colisage pour le Fournisseur 1
         oFactCol1 = FactColisageJ.GenereFacture(CDate("1/02/1964"), m_objFRN, Dossier.VINICOM)
         Assert.IsNotNull(oFactCol1, "FactCol1 generée")
         ' Fournisseur 2

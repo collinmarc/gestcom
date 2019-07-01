@@ -825,7 +825,7 @@ Public Class FactColisageJ
             For Each oPRD As Produit In colPRD
                 If oPRD.bDisponible Then
                     oPRD.load()
-                    oPRD.loadcolmvtStockDepuisLeDernierMouvementInventaire()
+                    oPRD.loadcolmvtStockFactureColisage(pIdFactCol)
                     oPRD.GenereDataSetRecapColisage(pIdFactCol, pCout, pDS)
                 End If
             Next
@@ -850,45 +850,5 @@ Public Class FactColisageJ
         Return pDS
 
     End Function
-    Public Function GenereDataSetRecapColisage() As dsVinicom
-
-        Dim dDatePrec As Date = DateTime.MinValue
-        Dim pDS As dsVinicom
-        Dim colPRD As New Collection()
-
-
-        pDS = New dsVinicom()
-
-
-        Try
-            For Each oLg As LgFactColisage In colLignes
-                Dim oPrd As Produit
-                oPrd = oLg.oProduit
-                oPrd.load()
-
-                oPrd.loadcolmvtStockDepuisLeDernierMouvementInventaire()
-                oPrd.GenereDataSetRecapColisage(dateDebut, dateFin, oLg.prixU, pDS)
-            Next
-
-            Dim oRow As dsVinicom.CONSTANTESRow
-            oRow = pDS.CONSTANTES.NewCONSTANTESRow()
-            oRow.CST_SOC2_ADRESSE_RUE1 = Param.getConstante("CST_SOC2_ADRESSE_RUE1")
-            oRow.CST_SOC2_ADRESSE_RUE2 = Param.getConstante("CST_SOC2_ADRESSE_RUE2")
-            oRow.CST_SOC2_ADRESSE_CP = Param.getConstante("CST_SOC2_ADRESSE_CP")
-            oRow.CST_SOC2_ADRESSE_VILLE = Param.getConstante("CST_SOC2_ADRESSE_VILLE")
-            oRow.CST_SOC2_TEL = Param.getConstante("CST_SOC2_TEL")
-            oRow.CST_SOC2_FAX = Param.getConstante("CST_SOC2_FAX")
-            oRow.CST_SOC2_EMAIL = Param.getConstante("CST_SOC2_EMAIL")
-
-            pDS.CONSTANTES.AddCONSTANTESRow(oRow)
-        Catch ex As Exception
-            setError(ex.StackTrace, ex.Message)
-            pDS = New dsVinicom()
-        End Try
-
-
-        Return pDS
-
-    End Function
-
+ 
 End Class

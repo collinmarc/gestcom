@@ -1020,7 +1020,7 @@ Public Class frmGestFactColisage
 
         Dim nCout As Decimal = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
 
-        Dim ods As dsVinicom = getElementCourant().GenereDataSetRecapColisage()
+        Dim ods As dsVinicom = FactColisageJ.GenereDataSetRecapColisage(getElementCourant().id, nCout, getElementCourant().dossierFact)
         objReport.SetDataSource(ods)
 
         objReport.SetParameterValue("Periode", getElementCourant().periode)

@@ -2936,14 +2936,14 @@ Public MustInherit Class Persist
     'Détails    :  
     'Retour : une collection triée
     '=======================================================================
-    Protected Shared Function ListeMVTSTK_FACTCOL(ByVal pidFactcolisage As Integer) As ColEventSorted
+    Protected Shared Function ListeMVTSTK_FACTCOL(ByVal pidProduit As Integer, ByVal pidFactcolisage As Integer) As List(Of mvtStock)
         Debug.Assert(shared_isConnected(), "La database doit être ouverte")
         Debug.Assert(pidFactcolisage <> 0, "L'idProduit doit être renseigné")
 
         Dim objCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing
         '        Dim objParam As OleDbParameter
-        Dim colReturn As New ColEventSorted
+        Dim colReturn As New List(Of mvtStock)
 
         Dim idMvt As Integer
         Dim idPRDmvt As Integer
@@ -2965,7 +2965,8 @@ Public MustInherit Class Persist
         If Len(Trim(strWhere)) <> 0 Then
             strWhere = strWhere & " AND "
         End If
-        strWhere = strWhere & " MVT_STOCK.STK_IDFACTCOLISAGE = ?FACTCOLISAGE "
+        strWhere = strWhere & " MVT_STOCK.STK_PRD_ID = ? "
+        strWhere = strWhere & " AND MVT_STOCK.STK_IDFACTCOLISAGE = ? "
 
 
         sqlString = sqlString & " WHERE " & strWhere & " ORDER BY " & strOrder
@@ -2979,10 +2980,11 @@ Public MustInherit Class Persist
 
         Try
             Dim objParam As OleDbParameter
-            objParam = objCommand.Parameters.AddWithValue("?" , pidFactcolisage)
+            objParam = objCommand.Parameters.AddWithValue("?", pidProduit)
+            objParam = objCommand.Parameters.AddWithValue("?", pidFactcolisage)
 
             objRS = objCommand.ExecuteReader()
-            colReturn = New ColEventSorted
+            colReturn = New List(Of mvtStock)
             While (objRS.Read())
                 idMvt = GetString(objRS, "STK_ID")
                 idPRDmvt = GetString(objRS, "STK_PRD_ID")
@@ -2997,15 +2999,16 @@ Public MustInherit Class Persist
                 objmvt.setid(idMvt)
                 objmvt.Commentaire = commvt
                 objmvt.idReference = refidmvt
+                objmvt.idFactColisage = pidFactcolisage
                 objmvt.resetBooleans()
-                colReturn.Add(objmvt, objmvt.key)
+                colReturn.Add(objmvt)
             End While
             objRS.Close()
 
         Catch ex As Exception
             setError("ListeMVTSTK_FACTCOL", ex.ToString())
             Debug.Assert(False, getErreur())
-            colReturn = New ColEventSorted
+            colReturn = New List(Of mvtStock)
         End Try
 
         Return colReturn

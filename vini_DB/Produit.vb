@@ -849,6 +849,19 @@ Public Class Produit
         shared_disconnect()
         Return bReturn
     End Function 'loadcolmvtStock
+    Public Function loadcolmvtStockFactureColisage(pIdFactCol As Integer) As Boolean
+        Dim bReturn As Boolean
+
+        bReturn = True
+        m_colMvtStock.clear()
+        shared_connect()
+        m_bcolMvtStockLoaded = True ' La collection des mouvements de stock est considérée comme chargée
+        m_colMvtStock.AddRange(mvtStock.getListeColisage(Me.id, pIdFactCol))
+        m_bcolMvtStockLoaded = bReturn ' La Liste des mouvement de stock est chargée
+        m_bcolMvtStockUpdated = False ' La Liste des mouvements de stocks n'est pas mise à jour
+        shared_disconnect()
+        Return bReturn
+    End Function 'loadcolmvtStock
     '=======================================================================
     'Fonction : savecolmvtStock
     'Description : Sauvegarde des lignes de mouvements de Stocks
@@ -1401,9 +1414,19 @@ Public Class Produit
         nSortie = 0
         bReturn = False
         Try
-            Dim oPRD As Produit = Me
-            Dim oStockAu As Decimal = oPRD.CalculeStockAu(dDeb)  'Calcul du Stock la veille du Début
-            oStockAu = oPRD.qteColis(oStockAu) 'Conversion en Colis
+            'La Liste des Mouvements de Stocks est chargée depuis une facture de colisage
+            'Le Premier Element DOIT ETRE un Mouvement de type inventaire
+            'NB La liste est chargée en send inverse des dates , c'est donc le dernier element de la liste
+
+            Dim oStockAu As Decimal = 0
+            If colmvtStock.Count > 0 Then
+                Dim omvtIventaire As mvtStock
+                omvtIventaire = colmvtStock.Item(colmvtStock.Count - 1)
+                If omvtIventaire.typeMvt = vncTypeMvt.vncMvtInventaire Then
+                    oStockAu = omvtIventaire.qte
+                End If
+            End If
+            oStockAu = qteColis(oStockAu) 'Conversion en Colis
 
             Dim nmvtDu(31) As Decimal
             Dim nStockAu(31) As Decimal
@@ -1412,13 +1435,13 @@ Public Class Produit
                 nStockAu(njour) = 0
             Next
             'Boucle pour calculer les mvt par jour
-            For nIndex As Integer = oPRD.colmvtStock.Count - 1 To 0 Step -1
-                Dim oMvtStk As mvtStock = oPRD.colmvtStock(nIndex)
+            For nIndex As Integer = colmvtStock.Count - 1 To 0 Step -1
+                Dim oMvtStk As mvtStock = colmvtStock(nIndex)
                 If oMvtStk.idFactColisage = pIdFactCol Then
                     'C'est un Mvt de la bonne Facture
                     If oMvtStk.typeMvt <> vncTypeMvt.vncMvtInventaire Then
-                        Dim qteColis As Decimal = oPRD.qteColis(oMvtStk.qte)
-                        nmvtDu(oMvtStk.datemvt.Day) = nmvtDu(oMvtStk.datemvt.Day) + qteColis
+                        Dim nbColis As Decimal = qteColis(oMvtStk.qte)
+                        nmvtDu(oMvtStk.datemvt.Day) = nmvtDu(oMvtStk.datemvt.Day) + nbColis
                     End If
                 End If
             Next
@@ -1429,13 +1452,13 @@ Public Class Produit
             Next
 
             Dim oFournisseur As New Fournisseur()
-            If oPRD.DossierProduit = Dossier.VINICOM Then
-                oFournisseur = Fournisseur.createandload(oPRD.idFournisseur)
+            If DossierProduit = Dossier.VINICOM Then
+                oFournisseur = Fournisseur.createandload(idFournisseur)
             End If
-            If oPRD.DossierProduit = Dossier.HOBIVIN Then
-                oFournisseur = Fournisseur.getIntermediairePourUnDossier(oPRD.DossierProduit)
+            If DossierProduit = Dossier.HOBIVIN Then
+                oFournisseur = Fournisseur.getIntermediairePourUnDossier(DossierProduit)
             End If
-            pDs.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=oPRD.code, RC_PRD_LIBELLE:=oPRD.nom,
+            pDs.RECAPCOLISAGEJOURN.AddRECAPCOLISAGEJOURNRow(RC_PRD_CODE:=code, RC_PRD_LIBELLE:=nom,
                                                             RC_FRN_CODE:=oFournisseur.code,
                                                             RC_FRN_NOM:=oFournisseur.nom,
                                                             RC_FRN_RS:=oFournisseur.rs,
@@ -1472,7 +1495,7 @@ Public Class Produit
                                                             RC_S30:=nStockAu(30),
                                                             RC_S31:=nStockAu(31),
                                                             PERIODE:=periode,
-                                                            RC_IDPRODUIT:=oPRD.id
+                                                            RC_IDPRODUIT:=id
                                                             )
 
 

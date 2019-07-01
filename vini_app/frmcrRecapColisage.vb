@@ -118,7 +118,7 @@ Public Class frmcrRecapColisage
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(84, 20)
         Me.Label3.TabIndex = 10
-        Me.Label3.Text = "Id Facture : "
+        Me.Label3.Text = "Code Facture : "
         '
         'tbIdFacture
         '
@@ -172,7 +172,7 @@ Public Class frmcrRecapColisage
         Dim strReportName As String = r1.ResourceName
         Dim strCodeFourn As String
         Dim nCout As Decimal
-        Dim pidFacCol As Integer = -1
+        Dim pNumFactCol As String = ""
         Dim oFacCol As FactColisageJ
         Dim periode As String
         Dim nbJour As Integer
@@ -183,11 +183,11 @@ Public Class frmcrRecapColisage
         strCodeFourn = tbCodeFourn.Text.Replace("*", "%")
         nCout = CDec(Param.getConstante("CST_FACT_COL_PU_COLIS"))
         If tbIdFacture.Text <> "" Then
-            pidFacCol = CInt(tbIdFacture.Text)
+            pNumFactCol = tbIdFacture.Text
         End If
 
         debAffiche()
-        If pidFacCol = -1 Then
+        If String.IsNullOrEmpty(pNumFactCol) Then
             Dim dDeb As Date = CDate("01/" & Me.dtMois.Value.Month & "/" & Me.dtMois.Value.Year)
             periode = dDeb.ToString("MMMM yyyy")
             Dim dFin As Date = dDeb.AddMonths(1).AddDays(-1)
@@ -195,16 +195,17 @@ Public Class frmcrRecapColisage
 
             oDS = FactColisageJ.GenereDataSetRecapColisage(dDeb, dFin, strCodeFourn, nCout, cbxDossier.Text)
         Else
-            oFacCol = FactColisageJ.createandload(pidFacCol)
+            oFacCol = FactColisageJ.createandload(pNumFactCol)
             periode = oFacCol.periode
             nbJour = CDate(periode).AddMonths(1).AddDays(-1).Day
-            oDS = FactColisageJ.GenereDataSetRecapColisage(pidFacCol, nCout, cbxDossier.Text)
+            oDS = FactColisageJ.GenereDataSetRecapColisage(oFacCol.id, nCout, oFacCol.dossierFact)
         End If
         setReportConnection(objReport)
         objReport.SetDataSource(oDS)
         'Les paramètres sont passé juste pour informations car ils ne sont pas utilisé
 
         objReport.SetParameterValue("Periode", periode)
+        objReport.SetParameterValue("NbJour", nbJour)
         objReport.SetParameterValue("NbJour", nbJour)
 
         CrystalReportViewer1.ReportSource = objReport

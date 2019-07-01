@@ -1,4 +1,8 @@
-﻿Version 5.9.7.3
+﻿Version
+Date 
+0001011: Génération du relevé de colisage pour une facture ne fonctionne pas
+
+Version 5.9.7.3
 Date : 01/20/2019
 0001001: frmControle des mouvements de stocks : ne fonctionne pas de date à date
 
