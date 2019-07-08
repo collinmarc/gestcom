@@ -19,7 +19,7 @@ Public Class frmGestParamConditionnement
         Me.Close()
     End Sub
 
-    Private Sub cbOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbOK.Click
+    Protected Overrides Function frmSave() As Boolean
         Dim objParam As Param
 
         'Sauvegarde des lignes "supprimées"
@@ -31,6 +31,11 @@ Public Class frmGestParamConditionnement
             objParam.Save()
         Next
         Param.LoadcolParams()
+
+    End Function
+    Private Sub cbOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbOK.Click
+        frmSave()
+
         Me.Close()
     End Sub
 
