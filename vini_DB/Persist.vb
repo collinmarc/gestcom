@@ -2054,10 +2054,12 @@ Public MustInherit Class Persist
                                         " PRODUIT.PRD_DISPO, " & _
                                         " PRODUIT.PRD_CODE_STAT, " & _
                                         " PRODUIT.PRD_STOCK, " & _
-                                        " PRD_TARIFA, PRD_TARIFB, PRD_TARIFC" & _
+                                        " PRD_TARIFA, PRD_TARIFB, PRD_TARIFC," & _
+                                        " PRODUIT.DOSSIER " & _
                                         " FROM PRODUIT  " & _
                                 " WHERE " & _
                                 " PRD_ID = ?"
+
 
         Dim objOLeDBCommand As OleDbCommand
         Dim objRS As OleDbDataReader = Nothing

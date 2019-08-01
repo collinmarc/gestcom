@@ -2,6 +2,7 @@
 Date 
 0001011: Génération du relevé de colisage pour une facture ne fonctionne pas
 0001012: La page 'Gestion des conditionnements' ne fonctionne pas
+0001013:les produits changent de dossier
 
 
 Version 5.9.7.3
