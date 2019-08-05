@@ -2,7 +2,9 @@
 Date 05/08/2019
 0001011: Génération du relevé de colisage pour une facture ne fonctionne pas
 0001012: La page 'Gestion des conditionnements' ne fonctionne pas
-0001013:les produits changent de dossier
+0001013: les produits changent de dossier
+0001023: Prise en compte de la gratuité dans les recap colisage
+
 
 
 Version 5.9.7.3
