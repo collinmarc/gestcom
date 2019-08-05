@@ -1,5 +1,5 @@
-﻿Version
-Date 
+﻿Version 5.9.7.4
+Date 05/08/2019
 0001011: Génération du relevé de colisage pour une facture ne fonctionne pas
 0001012: La page 'Gestion des conditionnements' ne fonctionne pas
 0001013:les produits changent de dossier

@@ -603,9 +603,6 @@ Public Class FactColisageJ
         Return bReturn
     End Function 'ChangeEtat
 
-    Public Overrides Function ControleMvtStock() As Microsoft.VisualBasic.Collection
-        Return Nothing
-    End Function
 
     Public Overrides Sub exporter(pstrFileName As String)
         MyBase.ExporterFacture(pstrFileName, "COL")

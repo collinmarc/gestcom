@@ -806,6 +806,8 @@ Public Class CommandeClient
         Dim objmvtStock As mvtStock
         Dim bcolADecharger As Boolean
         Dim strLib As String
+        Dim qte As Decimal
+
 
         'Chargement de la collection des lignes si elle n'est pas chargée
         bcolADecharger = False
@@ -827,18 +829,35 @@ Public Class CommandeClient
                     objProduit = objLgCom.oProduit
                     objProduit.load()
                     objProduit.loadcolmvtStock()
-                    strLib = "CMD " & code & " - " & objLgCom.num & " " & TiersRS
+
                     'Controle de la non-exitence d'une ligne de mvt de stock pour cette ligne de commande
-                    If existeMvtSocklib(strLib) Then
-                        Debug.Assert(False, "Il y a déja un mvt de stock pour cette ligne")
-                        bReturn = False
-                        setError("CommandeClient.genereMvtStock()", "Il y a déja un mvt de stock pour cette ligne")
-                        Return bReturn
-                        Persist.shared_disconnect()
-                        Exit Function
+                    'If existeMvtSocklib(strLib) Then
+                    '    Debug.Assert(False, "Il y a déja un mvt de stock pour cette ligne")
+                    '    bReturn = False
+                    '    setError("CommandeClient.genereMvtStock()", "Il y a déja un mvt de stock pour cette ligne")
+                    '    Return bReturn
+                    '    Persist.shared_disconnect()
+                    '    Exit Function
+                    'End If
+                    qte = objLgCom.qteLiv
+                    'Recherche des lignes de commandes concernant le même produit
+                    'dans ce cas on les cumuls et on la marque comme étant Traitée
+                    For Each objLgCom2 As LgCommande In m_colLignes
+                        If objLgCom2.id <> objLgCom.id And Not objLgCom2.bTraitee Then
+                            If objLgCom2.oProduit.id = objLgCom.oProduit.id Then
+                                qte = qte + objLgCom2.qteLiv
+                                objLgCom2.bTraitee = True
+                            End If
+                        End If
+                    Next
+                    strLib = "CMD " & code & " - " & objLgCom.num & " " & TiersRS
+                    'Sis la ligne à déjà été traitée, sa qte est égale à 0
+                    If objLgCom.bTraitee Then
+                        qte = 0
+                        strLib = strLib + "deja inclus"
                     End If
                     'Ajout de la ligne de stock avec recalcul du stock
-                    objmvtStock = objProduit.ajouteLigneMvtStock(Me.dateLivraison, vncEnums.vncTypeMvt.vncMvtCommandeClient, id, strLib, objLgCom.qteLiv * -1, "Commande N° " & code & vbCrLf & " Client : " & oTiers.code & " " & oTiers.rs & vbCrLf & "Date Commande" & dateCommande.ToShortDateString & vbCrLf & "Ref Livraison : " & refLivraison, True)
+                    objmvtStock = objProduit.ajouteLigneMvtStock(Me.dateLivraison, vncEnums.vncTypeMvt.vncMvtCommandeClient, id, strLib, qte * -1, strLib, True)
                     objmvtStock.save()
                     'Liberation des mouvement de stock produits pour libérer la mémoire
                     objProduit.releasecolmvtStock()
@@ -985,24 +1004,22 @@ Public Class CommandeClient
 
         Return bReturn
     End Function 'purge
-
+    ''' <summary>
+    ''' parcours de chaque ligne de commande pour vérifier l'existence d'un mouvement de stock
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Overrides Function controleMvtStock() As Collection
-
-        '=====================================================================================================
-        ' Function : controleMvtStock
-        ' Description : parcours de chaque ligne de commande pour vérifier l'existence d'un mouvement de stock
-        '=====================================================================================================
         Dim objLgCMD As LgCommande
         Dim colReturn As New Collection
         Dim strErreurLg As String
-        Dim nidProduitProduit As Integer
-        Dim nLigneMemeProduit As Integer
+        Dim nidProduit As Integer
         Dim colMvtStock As ColEventSorted
         Dim strErreur As String
         Dim objMvtStock As mvtStock
-        Dim bTrouve As Boolean
         Dim strCodePrd As String
-        Dim nidPrd As Long
+        Dim Qtecmd As Decimal
+        Dim QteStk As Decimal
 
         colMvtStock = Nothing
         strCodePrd = ""
@@ -1011,80 +1028,60 @@ Public Class CommandeClient
             'On ne controle que les commande plateforme
 
             strErreur = "Commande Num: " & code() & "(" & id & ")"
-
-            nidProduitProduit = 0
+            strErreurLg = ""
+            nidProduit = 0
             'chargement de la collection des lignes de produits
             'Elles sont triées par id produit
             If Not m_bcolLgLoaded Then
                 loadcolLignes()
             End If
             For Each objLgCMD In colLignes
-                strErreurLg = ""
-                If nidProduitProduit <> objLgCMD.oProduit.id Then
-                    'changement de produit
-                    If nidProduitProduit <> 0 Then
-                        '2) Controle des les mvts ne correspondant pas à une ligne de commande
-                        For Each objMvtStock In colMvtStock
-                            strErreurLg = ""
-                            If Not objMvtStock.bControle Then
-                                strErreurLg = "Produit Code " & strCodePrd & "(" & nidPrd & ")" & " pas de lignes de Commandes pour le mouvement de stock " & objMvtStock.toString & "(" & objMvtStock.id & ")"
-                                objMvtStock.bControle = True
-                            End If
-                            If strErreurLg <> "" Then
+                objLgCMD.oProduit.DBLoadLight()
+                If objLgCMD.oProduit.bStock Then
+                    strErreurLg = ""
+                    If nidProduit <> objLgCMD.oProduit.id Then
+                        If nidProduit <> 0 Then
+                            'changement de produit
+                            'chargement de la Liste des mouvements du produit précédent
+                            colMvtStock = mvtStock.getListe(nidProduit, m_id)
+                            'Cumul des Qte des mouvement de stocks
+                            QteStk = 0
+                            For Each objMvtStock In colMvtStock
+                                QteStk = QteStk + (objMvtStock.qte * -1)
+                            Next
+
+                            'controle que la Qt en mvt de stock = qte Livrée
+                            If Qtecmd <> QteStk Then
+                                strErreurLg = " ERR sur Qte attendu = " & Qtecmd & ", Stk =" & QteStk
+
                                 colReturn.Add(strErreur & strErreurLg)
                                 strErreurLg = ""
                             End If
-                        Next
-
-                    End If
-                    'Chargement des Mvt de Stok pour ce produit et cette commande
-                    colMvtStock = mvtStock.getListe(objLgCMD.oProduit.id, m_id)
-                    strCodePrd = objLgCMD.oProduit.code
-                    nidPrd = objLgCMD.oProduit.id
-
-                    nidProduitProduit = objLgCMD.oProduit.id
-                End If
-                nLigneMemeProduit = nLigneMemeProduit + 1
-
-                '1) Controle de l'existence d'un Mvt de stock pour chaque ligne
-                ' Parcours de la collection des mvts de stocks pour en trouver un de la même quantité
-                Debug.Assert(Not colMvtStock Is Nothing)
-                bTrouve = False
-                For Each objMvtStock In colMvtStock
-                    'Si une ligne à déjà été controlée il ne faut la prendre en compte une seconde fois
-                    'Probleme des doublons
-                    If Not objMvtStock.bControle Then
-                        If objMvtStock.qte = (objLgCMD.qteLiv * -1) Then
-                            bTrouve = True
-                            objMvtStock.bControle = True
-                            Exit For
+                            Qtecmd = 0
                         End If
+                        nidProduit = objLgCMD.oProduit.id
                     End If
-                Next
-                If Not bTrouve Then
-                    strErreurLg = "Produit Code " & objLgCMD.oProduit.code & "(" & objLgCMD.oProduit.id & ")" & " pas de lignes de mouvements de stocks trouvée pour la quantité " & objLgCMD.qteLiv
-                End If
-
-
-                If strErreurLg <> "" Then
-                    colReturn.Add(strErreur & strErreurLg)
-                    strErreurLg = ""
+                    Qtecmd = Qtecmd + objLgCMD.qteLiv
                 End If
             Next objLgCMD
-            If Not colMvtStock Is Nothing Then
-                'Pour le dernier produit chargé
-                '2) Controle des les mvts ne correspondant pas à une ligne de commande
-                For Each objMvtStock In colMvtStock
-                    strErreurLg = ""
-                    If Not objMvtStock.bControle Then
-                        strErreurLg = "Produit Code " & objLgCMD.oProduit.code & "(" & objLgCMD.oProduit.id & ")" & " pas de lignes de Commandes pour le mouvement de stock " & objMvtStock.toString & "(" & objMvtStock.id & ")"
-                        objMvtStock.bControle = True
+
+            If nidProduit <> 0 Then
+                objLgCMD.oProduit.DBLoadLight()
+                If objLgCMD.oProduit.bStock Then
+                    'Pour le dernier produit chargé
+                    colMvtStock = mvtStock.getListe(nidProduit, m_id)
+                    QteStk = 0
+                    For Each objMvtStock In colMvtStock
+                        QteStk = QteStk + (objMvtStock.qte * -1)
+                    Next
+
+                    If Qtecmd <> QteStk Then
+                        strErreurLg = " ERR sur Qte attendu = " & Qtecmd & ", Stk =" & QteStk
                     End If
-                    If strErreurLg <> "" Then
-                        colReturn.Add(strErreur & strErreurLg)
-                        strErreurLg = ""
-                    End If
-                Next
+
+                    nidProduit = objLgCMD.oProduit.id
+                    Qtecmd = 0
+                End If
             End If
 
 

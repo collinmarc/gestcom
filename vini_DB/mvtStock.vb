@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports System.Linq
 ''' <summary>
 ''' Classe mouvement de Stock
 ''' </summary>
@@ -30,6 +31,7 @@ Public Class mvtStock
         m_bControle = False
         m_Etat = EtatMvtStock.createEtat(vncEtatMVTSTK.vncMVTSTK_nFact)
         m_idFactColisage = 0
+        bTraitee = False
         majBooleenAlaFinDuNew()
     End Sub 'New
     Friend Sub New()
@@ -44,6 +46,7 @@ Public Class mvtStock
         m_bControle = False
         m_Etat = EtatMvtStock.createEtat(vncEtatMVTSTK.vncMVTSTK_nFact)
         m_idFactColisage = 0
+        bTraitee = False
     End Sub 'New
 
     Public Property idProduit() As Integer
@@ -163,6 +166,17 @@ Public Class mvtStock
             End If
         End Set
     End Property
+    'Propriété non sauvegardée
+    Private m_bTraitee As Boolean
+    Public Property bTraitee() As Boolean
+        Get
+            Return m_bTraitee
+        End Get
+        Set(ByVal value As Boolean)
+            m_bTraitee = value
+        End Set
+    End Property
+
     Public ReadOnly Property key() As String
         'on veut trier les mvts de stocks dans l'odre desc des date et des type de Mvts
         ' Donc on fait une clé sur une différence avec le 3eme millénaire
@@ -306,20 +320,12 @@ Public Class mvtStock
         Return colReturn
     End Function 'getListe
     ''' <summary>
-    ''' Chergement de la liste des Mvt de stocks depuis le dernier inventaire
+    ''' Chargement de la liste des Mvt de stocks depuis le dernier inventaire
     ''' </summary>
     ''' <param name="pidProduit">ID du produit</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Shared Function getListeDepuisDernMvtInventaire(ByVal pidProduit As Integer) As List(Of mvtStock)
-        '=======================================================================
-        'Fonction : getListe()
-        'Description : Rend une liste des mvt de stocks
-        'Détails    :  Si ID Commande est renseigné alors on ajoute un filtre sur le type de Mvt = "2"
-        '               Si ID BA est renseigné alors on ajoute un filtre sur le type de Mvt = "3"
-        '               Sinon on retourne tous les mvts de stocks
-        'Retour : collection des mouvements de stock
-        '=======================================================================
         Dim colReturn As New List(Of mvtStock)
 
         Persist.shared_connect()
@@ -358,7 +364,7 @@ Public Class mvtStock
         colReturn = Persist.ListeMVTSTKDossier(pDossier, pDateDebut, pDateFin, vncEtatMVTSTK.vncMVTSTK_nFact)
         Persist.shared_disconnect()
         Return colReturn
-    End Function 'getListe
+    End Function 'getListeDossierNonFacture
     Public Shared Function getListeDossierFacture(pDossier As String, ByVal pDateDebut As Date, ByVal pDateFin As Date) As Collection
 
         Dim colReturn As Collection
@@ -367,7 +373,47 @@ Public Class mvtStock
         colReturn = Persist.ListeMVTSTKDossier(pDossier, pDateDebut, pDateFin, vncEtatMVTSTK.vncMVTSTK_Fact)
         Persist.shared_disconnect()
         Return colReturn
-    End Function 'getListe
+    End Function 'getListeDossierFacture
+    ''' <summary>
+    ''' Regroupe les mouvements de stocks d'un produit d'une commande 
+    ''' exemple : Mvt1 qte=22, mvt2 qte=2 pour le même produit, la même commande
+    '''              => mvt1 qte = 24, mvt2 qte = 0
+    ''' </summary>
+    ''' <param name="pcolMvt"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function regroupMvtStockmemecommande(pcolMvt As ColEventSorted) As List(Of mvtStock)
+
+        Dim oReturn As New List(Of mvtStock)
+        For Each omvt As mvtStock In pcolMvt
+            oReturn.Add(omvt)
+        Next
+
+        For Each omvt As mvtStock In oReturn
+            If Not omvt.bTraitee Then
+                If omvt.typeMvt = vncTypeMvt.vncMvtCommandeClient Then
+                    'Récupération des Mvt de stock du même produit, même commande
+                    Dim olstmvt2 As Object = From omvt2 In oReturn
+                                                             Where omvt2.typeMvt = vncTypeMvt.vncMvtCommandeClient _
+                                                             And omvt2.idProduit = omvt.idProduit _
+                                                             And omvt2.idReference = omvt.idReference _
+                                                             And omvt2.bTraitee = False
+                                                             Select omvt2
+                    For Each omvt2 As mvtStock In olstmvt2
+                        If Not omvt.Equals(omvt2) Then
+                            omvt.qte = omvt.qte + omvt2.qte
+                            omvt2.qte = 0
+                            omvt2.bTraitee = True
+                        End If
+                    Next
+
+
+                End If
+            End If
+        Next omvt
+
+        Return oReturn
+    End Function
 
 #End Region
 

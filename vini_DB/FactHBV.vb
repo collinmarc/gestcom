@@ -465,10 +465,7 @@ Public Class FactHBV
         Return bReturn
     End Function 'ChangeEtat
 
-    Public Overrides Function ControleMvtStock() As Microsoft.VisualBasic.Collection
-        Return Nothing
-    End Function
-
+ 
 
 #End Region
     Public Shared Function getListe(Optional ByVal strCode As String = "", Optional ByVal strNomClient As String = "", Optional ByVal pEtat As vncEtatCommande = vncEnums.vncEtatCommande.vncRien) As Collection

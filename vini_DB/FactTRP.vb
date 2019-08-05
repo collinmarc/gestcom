@@ -519,9 +519,6 @@ Public Class FactTRP
         Return bReturn
     End Function 'ChangeEtat
 
-    Public Overrides Function ControleMvtStock() As Microsoft.VisualBasic.Collection
-        Return Nothing
-    End Function
 
 
 #End Region

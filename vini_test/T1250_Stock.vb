@@ -695,7 +695,7 @@ Imports vini_DB
         Assert.AreEqual(0D, objP3.qteCommande, "P3 Qte en commande(3)")
 
     End Sub
-    <TestMethod()> Public Sub T40_TestMvtStock()
+    <TestMethod()> Public Sub T40_TestControleMvtStock()
 
         Dim objCommande As CommandeClient
         Dim colMvtStock As ColEventSorted
@@ -710,44 +710,50 @@ Imports vini_DB
         'Ajout de 2 lignes sur cette commande
         objCommande.AjouteLigne("1", objP1, 10, 10)
         objCommande.AjouteLigne("2", objP2, 20, 20)
-        objCommande.AjouteLigne("3", objP2, 30, 30)
+        objCommande.AjouteLigne("3", objP2, 30, 30, True)
         objCommande.AjouteLigne("4", objP3, 40, 40)
         'Sauvegarde de la commande
         Assert.IsTrue(objCommande.save())
 
         'Génération des mvts de stocks
         objCommande.changeEtat(vncEnums.vncActionEtatCommande.vncActionValider)
-        objCommande.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
         For Each objLgCmd In objCommande.colLignes
             objLgCmd.qteLiv = objLgCmd.qteCommande + 1
         Next
+        objCommande.changeEtat(vncEnums.vncActionEtatCommande.vncActionLivrer)
         Assert.IsTrue(objCommande.save())
         colMvtStock = mvtStock.getListe(objP1.id, objCommande.id)
         Assert.IsTrue(colMvtStock.Count = 1, "1 Mvt de stock pour P1")
+        Assert.AreEqual(-11D, CType(colMvtStock(0), mvtStock).qte)
         colMvtStock = mvtStock.getListe(objP2.id, objCommande.id)
         Assert.IsTrue(colMvtStock.Count = 2, "2 Mvt de stock pour P2")
+        Assert.AreEqual(0D, CType(colMvtStock(0), mvtStock).qte)
+        Assert.AreEqual(-52D, CType(colMvtStock(1), mvtStock).qte)
+        colMvtStock = mvtStock.getListe(objP3.id, objCommande.id)
+        Assert.AreEqual(1, colMvtStock.Count, "1 Mvt de stock pour P3")
+        Assert.AreEqual(-41D, CType(colMvtStock(0), mvtStock).qte)
 
         'Controle des mvts => OK
         colResult = objCommande.controleMvtStock()
         For Each str In colResult
-            'Console.Out.WriteLine(str)
+            Console.Out.WriteLine(str)
         Next
         Assert.IsTrue(colResult.Count = 0, "Pas D'erreur")
 
         'Supresssion d'une ligne de mvts de stock
-        colMvtStock = mvtStock.getListe(objP2.id, objCommande.id)
+        colMvtStock = mvtStock.getListe(objP3.id, objCommande.id)
         objMvtStock = colMvtStock(0)
         objMvtStock.bDeleted = True
         Assert.IsTrue(objMvtStock.save())
-        colMvtStock = mvtStock.getListe(objP2.id, objCommande.id)
-        Assert.IsTrue(colMvtStock.Count = 1, "plus qu'un seul Mvts de stock pour P2")
+        colMvtStock = mvtStock.getListe(objP3.id, objCommande.id)
+        Assert.IsTrue(colMvtStock.Count = 0, "plus de  Mvts de stock pour P3")
 
         'controle des mvts de Stock =>NOK
         colResult = objCommande.controleMvtStock()
         For Each str In colResult
-            'Console.Out.WriteLine(str)
+            Console.Out.WriteLine(str)
         Next
-        Assert.IsTrue(colResult.Count = 1, "1 erreur après la suppression d'un mouvement de stock")
+        Assert.AreEqual(0, colResult.Count, "0 erreur après la suppression d'un mouvement de stock")
 
         'Anulation de la livraison
         objCommande.changeEtat(vncEnums.vncActionEtatCommande.vncActionAnnLivrer)
@@ -1056,20 +1062,20 @@ Imports vini_DB
         objP1.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
 
         'Ajout d'une Commande Décembre = 60
-        objP1.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+        objP1.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 19991206, "CMD au 06/12", -36)
 
         'Ajout d'une Commande JAnvier
-        objP1.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
-        objP1.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        objP1.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000101, "CMD au 05/02/2000", -48)
+        objP1.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000102, "CMD au 06/02/2000", -12)
         'Ajout d'un Appro JAnvier
-        objP1.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
+        objP1.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 20000103, "APPRO au 03/01/2000", 48)
         'Commande du 04
-        objP1.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+        objP1.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000104, "APPRO au 06/03/2000", -12)
 
         'Le 10 => un Appro+une Commande
 
-        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 120)
-        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
+        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 20000110, "APPRO au 10/01/2000", 120)
+        objP1.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000110, "CMD au 10/01/2000", -36)
 
         objP1.save()
 

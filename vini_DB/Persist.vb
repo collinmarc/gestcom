@@ -2055,7 +2055,7 @@ Public MustInherit Class Persist
                                         " PRODUIT.PRD_CODE_STAT, " & _
                                         " PRODUIT.PRD_STOCK, " & _
                                         " PRD_TARIFA, PRD_TARIFB, PRD_TARIFC," & _
-                                        " PRODUIT.DOSSIER " & _
+                                        " PRODUIT.PRD_DOSSIER " & _
                                         " FROM PRODUIT  " & _
                                 " WHERE " & _
                                 " PRD_ID = ?"
@@ -3376,44 +3376,44 @@ Public MustInherit Class Persist
 
     End Function ' PurgePRDMVTStock
 
-    Protected Function existeMvtSocklib(ByVal strLib As String) As Boolean
-        Dim bReturn As Boolean = True
-        shared_connect()
-        Debug.Assert(shared_isConnected(), "La database doit être ouverte")
+    'Protected Function existeMvtSocklib(ByVal strLib As String) As Boolean
+    '    Dim bReturn As Boolean = True
+    '    shared_connect()
+    '    Debug.Assert(shared_isConnected(), "La database doit être ouverte")
 
-        Dim sqlString As String = "SELECT * FROM MVT_STOCK WHERE STK_LIB = ?"
-        Dim objCommand As OleDbCommand
-        Dim objRS As OleDbDataReader = Nothing
-        Try
+    '    Dim sqlString As String = "SELECT * FROM MVT_STOCK WHERE STK_LIB = ?"
+    '    Dim objCommand As OleDbCommand
+    '    Dim objRS As OleDbDataReader = Nothing
+    '    Try
 
-            objCommand = New OleDbCommand
-            objCommand.Connection = m_dbconn.Connection
-            objCommand.CommandText = sqlString
-
-
-
-            objCommand.Parameters.AddWithValue("?" , strLib)
-
-            objRS = objCommand.ExecuteReader
-            If Not objRS.HasRows() Then
-                bReturn = False
-            Else
-                bReturn = True
-            End If
-
-            objRS.Close()
-        Catch ex As Exception
-            setError("Persist.existeMvtStockLib()", ex.ToString)
-            If Not objRS Is Nothing Then
-                objRS.Close()
-            End If
-            Throw ex
-        End Try
+    '        objCommand = New OleDbCommand
+    '        objCommand.Connection = m_dbconn.Connection
+    '        objCommand.CommandText = sqlString
 
 
-        shared_disconnect()
-        Return bReturn
-    End Function
+
+    '        objCommand.Parameters.AddWithValue("?" , strLib)
+
+    '        objRS = objCommand.ExecuteReader
+    '        If Not objRS.HasRows() Then
+    '            bReturn = False
+    '        Else
+    '            bReturn = True
+    '        End If
+
+    '        objRS.Close()
+    '    Catch ex As Exception
+    '        setError("Persist.existeMvtStockLib()", ex.ToString)
+    '        If Not objRS Is Nothing Then
+    '            objRS.Close()
+    '        End If
+    '        Throw ex
+    '    End Try
+
+
+    '    shared_disconnect()
+    '    Return bReturn
+    'End Function
 
 #End Region
 

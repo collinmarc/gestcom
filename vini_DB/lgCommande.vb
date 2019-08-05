@@ -55,7 +55,24 @@ Public Class LgCommande
 
 #Region "Accesseurs"
     Protected Sub New()
-
+        m_typedonnee = vncEnums.vncTypeDonnee.LGCOMMANDE
+        m_idSCmd = 0
+        m_num = 0
+        m_bGratuit = False
+        m_oProduit = Nothing
+        m_prixHT = 0
+        m_prixTTC = 0
+        m_prixU = 0
+        m_qteCom = 0
+        m_qteLiv = 0
+        m_qteFact = 0
+        m_bProduitLoaded = False
+        m_bLigneEclatee = False
+        m_TxComm = 0.0
+        m_MtComm = 0.0
+        m_bStockDispo = True
+        m_idTiers = 0
+        bTraitee = False
     End Sub
     Public Sub New(ByVal pidCommande As Integer, Optional ByVal pidScmd As Integer = 0, Optional ByVal pidBA As Integer = 0)
         m_typedonnee = vncEnums.vncTypeDonnee.LGCOMMANDE
@@ -85,7 +102,17 @@ Public Class LgCommande
         m_MtComm = 0.0
         m_bStockDispo = True
         m_idTiers = 0
+        bTraitee = False
     End Sub 'New
+    Private m_bTraitee As Boolean
+    Public Property bTraitee() As Boolean
+        Get
+            Return m_bTraitee
+        End Get
+        Set(ByVal value As Boolean)
+            m_bTraitee = value
+        End Set
+    End Property
 
     Public Property num() As Integer
         Get

@@ -143,6 +143,7 @@
       <Name>System.Data</Name>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
@@ -249,7 +250,6 @@
     <Compile Include="EtatFactColGeneree.vb" />
     <Compile Include="Facture.vb" />
     <Compile Include="lgFactColisage.vb" />
-    <Compile Include="FactColisage.vb" />
     <Compile Include="EtatMvtStock_nFact.vb" />
     <Compile Include="EtatMvtStock_Fact.vb" />
     <Compile Include="EtatMvtStock.vb" />

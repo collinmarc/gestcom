@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 '===================================================================================================================================
 'Projet : Vinicom
 'Auteur : Marc Collin 
@@ -561,11 +562,18 @@ Public Class Produit
 
         End Get
     End Property
-    Public ReadOnly Property qteColis(ByVal nqte As Decimal) As Decimal
+    ''' <summary>
+    ''' Convertit une Quantité en nombre de colis en fonction du conditionnement
+    ''' </summary>
+    ''' <param name="nqte"></param>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property qteColis(ByVal nqte As Decimal) As Integer
         Get
             Dim objCond As Param = Nothing
             Dim bok As Boolean
-            Dim nColis As Decimal
+            Dim nColis As Integer = 0
             Try
 
                 bok = False
@@ -576,19 +584,24 @@ Public Class Produit
                     End If
                 Next
                 If bok Then
-                    nColis = CInt(nqte / CDec(objCond.valeur))
-                    If ((nqte / CDec(objCond.valeur) - nColis)) > 0 Then
+                    nColis = nqte \ CDec(objCond.valeur) 'Rend la partie entière !!!
+                    If nqte Mod CDec(objCond.valeur) <> 0 Then
                         'S'il y a un reste => ajout d'un colis
-                        nColis = nColis + 1
+                        If nqte < 0 Then
+                            nColis = nColis - 1
+                        Else
+                            nColis = nColis + 1
+                        End If
                     End If
-                    Return CDec(nColis)
+
+                    Return nColis
 
                 Else
                     Debug.Assert(False, "Conditionnement non trouvé")
                     Return 0
                 End If
             Catch ex As Exception
-                Debug.Assert(False, "Conditionnement non trouvé")
+                Debug.Assert(False, "Produit.qteColis ERR", ex.Message)
                 Return 0
             End Try
 
@@ -1306,22 +1319,24 @@ Public Class Produit
         bReturn = False
         Try
             Dim oPRD As Produit = Me
-            Dim oStockAu As Decimal = oPRD.CalculeStockAu(pdDeb)  'Calcul du Stock la veille du Début
-            oStockAu = oPRD.qteColis(oStockAu) 'Conversion en Colis
+            Dim oStockAuQ As Decimal = oPRD.CalculeStockAu(pdDeb)  'Calcul du Stock la veille du Début
+            Dim oStockAu As Integer = oPRD.qteColis(oStockAuQ) 'Conversion en Colis
 
-            Dim nmvtDu(31) As Decimal
-            Dim nStockAu(31) As Decimal
+            Dim nmvtDu(31) As Integer
+            Dim nStockAu(31) As Integer
             For njour As Integer = 1 To 31
                 nmvtDu(njour) = 0
                 nStockAu(njour) = 0
             Next
+            Dim lstmvtStock As List(Of mvtStock)
+            lstmvtStock = mvtStock.regroupMvtStockmemecommande(oPRD.colmvtStock)
             'Boucle pour calculer les mvt par jour
-            For nIndex As Integer = oPRD.colmvtStock.Count - 1 To 0 Step -1
-                Dim oMvtStk As mvtStock = oPRD.colmvtStock(nIndex)
+            For nIndex As Integer = lstmvtStock.Count - 1 To 0 Step -1
+                Dim oMvtStk As mvtStock = lstmvtStock(nIndex)
                 If oMvtStk.datemvt >= pdDeb And oMvtStk.datemvt <= pdFin Then
                     'C'est un Mvt de la bonne date
                     If oMvtStk.typeMvt <> vncTypeMvt.vncMvtInventaire Then
-                        Dim qteColis As Decimal = oPRD.qteColis(oMvtStk.qte)
+                        Dim qteColis As Integer = oPRD.qteColis(oMvtStk.qte)
                         nmvtDu(oMvtStk.datemvt.Day) = nmvtDu(oMvtStk.datemvt.Day) + qteColis
                     End If
                 End If
@@ -1418,18 +1433,18 @@ Public Class Produit
             'Le Premier Element DOIT ETRE un Mouvement de type inventaire
             'NB La liste est chargée en send inverse des dates , c'est donc le dernier element de la liste
 
-            Dim oStockAu As Decimal = 0
+            Dim oStockAuQ As Decimal = 0
             If colmvtStock.Count > 0 Then
                 Dim omvtIventaire As mvtStock
                 omvtIventaire = colmvtStock.Item(colmvtStock.Count - 1)
                 If omvtIventaire.typeMvt = vncTypeMvt.vncMvtInventaire Then
-                    oStockAu = omvtIventaire.qte
+                    oStockAuQ = omvtIventaire.qte
                 End If
             End If
-            oStockAu = qteColis(oStockAu) 'Conversion en Colis
+            Dim oStockAu As Integer = qteColis(oStockAuQ) 'Conversion en Colis
 
-            Dim nmvtDu(31) As Decimal
-            Dim nStockAu(31) As Decimal
+            Dim nmvtDu(31) As Integer
+            Dim nStockAu(31) As Integer
             For njour As Integer = 1 To 31
                 nmvtDu(njour) = 0
                 nStockAu(njour) = 0
@@ -1440,7 +1455,7 @@ Public Class Produit
                 If oMvtStk.idFactColisage = pIdFactCol Then
                     'C'est un Mvt de la bonne Facture
                     If oMvtStk.typeMvt <> vncTypeMvt.vncMvtInventaire Then
-                        Dim nbColis As Decimal = qteColis(oMvtStk.qte)
+                        Dim nbColis As Integer = qteColis(oMvtStk.qte)
                         nmvtDu(oMvtStk.datemvt.Day) = nmvtDu(oMvtStk.datemvt.Day) + nbColis
                     End If
                 End If
@@ -1511,5 +1526,7 @@ Public Class Produit
         Return bReturn
 
     End Function
+
+
 
 End Class

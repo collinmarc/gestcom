@@ -487,6 +487,66 @@ Imports vini_DB
 
     End Sub
 
+    ''' <summary>
+    ''' Test LoadLight du champs dOssier
+    ''' </summary>
+    <TestCategory("5.9.7.4")>
+    <TestMethod()> Public Sub T70_ChampsDossierLight()
+
+        Dim obj As Produit
+        Dim nid As Integer
+
+        obj = New Produit("PRDTEST", m_oFRN, 1990)
+        obj.DossierProduit = Dossier.HOBIVIN
+        Assert.IsTrue(obj.save())
+        nid = obj.id
+        obj = New Produit()
+        obj.DBLoadLight(nid)
+        Assert.AreEqual(Dossier.HOBIVIN, obj.DossierProduit)
+        Assert.IsTrue(obj.save())
+
+        obj = New Produit()
+        obj = Produit.createandload(nid)
+        Assert.AreEqual(Dossier.HOBIVIN, obj.DossierProduit)
+
+
+        obj.bDeleted = True
+        obj.save()
+
+    End Sub
+    ''' <summary>
+    ''' Test la propriété Qtecolis
+    ''' </summary>
+    <TestCategory("5.9.7.4")>
+    <TestMethod()> Public Sub T70_Qtecolis()
+
+        Dim obj As Produit
+        Dim nid As Integer
+
+        'Création d'un conditionnement pour 6 blle
+        Dim objcond = New Param
+        objcond.type = PAR_CONDITIONNEMENT
+        objcond.code = "x6"
+        objcond.valeur = 6
+        objcond.Save()
+        Param.LoadcolParams()
+
+        obj = New Produit("PRDTEST", m_oFRN, 1990)
+        obj.idConditionnement = objcond.id
+        Assert.IsTrue(obj.save())
+
+        Assert.AreEqual(0, obj.qteColis(0))
+        Assert.AreEqual(1, obj.qteColis(5))
+        Assert.AreEqual(1, obj.qteColis(6))
+        Assert.AreEqual(2, obj.qteColis(7))
+        Assert.AreEqual(2, obj.qteColis(12))
+
+        Assert.AreEqual(-1, obj.qteColis(-5))
+        Assert.AreEqual(-1, obj.qteColis(-6))
+        Assert.AreEqual(-2, obj.qteColis(-7))
+        Assert.AreEqual(-2, obj.qteColis(-12))
+
+    End Sub
 End Class
 
 

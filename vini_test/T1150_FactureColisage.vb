@@ -250,20 +250,20 @@ Imports CrystalDecisions.Shared
         m_objPRD.ajouteLigneMvtStock(CDate("05/12/1999"), vncTypeMvt.vncMvtInventaire, 0, "Inventaire au 05/12", 72)
 
         'Ajout d'une Commande Décembre = 60
-        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/12", -36)
+        m_objPRD.ajouteLigneMvtStock(CDate("06/12/1999"), vncTypeMvt.vncMvtCommandeClient, 1991206, "CMD au 06/12", -36)
 
         'Ajout d'une Commande JAnvier
-        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 05/02/2000", -48)
-        m_objPRD.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 06/02/2000", -12)
+        m_objPRD.ajouteLigneMvtStock(CDate("01/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000205, "CMD au 05/02/2000", -48)
+        m_objPRD.ajouteLigneMvtStock(CDate("02/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000206, "CMD au 06/02/2000", -12)
         'Ajout d'un Appro JAnvier
         m_objPRD.ajouteLigneMvtStock(CDate("03/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 03/01/2000", 48)
         'Commande du 04
-        m_objPRD.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "APPRO au 06/03/2000", -12)
+        m_objPRD.ajouteLigneMvtStock(CDate("04/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000306, "APPRO au 06/03/2000", -12)
 
         'Le 10 => un Appro+une Commande
 
         m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncmvtBonAppro, 0, "APPRO au 10/01/2000", 240)
-        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 0, "CMD au 10/01/2000", -36)
+        m_objPRD.ajouteLigneMvtStock(CDate("10/01/2000"), vncTypeMvt.vncMvtCommandeClient, 20000110, "CMD au 10/01/2000", -36)
 
         m_objPRD.save()
 
@@ -1175,13 +1175,13 @@ Imports CrystalDecisions.Shared
         Assert.AreEqual(1, oFactCol1.colLignes.Count, "1 ligne par produit")
 
         oLgFactCol = oFactCol1.colLignes(1)
-        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD.qteColis(60 - 12) * 29), CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
 
         oLgFactCol = oFactcol2.colLignes(1)
-        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD2.qteColis(120 - 24) * 29), CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
 
         oLgFactCol = oFactCol3.colLignes(1)
-        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * 29, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD3.qteColis(120 - 6) * 29), CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
 
         oFactCol1.save()
         ' La sauvegarde met à ajour la liste des mvts de stock (etat et idFactrColisage)
@@ -1267,17 +1267,17 @@ Imports CrystalDecisions.Shared
         'Nombre de jour du Mois (28 pour Fevrier 1964)
         Dim njour As Integer = CDate(oFactCol1.periode).AddMonths(1).AddDays(-1).Day
         oLgFactCol = oFactCol1.colLignes(1)
-        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD.qteColis(60 - 12) * njour), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         Assert.AreEqual("février 1964", oFactcol2.periode)
         Assert.AreEqual(1, oFactcol2.colLignes.Count, "1 ligne par mois Facturé")
         oLgFactCol = oFactcol2.colLignes(1)
-        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD2.qteColis(120 - 24) * njour), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         Assert.AreEqual("février 1964", oFactCol3.periode)
         Assert.AreEqual(1, oFactCol3.colLignes.Count, "1 ligne par mois Facturé")
         oLgFactCol = oFactCol3.colLignes(1)
-        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * njour, oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD3.qteColis(120 - 6) * njour), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         'Sauvegarde le la Facture de colisage => mise à jout des mouvements de stock du Fournisseur
         oFactCol1.save()
@@ -1390,13 +1390,13 @@ Imports CrystalDecisions.Shared
         Assert.AreEqual(3, nLignesNonVides, "3 lignes ")
 
         oLgFactCol = oFactCol1.colLignes(1)
-        Assert.AreEqual(m_objPRD.qteColis(60 - 12) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD.qteColis(60 - 12) * 28), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         oLgFactCol = oFactCol1.colLignes(2)
-        Assert.AreEqual(m_objPRD2.qteColis(120 - 24) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD2.qteColis(120 - 24) * 28), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         oLgFactCol = oFactCol1.colLignes(3)
-        Assert.AreEqual(m_objPRD3.qteColis(120 - 6) * 28, CDec(oLgFactCol.qteCommande), "Qte = Stock I - Cmd")
+        Assert.AreEqual(CDec(m_objPRD3.qteColis(120 - 6) * 28), oLgFactCol.qteCommande, "Qte = Stock I - Cmd")
 
         oFactCol1.save()
 
@@ -1423,6 +1423,35 @@ Imports CrystalDecisions.Shared
         oFRNHBV.Save()
 
     End Sub
+    <TestCategory("5.9.7.3")>
+    <TestMethod()> Public Sub TraietementDesGratuitésdanscolMvtStok()
+        Dim omvt As mvtStock
+        Dim olst As List(Of mvtStock)
+
+        'Les mouvements de stocks sont triès par date et par type , il faut donc utiliser des dates différentes pour chaque type
+        m_objPRD.ajouteLigneMvtStock(Now, vncTypeMvt.vncMvtCommandeClient, 132456, "Cmd123456", 22, "Produit Normal")
+        m_objPRD.ajouteLigneMvtStock(Now, vncTypeMvt.vncMvtCommandeClient, 132456, "Cmd123456", 2, "Produit Gratuit")
+        m_objPRD.ajouteLigneMvtStock(Now, vncTypeMvt.vncMvtCommandeClient, 132457, "Cmd123457", 6, "Produit Normal")
+        m_objPRD.ajouteLigneMvtStock(Now.AddDays(-1), vncTypeMvt.vncmvtBonAppro, 132456, "BA123457", 6, "Produit Normal")
+        m_objPRD.ajouteLigneMvtStock(Now.AddDays(-2), vncTypeMvt.vncMvtInventaire, 132456, "MVTINVENT", 12, "Produit Normal")
+        m_objPRD.ajouteLigneMvtStock(Now.AddDays(-3), vncTypeMvt.vncmvtRegul, 132456, "REGUL", 24, "Produit Normal")
+
+        olst = mvtStock.regroupMvtStockmemecommande(m_objPRD.colmvtStock)
+
+
+        Assert.AreEqual(24D, olst(0).qte)
+        Assert.AreEqual(0D, olst(1).qte)
+        Assert.AreEqual(6D, olst(2).qte)
+        Assert.AreEqual(6D, olst(3).qte)
+        Assert.AreEqual(False, olst(0).bTraitee)
+        Assert.AreEqual(True, olst(1).bTraitee)
+        Assert.AreEqual(False, olst(2).bTraitee)
+        Assert.AreEqual(False, olst(3).bTraitee)
+
+
+    End Sub
+
+
 
 
 End Class

@@ -10,6 +10,7 @@ Imports System.Text.RegularExpressions
 ''' Classe de test à reactiver 
 ''' </summary>
 ''' 
+<Ignore()>
 <TestClass()> Public Class TestImap
     Inherits test_Base
     Private Sub CleanImap()
