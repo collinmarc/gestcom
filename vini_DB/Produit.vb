@@ -1449,8 +1449,10 @@ Public Class Produit
                 nmvtDu(njour) = 0
                 nStockAu(njour) = 0
             Next
+            Dim lstmvtStock As List(Of mvtStock)
+            lstmvtStock = mvtStock.regroupMvtStockmemecommande(Me.colmvtStock)
             'Boucle pour calculer les mvt par jour
-            For nIndex As Integer = colmvtStock.Count - 1 To 0 Step -1
+            For nIndex As Integer = lstmvtStock.Count - 1 To 0 Step -1
                 Dim oMvtStk As mvtStock = colmvtStock(nIndex)
                 If oMvtStk.idFactColisage = pIdFactCol Then
                     'C'est un Mvt de la bonne Facture
